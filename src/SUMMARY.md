@@ -17,19 +17,19 @@
 
 
 
-# 文档规范
+# 文档风格指南
 
 - [介绍](./doc-guides/intro.md)
 
 
-# API 规范
+# API 风格指南
 
 - [介绍](./api-design/intro.md)
 
 
 
 
-# FFi 指南
+# FFi 规范
 
 - [介绍](./ffi-guides/intro.md)
 
