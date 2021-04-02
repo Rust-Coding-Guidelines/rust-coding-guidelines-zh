@@ -6,6 +6,7 @@
 - [Facebook Diem 项目 Rust 编码规范](https://developers.diem.com/docs/core/coding-guidelines/)
 - [Apache Teaclave 安全计算平台 | Rust 开发规范](https://teaclave.apache.org/docs/rust-guildeline/)
 - [PingCAP | 编码风格指南（包括 Rust 和 Go 等）](https://github.com/pingcap/style-guide)
+- [Google Fuchsia 操作系统 Rust 开发指南](https://fuchsia.dev/fuchsia-src/development/languages/rust)
 
 但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。
 
@@ -26,5 +27,5 @@ graph TD
 
 如何参与贡献？
 
-请阅读 [贡献说明](./readme.md) 。
+请阅读 [贡献说明](./contribution.md) 。
 
