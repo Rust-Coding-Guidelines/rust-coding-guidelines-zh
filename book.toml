@@ -13,7 +13,7 @@ command = "mdbook-toc"
 renderer = ["html"]
 
 [output.html]
-git-repository-url = "https://github.com/RustcRustc/rustc-dev-guide-zh"
+git-repository-url = "https://github.com/Rust-Coding-Guidelines/rust-coding-guidelines-zh"
 
 [output.html.fold]
 enable = true
