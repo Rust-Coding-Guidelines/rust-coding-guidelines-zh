@@ -1,0 +1,20 @@
+[book]
+authors = ["blackanger"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "RustCodingGuidelines"
+
+[build]
+create-missing = true
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+
+[output.html]
+git-repository-url = "https://github.com/RustcRustc/rustc-dev-guide-zh"
+
+[output.html.fold]
+enable = true
+level = 0
