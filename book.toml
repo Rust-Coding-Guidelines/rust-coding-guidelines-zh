@@ -12,8 +12,12 @@ create-missing = true
 command = "mdbook-toc"
 renderer = ["html"]
 
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
 [output.html]
 git-repository-url = "https://github.com/Rust-Coding-Guidelines/rust-coding-guidelines-zh"
+additional-js = ["mermaid.min.js", "mermaid-init.js"]
 
 [output.html.fold]
 enable = true

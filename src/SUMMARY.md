@@ -2,8 +2,8 @@
 
 # 介绍
 
-- [背景介绍](./intro.md)
-- [使用说明](./readme.md)
+- [规范介绍](./readme.md)
+- [贡献说明](./contribution.md)
 
 # 安全编码规范
 
@@ -39,3 +39,4 @@
 # 最佳实践
 
 - [介绍](./best-practices/intro.md)
+
