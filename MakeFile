@@ -4,6 +4,7 @@ init:
 	git worktree remove -f /tmp/rustguidebook
 	git worktree add -f /tmp/rustguidebook gh-pages
 
+
 deploy: init
 	@echo "====> deploying to github"
 	mdbook build
