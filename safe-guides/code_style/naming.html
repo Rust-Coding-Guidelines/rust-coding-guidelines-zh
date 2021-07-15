@@ -3,9 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>RustCodingGuidelines</title>
-        
-        <meta name="robots" content="noindex" />
+        <title>命名 - RustCodingGuidelines</title>
         
         
 
@@ -20,28 +18,28 @@
         <meta name="theme-color" content="#ffffff" />
 
         
-        <link rel="icon" href="favicon.svg">
+        <link rel="icon" href="../../favicon.svg">
         
         
-        <link rel="shortcut icon" href="favicon.png">
+        <link rel="shortcut icon" href="../../favicon.png">
         
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
         
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
         
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
         
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
         
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         
@@ -51,7 +49,7 @@
     <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
-            var path_to_root = "";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -97,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item "><a href="index.html"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 前言</a></li><li class="chapter-item "><a href="safe-guides/dev_env.html"><strong aria-hidden="true">4.</strong> 开发环境</a></li><li class="chapter-item "><a href="safe-guides/code_style.html"><strong aria-hidden="true">5.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming.html"><strong aria-hidden="true">5.1.</strong> 命名</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments.html"><strong aria-hidden="true">5.2.</strong> 注释</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt.html"><strong aria-hidden="true">5.3.</strong> 格式</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice.html"><strong aria-hidden="true">6.</strong> 编程实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/mod.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">6.2.</strong> 包管理</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test.html"><strong aria-hidden="true">6.3.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/test/unit_test.html"><strong aria-hidden="true">6.3.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test/benchmark.html"><strong aria-hidden="true">6.3.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test/fuzz.html"><strong aria-hidden="true">6.3.3.</strong> 模糊测试</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/unsafe_rust.html"><strong aria-hidden="true">7.</strong> Unsafe Rust编码规范</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">7.1.</strong> 安全抽象规范</a></li><li class="chapter-item "><a href="safe-guides/unsafe_rust/ffi.html"><strong aria-hidden="true">7.2.</strong> FFi 规范</a></li></ol></li><li class="chapter-item "><li class="part-title">领域最佳实践</li><li class="chapter-item "><a href="best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">工具链使用指南</li><li class="chapter-item "><a href="tools/intro.html"><strong aria-hidden="true">9.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 优化指南</li><li class="chapter-item "><a href="optimizing/intro.html"><strong aria-hidden="true">10.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 常用基础库指南</li><li class="chapter-item "><a href="libs/intro.html"><strong aria-hidden="true">11.</strong> 介绍</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item "><a href="../../index.html"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="../../contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="../../safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 前言</a></li><li class="chapter-item "><a href="../../safe-guides/dev_env.html"><strong aria-hidden="true">4.</strong> 开发环境</a></li><li class="chapter-item expanded "><a href="../../safe-guides/code_style.html"><strong aria-hidden="true">5.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../safe-guides/code_style/naming.html" class="active"><strong aria-hidden="true">5.1.</strong> 命名</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments.html"><strong aria-hidden="true">5.2.</strong> 注释</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt.html"><strong aria-hidden="true">5.3.</strong> 格式</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice.html"><strong aria-hidden="true">6.</strong> 编程实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/mod.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">6.2.</strong> 包管理</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/test.html"><strong aria-hidden="true">6.3.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/test/unit_test.html"><strong aria-hidden="true">6.3.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/test/benchmark.html"><strong aria-hidden="true">6.3.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/test/fuzz.html"><strong aria-hidden="true">6.3.3.</strong> 模糊测试</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/unsafe_rust.html"><strong aria-hidden="true">7.</strong> Unsafe Rust编码规范</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">7.1.</strong> 安全抽象规范</a></li><li class="chapter-item "><a href="../../safe-guides/unsafe_rust/ffi.html"><strong aria-hidden="true">7.2.</strong> FFi 规范</a></li></ol></li><li class="chapter-item "><li class="part-title">领域最佳实践</li><li class="chapter-item "><a href="../../best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">工具链使用指南</li><li class="chapter-item "><a href="../../tools/intro.html"><strong aria-hidden="true">9.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 优化指南</li><li class="chapter-item "><a href="../../optimizing/intro.html"><strong aria-hidden="true">10.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 常用基础库指南</li><li class="chapter-item "><a href="../../libs/intro.html"><strong aria-hidden="true">11.</strong> 介绍</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -133,7 +131,7 @@
 
                     <div class="right-buttons">
                         
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
@@ -169,83 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#rust-编码规范介绍" id="rust-编码规范介绍">Rust 编码规范介绍</a></h1>
-<p>据了解，Rust 社区内有些公司和组织都各自维护着自己的编码规范。下面罗列了一些已经公开的：</p>
-<ul>
-<li><a href="https://rust-lang.github.io/api-guidelines/about.html">官方｜Rust API 编写指南</a></li>
-<li><a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">官方 | Rust Style Guide</a></li>
-<li><a href="https://anssi-fr.github.io/rust-guide">法国国家信息安全局 | Rust 安全（Security）规范</a></li>
-<li><a href="https://developers.diem.com/docs/core/coding-guidelines/">Facebook Diem 项目 Rust 编码规范</a></li>
-<li><a href="https://teaclave.apache.org/docs/rust-guildeline/">Apache Teaclave 安全计算平台 | Rust 开发规范</a></li>
-<li><a href="https://github.com/pingcap/style-guide">PingCAP | 编码风格指南（包括 Rust 和 Go 等）</a></li>
-<li><a href="https://fuchsia.dev/fuchsia-src/development/languages/rust">Google Fuchsia 操作系统 Rust 开发指南</a></li>
-</ul>
-<p>以上公开的编码规范，除官方Rust API 编写指南和法国国家信息安全局是通用目的公布之外，其他编码规范主要是为了开源项目自身统一贡献者编码风格而制作。</p>
-<p>随着 Rust 的普及，各大公司应用 Rust 的需求增多，为了方便 Rust 在公司落地，需要一个统一的、通用的、可通过 Clippy 等工具辅助检查的编码规范。</p>
-<p>本规范参考但不限于以上公开规范。本规范并非 Rust 教程，但也可以作为学习参考。</p>
-<h2><a class="header" href="#编码规范分类" id="编码规范分类">编码规范分类</a></h2>
-<ol>
-<li>安全编码规范。</li>
-<li>领域最佳实践。</li>
-<li>工具链使用指南。</li>
-<li>Rust优化指南。</li>
-<li>常用基础库指南。</li>
-</ol>
-<h2><a class="header" href="#贡献形式" id="贡献形式">贡献形式</a></h2>
-<pre class="mermaid">graph TD
-    A{Rust 编码规范}
-    A --&gt;|公司A| B[云计算]
-    A --&gt;|公司C| C[嵌入式]
-    A --&gt;|公司B| D[网络]
-    A --&gt;|公司D| E[跨平台组件]
-    A --&gt;|公司E| F[WebAssembly]
-</pre>
-<p>本规范致力于成为统一的 Rust 编码规范，并联合国内外公司共同维护。</p>
-<p>公司可以依赖本规范，结合自己的业务领域和团队习惯，形成自己的编码规范，并可以在日常实践中反哺本规范，让本规范更加完善。</p>
-<p>个人开发者也可以参与贡献！</p>
-<p>如何参与贡献？</p>
-<p>请阅读 <a href="./contribution.html">贡献说明</a> 。</p>
-<h1><a class="header" href="#贡献说明" id="贡献说明">贡献说明</a></h1>
-<p>目前项目处于初期，先以 issues 提建议为主，暂不支持 Pull Request。</p>
-<p>等项目整体结构确定以后，再开始接受 Pull Request。</p>
-<h3><a class="header" href="#贡献名单" id="贡献名单">贡献名单</a></h3>
-<h1><a class="header" href="#rust-安全编码规范" id="rust-安全编码规范">Rust 安全编码规范</a></h1>
-<p>Rust 语言虽然以类型安全、内存安全、线程安全和高性能等特性著称，但对于开发者而言，还是需要遵循一定的编码规范，更有助于写出地道安全的 Rust 代码。</p>
-<p>虽然 Rust 也提供了 Clippy 这样的静态检查工具来帮助开发者识别代码中的坏味道，但是 Clippy 内部为什么要遵循这些规则，以及它们的分类等，对于大部分开发者还是不太透明。这方面也需要一个文档来进行梳理。</p>
-<p>所以，为了更好地在公司内落地 Rust，制定安全编码规范是必须的。</p>
-<p>本规范的目标如下：</p>
-<ol>
-<li>提高 Unsafe Rust 代码编写的安全性。</li>
-<li>提高 代码的健壮性。</li>
-<li>提高 代码的可读性、可维护性和可移植性。</li>
-<li>编程规范条款力争系统化、易应用、易检查。</li>
-</ol>
-<p>本指南参考《华为 C 语言编程指南 V 1.0》组织内容，将规范条款分为原则和规则两个类别，通过标题前的编号来标识。</p>
-<ul>
-<li>标识为<code>P</code>为原则（Principle）。编号方式为<code>P.Number</code>。</li>
-<li>标识为<code>G</code>为规则（Guideline）。编号方式为<code>G.Element.Number</code>。</li>
-</ul>
-<p>Number 从<code>01</code>开始递增。<code>Element</code>为领域知识中关键元素的三位英文字母缩略语。</p>
-<table><thead><tr><th>Element</th><th>解释</th><th>Element</th><th>解释</th></tr></thead><tbody>
-<tr><td>NAM</td><td>命名</td><td>CMT</td><td>注释</td></tr>
-<tr><td>FMT</td><td>格式</td><td>TYP</td><td>数据类型</td></tr>
-<tr><td>CNS</td><td>常量</td><td>VAR</td><td>变量</td></tr>
-<tr><td>EXP</td><td>表达式</td><td>CTL</td><td>控制语句</td></tr>
-<tr><td>RFE</td><td>引用</td><td>PTR</td><td>指针</td></tr>
-<tr><td>STR</td><td>字符串</td><td>INT</td><td>整数</td></tr>
-<tr><td>MOD</td><td>模块</td><td>CAR</td><td>包管理</td></tr>
-<tr><td>MEM</td><td>内存</td><td>FUD</td><td>函数设计</td></tr>
-<tr><td>MAC</td><td>宏</td><td>OTH</td><td>其他</td></tr>
-</tbody></table>
-<h1><a class="header" href="#开发环境" id="开发环境">开发环境</a></h1>
-<h1><a class="header" href="#代码风格" id="代码风格">代码风格</a></h1>
-<p>代码风格包含标识符的命名风格、排版与格式风格、注释风格等。一致的编码习惯与风格，可以提高代码可读性和可维护性。</p>
-<ul>
-<li><a href="safe-guides/./code_style/naming.html">命名</a></li>
-<li><a href="safe-guides/./code_style/fmt.html">格式</a></li>
-<li><a href="safe-guides/./code_style/comments.html">注释</a></li>
-</ul>
-<h1><a class="header" href="#命名" id="命名">命名</a></h1>
+                        <h1><a class="header" href="#命名" id="命名">命名</a></h1>
 <h2><a class="header" href="#p01-标识符命名应该符合阅读习惯" id="p01-标识符命名应该符合阅读习惯">P.01 标识符命名应该符合阅读习惯</a></h2>
 <blockquote>
 <p>标识符的命名要清晰、明了，有明确含义，容易理解。符合英文阅读习惯的命名将明显提高代码可读性。</p>
@@ -531,36 +453,21 @@ Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <
 <p>这些名称都按照 <strong>动词-宾语-error</strong> 的单词顺序。</p>
 <p>如果增加“解析地址错误”类型，为了保持词性一致，应该使用 <code>ParseAddrError</code> 名称，而不是 <code>AddrParseError</code> 名称。 </p>
 <p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。</p>
-<h1><a class="header" href="#注释与文档" id="注释与文档">注释与文档</a></h1>
-<h2><a class="header" href="#" id=""></a></h2>
-<h2><a class="header" href="#参考" id="参考">参考</a></h2>
-<ol>
-<li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505: API 注释约定</a></li>
-<li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md">RFC 1574: API 文档约定</a></li>
-</ol>
-<h1><a class="header" href="#格式" id="格式">格式</a></h1>
-<h2><a class="header" href="#p03" id="p03">P.03</a></h2>
-<h1><a class="header" href="#编程实践" id="编程实践">编程实践</a></h1>
-<h1><a class="header" href="#模块" id="模块">模块</a></h1>
-<h1><a class="header" href="#包管理" id="包管理">包管理</a></h1>
-<h1><a class="header" href="#测试" id="测试">测试</a></h1>
-<h1><a class="header" href="#单元测试" id="单元测试">单元测试</a></h1>
-<h1><a class="header" href="#基准测试" id="基准测试">基准测试</a></h1>
-<h1><a class="header" href="#模糊测试" id="模糊测试">模糊测试</a></h1>
-<h1><a class="header" href="#unsafe-rust编码规范" id="unsafe-rust编码规范">Unsafe Rust编码规范</a></h1>
-<h1><a class="header" href="#安全抽象规范" id="安全抽象规范">安全抽象规范</a></h1>
-<h1><a class="header" href="#ffi-规范" id="ffi-规范">FFi 规范</a></h1>
-<h1><a class="header" href="#最佳实践" id="最佳实践">最佳实践</a></h1>
-<h1><a class="header" href="#介绍" id="介绍">介绍</a></h1>
-<h1><a class="header" href="#介绍-1" id="介绍-1">介绍</a></h1>
-<h1><a class="header" href="#介绍-2" id="介绍-2">介绍</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="../../safe-guides/code_style.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="../../safe-guides/code_style/comments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -570,7 +477,15 @@ Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="../../safe-guides/code_style.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="../../safe-guides/code_style/comments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -591,30 +506,22 @@ Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
         
-        <script type="text/javascript" src="mermaid.min.js"></script>
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
         
-        <script type="text/javascript" src="mermaid-init.js"></script>
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>

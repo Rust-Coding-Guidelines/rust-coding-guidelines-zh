@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Unsafe 编码规范</li><li class="chapter-item "><a href="unsafe-guides/intro.html"><strong aria-hidden="true">4.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">文档风格指南</li><li class="chapter-item "><a href="doc-guides/intro.html"><strong aria-hidden="true">5.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">API 风格指南</li><li class="chapter-item "><a href="api-design/intro.html"><strong aria-hidden="true">6.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">FFi 规范</li><li class="chapter-item "><a href="ffi-guides/intro.html"><strong aria-hidden="true">7.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">最佳实践</li><li class="chapter-item "><a href="best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 前言</a></li><li class="chapter-item "><a href="safe-guides/dev_env.html"><strong aria-hidden="true">4.</strong> 开发环境</a></li><li class="chapter-item "><a href="safe-guides/code_style.html"><strong aria-hidden="true">5.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming.html"><strong aria-hidden="true">5.1.</strong> 命名</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments.html"><strong aria-hidden="true">5.2.</strong> 注释</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt.html"><strong aria-hidden="true">5.3.</strong> 格式</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice.html"><strong aria-hidden="true">6.</strong> 编程实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/mod.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">6.2.</strong> 包管理</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test.html"><strong aria-hidden="true">6.3.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/test/unit_test.html"><strong aria-hidden="true">6.3.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test/benchmark.html"><strong aria-hidden="true">6.3.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/test/fuzz.html"><strong aria-hidden="true">6.3.3.</strong> 模糊测试</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/unsafe_rust.html"><strong aria-hidden="true">7.</strong> Unsafe Rust编码规范</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">7.1.</strong> 安全抽象规范</a></li><li class="chapter-item "><a href="safe-guides/unsafe_rust/ffi.html"><strong aria-hidden="true">7.2.</strong> FFi 规范</a></li></ol></li><li class="chapter-item "><li class="part-title">领域最佳实践</li><li class="chapter-item "><a href="best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">工具链使用指南</li><li class="chapter-item "><a href="tools/intro.html"><strong aria-hidden="true">9.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 优化指南</li><li class="chapter-item "><a href="optimizing/intro.html"><strong aria-hidden="true">10.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 常用基础库指南</li><li class="chapter-item "><a href="libs/intro.html"><strong aria-hidden="true">11.</strong> 介绍</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -170,13 +170,26 @@
                         <h1><a class="header" href="#rust-编码规范介绍" id="rust-编码规范介绍">Rust 编码规范介绍</a></h1>
 <p>据了解，Rust 社区内有些公司和组织都各自维护着自己的编码规范。下面罗列了一些已经公开的：</p>
 <ul>
+<li><a href="https://rust-lang.github.io/api-guidelines/about.html">官方｜Rust API 编写指南</a></li>
+<li><a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">官方 | Rust Style Guide</a></li>
 <li><a href="https://anssi-fr.github.io/rust-guide">法国国家信息安全局 | Rust 安全（Security）规范</a></li>
 <li><a href="https://developers.diem.com/docs/core/coding-guidelines/">Facebook Diem 项目 Rust 编码规范</a></li>
 <li><a href="https://teaclave.apache.org/docs/rust-guildeline/">Apache Teaclave 安全计算平台 | Rust 开发规范</a></li>
 <li><a href="https://github.com/pingcap/style-guide">PingCAP | 编码风格指南（包括 Rust 和 Go 等）</a></li>
 <li><a href="https://fuchsia.dev/fuchsia-src/development/languages/rust">Google Fuchsia 操作系统 Rust 开发指南</a></li>
 </ul>
-<p>但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。</p>
+<p>以上公开的编码规范，除官方Rust API 编写指南和法国国家信息安全局是通用目的公布之外，其他编码规范主要是为了开源项目自身统一贡献者编码风格而制作。</p>
+<p>随着 Rust 的普及，各大公司应用 Rust 的需求增多，为了方便 Rust 在公司落地，需要一个统一的、通用的、可通过 Clippy 等工具辅助检查的编码规范。</p>
+<p>本规范参考但不限于以上公开规范。本规范并非 Rust 教程，但也可以作为学习参考。</p>
+<h2><a class="header" href="#编码规范分类" id="编码规范分类">编码规范分类</a></h2>
+<ol>
+<li>安全编码规范。</li>
+<li>领域最佳实践。</li>
+<li>工具链使用指南。</li>
+<li>Rust优化指南。</li>
+<li>常用基础库指南。</li>
+</ol>
+<h2><a class="header" href="#贡献形式" id="贡献形式">贡献形式</a></h2>
 <pre class="mermaid">graph TD
     A{Rust 编码规范}
     A --&gt;|公司A| B[云计算]
@@ -187,6 +200,7 @@
 </pre>
 <p>本规范致力于成为统一的 Rust 编码规范，并联合国内外公司共同维护。</p>
 <p>公司可以依赖本规范，结合自己的业务领域和团队习惯，形成自己的编码规范，并可以在日常实践中反哺本规范，让本规范更加完善。</p>
+<p>个人开发者也可以参与贡献！</p>
 <p>如何参与贡献？</p>
 <p>请阅读 <a href="./contribution.html">贡献说明</a> 。</p>
 

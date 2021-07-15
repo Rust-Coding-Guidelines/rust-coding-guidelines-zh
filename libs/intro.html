@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="../contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="../safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Unsafe 编码规范</li><li class="chapter-item "><a href="../unsafe-guides/intro.html"><strong aria-hidden="true">4.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">文档风格指南</li><li class="chapter-item "><a href="../doc-guides/intro.html"><strong aria-hidden="true">5.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">API 风格指南</li><li class="chapter-item expanded "><a href="../api-design/intro.html" class="active"><strong aria-hidden="true">6.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">FFi 规范</li><li class="chapter-item "><a href="../ffi-guides/intro.html"><strong aria-hidden="true">7.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">最佳实践</li><li class="chapter-item "><a href="../best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> 规范介绍</a></li><li class="chapter-item "><a href="../contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="../safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 前言</a></li><li class="chapter-item "><a href="../safe-guides/dev_env.html"><strong aria-hidden="true">4.</strong> 开发环境</a></li><li class="chapter-item "><a href="../safe-guides/code_style.html"><strong aria-hidden="true">5.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../safe-guides/code_style/naming.html"><strong aria-hidden="true">5.1.</strong> 命名</a></li><li class="chapter-item "><a href="../safe-guides/code_style/comments.html"><strong aria-hidden="true">5.2.</strong> 注释</a></li><li class="chapter-item "><a href="../safe-guides/code_style/fmt.html"><strong aria-hidden="true">5.3.</strong> 格式</a></li></ol></li><li class="chapter-item "><a href="../safe-guides/coding_practice.html"><strong aria-hidden="true">6.</strong> 编程实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../safe-guides/coding_practice/mod.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item "><a href="../safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">6.2.</strong> 包管理</a></li><li class="chapter-item "><a href="../safe-guides/coding_practice/test.html"><strong aria-hidden="true">6.3.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../safe-guides/coding_practice/test/unit_test.html"><strong aria-hidden="true">6.3.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="../safe-guides/coding_practice/test/benchmark.html"><strong aria-hidden="true">6.3.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="../safe-guides/coding_practice/test/fuzz.html"><strong aria-hidden="true">6.3.3.</strong> 模糊测试</a></li></ol></li></ol></li><li class="chapter-item "><a href="../safe-guides/unsafe_rust.html"><strong aria-hidden="true">7.</strong> Unsafe Rust编码规范</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../safe-guides/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">7.1.</strong> 安全抽象规范</a></li><li class="chapter-item "><a href="../safe-guides/unsafe_rust/ffi.html"><strong aria-hidden="true">7.2.</strong> FFi 规范</a></li></ol></li><li class="chapter-item "><li class="part-title">领域最佳实践</li><li class="chapter-item "><a href="../best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">工具链使用指南</li><li class="chapter-item "><a href="../tools/intro.html"><strong aria-hidden="true">9.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 优化指南</li><li class="chapter-item "><a href="../optimizing/intro.html"><strong aria-hidden="true">10.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 常用基础库指南</li><li class="chapter-item expanded "><a href="../libs/intro.html" class="active"><strong aria-hidden="true">11.</strong> 介绍</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,22 +167,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#api-风格指南" id="api-风格指南">API 风格指南</a></h1>
+                        <h1><a class="header" href="#介绍" id="介绍">介绍</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../doc-guides/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../optimizing/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="../ffi-guides/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -192,15 +188,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../doc-guides/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../optimizing/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="../ffi-guides/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
