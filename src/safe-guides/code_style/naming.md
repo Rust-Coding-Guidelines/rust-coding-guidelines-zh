@@ -286,7 +286,7 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 ## G.NAM.05 迭代器类型名称应该与产生它们的方法相匹配
 
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制｜
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
 | ------ | ---- | --------- | ------ | ------ | 
 |  _ | no | no | _ | yes |
 
