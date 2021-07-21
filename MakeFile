@@ -1,6 +1,7 @@
 .PHONY: deploy
 
 init:
+	# git worktree add -f /tmp/rustguidebook gh-pages
 	git worktree remove -f /tmp/rustguidebook
 	git worktree add -f /tmp/rustguidebook gh-pages
 
