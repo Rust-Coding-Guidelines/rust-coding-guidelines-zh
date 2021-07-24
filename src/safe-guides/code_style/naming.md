@@ -2,7 +2,9 @@
 
 ## P.01 标识符命名应该符合阅读习惯
 
-> 标识符的命名要清晰、明了，有明确含义，容易理解。符合英文阅读习惯的命名将明显提高代码可读性。
+### 【描述】
+
+标识符的命名要清晰、明了，有明确含义，容易理解。符合英文阅读习惯的命名将明显提高代码可读性。
 
 一些好的实践包括但不限于：
 
@@ -13,23 +15,64 @@
 
 ## P.02 作用域越大，命名越精确；反之应简短
 
-1. 对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一
+### 【描述】
+
+1. 对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一。
+2. 对于函数局部变量，或者结构体、枚举中的成员变量，在其命名能够准确表达含义的前提下，应该尽量简短，避免冗余信息重复描述。
+
+### 【示例】
+
+**全局变量和函数的例子：**
+
+【正例】
+
+```rust
+static GET_MAX_THREAD_COUNT: i32 = 42;  // 符合
+```
+
+【反例】
 
 ```rust
 static GET_COUNT: i32 = 42;  // 不符合：描述不精确
-static GET_MAX_THREAD_COUNT: i32 = 42;  // 符合
+```
 
+【例外】
+
+当类型名字必须很长才能表达清楚语义：
+
+```rust
 // 如果必须这么长才能定义精准
 enum VeryVerboseEnumOfThingsToDoWithNumbers {
     Add,
     Subtract,
 }
-// 那么可以配合使用类型别名来适当缩短命名，但要保持语义完整
+// 那么可以配合使用类型别名来适当缩短命名
+//  使用的时候注意上下文，不要和其他类型冲突，或造成会让人误解的歧义
 type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
+```
+
+> 注意： 这里只是说明缩短命名的一种例外情况，而非 `type` 最佳实践。
+
+**枚举类型的成员命名的例子：**
+
+【正例】
+
+```rust
+// 符合： 上下文信息已经知道它是 Evenet
+enum WebEvent {
+    // An `enum` may either be `unit-like`,
+    PageLoad,
+    PageUnload,
+    // like tuple structs,
+    KeyPress(char),
+    Paste(String),
+    // or c-like structures.
+    Click { x: i64, y: i64 },
+}
 
 ```
 
-2. 对于函数局部变量，或者结构体、枚举中的成员变量，在其命名能够准确表达含义的前提下，应该尽量简短，避免冗余信息重复描述。
+【反例】
 
 ```rust
 
@@ -45,30 +88,21 @@ enum WebEvent {
     // or c-like structures.
     ClickEvent { x: i64, y: i64 },
 }
-
-
-
-// 符合： 上下文信息已经知道它是 Evenet
-enum WebEvent {
-    // An `enum` may either be `unit-like`,
-    PageLoad,
-    PageUnload,
-    // like tuple structs,
-    KeyPress(char),
-    Paste(String),
-    // or c-like structures.
-    Click { x: i64, y: i64 },
-}
-
-
 ```
 
 ## G.NAM.01 使用统一的命名风格
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
 | ------ | ---- | --------- | ------ | 
 | _ | yes| no | Style |
 
+### 【描述】
 
 Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有描述。总的来说，Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风格，在 “值（实例）级别”的结构中使用 `snake_case`命名风格。
 
@@ -107,11 +141,17 @@ Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/te
 
 ## G.NAM.02 类型转换函数命名需要遵循所有权语义
 
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
 | ------ | ---- | --------- | ------ | 
 | wrong_self_convention| yes| no | Style |
 
-
+### 【描述】
 
 应该使用带有以下前缀名称方法来进行特定类型转换：
 
@@ -121,7 +161,9 @@ Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/te
 | `to_` | 代价昂贵 | borrowed -\> borrowed<br>borrowed -\> owned (非 Copy 类型)<br>owned -\> owned (Copy 类型) |
 | `into_` | 看情况 | owned -\> owned (非 Copy 类型) |
 
-举例：
+### 【示例】
+
+【正例】
 
 - `as_`
     - [`str::as_bytes()`] 
@@ -193,11 +235,25 @@ fn as_mut_slice(&mut self) -> &mut [T];
 
 ## G.NAM.03 用于访问或获取数据的 `getter/setter` 类方法通常不要使用 `get_` 或 `set_` 等前缀
 
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |是否可定制|
 | ------ | ---- | --------- | ------ | ------ |
 |  _ | no | no | _ | yes |
 
 此规则 Clippy 不可检测，属于业务逻辑层面。
+
+### 【描述】
+
+因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 `&self` 和 独占引用 `&mut self`，分别代表了 getter 和 setter 的语义。
+
+### 【示例】
+
+【正例】
 
 ```rust
 pub struct S {
@@ -218,7 +274,29 @@ impl S {
 }
 ```
 
-因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 `&self` 和 独占引用 `&mut self`，分别代表了 getter 和 setter 的语义。
+【反例】
+
+```rust
+pub struct S {
+    first: First,
+    second: Second,
+}
+
+impl S {
+    // 不符合：访问成员函数名字不用get_前缀。
+    pub fn get_first(&self) -> &First {
+        &self.first
+    }
+
+    // 不符合：
+    // 同样不建议 `get_mut_first`, or `mut_first`.
+    pub fn get_first_mut(&mut self) -> &mut First {
+        &mut self.first
+    }
+}
+```
+
+【例外】
 
 但也存在例外情况：只有当有一个明显的东西可以通过`getter`得到时，才会使用`get`命名。例如，`Cell::get`可以访问一个`Cell`的内容。
 
@@ -251,13 +329,19 @@ getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那�
 
 ## G.NAM.04 遵循 `iter/ iter_mut/ into_iter` 规范来生成迭代器
 
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |是否可定制 |
 | ------ | ---- | --------- | ------ | ------ |
 |  _ | no | no | _ | yes |
 
 此规则 Clippy 不可检测，属于业务逻辑层面。
 
-参考 [RFC 199] 。
+### 【描述】
 
 对于容纳 `U` 类型的容器 (container) ，其迭代器方法应该这样命名：
 
@@ -269,13 +353,9 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 
 此规则适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 `url`  中的 [percent_encode](https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html) 返回一个 URL 编码的字符串片段的迭代器。使用`iter/iter_mut/into_iter`约定的话，函数名就不会有任何明确的语义了。
 
-标准库中存在一个反例： `str` 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 `str` 没有提供 `iter`/`iter_mut`/`into_iter` 命名的迭代器方法，而是提供 [`str::bytes`] 方法来输出字节迭代器、[`str::chars`] 方法来输出字符迭代器。
+### 【示例】
 
-[`str::bytes`]: https://doc.rust-lang.org/std/primitive.str.html#method.bytes
-[`str::chars`]: https://doc.rust-lang.org/std/primitive.str.html#method.chars
-[RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md
-
-来自标准库的例子：
+【正例】
 
 - [`Vec::iter`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter)
 - [`Vec::iter_mut`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut)
@@ -283,8 +363,28 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 - [`BTreeMap::iter`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter)
 - [`BTreeMap::iter_mut`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter_mut)
 
+
+【反例】
+
+标准库中存在一个反例： `str` 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 `str` 没有提供 `iter`/`iter_mut`/`into_iter` 命名的迭代器方法，而是提供 [`str::bytes`] 方法来输出字节迭代器、[`str::chars`] 方法来输出字符迭代器。
+
+[`str::bytes`]: https://doc.rust-lang.org/std/primitive.str.html#method.bytes
+[`str::chars`]: https://doc.rust-lang.org/std/primitive.str.html#method.chars
+
+### 【参考】
+
+参考 [RFC 199] 。
+
+[RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md
+
+
 ## G.NAM.05 迭代器类型名称应该与产生它们的方法相匹配
 
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -292,10 +392,15 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 
 此规则 Clippy 不可检测，属于业务逻辑层面。
 
-> 一个叫做`into_iter()`的方法应该返回一个叫做`IntoIter`的类型，同样，所有其他返回迭代器的方法也是如此。
+### 【描述】
+
+一个叫做`into_iter()`的方法应该返回一个叫做`IntoIter`的类型，同样，所有其他返回迭代器的方法也是如此。
 
 这条规则主要适用于方法，但通常对函数也有意义。例如，第三方库 `url`  中的 [percent_encode](https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html) 返回一个`PercentEncode` 类型的迭代器。
 
+### 【示例】
+
+【正例】
 
 来自标准库的例子：
 
@@ -316,8 +421,14 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 [`BTreeMap::values`]: https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values
 [btree_map::Values]: https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html
 
+
 ## G.NAM.06  cargo feature 名中不应该含有无意义的占位词
 
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
 | ------ | ---- | --------- | ------ | ------ |
@@ -325,11 +436,19 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 
 此规则 Clippy 不可检测，属于业务逻辑层面。
 
+### 【描述】
+
 给 [Cargo feature] 命名时，不要带有无实际含义的的词语，比如无需 `use-abc` 或 `with-abc` ，而是直接以 `abc` 命名。
 
 [Cargo feature]: http://doc.crates.io/manifest.html#the-features-section
 
-这条原则经常出现在对 Rust 标准库进行 [可选依赖][optional-dependency] 配置的 crate 上。最简洁且正确的做法是：
+这条原则经常出现在对 Rust 标准库进行 [可选依赖][optional-dependency] 配置的 crate 上。
+
+### 【示例】
+
+【正例】
+
+最简洁且正确的做法是：
 
 ```toml
 # In Cargo.toml
@@ -345,9 +464,26 @@ std = []
 #![cfg_attr(not(feature = "std"), no_std)]
 ```
 
-这个例子中，不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
+【反例】
+
+```toml
+# In Cargo.toml
+
+// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
+[features]
+default = ["use-std"]
+std = []
+```
+
+```rust,ignored
+// In lib.rs
+
+#![cfg_attr(not(feature = "use-std"), no_std)]
+```
 
 feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。
+
+【正例】
 
 假如 `x` crate 对 Serde 和 标准库具有可选依赖关系：
 
@@ -363,22 +499,51 @@ std = ["serde/std"]
 serde = { version = "1.0", optional = true }
 ```
 
-当我们使用 `x` crate 时，可以使用 `features = ["serde"]` 开启 Serde 依赖。
-类似地，也可以使用 `features = ["std"]` 开启标准库依赖。
+当我们使用 `x` crate 时，可以使用 `features = ["serde"]` 开启 Serde 依赖。类似地，也可以使用 `features = ["std"]` 开启标准库依赖。
 Cargo 推断的隐含的 features 应该叫做 `serde` ，而不是 `use-serde` 或者 `with-serde` 。
 
-与之相关的是， Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
+【反例】
+
+```toml
+[package]
+name = "x"
+version = "0.1.0"
+
+[features]
+std = ["serde/std"]
+// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
+no-abc=[]
+
+[dependencies]
+serde = { version = "1.0", optional = true }
+```
 
 [optional-dependency]:https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
 
 
-## G.NAM.07  名称应该使用统一的词序
+## G.NAM.07  类型名称应该使用统一的词序
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
 | ------ | ---- | --------- | ------ | ------ |
 |  _ | no | no | _ | no |
 
 此规则 Clippy 不可检测，属于业务逻辑层面。
+
+### 【描述】
+
+类型名称都按照 **动词-宾语-error** 的单词顺序。
+
+具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。
+
+### 【示例】
+
+【正例】
 
 以下是来自标准库的处理错误的一些类型：
 
@@ -390,10 +555,11 @@ Cargo 推断的隐含的 features 应该叫做 `serde` ，而不是 `use-serde` 
 - [`RecvTimeoutError`](https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html)
 - [`StripPrefixError`](https://doc.rust-lang.org/std/path/struct.StripPrefixError.html)
 
+【反例】
 
-这些名称都按照 **动词-宾语-error** 的单词顺序。
+```rust
+// 应该为 ParseAddrError
+struct AddrParseError {}
+```
 
-如果增加“解析地址错误”类型，为了保持词性一致，应该使用 `ParseAddrError` 名称，而不是 `AddrParseError` 名称。 
-
-具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。
-
+如果增加“解析地址错误”类型，为了保持词性一致，应该使用 `ParseAddrError` 名称，而不是 `AddrParseError`。
