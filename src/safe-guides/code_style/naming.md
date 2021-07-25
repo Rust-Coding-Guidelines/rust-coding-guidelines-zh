@@ -22,7 +22,7 @@
 
 ### 【示例】
 
-**全局变量和函数的例子：**
+**全局静态变量示例**
 
 【正例】
 
@@ -35,23 +35,6 @@ static GET_MAX_THREAD_COUNT: i32 = 42;  // 符合
 ```rust
 static GET_COUNT: i32 = 42;  // 不符合：描述不精确
 ```
-
-【例外】
-
-当类型名字必须很长才能表达清楚语义：
-
-```rust
-// 如果必须这么长才能定义精准
-enum VeryVerboseEnumOfThingsToDoWithNumbers {
-    Add,
-    Subtract,
-}
-// 那么可以配合使用类型别名来适当缩短命名
-//  使用的时候注意上下文，不要和其他类型冲突，或造成会让人误解的歧义
-type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
-```
-
-> 注意： 这里只是说明缩短命名的一种例外情况，而非 `type` 最佳实践。
 
 **枚举类型的成员命名的例子：**
 
@@ -89,6 +72,51 @@ enum WebEvent {
     ClickEvent { x: i64, y: i64 },
 }
 ```
+
+**类型别名示例**
+
+【正例】
+
+```rust
+type Size = u16; 
+
+pub struct HeaderMap {
+    // 在使用它的地方自然就知道是描述谁的大小
+    mask: Size,
+}
+```
+
+【反例】
+
+```rust
+type MaskSize = u16; 
+
+pub struct HeaderMap {
+    // 这样使用就显得有些冗余
+    mask: MaskSize,
+}
+```
+
+## P.03 避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
+
+### 【描述】
+
+命名必须要避免使用语义内置的保留字、关键字、内置类型和`trait`等特殊名称。
+
+【反例】
+
+```rust
+// Sized ： Rust 内置了同名 trait 
+type Sized = u16; 
+
+fn main() {
+    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
+    let r#try = 1;
+}
+```
+
+---
+
 
 ## G.NAM.01 使用统一的命名风格
 
@@ -563,3 +591,4 @@ struct AddrParseError {}
 ```
 
 如果增加“解析地址错误”类型，为了保持词性一致，应该使用 `ParseAddrError` 名称，而不是 `AddrParseError`。
+
