@@ -185,7 +185,7 @@
 <li>对于函数局部变量，或者结构体、枚举中的成员变量，在其命名能够准确表达含义的前提下，应该尽量简短，避免冗余信息重复描述。</li>
 </ol>
 <h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
-<p><strong>全局变量和函数的例子：</strong></p>
+<p><strong>全局静态变量示例</strong></p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -200,24 +200,6 @@
 </span>static GET_COUNT: i32 = 42;  // 不符合：描述不精确
 <span class="boring">}
 </span></code></pre></pre>
-<p>【例外】</p>
-<p>当类型名字必须很长才能表达清楚语义：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 如果必须这么长才能定义精准
-enum VeryVerboseEnumOfThingsToDoWithNumbers {
-    Add,
-    Subtract,
-}
-// 那么可以配合使用类型别名来适当缩短命名
-//  使用的时候注意上下文，不要和其他类型冲突，或造成会让人误解的歧义
-type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
-<span class="boring">}
-</span></code></pre></pre>
-<blockquote>
-<p>注意： 这里只是说明缩短命名的一种例外情况，而非 <code>type</code> 最佳实践。</p>
-</blockquote>
 <p><strong>枚举类型的成员命名的例子：</strong></p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -256,6 +238,44 @@ enum WebEvent {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<p><strong>类型别名示例</strong></p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type Size = u16; 
+
+pub struct HeaderMap {
+    // 在使用它的地方自然就知道是描述谁的大小
+    mask: Size,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type MaskSize = u16; 
+
+pub struct HeaderMap {
+    // 这样使用就显得有些冗余
+    mask: MaskSize,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#p03-避免使用语言内置保留字关键字内置类型和trait等特殊名称" id="p03-避免使用语言内置保留字关键字内置类型和trait等特殊名称">P.03 避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<p>命名必须要避免使用语义内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。</p>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">// Sized ： Rust 内置了同名 trait 
+type Sized = u16; 
+
+fn main() {
+    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
+    let r#try = 1;
+}
+</code></pre></pre>
+<hr />
 <h2><a class="header" href="#gnam01-使用统一的命名风格" id="gnam01-使用统一的命名风格">G.NAM.01 使用统一的命名风格</a></h2>
 <h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
@@ -263,7 +283,7 @@ enum WebEvent {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
 <tr><td>_</td><td>yes</td><td>no</td><td>Style</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
 <p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有描述。总的来说，Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
 <p>下面是具体汇总。</p>
 <table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
@@ -302,7 +322,7 @@ enum WebEvent {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
 <tr><td>wrong_self_convention</td><td>yes</td><td>no</td><td>Style</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>应该使用带有以下前缀名称方法来进行特定类型转换：</p>
 <table><thead><tr><th>名称前缀</th><th>内存代价</th><th>所有权</th></tr></thead><tbody>
 <tr><td><code>as_</code></td><td>无代价</td><td>borrowed -&gt; borrowed</td></tr>
@@ -375,7 +395,7 @@ fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
 <p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
 <p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 和 setter 的语义。</p>
 <h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
 <p>【正例】</p>
@@ -456,7 +476,7 @@ unsafe fn get_unchecked_mut(&amp;mut self, index: K) -&gt; &amp;mut V;
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
 <p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
 <p>对于容纳 <code>U</code> 类型的容器 (container) ，其迭代器方法应该这样命名：</p>
 <pre><code class="language-rust ignored">fn iter(&amp;self) -&gt; Iter             // Iter 实现 Iterator&lt;Item = &amp;U&gt;
 fn iter_mut(&amp;mut self) -&gt; IterMut  // IterMut 实现 Iterator&lt;Item = &amp;mut U&gt;
@@ -484,7 +504,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
 <p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
 <p>一个叫做<code>into_iter()</code>的方法应该返回一个叫做<code>IntoIter</code>的类型，同样，所有其他返回迭代器的方法也是如此。</p>
 <p>这条规则主要适用于方法，但通常对函数也有意义。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个<code>PercentEncode</code> 类型的迭代器。</p>
 <h3><a class="header" href="#示例-4" id="示例-4">【示例】</a></h3>
@@ -505,7 +525,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>no</td></tr>
 </tbody></table>
 <p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
+<h3><a class="header" href="#描述-8" id="描述-8">【描述】</a></h3>
 <p>给 <a href="http://doc.crates.io/manifest.html#the-features-section">Cargo feature</a> 命名时，不要带有无实际含义的的词语，比如无需 <code>use-abc</code> 或 <code>with-abc</code> ，而是直接以 <code>abc</code> 命名。</p>
 <p>这条原则经常出现在对 Rust 标准库进行 <a href="https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies">可选依赖</a> 配置的 crate 上。</p>
 <h3><a class="header" href="#示例-5" id="示例-5">【示例】</a></h3>
@@ -569,7 +589,7 @@ serde = { version = &quot;1.0&quot;, optional = true }
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>no</td></tr>
 </tbody></table>
 <p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-8" id="描述-8">【描述】</a></h3>
+<h3><a class="header" href="#描述-9" id="描述-9">【描述】</a></h3>
 <p>类型名称都按照 <strong>动词-宾语-error</strong> 的单词顺序。</p>
 <p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。</p>
 <h3><a class="header" href="#示例-6" id="示例-6">【示例】</a></h3>
