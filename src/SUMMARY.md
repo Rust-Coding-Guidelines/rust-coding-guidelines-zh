@@ -2,7 +2,7 @@
 
 # 介绍
 
-- [规范介绍](./readme.md)
+- [Rust 编码规范介绍](./readme.md)
 - [贡献说明](./contribution.md)
 
 # 安全编码规范
