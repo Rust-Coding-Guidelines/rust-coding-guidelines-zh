@@ -10,6 +10,7 @@
 - [PingCAP | 编码风格指南（包括 Rust 和 Go 等）](https://github.com/pingcap/style-guide)
 - [Google Fuchsia 操作系统 Rust 开发指南](https://fuchsia.dev/fuchsia-src/development/languages/rust)
 - [RustAnalyzer 编码风格指南](https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/style.md)
+- [使用 Rust 设计优雅的 API](https://deterministic.space/elegant-apis-in-rust.html)
 
 
 以上公开的编码规范，除官方Rust API 编写指南和法国国家信息安全局是通用目的公布之外，其他编码规范主要是为了开源项目自身统一贡献者编码风格而制作。

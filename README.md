@@ -11,6 +11,7 @@ Rust 编码规范 中文版
 - [PingCAP | 编码风格指南（包括 Rust 和 Go 等）](https://github.com/pingcap/style-guide)
 - [Google Fuchsia 操作系统 Rust 开发指南](https://fuchsia.dev/fuchsia-src/development/languages/rust)
 - [RustAnalyzer 编码风格指南](https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/style.md)
+- [使用 Rust 设计优雅的 API](https://deterministic.space/elegant-apis-in-rust.html)
 
 但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。
 
