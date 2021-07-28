@@ -5,6 +5,7 @@ Rust 编码规范 中文版
 
 - [官方｜Rust API 编写指南](https://rust-lang.github.io/api-guidelines/about.html)
 - [官方 | Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md)
+- [Rust's Unsafe Code Guidelines Reference](https://rust-lang.github.io/unsafe-code-guidelines/)
 - [法国国家信息安全局 | Rust 安全（Security）规范](https://anssi-fr.github.io/rust-guide)
 - [Facebook Diem 项目 Rust 编码规范](https://developers.diem.com/docs/core/coding-guidelines/)
 - [Apache Teaclave 安全计算平台 | Rust 开发规范](https://teaclave.apache.org/docs/rust-guildeline/)
@@ -12,6 +13,8 @@ Rust 编码规范 中文版
 - [Google Fuchsia 操作系统 Rust 开发指南](https://fuchsia.dev/fuchsia-src/development/languages/rust)
 - [RustAnalyzer 编码风格指南](https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/style.md)
 - [使用 Rust 设计优雅的 API](https://deterministic.space/elegant-apis-in-rust.html)
+- [Rust FFI 指南](https://michael-f-bryan.github.io/rust-ffi-guide/)
+
 
 但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。
 
