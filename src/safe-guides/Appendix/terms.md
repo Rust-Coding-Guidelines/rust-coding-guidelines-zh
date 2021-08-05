@@ -404,17 +404,13 @@ zero-width space(ZWSP)           | 零宽空格                      |
 
 ## 编译器相关术语表
 
-# 附录 B: Glossary
-
-# Glossary
-
 <!-- &nbsp;s are a workaround for https://github.com/badboy/mdbook-toc/issues/19 -->
 术语                                                  | 中文 | 意义 
 ------------------------------------------------------|--------|--------
 <span id="arena">arena/arena allocation</span> &nbsp; | <span id="arena">竞技场分配</span> &nbsp;  | arena 是一个大内存缓冲区，从中可以进行其他内存分配，这种分配方式称为竞技场分配。 
-<span id="ast">AST</span>                      &nbsp; | <span id="ast">抽象语法树</span>  | 由`rustc_ast` crate 产生的抽象语法树。
-<span id="binder">binder</span>                &nbsp; |  <span id="binder">绑定器</span> | 绑定器是声明变量和类型的地方。例如，`<T>` 是`fn foo<T>(..)`中泛型类型参数 `T`的绑定器，以及 \|`a`\|` ...`  是 参数`a`的绑定器。
-<span id="body-id">BodyId</span>               &nbsp; | <span id="body-id"> 主体ID</span> |  一个标识符，指的是crate 中的一个特定主体（函数或常量的定义）。
+<span id="ast">AST</span>                      &nbsp; | <span id="ast">抽象语法树</span> &nbsp;  | 由`rustc_ast` crate 产生的抽象语法树。
+<span id="binder">binder</span>                &nbsp; |  <span id="binder">绑定器</span> &nbsp; | 绑定器是声明变量和类型的地方。例如，`<T>` 是`fn foo<T>(..)`中泛型类型参数 `T`的绑定器，以及 \|`a`\|` ...`  是 参数`a`的绑定器。
+<span id="body-id">BodyId</span>               &nbsp; | <span id="body-id"> 主体ID</span> &nbsp;  |  一个标识符，指的是crate 中的一个特定主体（函数或常量的定义）。
 <span id="bound-var">bound variable</span>     &nbsp; |  <span id="bound-var">绑定变量</span>     &nbsp; | "绑定变量 "是在表达式/术语中声明的变量。例如，变量`a`被绑定在闭包表达式中\|`a`\|` a * 2`。
 <span id="codegen">codegen</span>              &nbsp; |  <span id="codegen">代码生成</span>              &nbsp; |由 MIR 转译为 LLVM IR。
 <span id="codegen-unit">codegen unit</span>    &nbsp; |  <span id="codegen-unit">代码生成单元</span>    &nbsp; |  当生成LLVM IR时，编译器将Rust代码分成若干个代码生成单元（有时缩写为CGU）。这些单元中的每一个都是由LLVM独立处理的，实现了并行化。它们也是增量编译的单位。
@@ -451,8 +447,8 @@ zero-width space(ZWSP)           | 零宽空格                      |
 <span id="lang-item">lang item</span>          &nbsp; |  <span id="lang-item">语言项</span>          &nbsp; |  代表语言本身固有的概念的项目，如特殊的内置特质，如`同步`和`发送`；或代表操作的特质，如`添加`；或由编译器调用的函数。
 <span id="lbl">late-bound lifetime</span>      &nbsp; | <span id="lbl">晚绑定生存期</span>      &nbsp; |  一个在其调用位置被替换的生存期区域。绑定在HRTB中，由编译器中的特定函数替代，如`liberate_late_bound_regions`。与**早绑定的生存期**形成对比。
 <span id="local-crate">local crate</span>      &nbsp; | <span id="local-crate">本地crate</span>      &nbsp; |  目前正在编译的crate。这与 "上游crate"相反，后者指的是本地crate的依赖关系。
-<span id="lto">[LTO]</span>                      &nbsp; | <span id="lto">[LTO]</span>                      &nbsp; | 链接时优化（Link-Time Optimizations）的简称，这是LLVM提供的一套优化，在最终二进制文件被链接之前进行。这些优化包括删除最终程序中从未使用的函数，例如。_[ThinLTO]_是LTO的一个变种，旨在提高可扩展性和效率，但可能牺牲了一些优化。
-<span id="llvm">[LLVM]</span>                  &nbsp; |  <span id="llvm">[LLVM]</span>                  &nbsp; |  (实际上不是一个缩写 :P) 一个开源的编译器后端。它接受LLVM IR并输出本地二进制文件。然后，各种语言（例如Rust）可以实现一个编译器前端，输出LLVM IR，并使用LLVM编译到所有LLVM支持的平台。
+<span id="lto">LTO</span>                      &nbsp; | <span id="lto">LTO</span>                      &nbsp; | 链接时优化（Link-Time Optimizations）的简称，这是LLVM提供的一套优化，在最终二进制文件被链接之前进行。这些优化包括删除最终程序中从未使用的函数，例如。_[ThinLTO]_是LTO的一个变种，旨在提高可扩展性和效率，但可能牺牲了一些优化。
+<span id="llvm">LLVM</span>                  &nbsp; |  <span id="llvm">LLVM</span>                  &nbsp; |  (实际上不是一个缩写 :P) 一个开源的编译器后端。它接受LLVM IR并输出本地二进制文件。然后，各种语言（例如Rust）可以实现一个编译器前端，输出LLVM IR，并使用LLVM编译到所有LLVM支持的平台。
 <span id="memoization">memoization</span>      &nbsp; |  <span id="memoization">memoization</span>      &nbsp; |  储存（纯）计算结果（如纯函数调用）的过程，以避免在未来重复计算。这通常是执行速度和内存使用之间的权衡。
 <span id="mir">MIR</span>                      &nbsp; | <span id="mir">中级中间语言</span>                      &nbsp; | 在类型检查后创建的中级中间语言，供borrowck和codegen使用。
 <span id="miri">miri</span>                    &nbsp; | <span id="miri">mir解释器</span>                    &nbsp; |  MIR的一个解释器，用于常量计算。
@@ -484,12 +480,12 @@ zero-width space(ZWSP)           | 零宽空格                      |
 <span id="sysroot">sysroot</span>              &nbsp; |  <span id="sysroot">sysroot</span>              &nbsp; |  用于编译器在运行时加载的构建工件的目录。
 <span id="tag">tag</span>                      &nbsp; |  <span id="tag">tag</span>                      &nbsp; |  枚举/生成器的 "标签 "编码激活变体/状态的判别式(discriminant)。 标签可以是 "直接的"（简单地将判别式存储在一个字段中）或使用"利基"。
 <span id="tcx">tcx</span>                      &nbsp; | <span id="tcx">tcx</span>                      &nbsp; | "类型化上下文"（`TyCtxt`），编译器的主要数据结构。
-<span id="lifetime-tcx">`'tcx`</span>          &nbsp; | <span id="lifetime-tcx">`'tcx`</span>          &nbsp; | `TyCtxt'所使用的分配区域的生存期。在编译过程中，大多数数据都会使用这个生存期，但HIR数据除外，它使用`'hir`生存期。
+<span id="lifetime-tcx">'tcx</span>          &nbsp; | <span id="lifetime-tcx">'tcx</span>          &nbsp; | `TyCtxt'所使用的分配区域的生存期。在编译过程中，大多数数据都会使用这个生存期，但HIR数据除外，它使用`'hir`生存期。
 <span id="token">token</span>                  &nbsp; | <span id="token">词条</span>                  &nbsp; | 解析的最小单位。词条是在词法运算后产生的
-<span id="tls">[TLS]</span>                    &nbsp; | <span id="tls">[TLS]</span>                    &nbsp; | 线程本地存储。变量可以被定义为每个线程都有自己的副本（而不是所有线程都共享该变量）。这与LLVM有一些相互作用。并非所有平台都支持TLS。
+<span id="tls">TLS</span>                    &nbsp; | <span id="tls">TLS</span>                    &nbsp; | 线程本地存储。变量可以被定义为每个线程都有自己的副本（而不是所有线程都共享该变量）。这与LLVM有一些相互作用。并非所有平台都支持TLS。
 <span id="trait-ref">trait reference</span>    &nbsp; | <span id="trait-ref">trait 引用</span>    &nbsp; |  一个特质的名称，以及一组合适的输入类型/生存期。
 <span id="trans">trans</span>                  &nbsp; | <span id="trans">trans</span>                  &nbsp; | 是 "转译"的简称，是将MIR转译成LLVM IR的代码。已经重命名为codegen。
-<span id="ty">`Ty`</span>                      &nbsp; |  <span id="ty">`Ty`</span>                      &nbsp; |  一个类型的内部表示。
+<span id="ty">Ty</span>                      &nbsp; |  <span id="ty">Ty</span>                      &nbsp; |  一个类型的内部表示。
 <span id="tyctxt">TyCtxt</span>                &nbsp; |  <span id="tyctxt">TyCtxt</span>                &nbsp; |  在代码中经常被称为tcx的数据结构，它提供对会话数据和查询系统的访问。
 <span id="ufcs">UFCS</span>                    &nbsp; | <span id="ufcs">UFCS</span>                    &nbsp; | 通用函数调用语法（Universal Function Call Syntax）的简称，这是一种调用方法的明确语法。
 <span id="ut">uninhabited type</span>          &nbsp; |  <span id="ut">孤类型</span>          &nbsp; |  一个没有值的类型。这与ZST不同，ZST正好有一个值。一个孤类型的例子是`enum Foo {}`，它没有变体，所以，永远不能被创建。编译器可以将处理孤类型的代码视为死代码，因为没有这样的值可以操作。`！`（从未出现过的类型）是一个孤类型。孤类型也被称为 "空类型"。
