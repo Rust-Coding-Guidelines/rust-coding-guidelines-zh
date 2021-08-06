@@ -80,6 +80,7 @@
 # 工具链使用指南
 
 - [介绍](./tools/intro.md)
+- [Rustfmt 配置相关说明](./tools/rustfmt.md)
 
 # Rust 优化指南
 

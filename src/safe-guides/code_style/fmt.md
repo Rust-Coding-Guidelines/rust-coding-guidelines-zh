@@ -4,6 +4,8 @@ Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调
 
 说明：以下 `rustfmt` 配置中对应配置项如果 `Stable`为`No`，则表示该配置项不能用于 Stable Rust 下在 `rustfmt.toml` 中自定义，但其默认值会在`cargo fmt`时生效。在 Nightly Rust 下则都可以自定义。
 
+在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：[Rustfmt 配置相关说明](../../tools/rustfmt.md) 。
+
 ## P.03 始终使用 rustfmt 进行自动格式化代码
 
 ### 【描述】
@@ -1060,3 +1062,80 @@ use foo::{
 
 ```
 
+## G.FMT.  空格使用规则
+
+
+
+## G.FMT.  结尾逗号规则
+
+
+## G.FMT.  `match` 分支格式
+
+
+
+## G.FMT.  导入模块分组规则
+
+
+## G.FMT.  声明宏分支格式
+
+
+## G.FMT.  字符串格式化
+
+
+## G.FMT.  结构体字段初始化不要省略字段名
+
+
+
+
+
+## G.FMT.  extern 外部函数需要指定 ABI
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`force_explicit_abi`](https://rust-lang.github.io/rustfmt/?#force_explicit_abi) | true（默认） | Yes|  extern 外部函数总是要指定 ABI |
+
+
+### 【描述】
+
+当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。`extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。如果是 `Rust-ABI`则不会省略。
+
+
+### 【示例】
+
+【正例】
+
+```rust
+extern "C" {
+    pub static lorem: c_int;
+}
+
+extern "Rust" {
+    type MyType;
+    fn f(&self) -> usize;
+}
+```
+
+【反例】
+
+```rust
+// 省略 ABI 指定，则默认是 C-ABI
+extern {
+    pub static lorem: c_int;
+}
+
+// 非 C-ABI 是无法省略的
+extern "Rust" {
+    type MyType;
+    fn f(&self) -> usize;
+}
+```
