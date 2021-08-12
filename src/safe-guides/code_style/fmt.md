@@ -1062,33 +1062,506 @@ use foo::{
 
 ```
 
-## G.FMT.  空格使用规则
+## G.FMT.11  空格使用规则
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`space_after_colon`](https://rust-lang.github.io/rustfmt/?#space_after_colon) | true（默认） | No |  在冒号后面要加空格|
+| [`space_before_colon`](https://rust-lang.github.io/rustfmt/?#space_before_colon) | false（默认） | No| 在冒号前面不要加空格 |
+| [`spaces_around_ranges`](https://rust-lang.github.io/rustfmt/?#spaces_around_ranges) | false（默认） | No| 在`..`和`..=`范围操作符前后不要加空格 |
+| [`type_punctuation_density`](https://rust-lang.github.io/rustfmt/?#type_punctuation_density) | "Wide"（默认） | No| 在 `+`或`=`操作符前后要加空格（此处特指类型签名） |
+
+
+### 【描述】
+
+总结：
+
+1. 在冒号之后添加空格，在冒号之前不要加空格。
+2. 在范围（range）操作符（`..`和`..=`）前后不要使用空格。
+3. 在`+`或`=`操作符前后要加空格。
+
+### 【示例】
+
+【正例】
+
+```rust
+// 当 `space_after_colon=true`
+fn lorem<T: Eq>(t: T) {
+    let lorem: Dolor = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+}
+
+// 当 `space_before_colon=false`
+fn lorem<T: Eq>(t: T) {
+    let lorem: Dolor = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+}
+
+// 当 `spaces_around_ranges=false`
+let lorem = 0..10;
+let ipsum = 0..=10;
+
+// 当 `type_punctuation_density="Wide"`
+fn lorem<Ipsum: Dolor + Sit = Amet>() {
+    // body
+    let answer = 1 + 2;
+}
+```
+
+
+【反例】
+
+```rust
+// 当 `space_after_colon=false`
+fn lorem<T:Eq>(t:T) {
+    let lorem:Dolor = Lorem {
+        ipsum:dolor,
+        sit:amet,
+    };
+}
+
+// 当 `space_before_colon=true`
+fn lorem<T : Eq>(t : T) {
+    let lorem : Dolor = Lorem {
+        ipsum : dolor,
+        sit : amet,
+    };
+}
+
+// 当 `spaces_around_ranges=true`
+let lorem = 0 .. 10;
+let ipsum = 0 ..= 10;
+
+// 当 `type_punctuation_density="Compressed"`
+fn lorem<Ipsum: Dolor+Sit=Amet>() {
+    // body
+    let answer = 1 + 2;
+}
+```
 
 
 
-## G.FMT.  结尾逗号规则
+## G.FMT.12  结尾逗号规则
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`trailing_comma`](https://rust-lang.github.io/rustfmt/?#trailing_comma) | "Vertical"（默认） | No |  当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号|
+| [`match_block_trailing_comma`](https://rust-lang.github.io/rustfmt/?#match_block_trailing_comma) | false（默认） | No| 在match分支中，如果包含了块，则不需要加逗号，否则需要加 |
 
 
-## G.FMT.  `match` 分支格式
+### 【描述】
+
+1. 当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号。
+2. 在match分支中，如果包含了块，则不需要加逗号，否则需要加。
+
+
+### 【示例】
+
+【正例】
+
+```rust
+// 当 `trailing_comma="Vertical"`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=false`
+fn main() {
+    match lorem {
+        Lorem::Ipsum => {
+            println!("ipsum");
+        }
+        Lorem::Dolor => println!("dolor"),
+    }
+}
+
+```
+
+【反例】
+
+```rust
+// 当 `trailing_comma="Always"`
+fn main() {
+    let Lorem { ipsum, dolor, sit, } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `trailing_comma="Never"`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=true`
+fn main() {
+    match lorem {
+        Lorem::Ipsum => {
+            println!("ipsum");
+        },
+        Lorem::Dolor => println!("dolor"),
+    }
+}
+
+```
 
 
 
-## G.FMT.  导入模块分组规则
+## G.FMT.13  `match` 分支格式
 
 
-## G.FMT.  声明宏分支格式
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`match_arm_blocks`](https://rust-lang.github.io/rustfmt/?#match_arm_blocks) | true（默认） | No | 当match分支右侧代码体太长无法和`=>`置于同一行需要使用块(block)来包裹|
+| [`match_arm_leading_pipes`](https://rust-lang.github.io/rustfmt/?#match_arm_leading_pipes) | Never（默认） | No| 在match分支左侧匹配表达式前不要增加管道符(`|`) |
+
+### 【描述】
+
+1. 当match分支右侧代码体太长无法和`=>`置于同一行需要使用块(block)来包裹。
+2. 在match分支左侧匹配表达式前不要增加管道符(`|`)
+
+### 【示例】
+
+【正例】
+
+```rust
+// 当 `match_arm_blocks=true`
+fn main() {
+    match lorem {
+        ipsum => { 
+            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x)
+        }
+        dolor => println!("{}", sit),
+        sit => foo(
+            "foooooooooooooooooooooooo",
+            "baaaaaaaaaaaaaaaaaaaaaaaarr",
+            "baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz",
+            "qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx",
+        ),
+    }
+}
+
+// 当 `match_arm_leading_pipes="Never"`
+fn foo() {
+    match foo {
+        "foo" | "bar" => {}
+        "baz"
+        | "something relatively long"
+        | "something really really really realllllllllllllly long" => println!("x"),
+        "qux" => println!("y"),
+        _ => {}
+    }
+}
 
 
-## G.FMT.  字符串格式化
+
+```
+
+【反例】
+
+```rust
+// 当 `match_arm_blocks=false`
+fn main() {
+    match lorem {
+        ipsum => 
+            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x),
+        dolor => println!("{}", sit),
+        sit => foo(
+            "foooooooooooooooooooooooo",
+            "baaaaaaaaaaaaaaaaaaaaaaaarr",
+            "baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz",
+            "qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx",
+        ),
+    }
+}
+
+// 当 `match_arm_leading_pipes="Alaways"`
+fn foo() {
+    match foo {
+        | "foo" | "bar" => {}
+        | "baz"
+        | "something relatively long"
+        | "something really really really realllllllllllllly long" => println!("x"),
+        | "qux" => println!("y"),
+        | _ => {}
+    }
+}
+
+```
+
+## G.FMT.14  导入模块分组规则
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`imports_granularity`](https://rust-lang.github.io/rustfmt/?#imports_granularity) | （Preserve（默认），Crate(推荐)）| No | 默认保留开发者的模块导入顺序|
+| [`reorder_imports`](https://rust-lang.github.io/rustfmt/?#reorder_imports) | true（默认） | No| 模块分组内根据模块首字母按字典序进行排序 |
+| [`group_imports`](https://rust-lang.github.io/rustfmt/?#group_imports) | （Preserve（默认）， StdExternalCrate（建议）） | No| 默认保留开发者的模块导入分组 |
+
+### 【描述】
+
+1. 导入同一模块的类型，应该置于同一个块内（`imports_granularity="Crate"`）。
+2. 模块导入应该按以下规则进行分组（`group_imports="StdExternalCrate"`）：
+    - 导入来自 `std`、`core` 和 `alloc`的模块需要置于前面一组。
+    - 导入来自 第三方库的模块 应该置于中间一组。
+    - 导入来自本地 `self`、`super`和`crate`前缀的模块，置于后面一组。
+3. 分组内使用字典序进行排序（`reorder_imports=true`）。
+
+说明： 默认 rustfmt 不会对导入的模块自动分组，而是保留开发者的导入顺序。所以，这里需要修改rustfmt 默认配置，但因为这几个配置项暂时未稳定，所以需要在 Nightly 下使用。
+
+### 【示例】
+
+【正例】
+
+```rust
+// 当 `imports_granularity="Crate"`
+use foo::{
+    a, b,
+    b::{f, g},
+    c,
+    d::e,
+};
+use qux::{h, i};
 
 
-## G.FMT.  结构体字段初始化不要省略字段名
+// 当 `group_imports="StdExternalCrate` 且 `reorder_imports=true`
+use alloc::alloc::Layout;
+use core::f32;
+use std::sync::Arc;
+
+use broker::database::PooledConnection;
+use chrono::Utc;
+use juniper::{FieldError, FieldResult};
+use uuid::Uuid;
+
+use super::schema::{Context, Payload};
+use super::update::convert_publish_payload;
+use crate::models::Event;
+```
+
+【反例】
+
+```rust
+
+// 当 `imports_granularity="Preserve"`
+use foo::b;
+use foo::b::{f, g};
+use foo::{a, c, d::e};
+use qux::{h, i};
+
+
+// 当按默认值设置时，模块导入比较乱，影响可读性
+use super::update::convert_publish_payload;
+use chrono::Utc;
+
+use alloc::alloc::Layout;
+use juniper::{FieldError, FieldResult};
+use uuid::Uuid;
+
+use std::sync::Arc;
+
+use broker::database::PooledConnection;
+
+use super::schema::{Context, Payload};
+use crate::models::Event;
+use core::f32;
+```
+
+
+## G.FMT.15  声明宏分支格式
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`format_macro_matchers`](https://rust-lang.github.io/rustfmt/?#format_macro_matchers) | （false（默认），true(建议)） | No |声明宏 模式匹配分支（`=>` 左侧）中要使用紧凑格式|
+| [`format_macro_bodies`](https://rust-lang.github.io/rustfmt/?#format_macro_bodies) | true（默认） | No| 声明宏分支代码体（`=>` 右侧） 使用宽松格式|
+
+### 【描述】
+
+1. 在声明宏中，模式匹配分支（`=>` 左侧）应该使用紧凑格式（`format_macro_matchers=true`）。
+2. 而分支代码体（`=>` 右侧） 使用宽松格式。详细请看示例。
+
+一切都是为了提升可读性。
+
+说明：因为这里需要修改`format_macro_matchers`的默认值，且该配置项并未 Stable ，所以需要 Nightly 下格式化。
+
+### 【示例】
+
+【正例】
+
+```rust
+// 当 `format_macro_matchers=true` 且 `format_macro_bodies=true`
+macro_rules! foo {
+    // 匹配分支紧凑格式， `$a:ident` 和 `$b:ty` 各自配对
+    ($a:ident : $b:ty) => {
+        $a(42): $b; // 在代码体内，则宽松一点
+    };
+    ($a:ident $b:ident $c:ident) => {
+        $a = $b + $c;
+    };
+}
+```
+
+【反例】
+
+```rust
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=true`
+macro_rules! foo {
+    ($a: ident : $b: ty) => {
+        $a(42): $b;
+    };
+    ($a: ident $b: ident $c: ident) => {
+        $a = $b + $c;
+    };
+}
+
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=false`
+macro_rules! foo {
+    ($a: ident : $b: ty) => {
+        $a(42):$b;
+    };
+    ($a: ident $b: ident $c: ident) => {
+        $a=$b+$c;
+    };
+}
+
+```
 
 
 
+## G.FMT.16  具名结构体字段初始化不要省略字段名
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`use_field_init_shorthand`](https://rust-lang.github.io/rustfmt/?#use_field_init_shorthand) | false（默认） | Yes |具名结构体字段初始化不能省略字段名|
 
 
-## G.FMT.  extern 外部函数需要指定 ABI
+### 【描述】
+
+具名结构体字段初始化不能省略字段名。
+
+### 【示例】
+
+【正例】
+
+```rust
+
+struct Foo {
+    x: u32,
+    y: u32,
+    z: u32,
+}
+
+fn main() {
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    let a = Foo { x: x, y: y, z: z };
+}
+```
+
+【反例】
+
+```rust
+struct Foo {
+    x: u32,
+    y: u32,
+    z: u32,
+}
+
+fn main() {
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    let a = Foo { x, y, z };
+}
+```
+
+
+## G.FMT.17  extern 外部函数需要指定 ABI
 
 ### 【级别：建议】
 
