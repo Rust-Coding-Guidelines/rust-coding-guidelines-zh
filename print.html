@@ -1577,25 +1577,440 @@ use foo::{
 
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt--空格使用规则" id="gfmt--空格使用规则">G.FMT.  空格使用规则</a></h2>
-<h2><a class="header" href="#gfmt--结尾逗号规则" id="gfmt--结尾逗号规则">G.FMT.  结尾逗号规则</a></h2>
-<h2><a class="header" href="#gfmt--match-分支格式" id="gfmt--match-分支格式">G.FMT.  <code>match</code> 分支格式</a></h2>
-<h2><a class="header" href="#gfmt--导入模块分组规则" id="gfmt--导入模块分组规则">G.FMT.  导入模块分组规则</a></h2>
-<h2><a class="header" href="#gfmt--声明宏分支格式" id="gfmt--声明宏分支格式">G.FMT.  声明宏分支格式</a></h2>
-<h2><a class="header" href="#gfmt--字符串格式化" id="gfmt--字符串格式化">G.FMT.  字符串格式化</a></h2>
-<h2><a class="header" href="#gfmt--结构体字段初始化不要省略字段名" id="gfmt--结构体字段初始化不要省略字段名">G.FMT.  结构体字段初始化不要省略字段名</a></h2>
-<h2><a class="header" href="#gfmt--extern-外部函数需要指定-abi" id="gfmt--extern-外部函数需要指定-abi">G.FMT.  extern 外部函数需要指定 ABI</a></h2>
+<h2><a class="header" href="#gfmt11--空格使用规则" id="gfmt11--空格使用规则">G.FMT.11  空格使用规则</a></h2>
 <h3><a class="header" href="#级别建议-11" id="级别建议-11">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-10" id="rustfmt-配置-10">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
 <p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#force_explicit_abi"><code>force_explicit_abi</code></a></td><td>true（默认）</td><td>Yes</td><td>extern 外部函数总是要指定 ABI</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#space_after_colon"><code>space_after_colon</code></a></td><td>true（默认）</td><td>No</td><td>在冒号后面要加空格</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#space_before_colon"><code>space_before_colon</code></a></td><td>false（默认）</td><td>No</td><td>在冒号前面不要加空格</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#spaces_around_ranges"><code>spaces_around_ranges</code></a></td><td>false（默认）</td><td>No</td><td>在<code>..</code>和<code>..=</code>范围操作符前后不要加空格</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#type_punctuation_density"><code>type_punctuation_density</code></a></td><td>&quot;Wide&quot;（默认）</td><td>No</td><td>在 <code>+</code>或<code>=</code>操作符前后要加空格（此处特指类型签名）</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-22" id="描述-22">【描述】</a></h3>
-<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。如果是 <code>Rust-ABI</code>则不会省略。</p>
+<p>总结：</p>
+<ol>
+<li>在冒号之后添加空格，在冒号之前不要加空格。</li>
+<li>在范围（range）操作符（<code>..</code>和<code>..=</code>）前后不要使用空格。</li>
+<li>在<code>+</code>或<code>=</code>操作符前后要加空格。</li>
+</ol>
 <h3><a class="header" href="#示例-15" id="示例-15">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 当 `space_after_colon=true`
+fn lorem&lt;T: Eq&gt;(t: T) {
+    let lorem: Dolor = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+}
+
+// 当 `space_before_colon=false`
+fn lorem&lt;T: Eq&gt;(t: T) {
+    let lorem: Dolor = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+}
+
+// 当 `spaces_around_ranges=false`
+let lorem = 0..10;
+let ipsum = 0..=10;
+
+// 当 `type_punctuation_density=&quot;Wide&quot;`
+fn lorem&lt;Ipsum: Dolor + Sit = Amet&gt;() {
+    // body
+    let answer = 1 + 2;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 当 `space_after_colon=false`
+fn lorem&lt;T:Eq&gt;(t:T) {
+    let lorem:Dolor = Lorem {
+        ipsum:dolor,
+        sit:amet,
+    };
+}
+
+// 当 `space_before_colon=true`
+fn lorem&lt;T : Eq&gt;(t : T) {
+    let lorem : Dolor = Lorem {
+        ipsum : dolor,
+        sit : amet,
+    };
+}
+
+// 当 `spaces_around_ranges=true`
+let lorem = 0 .. 10;
+let ipsum = 0 ..= 10;
+
+// 当 `type_punctuation_density=&quot;Compressed&quot;`
+fn lorem&lt;Ipsum: Dolor+Sit=Amet&gt;() {
+    // body
+    let answer = 1 + 2;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gfmt12--结尾逗号规则" id="gfmt12--结尾逗号规则">G.FMT.12  结尾逗号规则</a></h2>
+<h3><a class="header" href="#级别建议-12" id="级别建议-12">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-11" id="rustfmt-配置-11">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#trailing_comma"><code>trailing_comma</code></a></td><td>&quot;Vertical&quot;（默认）</td><td>No</td><td>当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#match_block_trailing_comma"><code>match_block_trailing_comma</code></a></td><td>false（默认）</td><td>No</td><td>在match分支中，如果包含了块，则不需要加逗号，否则需要加</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-23" id="描述-23">【描述】</a></h3>
+<ol>
+<li>当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号。</li>
+<li>在match分支中，如果包含了块，则不需要加逗号，否则需要加。</li>
+</ol>
+<h3><a class="header" href="#示例-16" id="示例-16">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">// 当 `trailing_comma=&quot;Vertical&quot;`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=false`
+fn main() {
+    match lorem {
+        Lorem::Ipsum =&gt; {
+            println!(&quot;ipsum&quot;);
+        }
+        Lorem::Dolor =&gt; println!(&quot;dolor&quot;),
+    }
+}
+
+</code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">// 当 `trailing_comma=&quot;Always&quot;`
+fn main() {
+    let Lorem { ipsum, dolor, sit, } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `trailing_comma=&quot;Never&quot;`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=true`
+fn main() {
+    match lorem {
+        Lorem::Ipsum =&gt; {
+            println!(&quot;ipsum&quot;);
+        },
+        Lorem::Dolor =&gt; println!(&quot;dolor&quot;),
+    }
+}
+
+</code></pre></pre>
+<h2><a class="header" href="#gfmt13--match-分支格式" id="gfmt13--match-分支格式">G.FMT.13  <code>match</code> 分支格式</a></h2>
+<h3><a class="header" href="#级别建议-13" id="级别建议-13">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-12" id="rustfmt-配置-12">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#match_arm_blocks"><code>match_arm_blocks</code></a></td><td>true（默认）</td><td>No</td><td>当match分支右侧代码体太长无法和<code>=&gt;</code>置于同一行需要使用块(block)来包裹</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#match_arm_leading_pipes"><code>match_arm_leading_pipes</code></a></td><td>Never（默认）</td><td>No</td><td>在match分支左侧匹配表达式前不要增加管道符(`</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-24" id="描述-24">【描述】</a></h3>
+<ol>
+<li>当match分支右侧代码体太长无法和<code>=&gt;</code>置于同一行需要使用块(block)来包裹。</li>
+<li>在match分支左侧匹配表达式前不要增加管道符(<code>|</code>)</li>
+</ol>
+<h3><a class="header" href="#示例-17" id="示例-17">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">// 当 `match_arm_blocks=true`
+fn main() {
+    match lorem {
+        ipsum =&gt; { 
+            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x)
+        }
+        dolor =&gt; println!(&quot;{}&quot;, sit),
+        sit =&gt; foo(
+            &quot;foooooooooooooooooooooooo&quot;,
+            &quot;baaaaaaaaaaaaaaaaaaaaaaaarr&quot;,
+            &quot;baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz&quot;,
+            &quot;qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx&quot;,
+        ),
+    }
+}
+
+// 当 `match_arm_leading_pipes=&quot;Never&quot;`
+fn foo() {
+    match foo {
+        &quot;foo&quot; | &quot;bar&quot; =&gt; {}
+        &quot;baz&quot;
+        | &quot;something relatively long&quot;
+        | &quot;something really really really realllllllllllllly long&quot; =&gt; println!(&quot;x&quot;),
+        &quot;qux&quot; =&gt; println!(&quot;y&quot;),
+        _ =&gt; {}
+    }
+}
+
+
+
+</code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">// 当 `match_arm_blocks=false`
+fn main() {
+    match lorem {
+        ipsum =&gt; 
+            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x),
+        dolor =&gt; println!(&quot;{}&quot;, sit),
+        sit =&gt; foo(
+            &quot;foooooooooooooooooooooooo&quot;,
+            &quot;baaaaaaaaaaaaaaaaaaaaaaaarr&quot;,
+            &quot;baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz&quot;,
+            &quot;qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx&quot;,
+        ),
+    }
+}
+
+// 当 `match_arm_leading_pipes=&quot;Alaways&quot;`
+fn foo() {
+    match foo {
+        | &quot;foo&quot; | &quot;bar&quot; =&gt; {}
+        | &quot;baz&quot;
+        | &quot;something relatively long&quot;
+        | &quot;something really really really realllllllllllllly long&quot; =&gt; println!(&quot;x&quot;),
+        | &quot;qux&quot; =&gt; println!(&quot;y&quot;),
+        | _ =&gt; {}
+    }
+}
+
+</code></pre></pre>
+<h2><a class="header" href="#gfmt14--导入模块分组规则" id="gfmt14--导入模块分组规则">G.FMT.14  导入模块分组规则</a></h2>
+<h3><a class="header" href="#级别建议-14" id="级别建议-14">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-13" id="rustfmt-配置-13">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#imports_granularity"><code>imports_granularity</code></a></td><td>（Preserve（默认），Crate(推荐)）</td><td>No</td><td>默认保留开发者的模块导入顺序</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#reorder_imports"><code>reorder_imports</code></a></td><td>true（默认）</td><td>No</td><td>模块分组内根据模块首字母按字典序进行排序</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#group_imports"><code>group_imports</code></a></td><td>（Preserve（默认）， StdExternalCrate（建议））</td><td>No</td><td>默认保留开发者的模块导入分组</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-25" id="描述-25">【描述】</a></h3>
+<ol>
+<li>导入同一模块的类型，应该置于同一个块内（<code>imports_granularity=&quot;Crate&quot;</code>）。</li>
+<li>模块导入应该按以下规则进行分组（<code>group_imports=&quot;StdExternalCrate&quot;</code>）：
+<ul>
+<li>导入来自 <code>std</code>、<code>core</code> 和 <code>alloc</code>的模块需要置于前面一组。</li>
+<li>导入来自 第三方库的模块 应该置于中间一组。</li>
+<li>导入来自本地 <code>self</code>、<code>super</code>和<code>crate</code>前缀的模块，置于后面一组。</li>
+</ul>
+</li>
+<li>分组内使用字典序进行排序（<code>reorder_imports=true</code>）。</li>
+</ol>
+<p>说明： 默认 rustfmt 不会对导入的模块自动分组，而是保留开发者的导入顺序。所以，这里需要修改rustfmt 默认配置，但因为这几个配置项暂时未稳定，所以需要在 Nightly 下使用。</p>
+<h3><a class="header" href="#示例-18" id="示例-18">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 当 `imports_granularity=&quot;Crate&quot;`
+use foo::{
+    a, b,
+    b::{f, g},
+    c,
+    d::e,
+};
+use qux::{h, i};
+
+
+// 当 `group_imports=&quot;StdExternalCrate` 且 `reorder_imports=true`
+use alloc::alloc::Layout;
+use core::f32;
+use std::sync::Arc;
+
+use broker::database::PooledConnection;
+use chrono::Utc;
+use juniper::{FieldError, FieldResult};
+use uuid::Uuid;
+
+use super::schema::{Context, Payload};
+use super::update::convert_publish_payload;
+use crate::models::Event;
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>// 当 `imports_granularity=&quot;Preserve&quot;`
+use foo::b;
+use foo::b::{f, g};
+use foo::{a, c, d::e};
+use qux::{h, i};
+
+
+// 当按默认值设置时，模块导入比较乱，影响可读性
+use super::update::convert_publish_payload;
+use chrono::Utc;
+
+use alloc::alloc::Layout;
+use juniper::{FieldError, FieldResult};
+use uuid::Uuid;
+
+use std::sync::Arc;
+
+use broker::database::PooledConnection;
+
+use super::schema::{Context, Payload};
+use crate::models::Event;
+use core::f32;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gfmt15--声明宏分支格式" id="gfmt15--声明宏分支格式">G.FMT.15  声明宏分支格式</a></h2>
+<h3><a class="header" href="#级别建议-15" id="级别建议-15">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-14" id="rustfmt-配置-14">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#format_macro_matchers"><code>format_macro_matchers</code></a></td><td>（false（默认），true(建议)）</td><td>No</td><td>声明宏 模式匹配分支（<code>=&gt;</code> 左侧）中要使用紧凑格式</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#format_macro_bodies"><code>format_macro_bodies</code></a></td><td>true（默认）</td><td>No</td><td>声明宏分支代码体（<code>=&gt;</code> 右侧） 使用宽松格式</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-26" id="描述-26">【描述】</a></h3>
+<ol>
+<li>在声明宏中，模式匹配分支（<code>=&gt;</code> 左侧）应该使用紧凑格式（<code>format_macro_matchers=true</code>）。</li>
+<li>而分支代码体（<code>=&gt;</code> 右侧） 使用宽松格式。详细请看示例。</li>
+</ol>
+<p>一切都是为了提升可读性。</p>
+<p>说明：因为这里需要修改<code>format_macro_matchers</code>的默认值，且该配置项并未 Stable ，所以需要 Nightly 下格式化。</p>
+<h3><a class="header" href="#示例-19" id="示例-19">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 当 `format_macro_matchers=true` 且 `format_macro_bodies=true`
+macro_rules! foo {
+    // 匹配分支紧凑格式， `$a:ident` 和 `$b:ty` 各自配对
+    ($a:ident : $b:ty) =&gt; {
+        $a(42): $b; // 在代码体内，则宽松一点
+    };
+    ($a:ident $b:ident $c:ident) =&gt; {
+        $a = $b + $c;
+    };
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 当 `format_macro_matchers=false`且 `format_macro_bodies=true`
+macro_rules! foo {
+    ($a: ident : $b: ty) =&gt; {
+        $a(42): $b;
+    };
+    ($a: ident $b: ident $c: ident) =&gt; {
+        $a = $b + $c;
+    };
+}
+
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=false`
+macro_rules! foo {
+    ($a: ident : $b: ty) =&gt; {
+        $a(42):$b;
+    };
+    ($a: ident $b: ident $c: ident) =&gt; {
+        $a=$b+$c;
+    };
+}
+
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gfmt16--具名结构体字段初始化不要省略字段名" id="gfmt16--具名结构体字段初始化不要省略字段名">G.FMT.16  具名结构体字段初始化不要省略字段名</a></h2>
+<h3><a class="header" href="#级别建议-16" id="级别建议-16">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-15" id="rustfmt-配置-15">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#use_field_init_shorthand"><code>use_field_init_shorthand</code></a></td><td>false（默认）</td><td>Yes</td><td>具名结构体字段初始化不能省略字段名</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-27" id="描述-27">【描述】</a></h3>
+<p>具名结构体字段初始化不能省略字段名。</p>
+<h3><a class="header" href="#示例-20" id="示例-20">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+struct Foo {
+    x: u32,
+    y: u32,
+    z: u32,
+}
+
+fn main() {
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    let a = Foo { x: x, y: y, z: z };
+}
+</code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">struct Foo {
+    x: u32,
+    y: u32,
+    z: u32,
+}
+
+fn main() {
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    let a = Foo { x, y, z };
+}
+</code></pre></pre>
+<h2><a class="header" href="#gfmt17--extern-外部函数需要指定-abi" id="gfmt17--extern-外部函数需要指定-abi">G.FMT.17  extern 外部函数需要指定 ABI</a></h2>
+<h3><a class="header" href="#级别建议-17" id="级别建议-17">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-16" id="rustfmt-配置-16">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#force_explicit_abi"><code>force_explicit_abi</code></a></td><td>true（默认）</td><td>Yes</td><td>extern 外部函数总是要指定 ABI</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-28" id="描述-28">【描述】</a></h3>
+<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。如果是 <code>Rust-ABI</code>则不会省略。</p>
+<h3><a class="header" href="#示例-21" id="示例-21">【示例】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -1632,6 +2047,7 @@ extern &quot;Rust&quot; {
 <ol>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505: API 注释约定</a></li>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md">RFC 1574: API 文档约定</a></li>
+<li><a href="https://www.tangramvision.com/blog/making-great-docs-with-rustdoc">Making Great Docs with Rustdoc</a></li>
 </ol>
 <h1><a class="header" href="#编程实践" id="编程实践">编程实践</a></h1>
 <h1><a class="header" href="#常量" id="常量">常量</a></h1>
