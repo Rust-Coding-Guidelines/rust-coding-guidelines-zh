@@ -248,7 +248,7 @@
 <li><a href="safe-guides/./code_style/comments.html">注释与文档</a></li>
 </ul>
 <h1><a class="header" href="#命名" id="命名">命名</a></h1>
-<h2><a class="header" href="#p01-标识符命名应该符合阅读习惯" id="p01-标识符命名应该符合阅读习惯">P.01 标识符命名应该符合阅读习惯</a></h2>
+<h2><a class="header" href="#pnam01-标识符命名应该符合阅读习惯" id="pnam01-标识符命名应该符合阅读习惯">P.NAM.01 标识符命名应该符合阅读习惯</a></h2>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>标识符的命名要清晰、明了，有明确含义，容易理解。符合英文阅读习惯的命名将明显提高代码可读性。</p>
 <p>一些好的实践包括但不限于：</p>
@@ -258,7 +258,7 @@
 <li>布尔型变量或函数避免使用否定形式</li>
 <li>尽量不要使用 Unicode 标识符。</li>
 </ul>
-<h2><a class="header" href="#p02-作用域越大命名越精确反之应简短" id="p02-作用域越大命名越精确反之应简短">P.02 作用域越大，命名越精确；反之应简短</a></h2>
+<h2><a class="header" href="#pnam02-作用域越大命名越精确反之应简短" id="pnam02-作用域越大命名越精确反之应简短">P.NAM.02 作用域越大，命名越精确；反之应简短</a></h2>
 <h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <ol>
 <li>对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一。</li>
@@ -697,7 +697,7 @@ struct AddrParseError {}
 <p>Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调整代码格式的工作，提升生产力。但是，rustfmt 遵循什么样的风格规范，作为开发者应该需要了解，在编写代码的时候可以主动按这样的风格编写。</p>
 <p>说明：以下 <code>rustfmt</code> 配置中对应配置项如果 <code>Stable</code>为<code>No</code>，则表示该配置项不能用于 Stable Rust 下在 <code>rustfmt.toml</code> 中自定义，但其默认值会在<code>cargo fmt</code>时生效。在 Nightly Rust 下则都可以自定义。</p>
 <p>在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：<a href="safe-guides/code_style/../../tools/rustfmt.html">Rustfmt 配置相关说明</a> 。</p>
-<h2><a class="header" href="#p03-始终使用-rustfmt-进行自动格式化代码" id="p03-始终使用-rustfmt-进行自动格式化代码">P.03 始终使用 rustfmt 进行自动格式化代码</a></h2>
+<h2><a class="header" href="#pfmt01-始终使用-rustfmt-进行自动格式化代码" id="pfmt01-始终使用-rustfmt-进行自动格式化代码">P.FMT.01 始终使用 rustfmt 进行自动格式化代码</a></h2>
 <h3><a class="header" href="#描述-10" id="描述-10">【描述】</a></h3>
 <p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件，即使它是空文件。这是向潜在的合作者表明你希望代码是自动格式化的。</p>
 <h3><a class="header" href="#例外" id="例外">【例外】</a></h3>
@@ -757,7 +757,7 @@ struct AddrParseError {}
 }
 
 </code></pre></pre>
-<h2><a class="header" href="#p04-代码格式以保证可读性为前提" id="p04-代码格式以保证可读性为前提">P.04 代码格式以保证可读性为前提</a></h2>
+<h2><a class="header" href="#pfmt02-代码格式以保证可读性为前提" id="pfmt02-代码格式以保证可读性为前提">P.FMT.02 代码格式以保证可读性为前提</a></h2>
 <h3><a class="header" href="#描述-11" id="描述-11">【描述】</a></h3>
 <p>制定统一的编码风格，是为了提升代码的可读性，让日常代码维护和团队之间审查代码更加方便。</p>
 <hr />
@@ -2042,7 +2042,21 @@ extern &quot;Rust&quot; {
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#注释与文档" id="注释与文档">注释与文档</a></h1>
-<h2><a class="header" href="#" id=""></a></h2>
+<h2><a class="header" href="#pcmt01-文档应该围绕-what-和-how-为核心来构建" id="pcmt01-文档应该围绕-what-和-how-为核心来构建">P.CMT.01 文档应该围绕 What 和 How 为核心来构建</a></h2>
+<h3><a class="header" href="#描述-29" id="描述-29">【描述】</a></h3>
+<p>文档应该始终围绕两个方向来构建：</p>
+<ol>
+<li>What : 用于阐述代码为什么而构建。</li>
+<li>how : 用于阐述代码如何去使用。</li>
+</ol>
+<h2><a class="header" href="#pcmt02-文档应该保持简短精干" id="pcmt02-文档应该保持简短精干">P.CMT.02 文档应该保持简短精干</a></h2>
+<h3><a class="header" href="#描述-30" id="描述-30">【描述】</a></h3>
+<ol>
+<li>文档内容用语应该尽量简短精干，不宜篇幅过长。</li>
+<li>使用通俗易懂的描述而尽量避免使用专业技术术语。</li>
+</ol>
+<hr />
+<hr />
 <h2><a class="header" href="#参考-1" id="参考-1">参考</a></h2>
 <ol>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505: API 注释约定</a></li>
