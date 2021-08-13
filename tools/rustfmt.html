@@ -283,28 +283,6 @@ ignore = [
 ignore = [&quot;/&quot;]
 <span class="boring">}
 </span></code></pre></pre>
-<h3><a class="header" href="#许可证license模版路径" id="许可证license模版路径">许可证（license）模版路径</a></h3>
-<p>【描述】</p>
-<p>检查每个文件的开头是否与许可证模板匹配，可以指定许可证模版路径。</p>
-<p>【对应配置项】</p>
-<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#license_template_path"><code>license_template_path</code></a></td><td>格式化每一个Rust文件（默认）</td><td>No</td><td>指定许可证模版路径</td></tr>
-</tbody></table>
-<p>【示例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Copyright {\d+} The Rust Project Developers.
-<span class="boring">}
-</span></code></pre></pre>
-<p>模版中这一行要匹配 Rust 项目中每个 Rust 文件开头中的：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Copyright 2018 The Rust Project Developers.
-<span class="boring">}
-</span></code></pre></pre>
-<p>其中年份会变。</p>
 <h3><a class="header" href="#禁用格式化" id="禁用格式化">禁用格式化</a></h3>
 <p>【描述】</p>
 <p>可以通过 <code>disable_all_formatting=true</code> 配置来禁用格式化。默认是开启的。</p>

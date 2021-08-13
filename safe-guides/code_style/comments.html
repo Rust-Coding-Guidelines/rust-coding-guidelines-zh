@@ -168,26 +168,70 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#注释与文档" id="注释与文档">注释与文档</a></h1>
-<h2><a class="header" href="#pcmt01-文档应该围绕-what-和-how-为核心来构建" id="pcmt01-文档应该围绕-what-和-how-为核心来构建">P.CMT.01 文档应该围绕 What 和 How 为核心来构建</a></h2>
+<p>在 Rust 中，注释分为两类：普通注释和文档注释，这里使用「注释」来代表普通注释，「文档」来代表「文档注释」。</p>
+<hr />
+<h2><a class="header" href="#pcmt01-不到必要的时候不要添加注释" id="pcmt01-不到必要的时候不要添加注释">P.CMT.01 不到必要的时候不要添加注释</a></h2>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
+<p>注释固然很重要, 但最好的代码应当本身就是文档。有意义的类型名、函数名和变量名, 要远胜过要用注释解释的含糊不清的名字。当有意义的类型名、函数名和变量名还不能表达完整的语义时，再使用注释。</p>
+<p>不要描述显而易见的现象, 永远不要用自然语言翻译代码作为注释。</p>
+<h2><a class="header" href="#pcmt02-文档应该始终基于-rustdoc-工具来构建" id="pcmt02-文档应该始终基于-rustdoc-工具来构建">P.CMT.02 文档应该始终基于 <code>rustdoc</code> 工具来构建</a></h2>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<p>Rust 语言提供 <code>rustdoc</code> 工具来帮助构建文档，所以应该始终围绕<code>rustdoc</code>工具的特性来构建项目文档。</p>
+<h2><a class="header" href="#pcmt03-文档应该围绕-what-和-how-为核心来构建" id="pcmt03-文档应该围绕-what-和-how-为核心来构建">P.CMT.03 文档应该围绕 What 和 How 为核心来构建</a></h2>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
 <p>文档应该始终围绕两个方向来构建：</p>
 <ol>
 <li>What : 用于阐述代码为什么而构建。</li>
 <li>how : 用于阐述代码如何去使用。</li>
 </ol>
-<h2><a class="header" href="#pcmt02-文档应该保持简短精干" id="pcmt02-文档应该保持简短精干">P.CMT.02 文档应该保持简短精干</a></h2>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<h2><a class="header" href="#pcmt04-注释和文档应该保持简短精干" id="pcmt04-注释和文档应该保持简短精干">P.CMT.04 注释和文档应该保持简短精干</a></h2>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
 <ol>
-<li>文档内容用语应该尽量简短精干，不宜篇幅过长。</li>
-<li>使用通俗易懂的描述而尽量避免使用专业技术术语。</li>
+<li>文档内容用语应该尽量简短精干，不宜篇幅过长。请确保你的代码注释良好并且易于他人理解。</li>
+<li>使用通俗易懂的描述而尽量避免使用专业技术术语。好的注释能够传达上下文关系和代码目的。</li>
 </ol>
+<h2><a class="header" href="#pcmt05-注释和文档使用的自然语言要保持一致" id="pcmt05-注释和文档使用的自然语言要保持一致">P.CMT.05 注释和文档使用的自然语言要保持一致</a></h2>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<p>注释和文档尽量使用英文来填写，如果要使用中文，整个项目必须都使用中文。请确保整个项目中文档和注释都使用同一种文本语言，保持一致性。</p>
 <hr />
+<h2><a class="header" href="#gcmt01-在每一个文件开头加入版权公告" id="gcmt01-在每一个文件开头加入版权公告">G.CMT.01 在每一个文件开头加入版权公告</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置" id="rustfmt-配置">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#license_template_path"><code>license_template_path</code></a></td><td>格式化每一个Rust文件（默认）</td><td>No</td><td>指定许可证模版路径</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<p>每个文件都应该包含许可证引用. 为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
+<p>可以通过 <code>rustfmt</code> 的 <code>license_template_path</code> 配置项 和 <code>license.template</code>来自动化此操作。</p>
+<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
+<p>来自 <a href="https://github.com/tikv/tikv/blob/master/etc/license.template">TiKV</a> 项目的案例，<code>license.template</code>许可证模版。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Copyright {\d+} TiKV Project Authors. Licensed under Apache-2.0.
+<span class="boring">}
+</span></code></pre></pre>
+<p>在 <code>rustfmt.toml</code> 中配置：</p>
+<pre><code class="language-toml">license_template_path = &quot;etc/license.template&quot;
+</code></pre>
+<p>自动在代码文件添加的注释：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
+<span class="boring">}
+</span></code></pre></pre>
+<p>其中年份会根据创建时间自动变更。</p>
 <hr />
 <h2><a class="header" href="#参考" id="参考">参考</a></h2>
 <ol>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505: API 注释约定</a></li>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md">RFC 1574: API 文档约定</a></li>
 <li><a href="https://www.tangramvision.com/blog/making-great-docs-with-rustdoc">Making Great Docs with Rustdoc</a></li>
+<li><a href="https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html">Rust Doc book</a></li>
 </ol>
 
                     </main>
