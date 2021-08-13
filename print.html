@@ -2081,7 +2081,7 @@ extern &quot;Rust&quot; {
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#license_template_path"><code>license_template_path</code></a></td><td>格式化每一个Rust文件（默认）</td><td>No</td><td>指定许可证模版路径</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-34" id="描述-34">【描述】</a></h3>
-<p>每个文件都应该包含许可证引用. 为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
+<p>每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
 <p>可以通过 <code>rustfmt</code> 的 <code>license_template_path</code> 配置项 和 <code>license.template</code>来自动化此操作。</p>
 <h3><a class="header" href="#示例-22" id="示例-22">【示例】</a></h3>
 <p>来自 <a href="https://github.com/tikv/tikv/blob/master/etc/license.template">TiKV</a> 项目的案例，<code>license.template</code>许可证模版。</p>
@@ -2094,14 +2094,13 @@ extern &quot;Rust&quot; {
 <p>在 <code>rustfmt.toml</code> 中配置：</p>
 <pre><code class="language-toml">license_template_path = &quot;etc/license.template&quot;
 </code></pre>
-<p>自动在代码文件添加的注释：</p>
+<p>在代码文件中手工添加对应的注释：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
 <span class="boring">}
 </span></code></pre></pre>
-<p>其中年份会根据创建时间自动变更。</p>
 <hr />
 <h2><a class="header" href="#参考-1" id="参考-1">参考</a></h2>
 <ol>
