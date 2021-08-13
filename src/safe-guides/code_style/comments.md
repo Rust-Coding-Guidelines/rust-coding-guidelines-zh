@@ -61,7 +61,7 @@ rustfmt 配置：
 
 ### 【描述】
 
-每个文件都应该包含许可证引用. 为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。
+每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。
 
 可以通过 `rustfmt` 的 `license_template_path` 配置项 和 `license.template`来自动化此操作。
 
@@ -79,13 +79,13 @@ rustfmt 配置：
 license_template_path = "etc/license.template"
 ```
 
-自动在代码文件添加的注释：
+在代码文件中手工添加对应的注释：
 
 ```rust
 // Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
 ```
 
-其中年份会根据创建时间自动变更。
+
 
 
 
