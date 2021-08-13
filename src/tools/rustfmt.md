@@ -136,33 +136,6 @@ ignore = ["/"]
 ```
 
 
-### 许可证（license）模版路径
-
-【描述】
-
-检查每个文件的开头是否与许可证模板匹配，可以指定许可证模版路径。
-
-【对应配置项】
-
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`license_template_path`](https://rust-lang.github.io/rustfmt/?#license_template_path) | 格式化每一个Rust文件（默认） | No|  指定许可证模版路径 |
-
-【示例】
-
-```rust
-// Copyright {\d+} The Rust Project Developers.
-```
-
-模版中这一行要匹配 Rust 项目中每个 Rust 文件开头中的：
-
-```rust
-// Copyright 2018 The Rust Project Developers.
-```
-
-其中年份会变。
-
-
 ### 禁用格式化
 
 【描述】

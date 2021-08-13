@@ -6,6 +6,8 @@ Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调
 
 在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：[Rustfmt 配置相关说明](../../tools/rustfmt.md) 。
 
+---
+
 ## P.FMT.01 始终使用 rustfmt 进行自动格式化代码
 
 ### 【描述】
