@@ -84,6 +84,19 @@ use_try_shorthand = true
 ```
 
 
+```toml
+
+edition = "2018"
+newline_style = "unix"
+# comments
+normalize_comments=true
+wrap_comments=true
+# imports 
+imports_granularity="Crate"
+group_imports="StdExternalCrate"
+
+```
+
 
 ## 一些全局配置项
 

@@ -1,6 +1,8 @@
 # 注释与文档
 
-在 Rust 中，注释分为两类：普通注释和文档注释，这里使用「注释」来代表普通注释，「文档」来代表「文档注释」。
+在 Rust 中，注释分为两类：普通注释和文档注释。普通注释使用 `//` 或 `/* ... */`，文档注释使用 `///`、`//!` 或 `/** ... **/`。
+
+在原则和规则中提到「注释」时，包括普通注释和文档注释。当提到「文档」时，特指文档注释。
 
 ---
 
@@ -41,9 +43,143 @@ Rust 语言提供 `rustdoc` 工具来帮助构建文档，所以应该始终围�
 注释和文档尽量使用英文来填写，如果要使用中文，整个项目必须都使用中文。请确保整个项目中文档和注释都使用同一种文本语言，保持一致性。
 
 
+## P.CMT.06 使用行注释而避免使用块注释
+
+### 【描述】 
+
+尽量使用行注释（`//` 或 `///`），而非块注释。
+
+对于文档注释，仅在编写模块级文档时使用 `//!`，在其他情况使用 `///`更好。
+
+### 【示例】 
+
+【正例】
+
+```rust
+// Wait for the main task to return, and set the process error code
+// appropriately.
+
+// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
+/// This module contains tests
+mod tests {
+    // ...
+}
+
+```
+
+【反例】
+
+```rust
+/*
+ * Wait for the main task to return, and set the process error code
+ * appropriately.
+ */
+
+mod tests {
+    //! This module contains tests
+
+    // ...
+}
+```
+
+## P.CMT.07 在文档中应该使用 Markdown 格式
+
+### 【描述】 
+
+Rust 文档注释支持 Markdown ，所以在编写文档注释的时候，应该使用 Markdown 格式。
+
+### 【示例】 
+
+模块级文档，来自于 Rust 标准库`std::vec`：
+
+```rust
+//! # The Rust core allocation and collections library
+//!
+//! This library provides smart pointers and collections for managing
+//! heap-allocated values.
+//!
+//! This library, like libcore, normally doesn’t need to be used directly
+//! since its contents are re-exported in the [`std` crate](../std/index.html).
+//! Crates that use the `#![no_std]` attribute however will typically
+//! not depend on `std`, so they’d use this crate instead.
+//!
+//! ## Boxed values
+//!
+//! The [`Box`] type is a smart pointer type. There can only be one owner of a
+//! [`Box`], and the owner can decide to mutate the contents, which live on the
+//! heap.
+```
+
+普通文档注释示例，来自标准库`Vec::new`方法：
+
+```rust
+    /// Constructs a new, empty `Vec<T>`.
+    ///
+    /// The vector will not allocate until elements are pushed onto it.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # #![allow(unused_mut)]
+    /// let mut vec: Vec<i32> = Vec::new();
+    /// ```
+    #[inline]
+    #[rustc_const_stable(feature = "const_vec_new", since = "1.39.0")]
+    #[stable(feature = "rust1", since = "1.0.0")]
+    pub const fn new() -> Self {
+        Vec { buf: RawVec::NEW, len: 0 }
+    }
+```
+
 ---
 
-## G.CMT.01 在每一个文件开头加入版权公告
+## G.CMT.01 注释应该有一定宽度限制
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`comment_width`](https://rust-lang.github.io/rustfmt/?#comment_width) | 80（默认） | No|  指定一行注释允许的最大宽度 |
+| [`wrap_comments`](https://rust-lang.github.io/rustfmt/?#wrap_comments) | false（默认），true（建议） | No|  指定一行注释允许的最大宽度 |
+
+### 【描述】
+
+每行注释的宽度不能过长，需要设置一定的宽度，有助于提升可读性。`comment_width`可配合 `wrap_comments` 将超过宽度限制的注释自动分割为多行。
+
+注意：`use_small_heuristics`配置项并不包括`comment_width`。
+
+### 【示例】
+
+【正例】
+
+当 `comment_width=80` 且 `wrap_comments=true`时。
+
+注意：这里 `wrap_comments`并未使用默认值，需要配置为 true。
+
+```rust
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+// sed do eiusmod tempor incididunt ut labore et dolore
+// magna aliqua. Ut enim ad minim veniam, quis nostrud
+// exercitation ullamco laboris nisi ut aliquip ex ea
+// commodo consequat.
+```
+
+【反例】
+
+```rust
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+```
+
+
+## G.CMT. 在每一个文件开头加入版权公告
 
 ### 【级别：建议】
 
@@ -67,7 +203,9 @@ rustfmt 配置：
 
 ### 【示例】
 
-来自 [TiKV](https://github.com/tikv/tikv/blob/master/etc/license.template) 项目的案例，`license.template`许可证模版。
+【正例】
+
+来自 [TiKV](https://github.com/tikv/tikv/blob/master/etc/license.template) 项目的案例。可以命名为`.rustfmt.license-template`许可证模版。
 
 ```rust
 // Copyright {\d+} TiKV Project Authors. Licensed under Apache-2.0.
@@ -76,17 +214,14 @@ rustfmt 配置：
 在 `rustfmt.toml` 中配置：
 
 ```toml
-license_template_path = "etc/license.template"
+license_template_path = ".rustfmt.license-template"
 ```
 
-在代码文件中手工添加对应的注释：
+在代码文件中手工添加对应的注释 （自动插入功能还未支持）：
 
 ```rust
 // Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
 ```
-
-
-
 
 
 
