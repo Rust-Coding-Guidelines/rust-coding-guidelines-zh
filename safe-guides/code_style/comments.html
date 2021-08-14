@@ -168,7 +168,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#注释与文档" id="注释与文档">注释与文档</a></h1>
-<p>在 Rust 中，注释分为两类：普通注释和文档注释，这里使用「注释」来代表普通注释，「文档」来代表「文档注释」。</p>
+<p>在 Rust 中，注释分为两类：普通注释和文档注释。普通注释使用 <code>//</code> 或 <code>/* ... */</code>，文档注释使用 <code>///</code>、<code>//!</code> 或 <code>/** ... **/</code>。</p>
+<p>在原则和规则中提到「注释」时，包括普通注释和文档注释。当提到「文档」时，特指文档注释。</p>
 <hr />
 <h2><a class="header" href="#pcmt01-不到必要的时候不要添加注释" id="pcmt01-不到必要的时候不要添加注释">P.CMT.01 不到必要的时候不要添加注释</a></h2>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
@@ -193,21 +194,139 @@
 <h2><a class="header" href="#pcmt05-注释和文档使用的自然语言要保持一致" id="pcmt05-注释和文档使用的自然语言要保持一致">P.CMT.05 注释和文档使用的自然语言要保持一致</a></h2>
 <h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>注释和文档尽量使用英文来填写，如果要使用中文，整个项目必须都使用中文。请确保整个项目中文档和注释都使用同一种文本语言，保持一致性。</p>
+<h2><a class="header" href="#pcmt06-使用行注释而避免使用块注释" id="pcmt06-使用行注释而避免使用块注释">P.CMT.06 使用行注释而避免使用块注释</a></h2>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<p>尽量使用行注释（<code>//</code> 或 <code>///</code>），而非块注释。</p>
+<p>对于文档注释，仅在编写模块级文档时使用 <code>//!</code>，在其他情况使用 <code>///</code>更好。</p>
+<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Wait for the main task to return, and set the process error code
+// appropriately.
+
+// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
+/// This module contains tests
+mod tests {
+    // ...
+}
+
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/*
+ * Wait for the main task to return, and set the process error code
+ * appropriately.
+ */
+
+mod tests {
+    //! This module contains tests
+
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pcmt07-在文档中应该使用-markdown-格式" id="pcmt07-在文档中应该使用-markdown-格式">P.CMT.07 在文档中应该使用 Markdown 格式</a></h2>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<p>Rust 文档注释支持 Markdown ，所以在编写文档注释的时候，应该使用 Markdown 格式。</p>
+<h3><a class="header" href="#示例-1" id="示例-1">【示例】</a></h3>
+<p>模块级文档，来自于 Rust 标准库<code>std::vec</code>：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! # The Rust core allocation and collections library
+//!
+//! This library provides smart pointers and collections for managing
+//! heap-allocated values.
+//!
+//! This library, like libcore, normally doesn’t need to be used directly
+//! since its contents are re-exported in the [`std` crate](../std/index.html).
+//! Crates that use the `#![no_std]` attribute however will typically
+//! not depend on `std`, so they’d use this crate instead.
+//!
+//! ## Boxed values
+//!
+//! The [`Box`] type is a smart pointer type. There can only be one owner of a
+//! [`Box`], and the owner can decide to mutate the contents, which live on the
+//! heap.
+<span class="boring">}
+</span></code></pre></pre>
+<p>普通文档注释示例，来自标准库<code>Vec::new</code>方法：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    /// Constructs a new, empty `Vec&lt;T&gt;`.
+    ///
+    /// The vector will not allocate until elements are pushed onto it.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # #![allow(unused_mut)]
+    /// let mut vec: Vec&lt;i32&gt; = Vec::new();
+    /// ```
+    #[inline]
+    #[rustc_const_stable(feature = &quot;const_vec_new&quot;, since = &quot;1.39.0&quot;)]
+    #[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+    pub const fn new() -&gt; Self {
+        Vec { buf: RawVec::NEW, len: 0 }
+    }
+<span class="boring">}
+</span></code></pre></pre>
 <hr />
-<h2><a class="header" href="#gcmt01-在每一个文件开头加入版权公告" id="gcmt01-在每一个文件开头加入版权公告">G.CMT.01 在每一个文件开头加入版权公告</a></h2>
+<h2><a class="header" href="#gcmt01-注释应该有一定宽度限制" id="gcmt01-注释应该有一定宽度限制">G.CMT.01 注释应该有一定宽度限制</a></h2>
 <h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置" id="rustfmt-配置">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
 <p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#comment_width"><code>comment_width</code></a></td><td>80（默认）</td><td>No</td><td>指定一行注释允许的最大宽度</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#wrap_comments"><code>wrap_comments</code></a></td><td>false（默认），true（建议）</td><td>No</td><td>指定一行注释允许的最大宽度</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
+<p>每行注释的宽度不能过长，需要设置一定的宽度，有助于提升可读性。<code>comment_width</code>可配合 <code>wrap_comments</code> 将超过宽度限制的注释自动分割为多行。</p>
+<p>注意：<code>use_small_heuristics</code>配置项并不包括<code>comment_width</code>。</p>
+<h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
+<p>【正例】</p>
+<p>当 <code>comment_width=80</code> 且 <code>wrap_comments=true</code>时。</p>
+<p>注意：这里 <code>wrap_comments</code>并未使用默认值，需要配置为 true。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+// sed do eiusmod tempor incididunt ut labore et dolore
+// magna aliqua. Ut enim ad minim veniam, quis nostrud
+// exercitation ullamco laboris nisi ut aliquip ex ea
+// commodo consequat.
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt-在每一个文件开头加入版权公告" id="gcmt-在每一个文件开头加入版权公告">G.CMT. 在每一个文件开头加入版权公告</a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-1" id="rustfmt-配置-1">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#license_template_path"><code>license_template_path</code></a></td><td>格式化每一个Rust文件（默认）</td><td>No</td><td>指定许可证模版路径</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<h3><a class="header" href="#描述-8" id="描述-8">【描述】</a></h3>
 <p>每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
 <p>可以通过 <code>rustfmt</code> 的 <code>license_template_path</code> 配置项 和 <code>license.template</code>来自动化此操作。</p>
-<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
-<p>来自 <a href="https://github.com/tikv/tikv/blob/master/etc/license.template">TiKV</a> 项目的案例，<code>license.template</code>许可证模版。</p>
+<h3><a class="header" href="#示例-3" id="示例-3">【示例】</a></h3>
+<p>【正例】</p>
+<p>来自 <a href="https://github.com/tikv/tikv/blob/master/etc/license.template">TiKV</a> 项目的案例。可以命名为<code>.rustfmt.license-template</code>许可证模版。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -215,9 +334,9 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p>在 <code>rustfmt.toml</code> 中配置：</p>
-<pre><code class="language-toml">license_template_path = &quot;etc/license.template&quot;
+<pre><code class="language-toml">license_template_path = &quot;.rustfmt.license-template&quot;
 </code></pre>
-<p>在代码文件中手工添加对应的注释：</p>
+<p>在代码文件中手工添加对应的注释 （自动插入功能还未支持）：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
