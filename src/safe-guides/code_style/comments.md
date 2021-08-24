@@ -42,47 +42,7 @@ Rust 语言提供 `rustdoc` 工具来帮助构建文档，所以应该始终围�
 
 注释和文档尽量使用英文来填写，如果要使用中文，整个项目必须都使用中文。请确保整个项目中文档和注释都使用同一种文本语言，保持一致性。
 
-
-## P.CMT.06 使用行注释而避免使用块注释
-
-### 【描述】 
-
-尽量使用行注释（`//` 或 `///`），而非块注释。
-
-对于文档注释，仅在编写模块级文档时使用 `//!`，在其他情况使用 `///`更好。
-
-### 【示例】 
-
-【正例】
-
-```rust
-// Wait for the main task to return, and set the process error code
-// appropriately.
-
-// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
-/// This module contains tests
-mod tests {
-    // ...
-}
-
-```
-
-【反例】
-
-```rust
-/*
- * Wait for the main task to return, and set the process error code
- * appropriately.
- */
-
-mod tests {
-    //! This module contains tests
-
-    // ...
-}
-```
-
-## P.CMT.07 在文档中应该使用 Markdown 格式
+## P.CMT.06 在文档中应该使用 Markdown 格式
 
 ### 【描述】 
 
@@ -179,7 +139,71 @@ rustfmt 配置：
 ```
 
 
-## G.CMT. 在每一个文件开头加入版权公告
+## G.CMT.02 使用行注释而避免使用块注释
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`normalize_comments`](https://rust-lang.github.io/rustfmt/?#normalize_comments) | false（默认） | No| 将 `/**/` 注释转为 `//`|
+| [`normalize_doc_attributes`](https://rust-lang.github.io/rustfmt/?#normalize_doc_attributes) | false（默认） | No| 将 `#![doc]` 和 `#[doc]` 注释转为 `//!` 和 `///` |
+
+### 【描述】
+
+尽量使用行注释（`//` 或 `///`），而非块注释。
+
+对于文档注释，仅在编写模块级文档时使用 `//!`，在其他情况使用 `///`更好。
+
+### 【示例】 
+
+【正例】
+
+```rust
+// Wait for the main task to return, and set the process error code
+// appropriately.
+
+// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
+/// This module contains tests
+mod tests {
+    // ...
+}
+
+//! Example documentation
+
+/// Example item documentation
+pub enum Foo {}
+
+```
+
+【反例】
+
+```rust
+/*
+ * Wait for the main task to return, and set the process error code
+ * appropriately.
+ */
+
+mod tests {
+    //! This module contains tests
+
+    // ...
+}
+
+#![doc = "Example documentation"]
+
+#[doc = "Example item documentation"]
+pub enum Foo {}
+```
+
+## G.CMT.03 在每一个文件开头加入版权公告
 
 ### 【级别：建议】
 
@@ -224,9 +248,196 @@ license_template_path = ".rustfmt.license-template"
 ```
 
 
+## G.CMT.04 在注释中使用 `FIXME` 和 `TODO` 来帮助任务协作
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`report_fixme`](https://rust-lang.github.io/rustfmt/?#report_fixme) | Never（默认），Unnumbered（推荐） | No|  是否报告 FIXME 注释 |
+| [`report_todo`](https://rust-lang.github.io/rustfmt/?#report_todo) | Never（默认），Unnumbered（推荐） | No|  是否报告 FIXME 注释 |
+
+### 【描述】
+
+通过在注释中开启 `FIXME` 和 `TODO` 可以方便协作。rustfmt 默认不开启该项，所以需要配置。
+
+但是配置为 `Always` 没必要，只需要配置为 `Unnumbered` 针对编号的 `FXIME` 和 `TODO` 报告即可。
+
+这两个配置目前有 Bug ，无法正确识别报告，但不影响这个规则的应用。
+
+### 【示例】
+
+【正例】
+
+```rust
+
+// TODO(calebcartwright): consider enabling box_patterns feature gate
+fn annotation_type_for_level(level: Level) -> AnnotationType {
+    match level {
+        Level::Bug | Level::Fatal | Level::Error => AnnotationType::Error,
+        Level::Warning => AnnotationType::Warning,
+        Level::Note => AnnotationType::Note,
+        Level::Help => AnnotationType::Help,
+        // FIXME(#59346): Not sure how to map these two levels
+        Level::Cancelled | Level::FailureNote => AnnotationType::Error,
+        Level::Allow => panic!("Should not call with Allow"),
+    }
+}
+```
+
+## G.CMT.05 在 公开的 unsafe 函数的文档中必须增加 `# Safety` 注释
+
+### 【级别：必须】
+
+必须按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [missing_safety_doc](https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc) | yes| no | Style | warn | 
+
+### 【描述】
+
+在公开（pub）的 unsafe 函数文档中，必须增加 `# Safety` 注释来解释该函数的安全边界，这样使用该函数的用户才可以安全地使用它。
+
+说明： 该规则通过 cargo clippy 来检测。默认会发出警告。
+
+### 【示例】
+
+【正例】
+
+示例来自于标准库文档： [https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167](https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167)
+
+```rust
+    /// Creates a `Vec<T>` directly from the raw components of another vector.
+    ///
+    /// # Safety
+    ///
+    /// This is highly unsafe, due to the number of invariants that aren't
+    /// checked:
+    ///
+    /// * `ptr` needs to have been previously allocated via [`String`]/`Vec<T>`
+    ///   (at least, it's highly likely to be incorrect if it wasn't).
+    /// * `T` needs to have the same size and alignment as what `ptr` was allocated with.
+    ///   (`T` having a less strict alignment is not sufficient, the alignment really
+    ///   needs to be equal to satisfy the [`dealloc`] requirement that memory must be
+    ///   allocated and deallocated with the same layout.)
+    /// * `length` needs to be less than or equal to `capacity`.
+    /// * `capacity` needs to be the capacity that the pointer was allocated with.
+    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
+        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
+    }
+```
 
 
+【反例】
 
+```rust
+    /// Creates a `Vec<T>` directly from the raw components of another vector.
+    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
+        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
+    }
+```
+
+
+## G.CMT.06 在 公开的返回`Result`类型返回的函数文档中增加 `# Error` 注释
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [missing_errors_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc ) | yes| no | Style | allow | 
+
+### 【描述】
+
+在公开（pub）的返回`Result`类型函数文档中，建议增加 `# Error` 注释来解释该函数返回的错误类型，方便用户处理错误。
+
+说明： 该规则通过 cargo clippy 来检测。默认不会警告。
+
+### 【示例】
+
+【正例】
+
+```rust
+# use std::io;
+/// # Errors
+///
+/// Will return `Err` if `filename` does not exist or the user does not have
+/// permission to read it.
+pub fn read(filename: String) -> io::Result<String> {
+    unimplemented!();
+}
+```
+
+【反例】
+
+```rust
+# use std::io;
+pub fn read(filename: String) -> io::Result<String> {
+    unimplemented!();
+}
+```
+
+
+## G.CMT.07 在 公开的函数文档中增加 `# Panic` 注释
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [missing_panics_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc ) | yes| no | Style | allow | 
+
+### 【描述】
+
+在公开（pub）函数文档中，建议增加 `# Panic` 注释来解释该函数在什么条件下会 Panic，便于使用者进行预处理。
+
+说明： 该规则通过 cargo clippy 来检测。默认不会警告。
+
+### 【示例】
+
+【正例】
+
+```rust
+/// # Panics
+///
+/// Will panic if y is 0
+pub fn divide_by(x: i32, y: i32) -> i32 {
+    if y == 0 {
+        panic!("Cannot divide by 0")
+    } else {
+        x / y
+    }
+}
+```
+
+【反例】
+
+```rust
+pub fn divide_by(x: i32, y: i32) -> i32 {
+    if y == 0 {
+        panic!("Cannot divide by 0")
+    } else {
+        x / y
+    }
+}
+```
 
 
 ---
