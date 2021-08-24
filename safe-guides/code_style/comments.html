@@ -194,46 +194,10 @@
 <h2><a class="header" href="#pcmt05-注释和文档使用的自然语言要保持一致" id="pcmt05-注释和文档使用的自然语言要保持一致">P.CMT.05 注释和文档使用的自然语言要保持一致</a></h2>
 <h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>注释和文档尽量使用英文来填写，如果要使用中文，整个项目必须都使用中文。请确保整个项目中文档和注释都使用同一种文本语言，保持一致性。</p>
-<h2><a class="header" href="#pcmt06-使用行注释而避免使用块注释" id="pcmt06-使用行注释而避免使用块注释">P.CMT.06 使用行注释而避免使用块注释</a></h2>
+<h2><a class="header" href="#pcmt06-在文档中应该使用-markdown-格式" id="pcmt06-在文档中应该使用-markdown-格式">P.CMT.06 在文档中应该使用 Markdown 格式</a></h2>
 <h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
-<p>尽量使用行注释（<code>//</code> 或 <code>///</code>），而非块注释。</p>
-<p>对于文档注释，仅在编写模块级文档时使用 <code>//!</code>，在其他情况使用 <code>///</code>更好。</p>
-<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Wait for the main task to return, and set the process error code
-// appropriately.
-
-// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
-/// This module contains tests
-mod tests {
-    // ...
-}
-
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>/*
- * Wait for the main task to return, and set the process error code
- * appropriately.
- */
-
-mod tests {
-    //! This module contains tests
-
-    // ...
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#pcmt07-在文档中应该使用-markdown-格式" id="pcmt07-在文档中应该使用-markdown-格式">P.CMT.07 在文档中应该使用 Markdown 格式</a></h2>
-<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
 <p>Rust 文档注释支持 Markdown ，所以在编写文档注释的时候，应该使用 Markdown 格式。</p>
-<h3><a class="header" href="#示例-1" id="示例-1">【示例】</a></h3>
+<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
 <p>模块级文档，来自于 Rust 标准库<code>std::vec</code>：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -288,10 +252,10 @@ mod tests {
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#comment_width"><code>comment_width</code></a></td><td>80（默认）</td><td>No</td><td>指定一行注释允许的最大宽度</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#wrap_comments"><code>wrap_comments</code></a></td><td>false（默认），true（建议）</td><td>No</td><td>指定一行注释允许的最大宽度</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
 <p>每行注释的宽度不能过长，需要设置一定的宽度，有助于提升可读性。<code>comment_width</code>可配合 <code>wrap_comments</code> 将超过宽度限制的注释自动分割为多行。</p>
 <p>注意：<code>use_small_heuristics</code>配置项并不包括<code>comment_width</code>。</p>
-<h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
+<h3><a class="header" href="#示例-1" id="示例-1">【示例】</a></h3>
 <p>【正例】</p>
 <p>当 <code>comment_width=80</code> 且 <code>wrap_comments=true</code>时。</p>
 <p>注意：这里 <code>wrap_comments</code>并未使用默认值，需要配置为 true。</p>
@@ -312,10 +276,65 @@ mod tests {
 </span>// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gcmt-在每一个文件开头加入版权公告" id="gcmt-在每一个文件开头加入版权公告">G.CMT. 在每一个文件开头加入版权公告</a></h2>
+<h2><a class="header" href="#gcmt02-使用行注释而避免使用块注释" id="gcmt02-使用行注释而避免使用块注释">G.CMT.02 使用行注释而避免使用块注释</a></h2>
 <h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-1" id="rustfmt-配置-1">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#normalize_comments"><code>normalize_comments</code></a></td><td>false（默认）</td><td>No</td><td>将 <code>/**/</code> 注释转为 <code>//</code></td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#normalize_doc_attributes"><code>normalize_doc_attributes</code></a></td><td>false（默认）</td><td>No</td><td>将 <code>#![doc]</code> 和 <code>#[doc]</code> 注释转为 <code>//!</code> 和 <code>///</code></td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
+<p>尽量使用行注释（<code>//</code> 或 <code>///</code>），而非块注释。</p>
+<p>对于文档注释，仅在编写模块级文档时使用 <code>//!</code>，在其他情况使用 <code>///</code>更好。</p>
+<h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Wait for the main task to return, and set the process error code
+// appropriately.
+
+// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
+/// This module contains tests
+mod tests {
+    // ...
+}
+
+//! Example documentation
+
+/// Example item documentation
+pub enum Foo {}
+
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/*
+ * Wait for the main task to return, and set the process error code
+ * appropriately.
+ */
+
+mod tests {
+    //! This module contains tests
+
+    // ...
+}
+
+#![doc = &quot;Example documentation&quot;]
+
+#[doc = &quot;Example item documentation&quot;]
+pub enum Foo {}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt03-在每一个文件开头加入版权公告" id="gcmt03-在每一个文件开头加入版权公告">G.CMT.03 在每一个文件开头加入版权公告</a></h2>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-2" id="rustfmt-配置-2">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
 <p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
@@ -341,6 +360,161 @@ mod tests {
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt04-在注释中使用-fixme-和-todo-来帮助任务协作" id="gcmt04-在注释中使用-fixme-和-todo-来帮助任务协作">G.CMT.04 在注释中使用 <code>FIXME</code> 和 <code>TODO</code> 来帮助任务协作</a></h2>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#rustfmt-配置-3" id="rustfmt-配置-3">【rustfmt 配置】</a></h3>
+<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
+<p>rustfmt 配置：</p>
+<table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#report_fixme"><code>report_fixme</code></a></td><td>Never（默认），Unnumbered（推荐）</td><td>No</td><td>是否报告 FIXME 注释</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#report_todo"><code>report_todo</code></a></td><td>Never（默认），Unnumbered（推荐）</td><td>No</td><td>是否报告 FIXME 注释</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-9" id="描述-9">【描述】</a></h3>
+<p>通过在注释中开启 <code>FIXME</code> 和 <code>TODO</code> 可以方便协作。rustfmt 默认不开启该项，所以需要配置。</p>
+<p>但是配置为 <code>Always</code> 没必要，只需要配置为 <code>Unnumbered</code> 针对编号的 <code>FXIME</code> 和 <code>TODO</code> 报告即可。</p>
+<p>这两个配置目前有 Bug ，无法正确识别报告，但不影响这个规则的应用。</p>
+<h3><a class="header" href="#示例-4" id="示例-4">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>// TODO(calebcartwright): consider enabling box_patterns feature gate
+fn annotation_type_for_level(level: Level) -&gt; AnnotationType {
+    match level {
+        Level::Bug | Level::Fatal | Level::Error =&gt; AnnotationType::Error,
+        Level::Warning =&gt; AnnotationType::Warning,
+        Level::Note =&gt; AnnotationType::Note,
+        Level::Help =&gt; AnnotationType::Help,
+        // FIXME(#59346): Not sure how to map these two levels
+        Level::Cancelled | Level::FailureNote =&gt; AnnotationType::Error,
+        Level::Allow =&gt; panic!(&quot;Should not call with Allow&quot;),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt05-在-公开的-unsafe-函数的文档中必须增加--safety-注释" id="gcmt05-在-公开的-unsafe-函数的文档中必须增加--safety-注释">G.CMT.05 在 公开的 unsafe 函数的文档中必须增加 <code># Safety</code> 注释</a></h2>
+<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<p>必须按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc">missing_safety_doc</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-10" id="描述-10">【描述】</a></h3>
+<p>在公开（pub）的 unsafe 函数文档中，必须增加 <code># Safety</code> 注释来解释该函数的安全边界，这样使用该函数的用户才可以安全地使用它。</p>
+<p>说明： 该规则通过 cargo clippy 来检测。默认会发出警告。</p>
+<h3><a class="header" href="#示例-5" id="示例-5">【示例】</a></h3>
+<p>【正例】</p>
+<p>示例来自于标准库文档： <a href="https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167">https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167</a></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    /// Creates a `Vec&lt;T&gt;` directly from the raw components of another vector.
+    ///
+    /// # Safety
+    ///
+    /// This is highly unsafe, due to the number of invariants that aren't
+    /// checked:
+    ///
+    /// * `ptr` needs to have been previously allocated via [`String`]/`Vec&lt;T&gt;`
+    ///   (at least, it's highly likely to be incorrect if it wasn't).
+    /// * `T` needs to have the same size and alignment as what `ptr` was allocated with.
+    ///   (`T` having a less strict alignment is not sufficient, the alignment really
+    ///   needs to be equal to satisfy the [`dealloc`] requirement that memory must be
+    ///   allocated and deallocated with the same layout.)
+    /// * `length` needs to be less than or equal to `capacity`.
+    /// * `capacity` needs to be the capacity that the pointer was allocated with.
+    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -&gt; Self {
+        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    /// Creates a `Vec&lt;T&gt;` directly from the raw components of another vector.
+    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -&gt; Self {
+        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt06-在-公开的返回result类型返回的函数文档中增加--error-注释" id="gcmt06-在-公开的返回result类型返回的函数文档中增加--error-注释">G.CMT.06 在 公开的返回<code>Result</code>类型返回的函数文档中增加 <code># Error</code> 注释</a></h2>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc">missing_errors_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-11" id="描述-11">【描述】</a></h3>
+<p>在公开（pub）的返回<code>Result</code>类型函数文档中，建议增加 <code># Error</code> 注释来解释该函数返回的错误类型，方便用户处理错误。</p>
+<p>说明： 该规则通过 cargo clippy 来检测。默认不会警告。</p>
+<h3><a class="header" href="#示例-6" id="示例-6">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::io;
+</span>/// # Errors
+///
+/// Will return `Err` if `filename` does not exist or the user does not have
+/// permission to read it.
+pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::io;
+</span>pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gcmt07-在-公开的函数文档中增加--panic-注释" id="gcmt07-在-公开的函数文档中增加--panic-注释">G.CMT.07 在 公开的函数文档中增加 <code># Panic</code> 注释</a></h2>
+<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc">missing_panics_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-12" id="描述-12">【描述】</a></h3>
+<p>在公开（pub）函数文档中，建议增加 <code># Panic</code> 注释来解释该函数在什么条件下会 Panic，便于使用者进行预处理。</p>
+<p>说明： 该规则通过 cargo clippy 来检测。默认不会警告。</p>
+<h3><a class="header" href="#示例-7" id="示例-7">【示例】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// # Panics
+///
+/// Will panic if y is 0
+pub fn divide_by(x: i32, y: i32) -&gt; i32 {
+    if y == 0 {
+        panic!(&quot;Cannot divide by 0&quot;)
+    } else {
+        x / y
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn divide_by(x: i32, y: i32) -&gt; i32 {
+    if y == 0 {
+        panic!(&quot;Cannot divide by 0&quot;)
+    } else {
+        x / y
+    }
+}
 <span class="boring">}
 </span></code></pre></pre>
 <hr />
