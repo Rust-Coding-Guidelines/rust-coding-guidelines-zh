@@ -26,9 +26,11 @@ Number 从`01`开始递增。`Element`为领域知识中关键元素的三位英
 | NAM     | 命名   | CMT     | 注释     |
 | FMT     | 格式   | TYP     | 数据类型 |
 | CNS     | 常量   | VAR     | 变量     |
-| EXP     | 表达式 | CTL     | 控制语句 |
+| EXP     | 表达式 | CTL     | 流程控制 |
 | RFE     | 引用   | PTR     | 指针     |
 | STR     | 字符串 | INT     | 整数     |
 | MOD     | 模块   | CAR     | 包管理   |
 | MEM     | 内存   | FUD     | 函数设计 |
-| MAC     | 宏   | OTH     | 其他 |
+| MAC     | 宏   | STV     | 静态变量 | 
+| GEN    | 泛型   | TRA     | 特质 | 
+| ASY    | 异步   | OTH     | 其他 | 

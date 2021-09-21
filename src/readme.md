@@ -4,6 +4,7 @@
 
 - [官方｜Rust API 编写指南](https://rust-lang.github.io/api-guidelines/about.html)
 - [官方 | Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md)
+- [Rust's Unsafe Code Guidelines Reference](https://rust-lang.github.io/unsafe-code-guidelines/)
 - [法国国家信息安全局 | Rust 安全（Security）规范](https://anssi-fr.github.io/rust-guide)
 - [Facebook Diem 项目 Rust 编码规范](https://developers.diem.com/docs/core/coding-guidelines/)
 - [Apache Teaclave 安全计算平台 | Rust 开发规范](https://teaclave.apache.org/docs/rust-guildeline/)
@@ -11,7 +12,10 @@
 - [Google Fuchsia 操作系统 Rust 开发指南](https://fuchsia.dev/fuchsia-src/development/languages/rust)
 - [RustAnalyzer 编码风格指南](https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/style.md)
 - [使用 Rust 设计优雅的 API](https://deterministic.space/elegant-apis-in-rust.html)
-
+- [Rust FFI 指南](https://michael-f-bryan.github.io/rust-ffi-guide/)
+- [大约 478 条 Clippy lint](https://rust-lang.github.io/rust-clippy/master/index.html)
+- [lints in the rustc book ](https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html)
+- [Dtolnay 对 crates.io 中 clippy lint 应用统计](https://github.com/dtolnay/noisy-clippy)
 
 以上公开的编码规范，除官方Rust API 编写指南和法国国家信息安全局是通用目的公布之外，其他编码规范主要是为了开源项目自身统一贡献者编码风格而制作。
 

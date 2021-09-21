@@ -23,7 +23,7 @@
         - [字符](./safe-guides/coding_practice/data-type/char.md)
         - [整数](./safe-guides/coding_practice/data-type/int.md)
         - [浮点数](./safe-guides/coding_practice/data-type/float.md)
-        - [切片](./safe-guides/coding_practice/data-type/slice-and_str.md)
+        - [切片](./safe-guides/coding_practice/data-type/slice-and-str.md)
         - [元组](./safe-guides/coding_practice/data-type/tuple.md)
         - [数组](./safe-guides/coding_practice/data-type/array.md)
         - [结构体](./safe-guides/coding_practice/data-type/struct.md)

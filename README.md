@@ -14,6 +14,9 @@ Rust 编码规范 中文版
 - [RustAnalyzer 编码风格指南](https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/dev/style.md)
 - [使用 Rust 设计优雅的 API](https://deterministic.space/elegant-apis-in-rust.html)
 - [Rust FFI 指南](https://michael-f-bryan.github.io/rust-ffi-guide/)
+- [大约 478 条 Clippy lint](https://rust-lang.github.io/rust-clippy/master/index.html)
+- [lints in the rustc book ](https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html)
+- [Dtolnay 对 crates.io 中 clippy lint 应用统计](https://github.com/dtolnay/noisy-clippy)
 
 
 但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。
