@@ -15,8 +15,9 @@ Rust 语言虽然以类型安全、内存安全、线程安全和高性能等特
 
 本指南参考《华为 C 语言编程指南 V 1.0》组织内容，将规范条款分为原则和规则两个类别，通过标题前的编号来标识。
 
-- 标识为`P`为原则（Principle）。编号方式为`P.Number`。
+- 标识为`P`为原则（Principle）。编号方式为`P.Element.Number`。
 - 标识为`G`为规则（Guideline）。编号方式为`G.Element.Number`。
+- 当有子目录时。编号方式为 `P.Element.SubElement.Number` 或 `G.Element.SubElement.Number`。
 
 Number 从`01`开始递增。`Element`为领域知识中关键元素的三位英文字母缩略语。
 
@@ -31,6 +32,9 @@ Number 从`01`开始递增。`Element`为领域知识中关键元素的三位英
 | STR     | 字符串 | INT     | 整数     |
 | MOD     | 模块   | CAR     | 包管理   |
 | MEM     | 内存   | FUD     | 函数设计 |
-| MAC     | 宏   | STV     | 静态变量 | 
-| GEN    | 泛型   | TRA     | 特质 | 
-| ASY    | 异步   | OTH     | 其他 | 
+| MAC     | 宏   | STV     | 静态变量 |
+| GEN    | 泛型   | TRA     | 特质 |
+| ASY    | 异步   | UNS | 非安全 |
+| ABS | 安全抽象 | FFI | 外部函数调用 |
+| LAY | 内存布局 | OTH | 其他 |
+

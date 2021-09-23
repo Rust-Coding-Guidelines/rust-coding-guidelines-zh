@@ -7,9 +7,11 @@
 - [字符](data-type/char.md)
 - [整数](data-type/int.md)
 - [浮点数](data-type/float.md)
+- [引用](data-type/ref.md)
 - [切片](data-type/slice-and-str.md)
 - [元组](data-type/tuple.md)
-- [数组](data-type/array.md)
+- [固定长度数组](data-type/array.md)
+- [动态数组](data-type/vec.md)
 - [结构体](data-type/struct.md)
 - [枚举](data-type/enum.md)
 
