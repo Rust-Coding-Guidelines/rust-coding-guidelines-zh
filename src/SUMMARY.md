@@ -57,7 +57,7 @@
         - [安全抽象](./safe-guides/coding_practice/unsafe_rust/safe_abstract.md)
         - [裸指针操作](./safe-guides/coding_practice/unsafe_rust/raw_ptr.md)
         - [联合体](./safe-guides/coding_practice/unsafe_rust/union.md)
-        - [内存布局](./safe-guides/coding_practice/unsafe_rust/layout.md)
+        - [内存](./safe-guides/coding_practice/unsafe_rust/mem.md)
         - [FFi 规范](./safe-guides/coding_practice/unsafe_rust/ffi.md)
     - [no-std](./safe-guides/coding_practice/no-std.md)
     - [其他](./safe-guides/coding_practice/others.md)

@@ -69,4 +69,32 @@ a = a + b;
 |< or >= |	| | x | 1 < 1 | false | m >= c|
 |<= or > |	| | x | 1 > 0 | true | m > c|
 
+## G.EXP.03   不要使用子表达式调用
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
+| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
+| [unnecessary_operation](https://rust-lang.github.io/rust-clippy/master/#unnecessary_operation) | yes           | no           | **complexity** | warn  |
+
+### 【描述】
+
+这样会影响代码可读性。
+
+【正例】
+
+```rust
+let arr = compute_array();
+let first = arr[0];
+```
+
+【反例】
+
+```rust
+let first = compute_array()[0];
+```
 
