@@ -10,10 +10,13 @@
 
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [disallowed_method](https://rust-lang.github.io/rust-clippy/master/#disallowed_method) | yes           | no           | nursery    | allow |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
+| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
+| [disallowed_method](https://rust-lang.github.io/rust-clippy/master/#disallowed_method) | yes           | no           | nursery         | allow |
+| [disallowed_script_idents](https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents) | yes           | no           | **restriction** | allow |
+| [disallowed_type](https://rust-lang.github.io/rust-clippy/master/#disallowed_type) | yes           | no           | **nursery**     | allow |
 
+这些lint 作用相似，但注意`nursery` 的lint 还未稳定。 
 
 ### 【描述】
 
