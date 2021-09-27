@@ -131,7 +131,7 @@ a+1;
 
 【例外】
 
-像在下面代码中，为了确保常量函数 `new` 可以在输入参数超出 MAX 限制的情况下 panic，使用了一个数组的技巧：` ["tag number out of range"][(byte > Self::MAX) as usize];` 。因为目前 在常量上下文中还无法直接使用 `panic!`。
+像在下面代码中，为了确保常量函数 `new` 可以在输入参数超出 MAX 限制的情况下 panic，使用了一个数组的技巧：` ["tag number out of range"][(byte > Self::MAX) as usize];` 。因为目前 在常量上下文中还无法直接使用 `panic!`，等 `const_panic` 功能稳定就可以了。
 
 如果不加 `#[allow(clippy::no_effect)]` ，Clippy 会有警告。 
 

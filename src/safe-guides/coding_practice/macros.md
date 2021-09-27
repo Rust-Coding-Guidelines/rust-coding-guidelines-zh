@@ -36,3 +36,20 @@ rustc -Z unstable-options --pretty expanded hello.rs
 cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 ```
 
+---
+
+## P.MAC.01  不要轻易使用宏
+
+【描述】
+
+能使用宏写出强大和用户友好的宏API的人，重点不是因为他们对宏如何实现掌握的好，而是因为他们也掌握了宏之外关于 Rust 的一切。
+
+宏设计的重点在于宏生成什么样的代码，而不是宏如何生成代码。
+
+宏只是将 Rust 语言特性以一种有趣的方式组合在一起能自动生成代码的创造力。
+
+尤其是过程宏，它有一定复杂性，且很难调试，不卫生，也容易出错，不适合新手使用它。
+
+【参考】
+
+[Rust 社区顶级专家 Dtolnay 写的 宏学习案例 ](https://github.com/dtolnay/case-studies)
