@@ -51,11 +51,12 @@ let foo = if … {
 
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [collapsible_else_if](https://rust-lang.github.io/rust-clippy/master/#collapsible_else_if) | yes           | no           | style      | warn  |
-| [collapsible_if](https://rust-lang.github.io/rust-clippy/master/#collapsible_if) | yes           | no           | style      | warn  |
-| [collapsible_match](https://rust-lang.github.io/rust-clippy/master/#collapsible_match) | yes           | no           | style      | warn  |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
+| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
+| [collapsible_else_if](https://rust-lang.github.io/rust-clippy/master/#collapsible_else_if) | yes           | no           | style          | warn  |
+| [collapsible_if](https://rust-lang.github.io/rust-clippy/master/#collapsible_if) | yes           | no           | style          | warn  |
+| [collapsible_match](https://rust-lang.github.io/rust-clippy/master/#collapsible_match) | yes           | no           | style          | warn  |
+| [double_comparisons](https://rust-lang.github.io/rust-clippy/master/#double_comparisons) | yes           | no           | **complexity** | warn  |
 
 ### 【描述】
 
@@ -81,6 +82,11 @@ fn func(opt: Option<Result<u64, String>>) {
         _ => return,
     };
 }
+
+// comparisons
+# let x = 1;
+# let y = 2;
+if x <= y {}
 ```
 
 【反例】
@@ -111,6 +117,11 @@ fn func(opt: Option<Result<u64, String>>) {
         None => return,
     };
 }
+
+// double_comparisons
+# let x = 1;
+# let y = 2;
+if x == y || x < y {}
 ```
 
 ## G.CTL.03   当需要通过比较大小来区分不同情况时，优先使用`match` 和 `cmp` 来代替 if 表达式

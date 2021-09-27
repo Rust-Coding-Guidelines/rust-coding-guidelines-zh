@@ -48,7 +48,7 @@
     - [包管理](./safe-guides/coding_practice/cargo.md)
     - [宏](./safe-guides/coding_practice/macros.md)
         - [声明宏](./safe-guides/coding_practice/macros/declarative.md)
-        - [过程宏](./safe-guides/coding_practice/macros/Procedural.md)
+        - [过程宏](./safe-guides/coding_practice/macros/procedural.md)
     - [多线程](./safe-guides/coding_practice/threads.md)
         - [有锁](./safe-guides/coding_practice/threads/lock.md)
         - [无锁](./safe-guides/coding_practice/threads/lock-free.md)
