@@ -176,3 +176,47 @@ fn f(x: u8, y: u8) {
 }
 ```
 
+
+
+## G.CTL.04    `if` 条件表达式分支中如果包含了 `else if`  分支也应该包含 `else` 分支
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
+| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
+| [else_if_without_else](https://rust-lang.github.io/rust-clippy/master/#else_if_without_else) | yes           | no           | **restriction** | allow |
+
+### 【描述】
+
+【正例】
+
+```rust
+# fn a() {}
+# fn b() {}
+# let x: i32 = 1;
+if x.is_positive() {
+    a();
+} else if x.is_negative() {
+    b();
+} else {
+    // We don't care about zero.
+}
+```
+
+【反例】
+
+```rust
+# fn a() {}
+# fn b() {}
+# let x: i32 = 1;
+if x.is_positive() {
+    a();
+} else if x.is_negative() {
+    b();
+}
+```
+

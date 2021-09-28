@@ -78,8 +78,11 @@ let req = match task.await {
 | ------ | ---- | --------- | ------ | ------ | 
 | [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes| no | pedantic | allow |
 
-
 ### 【描述】
+
+
+
+
 
 
 ## G.ASY.03 在 跨`await` 调用持有`RefCell`的引用需要进行处理
