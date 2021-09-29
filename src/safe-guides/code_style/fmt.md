@@ -6,6 +6,8 @@ Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调
 
 在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：[Rustfmt 配置相关说明](../../tools/rustfmt.md) 。
 
+注意： 以下规则 针对 rustfmt  version 1.4.36 版本。
+
 ---
 
 ## P.FMT.01 始终使用 rustfmt 进行自动格式化代码
@@ -127,10 +129,10 @@ rustfmt 配置：
 rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
+| ------ | ---- | ---- | ---- |
 | [`max_width`](https://rust-lang.github.io/rustfmt/?#max_width) | 100 | yes（默认）| 行最大宽度默认值|
 |[`error_on_line_overflow`](https://rust-lang.github.io/rustfmt/?#error_on_line_overflow)| false（默认）| No (tracking issue: #3391)| 如果超过最大行宽设置则报错|
-|[`use_small_heuristics`](https://rust-lang.github.io/rustfmt/?#use_small_heuristics)| Default（默认）| Yes| 统一管理宽度设置|
+|[`use_small_heuristics`](https://rust-lang.github.io/rustfmt/?#use_small_heuristics)| Default（默认）Max（推荐） | Yes| 统一管理宽度设置|
 
 ### 【描述】
 
@@ -1614,3 +1616,91 @@ extern "Rust" {
     fn f(&self) -> usize;
 }
 ```
+
+
+
+## G.FMT.18   解构元组的时候允许使用`..`来指代剩余元素
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项                                                     | 可选值                      | 是否 stable | 说明                                         |
+| ------------------------------------------------------------ | --------------------------- | ----------- | -------------------------------------------- |
+| [`condense_wildcard_suffixes`](https://rust-lang.github.io/rustfmt/?#condense_wildcard_suffixes) | false（默认） true （推荐） | No          | 解构元组的时候是否允许使用`..`来指代剩余元素 |
+
+
+### 【描述】
+
+默认选项是 false，表示不允许 解构元组的时候使用`..`来指代剩余元素
+
+### 【示例】
+
+【正例】
+
+设置 `condense_wildcard_suffixes = true` :
+
+```rust
+fn main() {
+    let (lorem, ipsum, ..) = (1, 2, 3, 4);
+}
+```
+
+【反例】
+
+```rust
+fn main() {
+    let (lorem, ipsum, _, _) = (1, 2, 3, 4);
+    let (lorem, ipsum, ..) = (1, 2, 3, 4);
+}
+```
+
+## G.FMT.19    不要将多个 Derive 宏合并为同一行
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【rustfmt 配置】
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项                                                     | 可选值                     | 是否 stable | 说明                             |
+| ------------------------------------------------------------ | -------------------------- | ----------- | -------------------------------- |
+| [`merge_derives`](https://rust-lang.github.io/rustfmt/?#merge_derives) | true（默认） false（推荐） | Yes         | 是否将多个 Derive 宏合并为同一行 |
+
+
+### 【描述】
+
+不要将多个 Derive 宏合并为同一行，可以增加代码可读性，明确语义。
+
+### 【示例】
+
+【正例】
+
+修改默认设置 `merge_derives = false`
+
+```rust
+#[derive(Eq, PartialEq)]
+#[derive(Debug)]
+#[derive(Copy, Clone)]
+pub enum Foo {}
+```
+
+【反例】
+
+用默认设置  `merge_derives = true`
+
+```rust
+#[derive(Eq, PartialEq, Debug, Copy, Clone)]
+pub enum Foo {}
+```
+

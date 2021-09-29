@@ -106,9 +106,9 @@ Rust 文档注释支持 Markdown ，所以在编写文档注释的时候，应�
 rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
+| ------ | ---- | ---- | ---- |
 | [`comment_width`](https://rust-lang.github.io/rustfmt/?#comment_width) | 80（默认） | No|  指定一行注释允许的最大宽度 |
-| [`wrap_comments`](https://rust-lang.github.io/rustfmt/?#wrap_comments) | false（默认），true（建议） | No|  指定一行注释允许的最大宽度 |
+| [`wrap_comments`](https://rust-lang.github.io/rustfmt/?#wrap_comments) | false（默认），true（建议） | No| 运行多行注释按最大宽度自动换成多行注释 |
 
 ### 【描述】
 
@@ -152,8 +152,8 @@ rustfmt 配置：
 rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`normalize_comments`](https://rust-lang.github.io/rustfmt/?#normalize_comments) | false（默认） | No| 将 `/**/` 注释转为 `//`|
+| ------ | ---- | ---- | ---- |
+| [`normalize_comments`](https://rust-lang.github.io/rustfmt/?#normalize_comments) | false（默认） true（推荐） | No| 将 `/**/` 注释转为 `//`|
 | [`normalize_doc_attributes`](https://rust-lang.github.io/rustfmt/?#normalize_doc_attributes) | false（默认） | No| 将 `#![doc]` 和 `#[doc]` 注释转为 `//!` 和 `///` |
 
 ### 【描述】
@@ -165,6 +165,8 @@ rustfmt 配置：
 ### 【示例】 
 
 【正例】
+
+当 `normalize_comments = true`  时：
 
 ```rust
 // Wait for the main task to return, and set the process error code
