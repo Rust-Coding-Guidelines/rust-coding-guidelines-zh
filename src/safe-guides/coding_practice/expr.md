@@ -161,3 +161,43 @@ impl TagNumber {
 
 ```
 
+## G.EXP.05    使用 `+=`/`-=` 等操作来代替 `++i` / `--i` 
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [double_neg](https://rust-lang.github.io/rust-clippy/master/#double_neg) | yes           | no           | style      | warn |
+
+### 【描述】
+
+`++i` 这种操作编译会失败，但是 `--i` 编译不会出错。有些C/Cpp等其他语言新手容易犯此错误。
+
+【正例】
+
+```rust
+let mut x = 3;
+x -= 1;
+```
+
+
+
+【反例】
+
+```rust
+let mut x = 3;
+--x;
+```
+
+
+
+
+
+
+
+
+

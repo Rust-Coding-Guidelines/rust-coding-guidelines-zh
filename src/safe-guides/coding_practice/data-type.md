@@ -50,3 +50,35 @@ Rust 中的类型转换有多种方式，包括 `as` 强转、`From/Into`安全�
 ### 【描述】
 
 Rust 的 `as` 转换包含了「静默的有损转换(lossy conversion)」。诸如 `i32::from` 之类的转换函数只会执行无损转换(lossless conversion)。 如果输入表达式的类型发生变化，使用转换函数可以防止转换变成无声的有损转换，并使阅读代码的人更容易知道转换是无损的。
+
+## G.TYP.02  数字字面量在使用的时候应该明确标注好类型
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [default_numeric_fallback](https://rust-lang.github.io/rust-clippy/master/#default_numeric_fallback) | yes           | no           | restriction | allow |
+
+### 【描述】
+
+如果数字字面量没有被指定具体类型，那么单靠类型推导，整数类型会被默认绑定为 `i32` 类型，而浮点数则默认绑定为 `f64`类型。这可能导致某些运行时的意外。
+
+【正例】
+
+```rust
+let i = 10u32;
+let f = 1.23f32;
+```
+
+【反例】
+
+```rust
+let i = 10; // i32
+let f = 1.23; // f64
+```
+
+## 

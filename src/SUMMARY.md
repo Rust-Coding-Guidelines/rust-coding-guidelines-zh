@@ -84,6 +84,12 @@
 - [网络服务](./best-practices/networks.md)
 - [WebAssembly](./best-practices/webassembly.md)
 
+
+
+# Cheat Sheet 
+
+- [介绍](./cheat-sheet/README.md)
+
 # 工具链使用指南
 
 - [介绍](./tools/intro.md)
@@ -97,30 +103,6 @@
 # Rust 常用基础库指南
 
 - [介绍](./libs/intro.md)
-- [serde](./libs/serde.md)
-- [clap/structopt](./libs/clap-structopt.md)
-- [nom](./libs/nom.md)
-- [rand](./libs/rand.md)
-- [ring](./libs/ring.md)
-- [regex](./libs/regex.md)
-- [syn/quote](./libs/syn-quote.md)
-- [chrono](./libs/chrono.md)
-- [crossbeam](./libs/crossbeam.md)
-- [parking_lot](./libs/parking_lot.md)
-- [rayon](./libs/rayon.md)
-- [wasm-bindgen](./libs/wasm-bindgen.md)
-- [bindgen](./libs/bindgen.md)
-- [cbindgen](./libs/cbindgen.md)
-- [cxx](./libs/cxx.md)
-- [tokio](./libs/tokio.md)
-- [hyper](./libs/hyper.md)
-- [async-std](./libs/async-std.md)
-- [rocket](./libs/rocket.md)
-- [actix-web](./libs/actix-web.md)
-- [tui-rs](./libs/tui.md)
-- [criterion](./libs/criterion.md)
-- [embedded-hal](./libs/embedded-hal.md)
-- [knurling-tools](./libs/knurling-tools.md)
 
 
 

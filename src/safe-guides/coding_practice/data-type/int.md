@@ -54,37 +54,7 @@ let b = `0xFFFF`
 let c = `0xF0F0_F0F0
 ```
 
-## G.TYP.INT.02  数字字面量在使用的时候应该明确标注好类型
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [default_numeric_fallback](https://rust-lang.github.io/rust-clippy/master/#default_numeric_fallback) | yes           | no           | restriction | allow |
-
-### 【描述】
-
-如果数字字面量没有被指定具体类型，那么单靠类型推导，整数类型会被默认绑定为 `i32` 类型，而浮点数则默认绑定为 `f64`类型。这可能导致某些运行时的意外。
-
-【正例】
-
-```rust
-let i = 10u32;
-let f = 1.23f32;
-```
-
-【反例】
-
-```rust
-let i = 10; // i32
-let f = 1.23; // f64
-```
-
-## G.TYP.INT.03  避免将有符号整数和无符号整数之间强制转换
+## G.TYP.INT.02  避免将有符号整数和无符号整数之间强制转换
 
 ### 【级别：建议】
 
@@ -118,6 +88,57 @@ let z = u128::from(y);
 let y: i8 = -1;
 y as u128; // will return 18446744073709551615
 ```
+
+
+
+## G.TYP.INT.03  对负数取模计算的时候不要使用 `%`
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [modulo_arithmetic](https://rust-lang.github.io/rust-clippy/master/#modulo_arithmetic) | yes           | no           | restriction | allow |
+
+### 【描述】
+
+Rust 当前的这个 `%`形式是余数运算符，它的行为与`C`或`Java`等语言中相同符号的运算符相同。它也类似于`Python`或`Haskell`等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。
+
+【正例】
+
+```rust
+fn main() {
+    let a: i32 = -1;
+    let b: i32 = 6;
+	//  取模是严格低于第二个操作数的自然数（所以是非负数），与第二个操作数的最大倍数相加，也低于或等于第一个操作数，则为第一个操作数。
+    //  6的最大倍数低于或等于-1 是 -6（6*-1），模数是5，因为-6+5=-1。
+    assert_eq!(a.rem_euclid(b), 5);
+}
+```
+
+【反例】
+
+```rust
+fn main() {
+    let a: i32 = -1;
+    let b: i32 = 6;
+    // 余数运算符只是返回第一个操作数除以第二个操作数的余数。所以 -1/6 给出 0，余数为 -1
+    assert_eq!(a % b, -1);
+}
+```
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -57,3 +57,52 @@ let _box = Box::new(3); // Box::new is disallowed in the config.
 let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 ```
 
+## G.OTH.02   【标准库】 计算秒级、毫秒级、微秒级的时间请使用对应的方法
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [duration_subsec](https://rust-lang.github.io/rust-clippy/master/#duration_subsec) | yes           | no           | complexity | warn  |
+
+### 【描述】
+
+【正例】
+
+```rust
+# use std::time::Duration;
+let dur = Duration::new(5, 0);
+
+// Good
+let _micros = dur.subsec_micros(); // 得到微秒
+let _millis = dur.subsec_millis(); // 得到毫秒
+```
+
+【反例】
+
+```rust
+# use std::time::Duration;
+let dur = Duration::new(5, 0);
+
+// Bad
+let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒 计算
+let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
