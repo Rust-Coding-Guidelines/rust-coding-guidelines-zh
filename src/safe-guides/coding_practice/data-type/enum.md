@@ -246,5 +246,43 @@ enum E {
 
 
 
+## G.TYP.Enum.06    注意 Enum 内变体的大小差异不要过大
 
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [large_enum_variant](https://rust-lang.github.io/rust-clippy/master/#large_enum_variant) | yes           | no           | perf       | warn  |
+
+该 lint 可以通过 clippy 配置项 `enum-variant-size-threshold = 200` 来配置，默认是 `200` 字节。
+
+### 【描述】
+
+要注意 Enum 内 变体 的大小差异不要过大，因为 Enum 内存布局是以最大的那个变体进行对齐。根据场景，如果该Enum 实例中小尺寸变体的实例使用很多的话，那内存就会有所浪费。但是如果小尺寸变体的实例使用很少，则无所谓。
+
+解决办法就是把大尺寸变体包到 `Box<T>`中。
+
+【正例】
+
+```rust
+enum Test {
+    A(i32),
+    B(Box<[i32; 1000]>),
+    C(Box<[i32; 8000]>),
+}
+```
+
+【反例】
+
+```rust
+enum Test {
+    A(i32),
+    B([i32; 1000]),
+    C([i32; 8000]),
+}
+```
 
