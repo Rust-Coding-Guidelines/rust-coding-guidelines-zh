@@ -68,9 +68,9 @@
         - [模糊测试](./safe-guides/Appendix/test/fuzz.md)
     - [术语解释](./safe-guides/Appendix/terms.md)
     - [模板](./safe-guides/Appendix/ templates)
-        - [rustfmt 模板](./safe-guides/Appendix/ templates/rustfmt.toml.md)
-        - [clippy 模板](./safe-guides/Appendix/ templates/clippy.toml.md)
-        - [deny 模板](./safe-guides/Appendix/ templates/deny.toml)
+        - [rustfmt 模板](./safe-guides/Appendix/templates/rustfmt.toml.md)
+        - [clippy 模板](./safe-guides/Appendix/templates/clippy.toml.md)
+        - [deny 模板](./safe-guides/Appendix/templates/deny.toml)
 
 # 领域最佳实践
 
