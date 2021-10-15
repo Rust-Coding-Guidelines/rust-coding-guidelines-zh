@@ -67,10 +67,10 @@
         - [基准测试](./safe-guides/Appendix/test/benchmark.md)
         - [模糊测试](./safe-guides/Appendix/test/fuzz.md)
     - [术语解释](./safe-guides/Appendix/terms.md)
-    - [模板](./safe-guides/Appendix/ templates)
+    - [模板](#)
         - [rustfmt 模板](./safe-guides/Appendix/templates/rustfmt.toml.md)
         - [clippy 模板](./safe-guides/Appendix/templates/clippy.toml.md)
-        - [deny 模板](./safe-guides/Appendix/templates/deny.toml)
+        - [deny 模板](./safe-guides/Appendix/templates/deny.toml.md)
 
 # 领域最佳实践
 
