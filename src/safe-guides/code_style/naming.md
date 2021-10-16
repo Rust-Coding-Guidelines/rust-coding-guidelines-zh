@@ -24,6 +24,14 @@
 1. 对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一。
 2. 对于函数局部变量，或者结构体、枚举中的成员变量，在其命名能够准确表达含义的前提下，应该尽量简短，避免冗余信息重复描述。
 
+**相关 Clippy lint：**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [module_name_repetitions](https://rust-lang.github.io/rust-clippy/master/#module_name_repetitions) | yes           | no           | pedantic   | allow |
+
+注意：
+
 ### 【示例】
 
 **全局静态变量示例**
