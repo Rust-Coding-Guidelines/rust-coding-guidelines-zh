@@ -50,7 +50,7 @@
         - [声明宏](./safe-guides/coding_practice/macros/declarative.md)
         - [过程宏](./safe-guides/coding_practice/macros/procedural.md)
     - [多线程](./safe-guides/coding_practice/threads.md)
-        - [有锁](./safe-guides/coding_practice/threads/lock.md)
+        - [锁同步](./safe-guides/coding_practice/threads/lock.md)
         - [无锁](./safe-guides/coding_practice/threads/lock-free.md)
     - [异步编程](./safe-guides/coding_practice/async-await.md)
     - [Unsafe Rust](./safe-guides/coding_practice/unsafe_rust.md)

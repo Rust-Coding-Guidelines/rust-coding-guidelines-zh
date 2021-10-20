@@ -34,6 +34,32 @@ Rust 中只允许索引为 `usize` 类型，因为：
 3. `std::mem::size_of()` 和 `std::mem::align_of()` 的函数返回 `usize` 类型。
 4. `usize` 不会因为平台架构的切换而导致索引值被截断的问题，比如 将`u32`类型的索引 用到 16位大小的嵌入式平台就会出问题。
 
+## P.TYP.03   必要时，应该使得类型可以表达更明确的语义，而不是只是直接使用原生类型
+
+**【描述】**
+
+这样可以增加代码的可读性。
+
+【正例】
+
+```rust
+struct Years(i64);
+
+fn main() {
+    let years = Years(1942);
+    let years_as_primitive_1: i64 = years.0; // Tuple
+    let Years(years_as_primitive_2) = years; // Destructuring
+}
+```
+
+【反例】
+
+```rust
+fn main() {
+    let years = 1942;
+}
+```
+
 
 
 ---

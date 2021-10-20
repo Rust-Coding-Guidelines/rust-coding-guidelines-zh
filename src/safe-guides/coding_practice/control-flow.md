@@ -59,6 +59,7 @@ let foo = if … {
 | [collapsible_if](https://rust-lang.github.io/rust-clippy/master/#collapsible_if) | yes           | no           | style          | warn  |
 | [collapsible_match](https://rust-lang.github.io/rust-clippy/master/#collapsible_match) | yes           | no           | style          | warn  |
 | [double_comparisons](https://rust-lang.github.io/rust-clippy/master/#double_comparisons) | yes           | no           | **complexity** | warn  |
+| [wildcard_in_or_patterns](https://rust-lang.github.io/rust-clippy/master/#wildcard_in_or_patterns) | yes           | no           | **complexity** | warn  |
 
 ### 【描述】
 
@@ -89,6 +90,12 @@ fn func(opt: Option<Result<u64, String>>) {
 # let x = 1;
 # let y = 2;
 if x <= y {}
+
+// wildcard_in_or_patterns    
+match "foo" {
+    "a" => {},
+    _ => {},
+}
 ```
 
 【反例】
@@ -124,6 +131,13 @@ fn func(opt: Option<Result<u64, String>>) {
 # let x = 1;
 # let y = 2;
 if x == y || x < y {}
+
+// wildcard_in_or_patterns    
+match "foo" {
+    "a" => {},
+    "bar" | _ => {},
+}
+
 ```
 
 ## G.CTL.03   当需要通过比较大小来区分不同情况时，优先使用`match` 和 `cmp` 来代替 if 表达式

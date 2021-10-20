@@ -343,3 +343,50 @@ let a = [1, 2, 3];
 let v_copied: Vec<_> = a.iter().cloned().collect();
 ```
 
+## G.TRA.Buitin.08 实现 `From` 而不是 `Into`
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [from_over_into](https://rust-lang.github.io/rust-clippy/master/#from_over_into) | yes           | no           | style      | warn  |
+
+### 【描述】
+
+优先为类型实现 `From` 而非 `Into`。因为实现了 `From`，`Into` 也会被自动实现。
+
+但是在泛型限定上，优先 `Into` . 
+
+【正例】
+
+```rust
+struct StringWrapper(String);
+
+impl From<String> for StringWrapper {
+    fn from(s: String) -> StringWrapper {
+        StringWrapper(s)
+    }
+}
+```
+
+【反例】
+
+```rust
+struct StringWrapper(String);
+
+impl Into<StringWrapper> for String {
+    fn into(self) -> StringWrapper {
+        StringWrapper(self)
+    }
+}
+```
+
+【例外】
+
+```rust
+```
+
