@@ -5,6 +5,8 @@
 1. CI Job 可以分为 `Stable` 和 `Nightly`。在 `Stable CI` 下进行编译，在`Nightly CI`下执行`cargo fmt` 和 `cargo clippy`。
 2. 在项目本地可以使用 `cargo +nightly fmt` 代替 `cargo fmt`。
 
+注意： 一定要在文件保存之后再运行 rustfmt`，否则容易出错。
+
 ## 真实项目中的配置案例
 
 1. 来自 [Rust 语言自身项目](https://github.com/rust-lang/rust/blob/master/rustfmt.toml)。
