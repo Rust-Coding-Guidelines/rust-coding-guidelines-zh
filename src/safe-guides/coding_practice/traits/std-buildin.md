@@ -357,9 +357,11 @@ let v_copied: Vec<_> = a.iter().cloned().collect();
 
 ### 【描述】
 
-优先为类型实现 `From` 而非 `Into`。因为实现了 `From`，`Into` 也会被自动实现。
+优先为类型实现 `From` 而非 `Into`。因为实现了 `From`，`Into` 也会被自动实现。并且在错误处理的时候，`?` 操作符会通过调用 `From` 实现自动进行错误类型转换。
 
-但是在泛型限定上，优先 `Into` . 
+但是在泛型限定上，优先 `Into` 。
+
+当然，也存在例外。
 
 【正例】
 
@@ -387,6 +389,115 @@ impl Into<StringWrapper> for String {
 
 【例外】
 
+有两类情况，可以直接实现 `Into`。
+
+1. `Into` 不提供 `From` 实现。在一些场景中，`From`  自动实现的 `Into` 并不符合转换需求。
+2. 使用 `Into` 来跳过孤儿规则。
+
 ```rust
+// 第一种情况。 
+// From： https://github.com/apache/arrow-datafusion/blob/master/ballista/rust/core/src/serde/scheduler/from_proto.rs
+#[allow(clippy::from_over_into)]
+impl Into<PartitionStats> for protobuf::PartitionStats {
+    fn into(self) -> PartitionStats {
+        PartitionStats::new(
+            foo(self.num_rows),
+            foo(self.num_batches),
+            foo(self.num_bytes),
+        )
+    }
+}
+
+// From： https://github.com/apache/arrow-datafusion/blob/master/ballista/rust/core/src/serde/scheduler/to_proto.rs
+#[allow(clippy::from_over_into)]
+impl Into<protobuf::PartitionStats> for PartitionStats {
+    fn into(self) -> protobuf::PartitionStats {
+        let none_value = -1_i64;
+        protobuf::PartitionStats {
+            num_rows: self.num_rows.map(|n| n as i64).unwrap_or(none_value),
+            num_batches: self.num_batches.map(|n| n as i64).unwrap_or(none_value),
+            num_bytes: self.num_bytes.map(|n| n as i64).unwrap_or(none_value),
+            column_stats: vec![],
+        }
+    }
+}
+
+// 第二种情况
+// 根据孤儿规则，trait 和 类型必须有一个在本地定义，所以不能为 Vec<T> 实现 From trait
+struct Wrapper<T>(Vec<T>);
+impl<T> From<Wrapper<T>> for Vec<T> {
+    fn from(w: Wrapper<T>) -> Vec<T> {
+        w.0
+    }
+}
+// 但是通过 Into<Vec<T>> ，就可以绕过这个规则
+struct Wrapper<T>(Vec<T>);
+impl<T> Into<Vec<T>> for Wrapper<T> {
+    fn into(self) -> Vec<T> {
+        self.0
+    }
+}
+```
+
+
+
+## G.TRA.Buitin.09   一般情况下不要给 Copy 类型手工实现 Clone 
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [expl_impl_clone_on_copy](https://rust-lang.github.io/rust-clippy/master/#expl_impl_clone_on_copy) | yes           | no           | pedantic   | allow |
+
+### 【描述】
+
+手工为 Copy 类型实现 Clone ，并不能改变 Copy 类型的行为。除非你显式地去调用 `clone()`方法。
+
+【正例】
+
+```rust
+#[derive(Copy, Clone)]
+struct Foo;
+```
+
+【反例】
+
+```rust
+#[derive(Copy)]
+struct Foo;
+
+impl Clone for Foo {
+    // ..
+}
+```
+
+【例外】
+
+在有些情况下，需要手动实现 Copy 和 Clone 。 相关 issues : [https://github.com/rust-lang/rust/issues/26925](https://github.com/rust-lang/rust/issues/26925) 
+
+```rust
+use std::marker::PhantomData;
+
+struct Marker<A>(PhantomData<A>);
+
+// 如果使用 Derive 自动实现的话，会要求 Marker<A> 里的 A 也必须实现 Clone
+// 这里通过手工给 Marker<A> 实现 Copy 和 Clone 可以避免这种限制
+impl<A> Copy for Marker<A> {}
+impl<A> Clone for Marker<A> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
+// 不需要给 NoClone 实现 Clone
+struct NoClone;
+fn main() {
+    let m: Marker<NoClone> = Marker(PhantomData);
+    let m2 = m.clone();
+}
 ```
 
