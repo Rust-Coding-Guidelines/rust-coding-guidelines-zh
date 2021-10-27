@@ -43,8 +43,23 @@
 
 该 Lint 默认为 `deny`，但在某些场景下，可以设置为`allow`.
 
-
 ### 【描述】
+
+【正例】
+
+```rust
+let x = std::f32::consts::PI;
+let y = std::f64::consts::FRAC_1_PI;
+```
+
+【反例】
+
+```rust
+let x = 3.14;
+let y = 1_f64 / x;
+```
+
+
 
 
 

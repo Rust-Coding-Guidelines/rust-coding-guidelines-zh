@@ -24,7 +24,7 @@
         - [整数](./safe-guides/coding_practice/data-type/int.md)
         - [浮点数](./safe-guides/coding_practice/data-type/float.md)
         - [引用](./safe-guides/coding_practice/data-type/ref.md)
-        - [切片](./safe-guides/coding_practice/data-type/slice-and-str.md)
+        - [切片](./safe-guides/coding_practice/data-type/slice.md)
         - [元组](./safe-guides/coding_practice/data-type/tuple.md)
         - [固定长度数组](./safe-guides/coding_practice/data-type/array.md)
         - [动态数组](./safe-guides/coding_practice/data-type/vec.md)

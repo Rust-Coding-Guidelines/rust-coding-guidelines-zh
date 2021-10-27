@@ -4,9 +4,20 @@ Rust 中有目前有 十二种整数类型：`i8/u8`, `i16/u16`, `i32/u32`, `i64
 
 ---
 
-## P.TYP.INT.01  在用整数计算的时候需要考虑整数溢出、回绕和截断的风险
+## G.TYP.INT.01  在用整数计算的时候需要考虑整数溢出、回绕和截断的风险
 
-【描述】
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic) | yes           | no           | restriction | allow |
+| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | allow |
+
+### 【描述】
 
 需要结合场景和业务来考虑如果发生溢出、回绕或截断的时候，是否会引起严重的问题。
 
@@ -22,9 +33,23 @@ Rust 编译器在编译时默认没有溢出检查（可通过编译参数来引
 
 无符号整数使用时要注意回绕(wrap around)，不同整数类型转换时需注意截断。
 
+【正例】
+
+```rust
+assert_eq!((-5i32).checked_abs(), Some(5));
+assert_eq!(100i32.saturating_add(1), 101);
+```
+
+【反例】
+
+```rust
+assert_eq!((-5i32).abs(), 5);
+assert_eq!(100i32+1, 101);
+```
 
 
-## G.TYP.INT.01 对于大整数字面量使用十六进制表示比十进制更好
+
+## G.TYP.INT.02 对于大整数字面量使用十六进制表示比十进制更好
 
 ### 【级别：建议】
 
@@ -54,7 +79,7 @@ let b = `0xFFFF`
 let c = `0xF0F0_F0F0
 ```
 
-## G.TYP.INT.02  避免将有符号整数和无符号整数之间强制转换
+## G.TYP.INT.03  避免将有符号整数和无符号整数之间强制转换
 
 ### 【级别：建议】
 
@@ -91,7 +116,7 @@ y as u128; // will return 18446744073709551615
 
 
 
-## G.TYP.INT.03  对负数取模计算的时候不要使用 `%`
+## G.TYP.INT.04  对负数取模计算的时候不要使用 `%`
 
 ### 【级别：建议】
 

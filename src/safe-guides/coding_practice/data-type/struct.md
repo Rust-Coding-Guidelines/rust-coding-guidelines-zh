@@ -4,6 +4,44 @@ Rust 包含了三种结构体： 命名结构体、元组结构体、单元结�
 
 ---
 
+## P.TYP.Struct.01 为结构体实现构造性方法时，应该避免构造后再初始化的情况
+
+**【描述】**
+
+跟其他OOP 或 FP 语言不一样， Rust 的惯用方式是构建即初始化。
+
+【正例】
+
+```rust
+// 构建即初始化
+let dict = Dictionary::from_file("./words.txt")?;
+
+impl Dictionary {
+  fn from_file(filename: impl AsRef<Path>) -> Result<Self, Error> {
+    let text = std::fs::read_to_string(filename)?;
+    // 不会去存储空状态
+    let mut words = Vec::new();
+    for line in text.lines() {
+      words.push(line);
+    }
+    Ok(Dictionary { words })
+  }
+}
+```
+
+【反例】
+
+```rust
+// 先构建
+let mut dict = Dictionary::new();
+// 后初始化
+dict.load_from_file("./words.txt")?;
+```
+
+
+
+---
+
 ## G.TYP.Struct.01    对外导出的公开的 Struct，建议增加 `#[non_exhaustive]`属性
 
 ### 【级别：建议】
@@ -130,5 +168,35 @@ struct S {
     is_processing: bool,
     is_finished: bool,
 }
+```
+
+## G.TYP.Struct.03    善用结构体功能更新语法来提升代码可读性
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [field_reassign_with_default](https://rust-lang.github.io/rust-clippy/master/#field_reassign_with_default) | yes           | no           | style      | warn  |
+
+### 【描述】
+
+【正例】
+
+```rust
+let a = A {
+    i: 42,
+    .. Default::default()
+};
+```
+
+【反例】
+
+```rust
+let mut a: A = Default::default();
+a.i = 42;
 ```
 

@@ -33,6 +33,10 @@ disallowed-methods = [
     # is disallowed.
     { path = "std::vec::Vec::leak", reason = "no leaking memory" },
 ]
+
+# 允许 Lint 支持配置值对应的本地语言
+# 配置时候从该列表取别名 https://www.unicode.org/iso15924/iso15924-codes.html
+allowed-locales = ["Latin", "Cyrillic"] 
 ```
 
 【反例】
@@ -96,9 +100,41 @@ let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
 
 
 
+## G.OTH.03   代码中不要出现隐藏的 Unicode 字符
 
+### 【级别：建议】
 
+建议按此规范执行。
 
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [invisible_characters](https://rust-lang.github.io/rust-clippy/master/#invisible_characters) | yes           | no           | correctness | deny  |
+
+### 【描述】
+
+该 Lint 可以检测代码中出现的隐藏 Unicode 字符。
+
+但也有例外，比如你的代码恰好是要处理这些特殊Unicode字符的。
+
+【例外】
+
+```rust
+// From: https://docs.rs/crate/lingo/0.1.2/source/src/generated.rs
+#[allow(clippy::invisible_characters)]
+pub fn get_embed_languages() -> FileContent {
+    let mut f = FileContent::from_vec(vec![
+        (
+            Language::Afrikaans.name(),
+            vec![
+                "e", "a", "i", "n", "s", "r", "o", "t", "d", "e_", "l", "k", "g", "ie", "n_",
+                // 省略很多字符，包括特殊的隐藏 unicode 字符
+            ]
+        )
+    )
+ }
+```
 
 
 

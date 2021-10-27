@@ -6,6 +6,10 @@
 
 
 
+
+
+---
+
 ## G.FUD.01  函数参数最长不要超过 五 个
 
 ### 【级别：建议】
@@ -217,5 +221,31 @@ fn main() {
     // 因为 结构体 Point 是 Copy 的，每次调用 raw_linted 方法，结构体实例就会被复制一次，得到的结果就不一样了
     assert_eq!(p.raw_linted(), p.raw_linted());
 }
+```
+
+## G.FUD.05   函数参数是不可变借用的时候，返回值不应该是可变借用
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [mut_from_ref](https://rust-lang.github.io/rust-clippy/master/#mut_from_ref) | yes           | no           | correctness | deny  |
+
+### 【描述】
+
+【正例】
+
+```rust
+fn foo(&Foo) -> &Bar { .. }
+```
+
+【反例】
+
+```rust
+fn foo(&Foo) -> &mut Bar { .. }
 ```
 
