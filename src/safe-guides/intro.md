@@ -48,5 +48,5 @@ Number 从`01`开始递增。`Element`为领域知识中关键元素的三位英
 | ABS | 安全抽象 | FFI | 外部函数调用 |
 | LAY | 内存布局 | ERR | 错误处理 |
 | CLT     | 集合     | MTH | 多线程 |
-|  |  | OTH | 其他 |
+| EMB | 嵌入式Rust | OTH | 其他 |
 

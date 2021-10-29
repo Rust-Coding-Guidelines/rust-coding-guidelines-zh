@@ -404,7 +404,6 @@ zero-width space(ZWSP)           | 零宽空格                      |
 
 ## 编译器相关术语表
 
-<!-- &nbsp;s are a workaround for https://github.com/badboy/mdbook-toc/issues/19 -->
 术语                                                  | 中文 | 意义 
 ------------------------------------------------------|--------|--------
 <span id="arena">arena/arena allocation</span> &nbsp; | <span id="arena">竞技场分配</span> &nbsp;  | arena 是一个大内存缓冲区，从中可以进行其他内存分配，这种分配方式称为竞技场分配。 

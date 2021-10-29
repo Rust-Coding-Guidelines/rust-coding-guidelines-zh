@@ -4,15 +4,188 @@
 
 使用 Unsafe Rust 的一种方式是将 Unsafe 的方法或函数进行安全抽象，将其变成安全的方法或函数。
 
-所谓安全抽象，就是充分考虑边界条件，消除某些不安全条件引发 UB 的可能性。
+Unsafe Rust 中 API 的安全性设计通常有两种方式：
 
+1.  将内部的 unsafe API 直接暴露给 API 的使用者，并且使用 `unsafe` 关键字来声明该 API 是非安全的，同时也需要对安全边界条件添加注释。
+2. 对 API 进行安全封装，即，安全抽象。在内部使用断言来保证当越过安全边界时可以 Panic，从而避免 UB 产生。
 
+第二种方式，对 Unsafe 代码进行安全抽象，是 Rust 生态的一种约定俗成。
 
 ---
 
-## P.UNS.SafeAbstract.01  
+## P.UNS.SafeAbstract.01   代码中要注意是否会因为恐慌（Panic）发生而导致内存安全问题
 
-【描述】
+**【描述】**
+
+恐慌一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了 `UnwindSafe` trait 的类型捕获恐慌。
+
+当 Panic 发生时，会引发栈回退（stack unwind），调用栈分配对象的析构函数，并将控制流转移给恐慌处理程序中。所以，当恐慌发生的时候，当前存活变量的析构函数将会被调用，从而导致一些内存安全问题，比如释放已经释放过的内存。
+
+通常， 封装的Unsafe 代码可能会暂时绕过所有权检查，而且，安全封装的 API 在内部unsafe 代码的值返回之前，会根据安全边界条件确保它不会违反安全规则。但是，假如封装的Unsafe 代码发生了恐慌，则其外部安全检查可能不会执行。这很可能导致类似 C/C++ 中 未初始化（Uninitialized ）或双重释放（Double Free）的内存不安全问题。
+
+想要正确的推理在 Unsafe 代码中的恐慌安全，是非常困难且易于出错的。即便如此，在编写代码的时候也要刻意注意此类问题发生的可能性。
+
+【示例】
+
+```rust
+// 标准库 `String::retain()` 曝出的 CVE-2020-36317 Panic safety bug
+
+pub fn retain<F>(&mut self, mut f: F)
+where 
+    F: FnMut(char) -> bool
+{
+    let len = self.len();
+    let mut del_bytes = 0;
+ 	let mut idx = 0;
+ 
+    unsafe { self.vec.set_len(0); }    // + 修复bug 的代码
+ 	while idx < len {
+ 		let ch = unsafe {
+  			self.get_unchecked(idx..len).chars().next().unwrap()
+ 		};
+ 		let ch_len = ch.len_utf8();
+ 
+ 		// self is left in an inconsistent state if f() panics
+        // 此处如果 f() 发生了恐慌，self 的长度就会不一致
+ 		if !f(ch) {
+ 			del_bytes += ch_len;
+ 		} else if del_bytes > 0 {
+ 			unsafe {
+ 				ptr::copy(self.vec.as_ptr().add(idx),
+ 				self.vec.as_mut_ptr().add(idx - del_bytes),
+ 				ch_len);
+ 			}
+ 		}
+ 		idx += ch_len; // point idx to the next char
+ 	}
+ 	unsafe { self.vec.set_len(len - del_bytes); } // + 修复bug 的代码 ，如果 while 里发生panic，则将返回长度设置为 0 
+}
+
+fn main(){
+    // PoC: creates a non-utf-8 string in the unwinding path
+    // 此处传入一个 非 UTF-8 编码字符串引发恐慌
+    "0è0".to_string().retain(|_| {
+        match the_number_of_invocation() {
+            1 => false,
+            2 => true,
+            _ => panic!(),
+        }
+    });
+}
+```
+
+## P.UNS.SafeAbstract.02    Unsafe 代码编写者有义务检查代码是否满足安全不变式
+
+**【描述】**
+
+安全不变式（见 [Unsafe 代码术语指南](./glossary.md) ）是 Rust 里的安全函数，在任何有效输入的情况下，都不应该发生任何未定义行为。
+
+可以从以下三个方面来检查：
+
+1. 逻辑一致性。
+2. 纯洁性。相同的输入总是要返回相同的输出。
+3. 语义约束。传入的参数要合法，满足数据类型。
+
+【示例】
+
+该代码是为 `Borrow<str>`实现 join 方法内部调用的一个函数 `join_generic_copy`的展示。 在 `join_generic_copy` 内部，会对 `slice` 进行两次转换，而在 `spezialize_for_lengths!` 宏内部，调用了`.borrow()`方法，如果第二次转换和第一次不一样，而会返回一个未初始化字节的字符串。
+
+这里， `Borrow<B>` 是高阶类型，它内部 `borrow` 的一致性其实并没有保证，可能会返回不同的slice，如果不做处理，很可能会暴露出未初始化的字节给调用者。
+
+```rust
+// CVE-2020-36323: a higher-order invariant bug in join()
+fn join_generic_copy<B, T, S>(slice: &[S], sep: &[T]) -> Vec<T> 
+where T: Copy, B: AsRef<[T]> + ?Sized, S: Borrow<B>
+{
+    let mut iter = slice.iter();
+
+    // `slice`is converted for the first time
+    // during the buffer size calculation.
+    let len = ...;  // `slice` 在这里第一次被转换	
+    let mut result = Vec::with_capacity(len);
+    // ...
+    unsafe {
+        let pos = result.len();
+        let target = result.get_unchecked_mut(pos..len);
+ 
+        // `slice`is converted for the second time in macro
+        // while copying the rest of the components.
+        spezialize_for_lengths!(sep, target, iter; // `slice` 第二次被转换
+        0, 1, 2, 3, 4);
+ 
+        // Indicate that the vector is initialized
+        result.set_len(len);
+    }
+    result
+}
+
+// PoC: a benign join() can trigger a memory safety issue
+impl Borrow<str> for InconsistentBorrow {
+    fn borrow(&self) -> &str {
+        if self.is_first_time() {
+            "123456"
+        } else {
+            "0"
+        }
+    }
+}
+
+let arr: [InconsistentBorrow; 3] = Default::default();
+arr.join("-");
+```
+
+
+
+## P.UNS.SafeAbstract.03    Unsafe 代码中手动实现 auto trait 需要注意
+
+**【描述】**
+
+所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
+
+所以，在手动实现的时候要充分考虑其安全性。
+
+【示例】
+
+Rust futures 库中发现的问题，错误的手工 `Send/Sync`实现 破坏了线程安全保证。
+
+受影响的版本中，`MappedMutexGuard`的`Send/Sync`实现只考虑了`T`上的差异，而`MappedMutexGuard`则取消了对`U`的引用。
+
+当`MutexGuard::map()`中使用的闭包返回与`T`无关的`U`时，这可能导致安全Rust代码中的数据竞争。
+
+这个问题通过修正`Send/Sync`的实现，以及在`MappedMutexGuard`类型中添加一个`PhantomData<&'a mut U>`标记来告诉编译器，这个防护也是在U之上。
+
+```rust
+// CVE-2020-35905: incorrect uses of Send/Sync on Rust's futures
+pub struct MappedMutexGuard<'a, T: ?Sized, U: ?Sized> {
+    mutex: &'a Mutex<T>,
+    value: *mut U,
+    _marker: PhantomData<&'a mut U>, // + 修复代码
+}
+
+impl<'a, T: ?Sized> MutexGuard<'a, T> {
+    pub fn map<U: ?Sized, F>(this: Self, f: F)
+        -> MappedMutexGuard<'a, T, U>
+        where F: FnOnce(&mut T) -> &mut U {
+            let mutex = this.mutex;
+            let value = f(unsafe { &mut *this.mutex.value.get() });
+                mem::forget(this);
+                // MappedMutexGuard { mutex, value }
+                MappedMutexGuard { mutex, value, _marker: PhantomData } //  + 修复代码
+    }
+}
+
+// unsafe impl<T: ?Sized + Send, U: ?Sized> Send
+unsafe impl<T: ?Sized + Send, U: ?Sized + Send> Send // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+//unsafe impl<T: ?Sized + Sync, U: ?Sized> Sync
+unsafe impl<T: ?Sized + Sync, U: ?Sized + Sync> Sync // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+
+// PoC: this safe Rust code allows race on reference counter
+* MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
+```
+
+
 
 
 

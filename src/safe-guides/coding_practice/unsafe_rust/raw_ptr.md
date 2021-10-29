@@ -6,7 +6,7 @@
 
 
 
-## P.UNS.PTR.01  如果不涉及 FFi，建议使用 `NonNull<T>` 来替代 `*mut T`
+## P.UNS.PTR.01   建议使用 `NonNull<T>` 来替代 `*mut T`
 
 **【描述】**
 
