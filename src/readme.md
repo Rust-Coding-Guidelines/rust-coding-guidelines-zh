@@ -1,5 +1,13 @@
 # Rust 编码规范介绍
 
+
+
+## 状态
+
+- [《Rust 安全编码规范》](./intro.md) 初稿发布 2021-10-31 (V 0.1)
+
+## 介绍
+
 据了解，Rust 社区内有些公司和组织都各自维护着自己的编码规范。下面罗列了一些已经公开的：
 
 - [官方｜Rust API 编写指南](https://rust-lang.github.io/api-guidelines/about.html)
