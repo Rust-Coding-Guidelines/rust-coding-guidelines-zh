@@ -3,7 +3,7 @@ Rust 编码规范 中文版
 
 ## 状态
 
-- 《Rust 安全编码规范》初稿发布 2021-10-31 (V 0.1)
+- [《Rust 安全编码规范》](https://rust-coding-guidelines.github.io/rust-coding-guidelines-zh/safe-guides/intro.html) 初稿发布 2021-10-31 (V 0.1)
 
 ## 介绍
 
