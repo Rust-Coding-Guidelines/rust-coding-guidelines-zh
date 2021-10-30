@@ -40,6 +40,120 @@ dict.load_from_file("./words.txt")?;
 
 
 
+## P.TYP.Struct.02  当你需要很多构造函数，或者构造时有很多可选配置项时，建议使用 构建者模式
+
+**【描述】**
+
+Rust 中没有默认的构造函数，都是自定义构造函数。
+
+如果需要多个构造函数，或者构造时需要很多可选配置的复杂场景，那么构建者模式是适合你的选择。
+
+ 【正例】
+
+```rust
+#[derive(Debug, PartialEq)]
+pub struct Foo {
+    // Lots of complicated fields.
+    bar: String,
+}
+
+impl Foo {
+    // This method will help users to discover the builder
+    pub fn builder() -> FooBuilder {
+        FooBuilder::default()
+    }
+}
+
+#[derive(Default)]
+pub struct FooBuilder {
+    // Probably lots of optional fields.
+    bar: String,
+}
+
+impl FooBuilder {
+    pub fn new(/* ... */) -> FooBuilder {
+        // Set the minimally required fields of Foo.
+        FooBuilder {
+            bar: String::from("X"),
+        }
+    }
+
+    pub fn name(mut self, bar: String) -> FooBuilder {
+        // Set the name on the builder itself, and return the builder by value.
+        self.bar = bar;
+        self
+    }
+
+    // If we can get away with not consuming the Builder here, that is an
+    // advantage. It means we can use the FooBuilder as a template for constructing
+    // many Foos.
+    pub fn build(self) -> Foo {
+        // Create a Foo from the FooBuilder, applying all settings in FooBuilder
+        // to Foo.
+        Foo { bar: self.bar }
+    }
+}
+
+#[test]
+fn builder_test() {
+    let foo = Foo {
+        bar: String::from("Y"),
+    };
+    let foo_from_builder: Foo = FooBuilder::new().name(String::from("Y")).build();
+    assert_eq!(foo, foo_from_builder);
+}
+```
+
+## P.TYP.Struct.03  结构体实例需要默认实现时，建议为其实现 `Default` 
+
+**【描述】**
+
+为结构体实现 `Default` 对于简化代码提高可读性很有帮助。
+
+【正例】
+
+ ```rust
+ use std::{path::PathBuf, time::Duration};
+ 
+ // note that we can simply auto-derive Default here.
+ #[derive(Default, Debug, PartialEq)]
+ struct MyConfiguration {
+     // Option defaults to None
+     output: Option<PathBuf>,
+     // Vecs default to empty vector
+     search_path: Vec<PathBuf>,
+     // Duration defaults to zero time
+     timeout: Duration,
+     // bool defaults to false
+     check: bool,
+ }
+ 
+ impl MyConfiguration {
+     // add setters here
+ }
+ 
+ fn main() {
+     // construct a new instance with default values
+     let mut conf = MyConfiguration::default();
+     // do something with conf here
+     conf.check = true;
+     println!("conf = {:#?}", conf);
+         
+     // partial initialization with default values, creates the same instance
+     let conf1 = MyConfiguration {
+         check: true,
+         ..Default::default()
+     };
+     assert_eq!(conf, conf1);
+ }
+ ```
+
+
+
+
+
+
+
 ---
 
 ## G.TYP.Struct.01    对外导出的公开的 Struct，建议增加 `#[non_exhaustive]`属性

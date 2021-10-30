@@ -1,6 +1,6 @@
 # Drop 析构
 
-
+在 Safe Rust 中 ，Drop 比较安全。在 Unsafe Rust 中则需要注意更多关于 Drop 的问题。 
 
 ---
 
@@ -17,7 +17,3 @@ Rust 语言并不保证避免内存泄漏，内存泄漏不属于 Rust 安全职
 5. 程序中止（abort on panic）
 
 
-
-
-
-## G.MEM.Drop.01 

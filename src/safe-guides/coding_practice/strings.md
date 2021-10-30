@@ -126,29 +126,27 @@ pub fn find<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 1. 不在乎编译文件大小。`regex` 正则引擎是第三方库，引入它的时候意味着还会引入其他依赖，对编译文件大小有要求可以考虑，是否使用 `Cow` 和 内建函数方法来替代。
 2. 对字符串查找性能有极致需求。`regex` 的  `find` 实现性能很好，但是 `replace` 替换就不一定了。对于替换需求，在适合 `Cow<str>` 的场景下，使用 `Cow` 和 内建函数方法来替代 regex 可能更好。
 
+## P.STR.06    在拼接字符串时，建议使用 `format!` 
+
+**【描述】**
+
+使用 `format!` 组合字符串是最简单和直观的方法，尤其是在字符串和非字符串混合的情况下。但追加字符串还是建议使用 `push`。
+
+【正例】
+
+```rust
+ let hw = format!("Hello {}!", name)
+```
+
+
+
+
+
 ---
 
 
 
-## G.STR.01   要对字符串进行比较
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [bytes_nth](https://rust-lang.github.io/rust-clippy/master/#bytes_nth) | yes           | no           | style      | warn  |
-
-### 【描述】
-
-
-
-
-
-## G.STR.02   在实现  `Display` trait 时不要调用 `to_string()` 方法
+## G.STR.01   在实现  `Display` trait 时不要调用 `to_string()` 方法
 
 ### 【级别：建议】
 
@@ -190,7 +188,7 @@ impl fmt::Display for Structure {
 }
 ```
 
-## G.STR.03   在拼接字符串时使用 `push_str`方法可读性更强
+## G.STR.02   在追加字符串时使用 `push_str`方法可读性更强
 
 ### 【级别：建议】
 
@@ -205,11 +203,26 @@ impl fmt::Display for Structure {
 
 ### 【描述】
 
+【正例】
+
+```rust
+let mut x = "Hello".to_owned();
+
+// More readable
+x += ", World";
+x.push_str(", World");
+```
+
+【反例】
+
+```rust
+let mut x = "Hello".to_owned();
+x = x + ", World";
+```
 
 
 
-
-## G.STR.04    将只包含 `ASCII`字符的字符串字面量转为字节序列可以直接使用`b"str"` 语法代替调用`as_bytes`方法
+## G.STR.03    将只包含 `ASCII`字符的字符串字面量转为字节序列可以直接使用`b"str"` 语法代替调用`as_bytes`方法
 
 ### 【级别：建议】
 
@@ -239,7 +252,7 @@ let bs = b"a byte string";
 let bs = "a byte string".as_bytes();
 ```
 
-## G.STR.05   需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较
+## G.STR.04   需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较
 
 ### 【级别：建议】
 
@@ -278,7 +291,7 @@ let name = "foo";
 if name.chars().next() == Some('_') {};
 ```
 
-## G.STR.06   对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码
+## G.STR.05   对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码
 
 ### 【级别：建议】
 

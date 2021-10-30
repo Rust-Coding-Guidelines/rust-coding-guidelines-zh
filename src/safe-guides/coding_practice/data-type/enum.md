@@ -21,7 +21,34 @@ enum DataCarrying {
 
 Rust 中枚举体用处很多，你甚至可以将其作为一种接口使用。
 
+---
 
+## P.TYP.Enum.01 修改 Enum 中值的时候建议使用 `std::mem::take` 
+
+**【描述】**
+
+```rust
+use std::mem;
+
+enum MultiVariateEnum {
+    A { name: String },
+    B { name: String },
+    C,
+    D
+}
+
+fn swizzle(e: &mut MultiVariateEnum) {
+    use MultiVariateEnum::*;
+    *e = match e {
+        // Ownership rules do not allow taking `name` by value, but we cannot
+        // take the value out of a mutable reference, unless we replace it:
+        A { name } => B { name: mem::take(name) },
+        B { name } => A { name: mem::take(name) },
+        C => D,
+        D => C
+    }
+}
+```
 
 
 

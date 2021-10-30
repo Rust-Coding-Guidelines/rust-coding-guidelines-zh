@@ -187,6 +187,236 @@ for MappedMutexGuard<'_, T, U> {}
 
 
 
+## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
+
+**【描述】**
+
+在公开的API中暴露裸指针，可能会被用户修改为空指针，从而有段错误风险。
+
+【示例】
+
+```rust
+use cache;
+
+
+/**
+
+    `cache crate` 内部代码：
+
+    ```rust
+    pub enum Cached<'a, V: 'a> {
+        /// Value could not be put on the cache, and is returned in a box
+        /// as to be able to implement `StableDeref`
+        Spilled(Box<V>),
+        /// Value resides in cache and is read-locked.
+        Cached {
+            /// The readguard from a lock on the heap
+            guard: RwLockReadGuard<'a, ()>,
+            /// A pointer to a value on the heap
+            // 漏洞风险
+            ptr: *const ManuallyDrop<V>,
+        },
+        /// A value that was borrowed from outside the cache.
+        Borrowed(&'a V),
+    }
+
+    ```
+**/
+fn main() {
+    let c = cache::Cache::new(8, 4096);
+    c.insert(1, String::from("test"));
+    let mut e = c.get::<String>(&1).unwrap();
+
+    match &mut e {
+        cache::Cached::Cached { ptr, .. } => {
+            // 将 ptr 设置为 空指针，导致段错误
+            *ptr = std::ptr::null();
+        },
+        _ => panic!(),
+    }
+    // 输出：3851，段错误
+    println!("Entry: {}", *e);
+}
+```
+
+## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露未初始化内存
+
+**【描述】**
+
+在公开的API中暴露未初始化内存可能导致 UB。
+
+【正例】
+
+ ```rust
+ // 修正以后的代码示例，去掉了未初始化的buf：
+ impl<R> BufRead for GreedyAccessReader<R>
+     where
+         R: Read,
+ {
+     fn fill_buf(&mut self) -> IoResult<&[u8]> {
+         if self.buf.capacity() == self.consumed {
+             self.reserve_up_to(self.buf.capacity() + 16);
+         }
+ 
+         let b = self.buf.len();
+         self.buf.resize(self.buf.capacity(), 0);
+         let buf = &mut self.buf[b..];
+         let o = self.inner.read(buf)?;
+ 
+         // truncate to exclude non-written portion
+         self.buf.truncate(b + o);
+ 
+         Ok(&self.buf[self.consumed..])
+     }
+ 
+     fn consume(&mut self, amt: usize) {
+         self.consumed += amt;
+     }
+ }
+ 
+ // 另外一个已修正漏洞的代码
+ fn read_vec(&mut self) -> Result<Vec<u8>> {
+     let len: u32 = de::Deserialize::deserialize(&mut *self)?;
+     // 创建了未初始化buf
+     let mut buf = Vec::with_capacity(len as usize);
+     // 初始化为 0；
+     buf.resize(len as usize, 0);
+     self.read_size(u64::from(len))?;
+     // 将其传递给了用户提供的`Read`实现
+     self.reader.read_exact(&mut buf[..])?;
+     Ok(buf)
+ }
+ ```
+
+
+
+【反例】
+
+```rust
+// 以下是有安全风险的代码示例：
+impl<R> BufRead for GreedyAccessReader<R>
+    where
+        R: Read,
+{
+    fn fill_buf(&mut self) -> IoResult<&[u8]> {
+        if self.buf.capacity() == self.consumed {
+            self.reserve_up_to(self.buf.capacity() + 16);
+        }
+
+        let b = self.buf.len();
+        let buf = unsafe {
+            // safe because it's within the buffer's limits
+            // and we won't be reading uninitialized memory
+            // 这里虽然没有读取未初始化内存，但是会导致用户读取
+            std::slice::from_raw_parts_mut(
+                self.buf.as_mut_ptr().offset(b as isize),
+                self.buf.capacity() - b)
+        };
+
+        match self.inner.read(buf) {
+            Ok(o) => {
+                unsafe {
+                    // reset the size to include the written portion,
+                    // safe because the extra data is initialized
+                    self.buf.set_len(b + o);
+                }
+
+                Ok(&self.buf[self.consumed..])
+            }
+            Err(e) => Err(e),
+        }
+    }
+
+    fn consume(&mut self, amt: usize) {
+        self.consumed += amt;
+    }
+}
+
+// 另外一个漏洞代码
+fn read_vec(&mut self) -> Result<Vec<u8>> {
+    let len: u32 = de::Deserialize::deserialize(&mut *self)?;
+    // 创建了未初始化buf
+    let mut buf = Vec::with_capacity(len as usize);
+    unsafe { buf.set_len(len as usize) }
+    self.read_size(u64::from(len))?;
+    // 将其传递给了用户提供的`Read`实现
+    self.reader.read_exact(&mut buf[..])?;
+    Ok(buf)
+}
+```
+
+
+
+## P.UNS.SafeAbstract.05   要考虑 Panic Safety 的情况
+
+**【描述】**
+
+要注意 Panic Safety 的情况，避免双重释放（double free）的问题发生。
+
+在使用 `std::ptr` 模块中接口需要注意，容易产生 UB 问题，要多多查看 API 文档。
+
+【正例】
+
+ ```rust
+ macro_rules! from_event_option_array_into_event_list(
+     ($e:ty, $len:expr) => (
+         impl<'e> From<[Option<$e>; $len]> for EventList {
+             fn from(events: [Option<$e>; $len]) -> EventList {
+                 let mut el = ManuallyDrop::new(
+                     EventList::with_capacity(events.len())
+                 );
+ 
+                 for idx in 0..events.len() {
+                     let event_opt = unsafe {
+                         ptr::read(events.get_unchecked(idx))
+                     };
+ 
+                     if let Some(event) = event_opt {
+                         // Use `ManuallyDrop` to guard against
+                         // potential panic within `into()`.
+                         // 当 into 方法发生 panic 当时候，这里 ManuallyDrop 可以保护其不会`double free`
+                         let event = ManuallyDrop::into_inner(
+                             ManuallyDrop::new(event)
+                             .into()
+                         );
+                         el.push(event);
+                     }
+                 }
+                 mem::forget(events);
+                 ManuallyDrop::into_inner(el)
+             }
+         }
+     )
+ );
+ ```
+
+
+
+【反例】
+
+```rust
+//case 1
+macro_rules! from_event_option_array_into_event_list(
+    ($e:ty, $len:expr) => (
+        impl<'e> From<[Option<$e>; $len]> for EventList {
+                fn from(events: [Option<$e>; $len]) -> EventList {
+                    let mut el = EventList::with_capacity(events.len());
+                    for idx in 0..events.len() {
+                    // 这个 unsafe 用法在 `event.into()`调用panic的时候会导致双重释放
+                        let event_opt = unsafe { ptr::read(events.get_unchecked(idx)) };
+                        if let Some(event) = event_opt { el.push::<Event>(event.into()); }
+                    }
+                    // 此处 mem::forget 就是为了防止 `dobule free`。
+                    // 因为 `ptr::read` 也会制造一次 drop。
+                    // 所以上面如果发生了panic，那就相当于注释了 `mem::forget`，导致`dobule free`
+                    mem::forget(events);
+                    el
+                }
+        }
+    )
+);
+```
+
 
 
 

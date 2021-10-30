@@ -46,6 +46,16 @@ bin/
 
 如果你编写的可执行程序比较复杂时，在 `main.rs`里需要依赖太多东西，那就需要创建 Workspace， 把 `main.rs` 在独立为一个 crate 了，而在这个 crate 内也没有必要在拆分为 `main`和 `lib` 了。
 
+## P.CAR.03    不要滥用 `features` 
+
+**【描述】**
+
+Rust 的 features ，提供了方便的条件编译功能。从软件工程来说，features 应该是为了避免让用户依赖没必要依赖的功能而使用的。
+
+在使用 features 的时候，应该考虑到底是不是真的需要 features。
+
+
+
 ---
 
 

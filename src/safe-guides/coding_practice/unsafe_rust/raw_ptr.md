@@ -2,6 +2,17 @@
 
 
 
+Rust提供了`*const T`（不变）和`*mut T`（可变）两种指针类型。因为这两种指针和C语言中的指针十分相近，所以叫其原生指针（Raw Pointer）。
+
+原生指针具有以下特点：
+
+- 并不保证指向合法的内存。比如很可能是一个空指针。
+- 不能像智能指针那样自动清理内存。需要像 C 语言那样手动管理内存。
+- 没有生命周期的概念，也就是说，编译器不会对其提供借用检查。
+- 不能保证线程安全。
+
+可见，原生指针并不受Safe Rust提供的那一层“安全外衣”保护，所以也被称为“裸指针”。
+
 ---
 
 
@@ -9,6 +20,61 @@
 ## P.UNS.PTR.01   建议使用 `NonNull<T>` 来替代 `*mut T`
 
 **【描述】**
+
+尽量使用 [`NonNull`](https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html) 来包装 `*mut T`。
+
+`NonNull` 的优势：
+
+1. 非空指针。会自动检查包装的指针是否为空。
+2. 协变。方便安全抽象。如果用裸指针，则需要配合 `PhantomData`类型来保证协变。
+
+【正例】
+
+```rust
+use std::ptr::NonNull;
+
+let mut x = 0u32;
+let ptr = NonNull::<u32>::new(&mut x as *mut _).expect("ptr is null!");
+
+if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
+    unreachable!();
+}
+```
+
+## P.UNS.PTR.02   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
+
+**【描述】**
+
+`PhantomData<T>` 是经常被用于 Unsafe Rust 中配合裸指针来指定协变和所有权的，为裸指针构建的类型保证安全性和有效性。否则，可能会产生未定义行为。
+
+  参考： [`PhantomData<T>`  的型变（variance）模式表](https://doc.rust-lang.org/nomicon/phantom-data.html) 
+
+【正例】
+
+```rust
+use std::marker;
+
+struct Vec<T> {
+    data: *const T, // *const for variance!
+    len: usize,
+    cap: usize,
+    _marker: marker::PhantomData<T>, // 让 Vec<T> 拥有 T，并且让 指针有了协变
+}
+```
+
+【反例】
+
+```rust
+
+// Vec<T> 不拥有类型 T，并且 data 字段的裸指针不支持协变
+// 这样的话，是有风险的。
+// 为 Vec<T> 实现的 Drop 可能导致 UB
+struct Vec<T> {
+    data: *const T, 
+    len: usize,
+    cap: usize,
+}
+```
 
 
 

@@ -77,6 +77,23 @@ let y = 1_f64 / x;
 
 ### 【描述】
 
+因为有可能被编译器优化掉。
+
+【反例】
+
+```rust
+#![allow(clippy::assertions_on_constants)]
+const MIN_OVERFLOW: usize = 8192;
+const MAX_START: usize = 2048;
+const MAX_END: usize = 2048;
+const MAX_PRINTED: usize = MAX_START + MAX_END;
+assert!(MAX_PRINTED < MIN_OVERFLOW);
+```
+
+
+
+
+
 
 ## G.CNS.03 不要将内部可变性容器声明为常量
 
@@ -91,9 +108,37 @@ let y = 1_f64 / x;
 | [borrow_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#borrow_interior_mutable_const) | yes| no | Style | warn |
 | [declare_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#declare_interior_mutable_const) | yes| no | Style | warn |
 
-
-
 ### 【描述】
+
+【正例】
+
+```rust
+use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
+
+// Good.
+static STATIC_ATOM: AtomicUsize = CONST_ATOM;
+STATIC_ATOM.store(9, SeqCst);
+assert_eq!(STATIC_ATOM.load(SeqCst), 9); // use a `static` item to refer to the same instance
+```
+
+
+
+【反例】
+
+```rust
+use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
+
+// Bad.
+CONST_ATOM.store(6, SeqCst); // the content of the atomic is unchanged
+assert_eq!(CONST_ATOM.load(SeqCst), 12); // because the CONST_ATOM in these lines are distinct
+
+```
+
+
+
+
 
 
 ## G.CNS.04 不要在常量定义中增加显式的 `'static` 生命周期
@@ -110,6 +155,28 @@ let y = 1_f64 / x;
 
 ### 【描述】
 
+没必要加。
+
+【正例】
+
+```rust
+const FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
+ static FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
+```
+
+【反例】
+
+```rust
+const FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
+&[...]
+static FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
+&[...]
+```
+
+
+
+
+
 ## G.CNS.05  对于函数或方法应尽可能地使用 `const fn`
 
 ### 【级别：建议】
@@ -123,3 +190,20 @@ let y = 1_f64 / x;
 | [missing_const_for_fn](https://rust-lang.github.io/rust-clippy/master/#missing_const_for_fn) | yes| no | Perf | warn |
 
 ### 【描述】
+
+【正例】
+
+```rust
+const fn new() -> Self {
+    Self { random_number: 42 }
+}
+```
+
+【反例】
+
+```rust
+fn new() -> Self {
+    Self { random_number: 42 }
+}
+```
+

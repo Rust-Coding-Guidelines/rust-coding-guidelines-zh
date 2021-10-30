@@ -4,6 +4,117 @@
 
 ---
 
+## P.FUD.01  函数参数建议使用借用类型
+
+**【描述】**
+
+这里是指 借用类型，而非 借用有所有权的类型。比如：`&str` 优于 `&String`，`&[T]` 优于`&Vec<T>`，`&T` 优于 `&Box<T>` 等。
+
+使用 借用类型 可以利用 `Deref` 隐式转换让函数参数更加灵活。
+
+【正例】
+
+```rust
+// 这里的参数可以接受 &String / &'str/ &'static str 三种类型参数
+fn three_vowels(word: &str) -> bool {
+    let mut vowel_count = 0;
+    for c in word.chars() {
+        match c {
+            'a' | 'e' | 'i' | 'o' | 'u' => {
+                vowel_count += 1;
+                if vowel_count >= 3 {
+                    return true
+                }
+            }
+            _ => vowel_count = 0
+        }
+    }
+    false
+}
+
+fn main() {
+    let sentence_string =
+        "Once upon a time, there was a friendly curious crab named Ferris".to_string();
+    for word in sentence_string.split(' ') {
+        if three_vowels(word) {
+            println!("{} has three consecutive vowels!", word);
+        }
+    }
+}
+```
+
+## P.FUD.02   传递到闭包的变量建议单独重新绑定
+
+**【描述】**
+
+默认情况下，闭包通过借用来捕获环境变量。或者，可以使用 `move` 关键字来移动环境变量到闭包中。
+
+将这些要在闭包内用的变量，重新进行分组绑定，可读性更好。
+
+【正例】
+
+```rust
+use std::rc::Rc;
+
+let num1 = Rc::new(1);
+let num2 = Rc::new(2);
+let num3 = Rc::new(3);
+// 单独对要传递到闭包的变量重新绑定
+let num2_cloned = num2.clone();
+let num3_borrowed = num3.as_ref();
+let closure = move || {
+    *num1 + *num2_cloned + *num3_borrowed;
+};
+```
+
+【反例】
+
+```rust
+use std::rc::Rc;
+
+let num1 = Rc::new(1);
+let num2 = Rc::new(2);
+let num3 = Rc::new(3);
+let closure = {
+    // `num1` is moved
+    let num2 = num2.clone();  // `num2` is cloned
+    let num3 = num3.as_ref();  // `num3` is borrowed
+    move || {
+        *num1 + *num2 + *num3;
+    }
+};
+```
+
+## P.FUD.03   函数返回值不要使用 `return`
+
+**【描述】**
+
+Rust 中函数块会自动返回最后一个表达式的值，不需要显式地指定 Return。
+
+只有在函数过程中需要提前返回的时候再加 Return。
+
+【正例】
+
+```rust
+fn foo(x: usize) -> usize {
+    if x < 42{
+        return x;
+    }
+    x + 1
+}
+```
+
+【反例】
+
+```rust
+fn foo(x: usize) -> usize {
+    if x < 42{
+        return x;
+    }
+    return x + 1;
+}
+```
+
 
 
 
@@ -247,5 +358,30 @@ fn foo(&Foo) -> &Bar { .. }
 
 ```rust
 fn foo(&Foo) -> &mut Bar { .. }
+```
+
+## G.FUD.06   不要为函数指定  `inline(always)` 
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [inline_always](https://rust-lang.github.io/rust-clippy/master/#inline_always) | yes           | no           | pedantic   | allow |
+
+### 【描述】
+
+`inline` 虽然可以提升性能，但也会增加编译时间和编译大小。
+
+Rust 中性能、编译时间和编译大小之间需要权衡。根据需要再 `inline` 即可。
+
+【反例】
+
+```rust
+#[inline(always)]
+fn not_quite_hot_code(..) { ... }
 ```
 
