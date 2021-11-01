@@ -125,3 +125,111 @@ impl Drop for Fails {
 }
 ```
 
+## P.MAC.Proc.03 保证过程宏的卫生性
+
+【描述】
+
+过程宏生成的代码尽量使用完全限定名，防止命名冲突产生意想不到的后果。 
+
+【正例】
+
+```rust
+quote!(::std::ToString::to_string(a))
+```
+
+```rust
+quote! {{
+    use ::std::ToString;
+    a.to_string()
+}}
+```
+
+【反例】
+
+```rust
+quote!(a.to_string())
+```
+
+【测试】
+
+使用`#![no_implicit_prelude]`属性来验证过程宏的卫生性。
+
+```rust
+#![no_implicit_prelude]
+
+#[derive(MyMacro)]
+struct A;
+```
+
+## P.MAC.Proc.04 给出正确的错误位置
+
+【描述】
+
+过程宏发生错误时，返回的错误应该有正确的位置信息。
+
+【正例】
+
+```rust
+#[proc_macro_derive(MyMacro)]
+pub fn derive_my_macro(input: TokenStream) -> TokenStream {
+    let derive_input: DeriveInput = syn::parse_macro_input!(input as DeriveInput);
+
+    if let Data::Enum(e) = &derive_input.data {
+        for variant in &e.variants {
+            if !variant.fields.is_empty() {
+                // 使用variant的span
+                return Error::new_spanned(&variant, "must be a unit variable.")
+                    .to_compile_error()
+                    .into();
+            }
+        }
+    }
+
+    todo!()
+}
+```
+
+【反例】
+
+```rust
+// 直接用Span::call_site()
+Error::new(Span::call_site(), "requires unit variant")
+    .to_compile_error()
+    .into()
+```
+
+## P.MAC.Proc.05 尽量不要用过程宏生成新类型或函数
+
+【描述】
+
+尽量不要用过程宏生成新类型或函数，因为IDE无法识别它们，使用`build.rs`来代替过程宏。 
+
+【正例】
+
+`build.rs`把`tonic`生成的代码直接放在`src`目录，这样IDE能够识别它们使自动完成能够工作，提高开发效率。
+
+```rust
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tonic_build::configure()
+        .out_dir("src")
+        .compile(
+            &["proto/helloworld/helloworld.proto"],
+            &["proto/helloworld"],
+        )?;
+    println!("cargo:rerun-if-changed=proto");
+}
+```
+
+【反例】
+
+`tarpc`的`service`宏会生成一个新的`WorldClient`类型，IDE完全无法识别。
+
+```rust
+#[tarpc::service]
+trait World {
+    async fn hello(name: String) -> String;
+}
+
+let (client_transport, server_transport) = tarpc::transport::channel::unbounded();
+let mut client = WorldClient::new(client::Config::default(), client_transport).spawn();
+```
