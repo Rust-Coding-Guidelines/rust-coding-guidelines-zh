@@ -204,7 +204,9 @@ Error::new(Span::call_site(), "requires unit variant")
 
 用过程宏生进行代码生成，比如生成新类型或函数，有一个缺点就是：IDE无法识别它们，影响开发体验。
 
-但是使用`build.rs`生成的代码，对 IDE 是友好的。
+但是使用`build.rs`生成的代码，对 IDE 更友好。
+
+不过随着 IDE 的增强，过程宏以后应该也能变得更加 IDE 友好。
 
 建议按应用场景选择：
 
