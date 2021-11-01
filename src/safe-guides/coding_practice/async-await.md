@@ -241,3 +241,35 @@ let fut = async move {
 };
 ```
 
+## G.ASY.04 避免定义不必要的异步函数
+
+### 【描述】
+
+如果一个异步函数内部没有任何异步代码，相比一个同步函数，它会产生额外的调用成本。
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [unused_async](https://rust-lang.github.io/rust-clippy/master/#unused_async) | yes| no | pedantic | allow |
+
+
+【正例】
+
+```rust
+fn add(value: i32) -> i32 {
+    value + 1
+}
+```
+
+【反例】
+
+```rust
+async fn add(value: i32) -> i32 {
+    value + 1
+}
+```
