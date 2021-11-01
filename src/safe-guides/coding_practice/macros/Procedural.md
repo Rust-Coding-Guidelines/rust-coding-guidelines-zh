@@ -198,11 +198,18 @@ Error::new(Span::call_site(), "requires unit variant")
     .into()
 ```
 
-## P.MAC.Proc.05 尽量不要用过程宏生成新类型或函数
+## P.MAC.Proc.05 代码生成要按情况选择使用过程宏还是`build.rs`
 
 【描述】
 
-尽量不要用过程宏生成新类型或函数，因为IDE无法识别它们，使用`build.rs`来代替过程宏。 
+用过程宏生进行代码生成，比如生成新类型或函数，有一个缺点就是：IDE无法识别它们，影响开发体验。
+
+但是使用`build.rs`生成的代码，对 IDE 是友好的。
+
+建议按应用场景选择：
+
+- `build.rs` 一般用于根据外部文件生成代码的场景。比如根据 `C` 头文件生成 Rust 绑定，或者根据 `proto` 文件生成相应的 Rust 类型等，供开发者直接使用。
+- 过程宏一般用于消除样例式代码，提升库使用者的开发体验。
 
 【正例】
 
@@ -219,8 +226,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=proto");
 }
 ```
-
-【反例】
 
 `tarpc`的`service`宏会生成一个新的`WorldClient`类型，IDE完全无法识别。
 
