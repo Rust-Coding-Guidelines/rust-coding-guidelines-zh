@@ -346,7 +346,8 @@ Error::new(Span::call_site(), &quot;requires unit variant&quot;)
 <h2><a class="header" href="#pmacproc05-代码生成要按情况选择使用过程宏还是buildrs" id="pmacproc05-代码生成要按情况选择使用过程宏还是buildrs">P.MAC.Proc.05 代码生成要按情况选择使用过程宏还是<code>build.rs</code></a></h2>
 <p>【描述】</p>
 <p>用过程宏生进行代码生成，比如生成新类型或函数，有一个缺点就是：IDE无法识别它们，影响开发体验。</p>
-<p>但是使用<code>build.rs</code>生成的代码，对 IDE 是友好的。</p>
+<p>但是使用<code>build.rs</code>生成的代码，对 IDE 更友好。</p>
+<p>不过随着 IDE 的增强，过程宏以后应该也能变得更加 IDE 友好。</p>
 <p>建议按应用场景选择：</p>
 <ul>
 <li><code>build.rs</code> 一般用于根据外部文件生成代码的场景。比如根据 <code>C</code> 头文件生成 Rust 绑定，或者根据 <code>proto</code> 文件生成相应的 Rust 类型等，供开发者直接使用。</li>
