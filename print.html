@@ -8325,6 +8325,113 @@ impl Drop for Fails {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#pmacproc03-保证过程宏的卫生性" id="pmacproc03-保证过程宏的卫生性">P.MAC.Proc.03 保证过程宏的卫生性</a></h2>
+<p>【描述】</p>
+<p>过程宏生成的代码尽量使用完全限定名，防止命名冲突产生意想不到的后果。 </p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>quote!(::std::ToString::to_string(a))
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>quote! {{
+    use ::std::ToString;
+    a.to_string()
+}}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>quote!(a.to_string())
+<span class="boring">}
+</span></code></pre></pre>
+<p>【测试】</p>
+<p>使用<code>#![no_implicit_prelude]</code>属性来验证过程宏的卫生性。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![no_implicit_prelude]
+
+<span class="boring">fn main() {
+</span>#[derive(MyMacro)]
+struct A;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pmacproc04-给出正确的错误位置" id="pmacproc04-给出正确的错误位置">P.MAC.Proc.04 给出正确的错误位置</a></h2>
+<p>【描述】</p>
+<p>过程宏发生错误时，返回的错误应该有正确的位置信息。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[proc_macro_derive(MyMacro)]
+pub fn derive_my_macro(input: TokenStream) -&gt; TokenStream {
+    let derive_input: DeriveInput = syn::parse_macro_input!(input as DeriveInput);
+
+    if let Data::Enum(e) = &amp;derive_input.data {
+        for variant in &amp;e.variants {
+            if !variant.fields.is_empty() {
+                // 使用variant的span
+                return Error::new_spanned(&amp;variant, &quot;must be a unit variable.&quot;)
+                    .to_compile_error()
+                    .into();
+            }
+        }
+    }
+
+    todo!()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 直接用Span::call_site()
+Error::new(Span::call_site(), &quot;requires unit variant&quot;)
+    .to_compile_error()
+    .into()
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pmacproc05-代码生成要按情况选择使用过程宏还是buildrs" id="pmacproc05-代码生成要按情况选择使用过程宏还是buildrs">P.MAC.Proc.05 代码生成要按情况选择使用过程宏还是<code>build.rs</code></a></h2>
+<p>【描述】</p>
+<p>用过程宏生进行代码生成，比如生成新类型或函数，有一个缺点就是：IDE无法识别它们，影响开发体验。</p>
+<p>但是使用<code>build.rs</code>生成的代码，对 IDE 是友好的。</p>
+<p>建议按应用场景选择：</p>
+<ul>
+<li><code>build.rs</code> 一般用于根据外部文件生成代码的场景。比如根据 <code>C</code> 头文件生成 Rust 绑定，或者根据 <code>proto</code> 文件生成相应的 Rust 类型等，供开发者直接使用。</li>
+<li>过程宏一般用于消除样例式代码，提升库使用者的开发体验。</li>
+</ul>
+<p>【正例】</p>
+<p><code>build.rs</code>把<code>tonic</code>生成的代码直接放在<code>src</code>目录，这样IDE能够识别它们使自动完成能够工作，提高开发效率。</p>
+<pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    tonic_build::configure()
+        .out_dir(&quot;src&quot;)
+        .compile(
+            &amp;[&quot;proto/helloworld/helloworld.proto&quot;],
+            &amp;[&quot;proto/helloworld&quot;],
+        )?;
+    println!(&quot;cargo:rerun-if-changed=proto&quot;);
+}
+</code></pre></pre>
+<p><code>tarpc</code>的<code>service</code>宏会生成一个新的<code>WorldClient</code>类型，IDE完全无法识别。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[tarpc::service]
+trait World {
+    async fn hello(name: String) -&gt; String;
+}
+
+let (client_transport, server_transport) = tarpc::transport::channel::unbounded();
+let mut client = WorldClient::new(client::Config::default(), client_transport).spawn();
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#多线程" id="多线程">多线程</a></h1>
 <p>Rust 天生线程安全，可以有效消除数据竞争。</p>
 <hr />
