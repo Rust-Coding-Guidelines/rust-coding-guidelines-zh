@@ -53,7 +53,7 @@ static GET_COUNT: i32 = 42;  // 不符合：描述不精确
 【正例】
 
 ```rust
-// 符合： 上下文信息已经知道它是 Evenet
+// 符合： 上下文信息已经知道它是 Event
 enum WebEvent {
     // An `enum` may either be `unit-like`,
     PageLoad,
@@ -64,7 +64,6 @@ enum WebEvent {
     // or c-like structures.
     Click { x: i64, y: i64 },
 }
-
 ```
 
 【反例】
