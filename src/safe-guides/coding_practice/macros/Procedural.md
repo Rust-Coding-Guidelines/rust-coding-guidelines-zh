@@ -2,6 +2,12 @@
 
 [过程宏（*Procedural macros*）](https://doc.rust-lang.org/reference/procedural-macros.html) 允许开发者来创建语法扩展。你可以通过过程宏创建类似函数的宏、派生宏以及属性宏。
 
+广义上的"过程宏"指的是通过 syn/quote(毕竟几乎全部过程宏库都用 syn) 及 syn 生态(例如 darling) 进行代码生成等元编程操作。
+
+syn/quote 不仅能用于过程宏，还广泛用于代码生成(*codegen*)、静态分析等用途，例如 tonic-build/prost 源码中也用到了 syn/quote 。
+
+因此本过程宏规范不仅适用于过程宏，部分规范(例如 P.MAC.Proc.06 )还适用于 prost 这种代码生成库
+
 过程宏必须被单独定义在一个类型为`proc-macro` 的 crate 中。
 
 过程宏有两类报告错误的方式：`Panic` 或 通过 `compile_error`  宏调用发出错误。
@@ -178,7 +184,7 @@ pub fn derive_my_macro(input: TokenStream) -> TokenStream {
         for variant in &e.variants {
             if !variant.fields.is_empty() {
                 // 使用variant的span
-                return Error::new_spanned(&variant, "must be a unit variable.")
+                return syn::Error::new_spanned(&variant, "must be a unit variable.")
                     .to_compile_error()
                     .into();
             }
@@ -215,7 +221,7 @@ Error::new(Span::call_site(), "requires unit variant")
 
 【正例】
 
-`build.rs`把`tonic`生成的代码直接放在`src`目录，这样IDE能够识别它们使自动完成能够工作，提高开发效率。
+`build.rs` 把 `tonic` 生成的代码直接放在 `src` 目录(生成的代码文件应该在 .gitignore 中忽略版本管理)，这样 IDE 能够识别它们使自动完成能够工作，提高开发效率。
 
 ```rust
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -239,4 +245,40 @@ trait World {
 
 let (client_transport, server_transport) = tarpc::transport::channel::unbounded();
 let mut client = WorldClient::new(client::Config::default(), client_transport).spawn();
+```
+
+## P.MAC.Proc.06 build.rs 生成的代码要保证没有任何警告
+
+【描述】
+build.rs 生成的代码(codegen)，要通过或忽略 clippy 检查，不要让用户/库的使用者自行忽略
+
+codegen 库要保证生成的代码应该非常干净没有任何警告，不应该让库的使用者去处理生成代码中的警告
+
+【正例】
+tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告
+
+```rust
+pub mod peer_communication_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+```
+
+【反例】
+lalrpop v0.19.6 生成的代码有几百个 clippy 警告，"淹没"了用户自己代码的 clippy 警告
+
+```
+warning: using `clone` on type `usize` which implements the `Copy` trait
+      --> /home/w/temp/my_parser/target/debug/build/my_parser-dd96f436ee76c58d/out/my_parser.rs:182148:21
+       |
+182148 |         let __end = __start.clone();
+       |                     ^^^^^^^^^^^^^^^ help: try removing the `clone` call: `__start`
+```
+
+使得 lalrpop 库的使用者必须手动给生成的模块代码加上 allow clippy ，给使用者带来不便
+
+```rust
+lalrpop_mod!(
+    #[allow(clippy::all)]
+    my_parser
+);
 ```
