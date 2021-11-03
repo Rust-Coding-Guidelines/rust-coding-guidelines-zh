@@ -24,8 +24,8 @@ Rust 语言核心库和标准库，都内置了一些声明宏和过程宏，以
 
 使用宏时，需要从 `声明宏` 和 `过程宏` 各自的特性为出发点，来安全使用它。
 
-- [声明宏规范](./macros/declarative.md)
-- [过程宏规范](./macros/procedural.md)
+- [声明宏规范](./macros/decl.md)
+- [过程宏规范](./macros/proc.md)
 
 **宏展开命令：**
 
