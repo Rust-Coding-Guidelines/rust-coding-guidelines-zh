@@ -373,6 +373,33 @@ let fut = async move {
 };
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gasy04-避免定义不必要的异步函数" id="gasy04-避免定义不必要的异步函数">G.ASY.04 避免定义不必要的异步函数</a></h2>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<p>如果一个异步函数内部没有任何异步代码，相比一个同步函数，它会产生额外的调用成本。</p>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#unused_async">unused_async</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
+</tbody></table>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn add(value: i32) -&gt; i32 {
+    value + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn add(value: i32) -&gt; i32 {
+    value + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

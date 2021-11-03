@@ -169,6 +169,9 @@
                     <main>
                         <h1><a class="header" href="#过程宏" id="过程宏">过程宏</a></h1>
 <p><a href="https://doc.rust-lang.org/reference/procedural-macros.html">过程宏（<em>Procedural macros</em>）</a> 允许开发者来创建语法扩展。你可以通过过程宏创建类似函数的宏、派生宏以及属性宏。</p>
+<p>广义上的&quot;过程宏&quot;指的是通过 syn/quote(毕竟几乎全部过程宏库都用 syn) 及 syn 生态(例如 darling) 进行代码生成等元编程操作。</p>
+<p>syn/quote 不仅能用于过程宏，还广泛用于代码生成(<em>codegen</em>)、静态分析等用途，例如 tonic-build/prost 源码中也用到了 syn/quote 。</p>
+<p>因此本过程宏规范不仅适用于过程宏，部分规范(例如 P.MAC.Proc.06 )还适用于 prost 这种代码生成库</p>
 <p>过程宏必须被单独定义在一个类型为<code>proc-macro</code> 的 crate 中。</p>
 <p>过程宏有两类报告错误的方式：<code>Panic</code> 或 通过 <code>compile_error</code>  宏调用发出错误。</p>
 <p>过程宏不具有卫生性（hygiene），这意味着它会受到外部语法项（item）的影响，也会影响到外部导入。</p>
@@ -322,7 +325,7 @@ pub fn derive_my_macro(input: TokenStream) -&gt; TokenStream {
         for variant in &amp;e.variants {
             if !variant.fields.is_empty() {
                 // 使用variant的span
-                return Error::new_spanned(&amp;variant, &quot;must be a unit variable.&quot;)
+                return syn::Error::new_spanned(&amp;variant, &quot;must be a unit variable.&quot;)
                     .to_compile_error()
                     .into();
             }
@@ -354,7 +357,7 @@ Error::new(Span::call_site(), &quot;requires unit variant&quot;)
 <li>过程宏一般用于消除样例式代码，提升库使用者的开发体验。</li>
 </ul>
 <p>【正例】</p>
-<p><code>build.rs</code>把<code>tonic</code>生成的代码直接放在<code>src</code>目录，这样IDE能够识别它们使自动完成能够工作，提高开发效率。</p>
+<p><code>build.rs</code> 把 <code>tonic</code> 生成的代码直接放在 <code>src</code> 目录(生成的代码文件应该在 .gitignore 中忽略版本管理)，这样 IDE 能够识别它们使自动完成能够工作，提高开发效率。</p>
 <pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
     tonic_build::configure()
         .out_dir(&quot;src&quot;)
@@ -376,6 +379,38 @@ trait World {
 
 let (client_transport, server_transport) = tarpc::transport::channel::unbounded();
 let mut client = WorldClient::new(client::Config::default(), client_transport).spawn();
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pmacproc06-buildrs-生成的代码要保证没有任何警告" id="pmacproc06-buildrs-生成的代码要保证没有任何警告">P.MAC.Proc.06 build.rs 生成的代码要保证没有任何警告</a></h2>
+<p>【描述】
+build.rs 生成的代码(codegen)，要通过或忽略 clippy 检查，不要让用户/库的使用者自行忽略</p>
+<p>codegen 库要保证生成的代码应该非常干净没有任何警告，不应该让库的使用者去处理生成代码中的警告</p>
+<p>【正例】
+tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub mod peer_communication_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】
+lalrpop v0.19.6 生成的代码有几百个 clippy 警告，&quot;淹没&quot;了用户自己代码的 clippy 警告</p>
+<pre><code>warning: using `clone` on type `usize` which implements the `Copy` trait
+      --&gt; /home/w/temp/my_parser/target/debug/build/my_parser-dd96f436ee76c58d/out/my_parser.rs:182148:21
+       |
+182148 |         let __end = __start.clone();
+       |                     ^^^^^^^^^^^^^^^ help: try removing the `clone` call: `__start`
+</code></pre>
+<p>使得 lalrpop 库的使用者必须手动给生成的模块代码加上 allow clippy ，给使用者带来不便</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>lalrpop_mod!(
+    #[allow(clippy::all)]
+    my_parser
+);
 <span class="boring">}
 </span></code></pre></pre>
 

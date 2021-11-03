@@ -212,7 +212,7 @@
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 符合： 上下文信息已经知道它是 Evenet
+</span>// 符合： 上下文信息已经知道它是 Event
 enum WebEvent {
     // An `enum` may either be `unit-like`,
     PageLoad,
@@ -223,7 +223,6 @@ enum WebEvent {
     // or c-like structures.
     Click { x: i64, y: i64 },
 }
-
 <span class="boring">}
 </span></code></pre></pre>
 <p>【反例】</p>

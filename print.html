@@ -480,7 +480,7 @@ git-fetch-with-cli = true
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 符合： 上下文信息已经知道它是 Evenet
+</span>// 符合： 上下文信息已经知道它是 Event
 enum WebEvent {
     // An `enum` may either be `unit-like`,
     PageLoad,
@@ -491,7 +491,6 @@ enum WebEvent {
     // or c-like structures.
     Click { x: i64, y: i64 },
 }
-
 <span class="boring">}
 </span></code></pre></pre>
 <p>【反例】</p>
@@ -8224,6 +8223,9 @@ fn unit() {
 </span></code></pre></pre>
 <h1><a class="header" href="#过程宏" id="过程宏">过程宏</a></h1>
 <p><a href="https://doc.rust-lang.org/reference/procedural-macros.html">过程宏（<em>Procedural macros</em>）</a> 允许开发者来创建语法扩展。你可以通过过程宏创建类似函数的宏、派生宏以及属性宏。</p>
+<p>广义上的&quot;过程宏&quot;指的是通过 syn/quote(毕竟几乎全部过程宏库都用 syn) 及 syn 生态(例如 darling) 进行代码生成等元编程操作。</p>
+<p>syn/quote 不仅能用于过程宏，还广泛用于代码生成(<em>codegen</em>)、静态分析等用途，例如 tonic-build/prost 源码中也用到了 syn/quote 。</p>
+<p>因此本过程宏规范不仅适用于过程宏，部分规范(例如 P.MAC.Proc.06 )还适用于 prost 这种代码生成库</p>
 <p>过程宏必须被单独定义在一个类型为<code>proc-macro</code> 的 crate 中。</p>
 <p>过程宏有两类报告错误的方式：<code>Panic</code> 或 通过 <code>compile_error</code>  宏调用发出错误。</p>
 <p>过程宏不具有卫生性（hygiene），这意味着它会受到外部语法项（item）的影响，也会影响到外部导入。</p>
@@ -8377,7 +8379,7 @@ pub fn derive_my_macro(input: TokenStream) -&gt; TokenStream {
         for variant in &amp;e.variants {
             if !variant.fields.is_empty() {
                 // 使用variant的span
-                return Error::new_spanned(&amp;variant, &quot;must be a unit variable.&quot;)
+                return syn::Error::new_spanned(&amp;variant, &quot;must be a unit variable.&quot;)
                     .to_compile_error()
                     .into();
             }
@@ -8409,7 +8411,7 @@ Error::new(Span::call_site(), &quot;requires unit variant&quot;)
 <li>过程宏一般用于消除样例式代码，提升库使用者的开发体验。</li>
 </ul>
 <p>【正例】</p>
-<p><code>build.rs</code>把<code>tonic</code>生成的代码直接放在<code>src</code>目录，这样IDE能够识别它们使自动完成能够工作，提高开发效率。</p>
+<p><code>build.rs</code> 把 <code>tonic</code> 生成的代码直接放在 <code>src</code> 目录(生成的代码文件应该在 .gitignore 中忽略版本管理)，这样 IDE 能够识别它们使自动完成能够工作，提高开发效率。</p>
 <pre><pre class="playground"><code class="language-rust">fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
     tonic_build::configure()
         .out_dir(&quot;src&quot;)
@@ -8431,6 +8433,38 @@ trait World {
 
 let (client_transport, server_transport) = tarpc::transport::channel::unbounded();
 let mut client = WorldClient::new(client::Config::default(), client_transport).spawn();
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pmacproc06-buildrs-生成的代码要保证没有任何警告" id="pmacproc06-buildrs-生成的代码要保证没有任何警告">P.MAC.Proc.06 build.rs 生成的代码要保证没有任何警告</a></h2>
+<p>【描述】
+build.rs 生成的代码(codegen)，要通过或忽略 clippy 检查，不要让用户/库的使用者自行忽略</p>
+<p>codegen 库要保证生成的代码应该非常干净没有任何警告，不应该让库的使用者去处理生成代码中的警告</p>
+<p>【正例】
+tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub mod peer_communication_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】
+lalrpop v0.19.6 生成的代码有几百个 clippy 警告，&quot;淹没&quot;了用户自己代码的 clippy 警告</p>
+<pre><code>warning: using `clone` on type `usize` which implements the `Copy` trait
+      --&gt; /home/w/temp/my_parser/target/debug/build/my_parser-dd96f436ee76c58d/out/my_parser.rs:182148:21
+       |
+182148 |         let __end = __start.clone();
+       |                     ^^^^^^^^^^^^^^^ help: try removing the `clone` call: `__start`
+</code></pre>
+<p>使得 lalrpop 库的使用者必须手动给生成的模块代码加上 allow clippy ，给使用者带来不便</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>lalrpop_mod!(
+    #[allow(clippy::all)]
+    my_parser
+);
 <span class="boring">}
 </span></code></pre></pre>
 <h1><a class="header" href="#多线程" id="多线程">多线程</a></h1>
@@ -8788,6 +8822,33 @@ let fut = async move {
 };
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gasy04-避免定义不必要的异步函数" id="gasy04-避免定义不必要的异步函数">G.ASY.04 避免定义不必要的异步函数</a></h2>
+<h3><a class="header" href="#描述-144" id="描述-144">【描述】</a></h3>
+<p>如果一个异步函数内部没有任何异步代码，相比一个同步函数，它会产生额外的调用成本。</p>
+<h3><a class="header" href="#级别建议-115" id="级别建议-115">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-107" id="lint-检测-107">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#unused_async">unused_async</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
+</tbody></table>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn add(value: i32) -&gt; i32 {
+    value + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn add(value: i32) -&gt; i32 {
+    value + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
 <h1><a class="header" href="#unsafe-rust" id="unsafe-rust">Unsafe Rust</a></h1>
 <p>Unsafe Rust 是 Safe Rust 的超集，意味着在 Unsafe Rust 中也会有 Safe Rust的安全检查。但是 Unsafe Rust 中下面五件事是Safe Rust 的检查鞭长莫及的地方：</p>
 <ol>
@@ -8818,13 +8879,13 @@ let fut = async move {
 <p>对比 Safe 代码的性能看是否够用，就可以减少不必要的 Unsafe。</p>
 <hr />
 <h2><a class="header" href="#guns01--不要随便为-带有-unsafe命名的-类型或方法创建别名" id="guns01--不要随便为-带有-unsafe命名的-类型或方法创建别名">G.UNS.01  不要随便为 带有 <code>unsafe</code>命名的 类型或方法创建别名</a></h2>
-<h3><a class="header" href="#级别建议-115" id="级别建议-115">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-116" id="级别建议-116">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-107" id="lint-检测-107">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-108" id="lint-检测-108">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#unsafe_removed_from_name">unsafe_removed_from_name</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-144" id="描述-144">【描述】</a></h3>
+<h3><a class="header" href="#描述-145" id="描述-145">【描述】</a></h3>
 <p>Rust 里  <code>unsafe</code> 字样用于提醒开发者在编写代码的时候注意保证安全。如果修改别名，隐藏了这种提醒，不利于展示这种信息。</p>
 <p>不利于开发者去保证安全。</p>
 <p>【正例】</p>
@@ -9225,11 +9286,11 @@ macro_rules! from_event_option_array_into_event_list(
 <h2><a class="header" href="#gunsabs01--在-公开的-unsafe-函数的文档中必须增加--safety-注释" id="gunsabs01--在-公开的-unsafe-函数的文档中必须增加--safety-注释">G.UNS.ABS.01  在 公开的 unsafe 函数的文档中必须增加 <code># Safety</code> 注释</a></h2>
 <h3><a class="header" href="#级别必须-16" id="级别必须-16">【级别：必须】</a></h3>
 <p>必须按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-108" id="lint-检测-108">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-109" id="lint-检测-109">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc">missing_safety_doc</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-145" id="描述-145">【描述】</a></h3>
+<h3><a class="header" href="#描述-146" id="描述-146">【描述】</a></h3>
 <p>在公开（pub）的 unsafe 函数文档中，必须增加 <code># Safety</code> 注释来解释该函数的安全边界，这样使用该函数的用户才可以安全地使用它。</p>
 <p>说明： 该规则通过 cargo clippy 来检测。默认会发出警告。</p>
 <h3><a class="header" href="#示例-32" id="示例-32">【示例】</a></h3>
@@ -9271,12 +9332,12 @@ macro_rules! from_event_option_array_into_event_list(
 <h2><a class="header" href="#gunsabs02---在-unafe-函数中应该使用-assert-而非-debug_assert-去校验边界条件" id="gunsabs02---在-unafe-函数中应该使用-assert-而非-debug_assert-去校验边界条件">G.UNS.ABS.02   在 Unafe 函数中应该使用 <code>assert!</code> 而非 <code>debug_assert!</code> 去校验边界条件</a></h2>
 <h3><a class="header" href="#级别必须-17" id="级别必须-17">【级别：必须】</a></h3>
 <p>必须按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-109" id="lint-检测-109">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-110" id="lint-检测-110">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#debug_assert_with_mut_call">debug_assert_with_mut_call</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 </tbody></table>
 <p>注意该 lint 当前是 Nursery Group，意味着可能会产生误报 Bug。</p>
-<h3><a class="header" href="#描述-146" id="描述-146">【描述】</a></h3>
+<h3><a class="header" href="#描述-147" id="描述-147">【描述】</a></h3>
 <p><code>assert!</code> 宏 在 Release 和 Debug 模式下都会被检查，并且不能被禁用。它通常用来在  unsafe 函数中判断传入的参数是否满足某种边界条件，以此来防止不合法的参数传入导致未定义行为。</p>
 <p>但是 <code>debug_assert!</code> 则可以通过配置 <code>-C debug-assertions</code> 来禁用它， 而且 <code>debug_assert!</code>    在 Release 模式下也会被编译器优化。所以，一旦使用了 <code>debug_assert!</code> 在 unsafe 函数中用来防范不合法参数，那有可能会失效。</p>
 <p>【正例】</p>
@@ -9379,13 +9440,13 @@ struct Vec&lt;T&gt; {
 </span></code></pre></pre>
 <hr />
 <h2><a class="header" href="#gunsptr01---当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用" id="gunsptr01---当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用">G.UNS.PTR.01   当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></h2>
-<h3><a class="header" href="#级别建议-116" id="级别建议-116">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-117" id="级别建议-117">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-110" id="lint-检测-110">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-111" id="lint-检测-111">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#cast_ptr_alignment">cast_ptr_alignment</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-147" id="描述-147">【描述】</a></h3>
+<h3><a class="header" href="#描述-148" id="描述-148">【描述】</a></h3>
 <p>该 Lint 会检查是否出现 指针类型被强转为和当前内存对齐不一致的指针类型 的情况，要注意不要对这类强转后的指针进行解引用操作，否则会有未定义行为。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -9419,13 +9480,13 @@ struct Vec&lt;T&gt; {
 
 </code></pre></pre>
 <h2><a class="header" href="#gunsptr02---禁止将不可变指针手工转换为可变指针" id="gunsptr02---禁止将不可变指针手工转换为可变指针">G.UNS.PTR.02   禁止将不可变指针手工转换为可变指针</a></h2>
-<h3><a class="header" href="#级别建议-117" id="级别建议-117">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-118" id="级别建议-118">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-111" id="lint-检测-111">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-112" id="lint-检测-112">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut">cast_ref_to_mut</a></td><td>yes</td><td>no</td><td><strong>correctness</strong></td><td>deny</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-148" id="描述-148">【描述】</a></h3>
+<h3><a class="header" href="#描述-149" id="描述-149">【描述】</a></h3>
 <p>因为将不可变指针手工转换为可变指针可能会引发未定义行为。通常有这种需求，合法的手段是使用 <code>UnsafeCell&lt;T&gt;</code>。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -9477,13 +9538,13 @@ unsafe fn mut_self(&amp;self) -&gt; &amp;mut Self {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gunsptr03---尽量使用-pointercast-来代替-使用-as-强转指针" id="gunsptr03---尽量使用-pointercast-来代替-使用-as-强转指针">G.UNS.PTR.03   尽量使用 <code>pointer::cast</code> 来代替 使用 <code>as</code> 强转指针</a></h2>
-<h3><a class="header" href="#级别建议-118" id="级别建议-118">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-119" id="级别建议-119">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-112" id="lint-检测-112">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-113" id="lint-检测-113">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr">ptr_as_ptr</a></td><td>yes</td><td>no</td><td><strong>correctness</strong></td><td>deny</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-149" id="描述-149">【描述】</a></h3>
+<h3><a class="header" href="#描述-150" id="描述-150">【描述】</a></h3>
 <p>使用 <code>pointer::cast</code> 方法转换更加安全，它不会意外地改变指针的可变性，也不会将指针转换为其他类型。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -9587,14 +9648,14 @@ fn test() {
 </ul>
 <hr />
 <h2><a class="header" href="#gunsmem01---使用-maybeuninitt-来处理未初始化的内存" id="gunsmem01---使用-maybeuninitt-来处理未初始化的内存">G.UNS.MEM.01   使用 <code>MaybeUninit&lt;T&gt;</code> 来处理未初始化的内存</a></h2>
-<h3><a class="header" href="#级别建议-119" id="级别建议-119">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-120" id="级别建议-120">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-113" id="lint-检测-113">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-114" id="lint-检测-114">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#uninit_assumed_init">uninit_assumed_init</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#uninit_vec">uninit_vec</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-150" id="描述-150">【描述】</a></h3>
+<h3><a class="header" href="#描述-151" id="描述-151">【描述】</a></h3>
 <p>Rust 编译器要求变量要根据其类型正确初始化。</p>
 <p>比如引用类型的变量必须对齐且非空。这是一个必须始终坚持的不变量，即使在 Unsafe 代码中也是如此。因此，零初始化引用类型的变量会导致立即未定义行为，无论该引用是否访问过内存。</p>
 <p>编译器利用这一点，进行各种优化，并且可以省略运行时检查。</p>
@@ -9939,16 +10000,16 @@ impl From&lt;ParseError&gt; for parse_error {
 <p>虽然 <code>no-std</code> 下不能用Rust 的标准库，但是可以自定义 <code>no-std</code> 下的标准库 <code>baremetal-std</code>，用于积累 <code>no-std</code> 下常用的公共库。</p>
 <h1><a class="header" href="#其他" id="其他">其他</a></h1>
 <h2><a class="header" href="#goth01----对于某些场景下不建议使用的方法可以通过配置-clippytoml-来拒绝" id="goth01----对于某些场景下不建议使用的方法可以通过配置-clippytoml-来拒绝">G.OTH.01    对于某些场景下不建议使用的方法可以通过配置 <code>clippy.toml</code> 来拒绝</a></h2>
-<h3><a class="header" href="#级别建议-120" id="级别建议-120">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-121" id="级别建议-121">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-114" id="lint-检测-114">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-115" id="lint-检测-115">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#disallowed_method">disallowed_method</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents">disallowed_script_idents</a></td><td>yes</td><td>no</td><td><strong>restriction</strong></td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#disallowed_type">disallowed_type</a></td><td>yes</td><td>no</td><td><strong>nursery</strong></td><td>allow</td></tr>
 </tbody></table>
 <p>这些lint 作用相似，但注意<code>nursery</code> 的lint 还未稳定。 </p>
-<h3><a class="header" href="#描述-151" id="描述-151">【描述】</a></h3>
+<h3><a class="header" href="#描述-152" id="描述-152">【描述】</a></h3>
 <p>有些场合可能需要拒绝使用一些容易出错的方法或函数，可以在 <code>clippy.toml</code> 中通过配置 <code>disallowed_method</code> 来满足这个需求。</p>
 <pre><code class="language-toml"># clippy.toml
 disallowed-methods = [
@@ -9989,13 +10050,13 @@ let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#goth02---标准库-计算秒级毫秒级微秒级的时间请使用对应的方法" id="goth02---标准库-计算秒级毫秒级微秒级的时间请使用对应的方法">G.OTH.02   【标准库】 计算秒级、毫秒级、微秒级的时间请使用对应的方法</a></h2>
-<h3><a class="header" href="#级别建议-121" id="级别建议-121">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-122" id="级别建议-122">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-115" id="lint-检测-115">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-116" id="lint-检测-116">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#duration_subsec">duration_subsec</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-152" id="描述-152">【描述】</a></h3>
+<h3><a class="header" href="#描述-153" id="描述-153">【描述】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10022,13 +10083,13 @@ let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#goth03---代码中不要出现隐藏的-unicode-字符" id="goth03---代码中不要出现隐藏的-unicode-字符">G.OTH.03   代码中不要出现隐藏的 Unicode 字符</a></h2>
-<h3><a class="header" href="#级别建议-122" id="级别建议-122">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-123" id="级别建议-123">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-116" id="lint-检测-116">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-117" id="lint-检测-117">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#invisible_characters">invisible_characters</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-153" id="描述-153">【描述】</a></h3>
+<h3><a class="header" href="#描述-154" id="描述-154">【描述】</a></h3>
 <p>该 Lint 可以检测代码中出现的隐藏 Unicode 字符。</p>
 <p>但也有例外，比如你的代码恰好是要处理这些特殊Unicode字符的。</p>
 <p>【例外】</p>
