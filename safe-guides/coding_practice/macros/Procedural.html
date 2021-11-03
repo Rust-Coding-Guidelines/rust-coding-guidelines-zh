@@ -382,11 +382,11 @@ let mut client = WorldClient::new(client::Config::default(), client_transport).s
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#pmacproc06-buildrs-生成的代码要保证没有任何警告" id="pmacproc06-buildrs-生成的代码要保证没有任何警告">P.MAC.Proc.06 build.rs 生成的代码要保证没有任何警告</a></h2>
-<p>【描述】
-build.rs 生成的代码(codegen)，要通过或忽略 clippy 检查，不要让用户/库的使用者自行忽略</p>
+<p>【描述】</p>
+<p>build.rs 生成的代码(codegen)，要通过或忽略 clippy 检查，不要让用户/库的使用者自行忽略</p>
 <p>codegen 库要保证生成的代码应该非常干净没有任何警告，不应该让库的使用者去处理生成代码中的警告</p>
-<p>【正例】
-tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告</p>
+<p>【正例】</p>
+<p>tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -395,8 +395,8 @@ tonic-build 生成的 rs 会通过 allow 忽略掉 clippy 警告</p>
     use tonic::codegen::*;
 <span class="boring">}
 </span></code></pre></pre>
-<p>【反例】
-lalrpop v0.19.6 生成的代码有几百个 clippy 警告，&quot;淹没&quot;了用户自己代码的 clippy 警告</p>
+<p>【反例】</p>
+<p>lalrpop v0.19.6 生成的代码有几百个 clippy 警告，&quot;淹没&quot;了用户自己代码的 clippy 警告</p>
 <pre><code>warning: using `clone` on type `usize` which implements the `Copy` trait
       --&gt; /home/w/temp/my_parser/target/debug/build/my_parser-dd96f436ee76c58d/out/my_parser.rs:182148:21
        |
