@@ -214,7 +214,7 @@ let x : f32 = 16_777_217.0;
 assert_eq!(16777216.0, x);
 ```
 
-## G.TYP.Float.06     浮点数和整数之间转换时不要使用 `transmute` 在
+## G.TYP.Float.06     浮点数和整数之间转换时不要使用 `transmute` 
 
 ### 【级别：建议】
 
