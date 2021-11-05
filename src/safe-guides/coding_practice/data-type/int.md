@@ -66,18 +66,19 @@ assert_eq!(100i32+1, 101);
 【正例】
 
 ```rust
-let a = `255` 
-let b = `65_535`
-let c =`4_042_322_160` 
+let a = `0xFF`
+let b = `0xFFFF`
+let c = `0xF0F0_F0F0
 ```
 
 【反例】
 
 ```rust
-let a = `0xFF` 
-let b = `0xFFFF` 
-let c = `0xF0F0_F0F0
+let a = `255` 
+let b = `65_535`
+let c =`4_042_322_160` 
 ```
+
 
 ## G.TYP.INT.03  避免将有符号整数和无符号整数之间强制转换
 

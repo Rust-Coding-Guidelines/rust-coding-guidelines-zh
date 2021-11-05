@@ -101,7 +101,7 @@ if a && b || a { ... }
 
 该示例中，条件 `b` 是不需要的，它等价于 `if a {...}`。
 
-## G.TYP.Bool.03 对于布尔表达式要避免使用`match`模式匹配
+## G.TYP.Bool.03 如果 match 匹配表达式为布尔类型，建议使用 `if` 表达式来代替
 
 ### 【级别：建议】
 
@@ -111,7 +111,8 @@ if a && b || a { ... }
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
-| [logic_bug ](https://rust-lang.github.io/rust-clippy/master/#logic_bug ) | yes| no | pedantic | allow |
+| [logic_bug ](https://rust-lang.github.io/rust-clippy/master/#logic_bug ) | yes | no | pedantic | allow |
+| [match_bool](https://rust-lang.github.io/rust-clippy/master/#match_bool) | yes | no | pedantic | allow |
 
 ### 【描述】
 
@@ -141,8 +142,6 @@ match condition {
     false => bar(),
 }
 ```
-
-该示例中，条件 `b` 是不需要的，它等价于 `if a {...}`。
 
 
 ## G.TYP.Bool.04 不要尝试将数字类型转换为布尔值
@@ -207,48 +206,8 @@ if { true } { /* ... */ }
 if { let x = somefunc(); x } { /* ... */ }
 ```
 
-## G.TYP.Bool.06   如果 match 匹配表达式为布尔类型，建议使用 `if`   表达式来代替
 
-### 【级别：必须】
-
-必须按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [match_bool](https://rust-lang.github.io/rust-clippy/master/#match_bool) | yes           | no           | pedantic   | allow |
-
-### 【描述】
-
-为了增加可读性。
-
-【正例】
-
-```rust
-fn foo() {}
-fn bar() {}
-let condition: bool = true;
-if condition {
-    foo();
-} else {
-    bar();
-}
-```
-
-【反例】
-
-```rust
-fn foo() {}
-fn bar() {}
-let condition: bool = true;
-match condition {
-    true => foo(),
-    false => bar(),
-}
-```
-
-## G.TYP.Bool.07       非必要时，布尔运算优先使用 逻辑运算符( `&&/||`)而非 位运算符 (`&/|`)
+## G.TYP.Bool.06       非必要时，布尔运算优先使用 逻辑运算符( `&&/||`)而非 位运算符 (`&/|`)
 
 ### 【级别：必须】
 
