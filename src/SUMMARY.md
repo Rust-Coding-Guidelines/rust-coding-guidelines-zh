@@ -74,6 +74,10 @@
         - [rustfmt 模板](./safe-guides/Appendix/templates/rustfmt.toml.md)
         - [clippy 模板](./safe-guides/Appendix/templates/clippy.toml.md)
         - [deny 模板](./safe-guides/Appendix/templates/deny.toml.md)
+    - [工具链](./safe-guides/Appendix/tools/intro.md)
+        - [rustfmt](./safe-guides/Appendix/tools/rustfmt.md)
+        - [noisy-clippy](./safe-guides/Appendix/tools/noisy-clippy.md)
+        - [cargo-udeps](./safe-guides/Appendix/tools/cargo-udeps.md) 
 
 # 领域最佳实践
 
