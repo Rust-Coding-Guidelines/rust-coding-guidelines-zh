@@ -82,6 +82,7 @@
 # 领域最佳实践
 
 - [介绍](./best-practices/intro.md)
+- [高性能计算](./best-practices/hpc.md)
 - [嵌入式 Rust](./best-practices/embedded.md)
 - [数据库](./best-practices/databases.md)
 - [游戏](./best-practices/games.md)
@@ -97,19 +98,16 @@
 
 - [介绍](./cheat-sheet/README.md)
 
-# 工具链使用指南
 
-- [介绍](./tools/intro.md)
-- [Rustfmt 配置相关说明](./tools/rustfmt.md)
 
 # Rust 优化指南
 
 - [介绍](./optimizing/intro.md)
 
 
-# Rust 常用基础库指南
+# Rust Cookbook
 
-- [介绍](./libs/intro.md)
+- [介绍](./cookbook/intro.md)
 
 
 
