@@ -62,6 +62,7 @@
         - [I/O](./safe-guides/coding_practice/unsafe_rust/io.md)
     - [no-std](./safe-guides/coding_practice/no-std.md)
     - [I/O](./safe-guides/coding_practice/io.md)
+    - [信息安全](./safe-guides/coding_practice/security.md)
     - [其他](./safe-guides/coding_practice/others.md)
 - [附录](./safe-guides/Appendix/toc.md)
     - [测试](./safe-guides/Appendix/test.md)

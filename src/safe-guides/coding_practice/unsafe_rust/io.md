@@ -24,3 +24,7 @@ pub fn do_some_io<FD: AsRawFd>(input: &FD) -> io::Result<()> {
 
 在一些特殊的情况下，违反 I/O 安全甚至会导致内存安全。
 
+【定制参考】
+
+检测在 IO 时使用  `as_raw_fd` 调用时，警告开发者这是 Unsafe 的，要对传入的原始文件描述符的安全性进行考察。
+

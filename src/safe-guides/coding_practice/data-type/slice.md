@@ -21,8 +21,8 @@ let points: Vec<Coordinate> = ...;
 let mut differences = Vec::new();
 
 // 切片提供 windows 或 array_windows 方法返回迭代器
-for [previous, current] in points.windows().copied() {
-  differences.push(current - previous);
+for [previous, current] in points.array_windows().copied() {
+    differences.push(current - previous);
 }
 ```
 

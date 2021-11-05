@@ -41,6 +41,12 @@ if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
 }
 ```
 
+【定制参考】
+
+检测到包含 `*mut T`类型的结构体，应该给予开发者警告或建议去使用 `NonNull` 。
+
+
+
 ## P.UNS.PTR.02   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
 
 **【描述】**
@@ -76,7 +82,9 @@ struct Vec<T> {
 }
 ```
 
+【定制参考】
 
+检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权
 
 
 

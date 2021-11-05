@@ -13,11 +13,11 @@ Unsafe Rust 中 API 的安全性设计通常有两种方式：
 
 ---
 
-## P.UNS.SafeAbstract.01   代码中要注意是否会因为恐慌（Panic）发生而导致内存安全问题
+## P.UNS.SafeAbstract.01   代码中要注意是否会因为 Panic 发生而导致内存安全问题
 
 **【描述】**
 
-恐慌一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了 `UnwindSafe` trait 的类型捕获恐慌。
+Panic 一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了 `UnwindSafe` trait 的类型捕获恐慌。
 
 当 Panic 发生时，会引发栈回退（stack unwind），调用栈分配对象的析构函数，并将控制流转移给恐慌处理程序中。所以，当恐慌发生的时候，当前存活变量的析构函数将会被调用，从而导致一些内存安全问题，比如释放已经释放过的内存。
 
@@ -185,6 +185,10 @@ for MappedMutexGuard<'_, T, U> {}
 * MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
 ```
 
+【定制参考】
+
+Lint 需要检测 手工实现 auto trait 的行为，比如 `Sync/Send`，对开发者发出警告，要注意考虑其安全性
+
 
 
 ## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
@@ -219,8 +223,6 @@ use cache;
         /// A value that was borrowed from outside the cache.
         Borrowed(&'a V),
     }
-
-    ```
 **/
 fn main() {
     let c = cache::Cache::new(8, 4096);
@@ -239,7 +241,13 @@ fn main() {
 }
 ```
 
-## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露未初始化内存
+【定制参考】
+
+Lint需要检测在 pub 的结构体、枚举等类型中有裸指针字段或变体，对开发者发出警告，要注意考虑其安全性
+
+
+
+## P.UNS.SafeAbstract.05    不要随便在公开的 API 中暴露未初始化内存
 
 **【描述】**
 

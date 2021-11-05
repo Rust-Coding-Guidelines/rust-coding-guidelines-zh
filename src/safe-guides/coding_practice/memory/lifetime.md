@@ -8,28 +8,40 @@
 
 **【描述】**
 
-生命周期参数的命名应该尽量简单，用 `'a/ 'b/ 'c` 即可，不要将其命名为带语义的名称。
+生命周期参数的命名应该尽量简单，可以使用表达一定语义的缩写。
 
 因为生命周期参数的目的是给编译器使用，用于防止函数中出现悬垂引用。
 
-生命周期参数越简单，越没有语义，就越不会影响到其他业务代码，作为开发者可以做到无视这些生命周期参数，而只有在需要的时候才检查它们。
-
-如果加上语义的话，就会影响代码可读性。
+适当简单的携带语义的缩写，可以最小化对业务代码的干扰。并且在生命周期参数较多的情况下，清晰地表达具体哪个引用属于哪个生命周期。
 
 【正例】
 
 ```rust
-fn the_longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
-    if s1.len() > s2.len() { s1 } else { s2 }
+/// 'cg = the duration of the constraint generation process itself.
+struct ConstraintGeneration<'cg, 'cx, 'tcx> {
+    infcx: &'cg InferCtxt<'cx, 'tcx>,
+    all_facts: &'cg mut Option<AllFacts>,
+    location_table: &'cg LocationTable,
+    liveness_constraints: &'cg mut LivenessValues<RegionVid>,
+    borrow_set: &'cg BorrowSet<'tcx>,
+    body: &'cg Body<'tcx>,
 }
+
 ```
 
 【反例】
 
 ```rust
-fn the_longest<'strlife>(s1: &'strlife str, s2: &'strlife str) -> &'strlife str {
-    if s1.len() > s2.len() { s1 } else { s2 }
+
+struct ConstraintGeneration<'a, 'b, 'c> {
+    infcx: &'cg InferCtxt<'b, 'c>,
+    all_facts: &'a mut Option<AllFacts>,
+    location_table: &'a LocationTable,
+    liveness_constraints: &'a mut LivenessValues<RegionVid>,
+    borrow_set: &'a BorrowSet<'c>,
+    body: &'cg Body<'c>,
 }
+
 ```
 
 ## P.MEM.Lifetime.02  在需要的时候，最好显式地标注生命周期，而非利用编译器推断

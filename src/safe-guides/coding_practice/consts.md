@@ -13,6 +13,24 @@
 
 ### 【描述】
 
+常量的定义必须表达清楚相应语义，这样可以增强可读性。
+
+【正例】
+
+```rust
+const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
+const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+```
+
+【反例】
+
+```rust
+const ERROR_NO_1: u32 = 336;
+const ERROR_NO_2: u32 = 594;
+```
+
+
+
 ## P.CNS.02 注意根据常量和静态变量的本质区别来选择何时使用常量或静态变量
 
 ### 【描述】
@@ -59,10 +77,6 @@ let x = 3.14;
 let y = 1_f64 / x;
 ```
 
-
-
-
-
 ## G.CNS.02 不要断言常量布尔类型
 
 ### 【级别：必须】
@@ -77,9 +91,24 @@ let y = 1_f64 / x;
 
 ### 【描述】
 
-因为有可能被编译器优化掉。
+因为有可能被编译器优化掉。最好直接使用 `panic!` 代替。
+
+【正例】
+
+```rust
+panic!（"something"）;
+```
 
 【反例】
+
+```rust
+const B: bool = false;
+assert!(B);
+```
+
+【例外】
+
+该示例需要维护一个常量的不变性，确保它在未来修改时不会被无意中破坏。类似于 [static_assertions/](https://docs.rs/static_assertions/1.1.0/static_assertions/) 的作用。
 
 ```rust
 #![allow(clippy::assertions_on_constants)]
@@ -89,10 +118,6 @@ const MAX_END: usize = 2048;
 const MAX_PRINTED: usize = MAX_START + MAX_END;
 assert!(MAX_PRINTED < MIN_OVERFLOW);
 ```
-
-
-
-
 
 
 ## G.CNS.03 不要将内部可变性容器声明为常量

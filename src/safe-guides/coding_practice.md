@@ -44,4 +44,6 @@
     - [内存布局](./coding_practice/unsafe_rust/layout.md)
     - [FFi 规范](./coding_practice/unsafe_rust/ffi.md)
 - [no-std](./coding_practice/no-std.md)
+- [信息安全](./coding_practice/security.md)
 - [其他](./coding_practice/others.md)
+

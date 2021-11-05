@@ -18,6 +18,25 @@
 
 当两个作用域存在包含关系时，不要使用变量遮蔽功能，即，在较小的作用域内定义与较大作用域中相同的变量名，以免引起逻辑Bug。
 
+【示例】
+
+```rust
+fn main(){
+    let mut a = 0;
+    {
+        // do something
+        a = 42;
+        
+        // bug
+        // let a = 42;
+    }
+    
+    a; // use a again
+}
+```
+
+
+
 ## P.VAR.03 避免大量栈分配
 
 **【描述】**
@@ -73,10 +92,10 @@ let data = data; //  后面就不需要改动了，由编译器可以确保
 【反例】
 
 ```rust
-let data = {
+let data = { 
     let mut data = get_vec();
     data.sort();
-    data // 后面不在改动，但代码语义上没有表现出来，并且编译器也无法确保后面不会被改变
+    data // 虽然后面不再改动，但代码语义上没有表现出来先改变，后不变那种顺序语义
 };
 
 // Here `data` is immutable.
