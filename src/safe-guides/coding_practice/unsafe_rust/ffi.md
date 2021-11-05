@@ -149,7 +149,19 @@ FFi 接口使用的字符串要符合 C 语言约定，即使用 `\0` 结尾且�
 
 Rust 中字符串要求 `utf-8 `编码，而 C 字符串则没有这个要求。所以需要注意编码。
 
+【正例】
 
+```rust
+let f = libc::fopen("/proc/uptime\0".as_ptr().cast(), "r\0".as_ptr().cast());
+```
+
+【反例】
+
+```rust
+let f = libc::fopen("/proc/uptime".as_ptr().cast(), "r".as_ptr().cast());
+// 即使 /proc/uptime 文件存在，fopen 系统调用也会返回 NULL
+// 并且将错误码 errno 标记为 2 ("No such file or directory")
+```
 
 ## P.UNS.FFi.08   从外部传入的不健壮类型的外部值要进行检查
 
