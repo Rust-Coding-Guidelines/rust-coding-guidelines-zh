@@ -86,6 +86,21 @@ struct Vec<T> {
 
 检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权
 
+## P.UNS.PTR.03   不要将裸指针在多线程间共享
+
+**【描述】**
+
+裸指针在 Rust 中不是线程安全的，将裸指针在多线程传递编译器也会编译出错。如果需要在多线程间共享裸指针，则考虑使用 `NewType` 模式来包装它。
+
+【正例】
+
+```rust
+struct MyBox(*mut u8);
+
+unsafe impl Send for MyBox {}
+unsafe impl Sync for MyBox {}
+```
+
 
 
 ---
