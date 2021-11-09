@@ -15,78 +15,7 @@ Rust提供了`*const T`（不变）和`*mut T`（可变）两种指针类型。�
 
 ---
 
-
-
-## P.UNS.PTR.01   建议使用 `NonNull<T>` 来替代 `*mut T`
-
-**【描述】**
-
-尽量使用 [`NonNull`](https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html) 来包装 `*mut T`。
-
-`NonNull` 的优势：
-
-1. 非空指针。会自动检查包装的指针是否为空。
-2. 协变。方便安全抽象。如果用裸指针，则需要配合 `PhantomData`类型来保证协变。
-
-【正例】
-
-```rust
-use std::ptr::NonNull;
-
-let mut x = 0u32;
-let ptr = NonNull::<u32>::new(&mut x as *mut _).expect("ptr is null!");
-
-if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
-    unreachable!();
-}
-```
-
-【定制参考】
-
-检测到包含 `*mut T`类型的结构体，应该给予开发者警告或建议去使用 `NonNull` 。
-
-
-
-## P.UNS.PTR.02   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
-
-**【描述】**
-
-`PhantomData<T>` 是经常被用于 Unsafe Rust 中配合裸指针来指定协变和所有权的，为裸指针构建的类型保证安全性和有效性。否则，可能会产生未定义行为。
-
-  参考： [`PhantomData<T>`  的型变（variance）模式表](https://doc.rust-lang.org/nomicon/phantom-data.html) 
-
-【正例】
-
-```rust
-use std::marker;
-
-struct Vec<T> {
-    data: *const T, // *const for variance!
-    len: usize,
-    cap: usize,
-    _marker: marker::PhantomData<T>, // 让 Vec<T> 拥有 T，并且让 指针有了协变
-}
-```
-
-【反例】
-
-```rust
-
-// Vec<T> 不拥有类型 T，并且 data 字段的裸指针不支持协变
-// 这样的话，是有风险的。
-// 为 Vec<T> 实现的 Drop 可能导致 UB
-struct Vec<T> {
-    data: *const T, 
-    len: usize,
-    cap: usize,
-}
-```
-
-【定制参考】
-
-检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权
-
-## P.UNS.PTR.03   不要将裸指针在多线程间共享
+## P.UNS.PTR.01   不要将裸指针在多线程间共享
 
 **【描述】**
 
@@ -104,8 +33,6 @@ unsafe impl Sync for MyBox {}
 
 
 ---
-
-
 
 ## G.UNS.PTR.01   当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用
 
@@ -255,5 +182,91 @@ let ptr: *const u32 = &42_u32;
 let mut_ptr: *mut u32 = &mut 42_u32;
 let _ = ptr as *const i32;
 let _ = mut_ptr as *mut i32;
+```
+
+## G.UNS.PTR.04   建议使用 `NonNull<T>` 来替代 `*mut T`
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+检测到包含 `*mut T`类型的结构体，应该给予开发者警告或建议去使用 `NonNull` 。
+
+### 【描述】
+
+尽量使用 [`NonNull`](https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html) 来包装 `*mut T`。
+
+`NonNull` 的优势：
+
+1. 非空指针。会自动检查包装的指针是否为空。
+2. 协变。方便安全抽象。如果用裸指针，则需要配合 `PhantomData`类型来保证协变。
+
+【正例】
+
+```rust
+use std::ptr::NonNull;
+
+let mut x = 0u32;
+let ptr = NonNull::<u32>::new(&mut x as *mut _).expect("ptr is null!");
+
+if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
+    unreachable!();
+}
+```
+
+## G.UNS.PTR.05   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权
+
+### 【描述】
+
+`PhantomData<T>` 是经常被用于 Unsafe Rust 中配合裸指针来指定协变和所有权的，为裸指针构建的类型保证安全性和有效性。否则，可能会产生未定义行为。
+
+  参考： [`PhantomData<T>`  的型变（variance）模式表](https://doc.rust-lang.org/nomicon/phantom-data.html) 
+
+【正例】
+
+```rust
+use std::marker;
+
+struct Vec<T> {
+    data: *const T, // *const for variance!
+    len: usize,
+    cap: usize,
+    _marker: marker::PhantomData<T>, // 让 Vec<T> 拥有 T，并且让 指针有了协变
+}
+```
+
+【反例】
+
+```rust
+// Vec<T> 不拥有类型 T，并且 data 字段的裸指针不支持协变
+// 这样的话，是有风险的。
+// 为 Vec<T> 实现的 Drop 可能导致 UB
+struct Vec<T> {
+    data: *const T, 
+    len: usize,
+    cap: usize,
+}
 ```
 

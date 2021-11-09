@@ -136,118 +136,7 @@ arr.join("-");
 
 
 
-## P.UNS.SafeAbstract.03    Unsafe 代码中手动实现 auto trait 需要注意
-
-**【描述】**
-
-所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
-
-所以，在手动实现的时候要充分考虑其安全性。
-
-【示例】
-
-Rust futures 库中发现的问题，错误的手工 `Send/Sync`实现 破坏了线程安全保证。
-
-受影响的版本中，`MappedMutexGuard`的`Send/Sync`实现只考虑了`T`上的差异，而`MappedMutexGuard`则取消了对`U`的引用。
-
-当`MutexGuard::map()`中使用的闭包返回与`T`无关的`U`时，这可能导致安全Rust代码中的数据竞争。
-
-这个问题通过修正`Send/Sync`的实现，以及在`MappedMutexGuard`类型中添加一个`PhantomData<&'a mut U>`标记来告诉编译器，这个防护也是在U之上。
-
-```rust
-// CVE-2020-35905: incorrect uses of Send/Sync on Rust's futures
-pub struct MappedMutexGuard<'a, T: ?Sized, U: ?Sized> {
-    mutex: &'a Mutex<T>,
-    value: *mut U,
-    _marker: PhantomData<&'a mut U>, // + 修复代码
-}
-
-impl<'a, T: ?Sized> MutexGuard<'a, T> {
-    pub fn map<U: ?Sized, F>(this: Self, f: F)
-        -> MappedMutexGuard<'a, T, U>
-        where F: FnOnce(&mut T) -> &mut U {
-            let mutex = this.mutex;
-            let value = f(unsafe { &mut *this.mutex.value.get() });
-                mem::forget(this);
-                // MappedMutexGuard { mutex, value }
-                MappedMutexGuard { mutex, value, _marker: PhantomData } //  + 修复代码
-    }
-}
-
-// unsafe impl<T: ?Sized + Send, U: ?Sized> Send
-unsafe impl<T: ?Sized + Send, U: ?Sized + Send> Send // + 修复代码
-for MappedMutexGuard<'_, T, U> {}
-//unsafe impl<T: ?Sized + Sync, U: ?Sized> Sync
-unsafe impl<T: ?Sized + Sync, U: ?Sized + Sync> Sync // + 修复代码
-for MappedMutexGuard<'_, T, U> {}
-
-// PoC: this safe Rust code allows race on reference counter
-* MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
-```
-
-【定制参考】
-
-Lint 需要检测 手工实现 auto trait 的行为，比如 `Sync/Send`，对开发者发出警告，要注意考虑其安全性
-
-
-
-## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
-
-**【描述】**
-
-在公开的API中暴露裸指针，可能会被用户修改为空指针，从而有段错误风险。
-
-【示例】
-
-```rust
-use cache;
-
-
-/**
-
-    `cache crate` 内部代码：
-
-    ```rust
-    pub enum Cached<'a, V: 'a> {
-        /// Value could not be put on the cache, and is returned in a box
-        /// as to be able to implement `StableDeref`
-        Spilled(Box<V>),
-        /// Value resides in cache and is read-locked.
-        Cached {
-            /// The readguard from a lock on the heap
-            guard: RwLockReadGuard<'a, ()>,
-            /// A pointer to a value on the heap
-            // 漏洞风险
-            ptr: *const ManuallyDrop<V>,
-        },
-        /// A value that was borrowed from outside the cache.
-        Borrowed(&'a V),
-    }
-**/
-fn main() {
-    let c = cache::Cache::new(8, 4096);
-    c.insert(1, String::from("test"));
-    let mut e = c.get::<String>(&1).unwrap();
-
-    match &mut e {
-        cache::Cached::Cached { ptr, .. } => {
-            // 将 ptr 设置为 空指针，导致段错误
-            *ptr = std::ptr::null();
-        },
-        _ => panic!(),
-    }
-    // 输出：3851，段错误
-    println!("Entry: {}", *e);
-}
-```
-
-【定制参考】
-
-Lint需要检测在 pub 的结构体、枚举等类型中有裸指针字段或变体，对开发者发出警告，要注意考虑其安全性
-
-
-
-## P.UNS.SafeAbstract.05    不要随便在公开的 API 中暴露未初始化内存
+## P.UNS.SafeAbstract.03    不要随便在公开的 API 中暴露未初始化内存
 
 **【描述】**
 
@@ -355,7 +244,7 @@ fn read_vec(&mut self) -> Result<Vec<u8>> {
 
 
 
-## P.UNS.SafeAbstract.05   要考虑 Panic Safety 的情况
+## P.UNS.SafeAbstract.04   要考虑 Panic Safety 的情况
 
 **【描述】**
 
@@ -398,8 +287,6 @@ fn read_vec(&mut self) -> Result<Vec<u8>> {
  );
  ```
 
-
-
 【反例】
 
 ```rust
@@ -427,13 +314,11 @@ macro_rules! from_event_option_array_into_event_list(
 
 
 
-
-
 ---
 
 
 
-## G.UNS.ABS.01  在 公开的 unsafe 函数的文档中必须增加 `# Safety` 注释
+## G.UNS.SafeAbstract.01  在 公开的 unsafe 函数的文档中必须增加 `# Safety` 注释
 
 ### 【级别：必须】
 
@@ -488,7 +373,7 @@ macro_rules! from_event_option_array_into_event_list(
     }
 ```
 
-## G.UNS.ABS.02   在 Unafe 函数中应该使用 `assert!` 而非 `debug_assert!` 去校验边界条件
+## G.UNS.SafeAbstract.02   在 Unafe 函数中应该使用 `assert!` 而非 `debug_assert!` 去校验边界条件
 
 ### 【级别：必须】
 
@@ -538,4 +423,135 @@ macro_rules! from_event_option_array_into_event_list(
    // 也会因为 debug_assert_ 系列的断言宏在 Release 下产生不可预料的结果，它是 unsafe 的
    debug_assert_eq!(vec![3].pop(), Some(3));
 ```
+
+## G.UNS.SafeAbstract.03    Unsafe 代码中手动实现 auto trait 需要注意
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+Lint 需要检测 手工实现 auto trait 的行为，比如 `Sync/Send`，对开发者发出警告，要注意考虑其安全性
+
+### 【描述】
+
+所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
+
+所以，在手动实现的时候要充分考虑其安全性。
+
+【示例】
+
+Rust futures 库中发现的问题，错误的手工 `Send/Sync`实现 破坏了线程安全保证。
+
+受影响的版本中，`MappedMutexGuard`的`Send/Sync`实现只考虑了`T`上的差异，而`MappedMutexGuard`则取消了对`U`的引用。
+
+当`MutexGuard::map()`中使用的闭包返回与`T`无关的`U`时，这可能导致安全Rust代码中的数据竞争。
+
+这个问题通过修正`Send/Sync`的实现，以及在`MappedMutexGuard`类型中添加一个`PhantomData<&'a mut U>`标记来告诉编译器，这个防护也是在U之上。
+
+```rust
+// CVE-2020-35905: incorrect uses of Send/Sync on Rust's futures
+pub struct MappedMutexGuard<'a, T: ?Sized, U: ?Sized> {
+    mutex: &'a Mutex<T>,
+    value: *mut U,
+    _marker: PhantomData<&'a mut U>, // + 修复代码
+}
+
+impl<'a, T: ?Sized> MutexGuard<'a, T> {
+    pub fn map<U: ?Sized, F>(this: Self, f: F)
+        -> MappedMutexGuard<'a, T, U>
+        where F: FnOnce(&mut T) -> &mut U {
+            let mutex = this.mutex;
+            let value = f(unsafe { &mut *this.mutex.value.get() });
+                mem::forget(this);
+                // MappedMutexGuard { mutex, value }
+                MappedMutexGuard { mutex, value, _marker: PhantomData } //  + 修复代码
+    }
+}
+
+// unsafe impl<T: ?Sized + Send, U: ?Sized> Send
+unsafe impl<T: ?Sized + Send, U: ?Sized + Send> Send // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+//unsafe impl<T: ?Sized + Sync, U: ?Sized> Sync
+unsafe impl<T: ?Sized + Sync, U: ?Sized + Sync> Sync // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+
+// PoC: this safe Rust code allows race on reference counter
+* MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
+```
+
+
+
+## G.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+Lint需要检测在 pub 的结构体、枚举等类型中有裸指针字段或变体，对开发者发出警告，要注意考虑其安全性
+
+### 【描述】
+
+在公开的API中暴露裸指针，可能会被用户修改为空指针，从而有段错误风险。
+
+【示例】
+
+```rust
+use cache;
+
+
+/**
+
+    `cache crate` 内部代码：
+
+    ```rust
+    pub enum Cached<'a, V: 'a> {
+        /// Value could not be put on the cache, and is returned in a box
+        /// as to be able to implement `StableDeref`
+        Spilled(Box<V>),
+        /// Value resides in cache and is read-locked.
+        Cached {
+            /// The readguard from a lock on the heap
+            guard: RwLockReadGuard<'a, ()>,
+            /// A pointer to a value on the heap
+            // 漏洞风险
+            ptr: *const ManuallyDrop<V>,
+        },
+        /// A value that was borrowed from outside the cache.
+        Borrowed(&'a V),
+    }
+**/
+fn main() {
+    let c = cache::Cache::new(8, 4096);
+    c.insert(1, String::from("test"));
+    let mut e = c.get::<String>(&1).unwrap();
+
+    match &mut e {
+        cache::Cached::Cached { ptr, .. } => {
+            // 将 ptr 设置为 空指针，导致段错误
+            *ptr = std::ptr::null();
+        },
+        _ => panic!(),
+    }
+    // 输出：3851，段错误
+    println!("Entry: {}", *e);
+}
+```
+
+
 
