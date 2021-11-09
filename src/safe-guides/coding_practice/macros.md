@@ -5,8 +5,8 @@ Rust  通过宏来支持元编程。其中宏有很多种，按实现方式可�
 按功能效果，过程宏又可以分为三类：
 
 1.  Bang 宏。类似于声明宏那样，像函数调用一样去使用的宏。
-2. Derive 宏。用于为数据类型自动生成一些 语法项（item），比如 trait 、结构体、方法等。
-3. Attrubutes 宏。用于更加通用的代码生成功能。
+2.  Derive 宏。用于为数据类型自动生成一些 语法项（item），比如 trait 、结构体、方法等。
+3.  Attrubutes 宏。用于更加通用的代码生成功能。
 
 Rust 语言核心库和标准库，都内置了一些声明宏和过程宏，以方便开发者使用。
 
@@ -54,56 +54,7 @@ cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 
 [Rust 社区顶级专家 Dtolnay 写的 宏学习案例 ](https://github.com/dtolnay/case-studies)
 
-## P.MAC.02   在多个地方使用`println!` 或 `panic!` 之类的内置宏 时，可以将其包装到函数内，使用 `#[cold]` 和 `#[inline(never)]` 属性避免其内联，从而避免编译文件膨胀
-
-**【描述】**
-
-因为像 `println!` 或 `panic!` 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。
-
-【正例】
-
-```rust
-#[inline(never)]
-#[cold]
-#[track_caller] // 为了定位 panic 发生时的调用者的位置
-fn unwrap_failed(msg: &str, error: &dyn fmt::Debug) -> ! {
-    panic!("{}: {:?}", msg, error)
-}
-
-pub fn expect(self, msg: &str) -> T {
-    match self {
-        Ok(t) => t,
-        Err(e) => unwrap_failed(msg, &e),
-    }
-}
-
-pub fn unwrap_err(self) -> E {
-    match self {
-        Ok(t) => unwrap_failed("called `Result::unwrap_err()` on an `Ok` value", &t),
-        Err(e) => e,
-    }
-}
-```
-
-【反例】
-
-```rust
-pub fn expect(self, msg: &str) -> T {
-    match self {
-        Ok(t) => t,
-        Err(e) => panic!("{}: {:?}", msg, &e),
-    }
-}
-
-pub fn unwrap_err(self) -> E {
-    match self {
-        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
-        Err(e) => e,
-    }
-}
-```
-
-## P.MAC.03 实现宏语法的时候，应该尽量贴近 Rust 语法   
+## P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法   
 
 **【描述】**
 
@@ -151,9 +102,9 @@ bitflags! {
 
 ## G.MAC.01   `dbg!()` 宏只应该在 Debug 模式下使用
 
-### 【级别：建议】
+### 【级别：规则】
 
-建议按此规范执行。
+按此规范执行。
 
 ### 【Lint 检测】
 
@@ -185,5 +136,64 @@ let foo = false;
 // Release 模式编译
 let foo = false;
 dbg!(foo); 
+```
+
+## G.MAC.02   在多个地方使用`println!` 或 `panic!` 之类的内置宏 时，可以将其包装到函数内，使用 `#[cold]` 和 `#[inline(never)]` 属性避免其内联，从而避免编译文件膨胀
+
+### 【级别：建议】
+
+建议按此规范执行
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+### **【描述】**
+
+因为像 `println!` 或 `panic!` 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。
+
+【正例】
+
+```rust
+#[inline(never)]
+#[cold]
+#[track_caller] // 为了定位 panic 发生时的调用者的位置
+fn unwrap_failed(msg: &str, error: &dyn fmt::Debug) -> ! {
+    panic!("{}: {:?}", msg, error)
+}
+
+pub fn expect(self, msg: &str) -> T {
+    match self {
+        Ok(t) => t,
+        Err(e) => unwrap_failed(msg, &e),
+    }
+}
+
+pub fn unwrap_err(self) -> E {
+    match self {
+        Ok(t) => unwrap_failed("called `Result::unwrap_err()` on an `Ok` value", &t),
+        Err(e) => e,
+    }
+}
+```
+
+【反例】
+
+```rust
+pub fn expect(self, msg: &str) -> T {
+    match self {
+        Ok(t) => t,
+        Err(e) => panic!("{}: {:?}", msg, &e),
+    }
+}
+
+pub fn unwrap_err(self) -> E {
+    match self {
+        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
+        Err(e) => e,
+    }
+}
 ```
 
