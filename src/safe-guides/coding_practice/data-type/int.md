@@ -15,7 +15,7 @@ Rust 中有目前有 十二种整数类型：`i8/u8`, `i16/u16`, `i32/u32`, `i64
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
 | [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic) | yes           | no           | restriction | allow |
-| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | allow |
+| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | warn |
 
 ### 【描述】
 

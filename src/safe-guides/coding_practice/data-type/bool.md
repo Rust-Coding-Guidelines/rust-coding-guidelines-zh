@@ -45,11 +45,11 @@ assert_eq!(false, b == 0);
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
 | [bool_comparison ](https://rust-lang.github.io/rust-clippy/master/#bool_comparison ) | yes| no | complexity | warn |
-| [bool_assert_comparison ](https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison ) | yes| no | complexity | warn |
+| [bool_assert_comparison ](https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison ) | yes| no | style | warn |
 | [needless_bool ](https://rust-lang.github.io/rust-clippy/master/#needless_bool ) | yes| no | complexity | warn |
 | [nonminimal_bool  ](https://rust-lang.github.io/rust-clippy/master/#nonminimal_bool  ) | yes| no | complexity | warn |
 | [needless_bitwise_bool  ](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool  ) | yes| no | pedantic | allow |
-| [assertions_on_constants  ](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool  ) | yes| no | style | warn |
+| [assertions_on_constants  ](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool  ) | yes| no | pedantic | warn |
 
 
 
@@ -111,7 +111,7 @@ if a && b || a { ... }
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
-| [logic_bug ](https://rust-lang.github.io/rust-clippy/master/#logic_bug ) | yes | no | pedantic | allow |
+| [logic_bug ](https://rust-lang.github.io/rust-clippy/master/#logic_bug ) | yes | no | correctness | deny |
 | [match_bool](https://rust-lang.github.io/rust-clippy/master/#match_bool) | yes | no | pedantic | allow |
 
 ### 【描述】
