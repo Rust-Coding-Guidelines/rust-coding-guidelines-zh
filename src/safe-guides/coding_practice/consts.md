@@ -161,9 +161,6 @@ static FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
 ```
 
 
-
-
-
 ## G.CNS.05  对于函数或方法应尽可能地使用 `const fn`
 
 ### 【级别：建议】
@@ -194,7 +191,7 @@ fn new() -> Self {
 }
 ```
 
-## G.CNS.05 注意避免将量大的数据结构定义为常量
+## G.CNS.06 注意避免将量大的数据结构定义为常量
 
 ### 【级别：建议】
 
