@@ -17,6 +17,24 @@
 - 布尔型变量或函数避免使用否定形式
 - 尽量不要使用 Unicode 标识符。
 
+【正例】
+
+```rust
+let first_name: &str = "John";
+let last_name: &str = "Smith";
+const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
+const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+```
+
+【反例】
+
+```rust
+let ming: &str = "John";
+let xing: &str = "Smith";
+const ERROR_NO_1: u32 = 336;
+const ERROR_NO_2: u32 = 594;
+```
+
 
 
 ## P.NAM.02 避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
