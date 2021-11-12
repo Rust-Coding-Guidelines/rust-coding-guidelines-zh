@@ -4,7 +4,140 @@
 
 ---
 
-## P.NAM.01 标识符命名应该符合阅读习惯
+## P.NAM.01  类型名称应该使用统一的词序
+
+### 【描述】
+
+类型名称都按照 **动词-宾语-error** 的单词顺序。
+
+具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。
+
+### 【示例】
+
+【正例】
+
+以下是来自标准库的处理错误的一些类型：
+
+- [`JoinPathsError`](https://doc.rust-lang.org/std/env/struct.JoinPathsError.html)
+- [`ParseBoolError`](https://doc.rust-lang.org/std/str/struct.ParseBoolError.html)
+- [`ParseCharError`](https://doc.rust-lang.org/std/char/struct.ParseCharError.html)
+- [`ParseFloatError`](https://doc.rust-lang.org/std/num/struct.ParseFloatError.html)
+- [`ParseIntError`](https://doc.rust-lang.org/std/num/struct.ParseIntError.html)
+- [`RecvTimeoutError`](https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html)
+- [`StripPrefixError`](https://doc.rust-lang.org/std/path/struct.StripPrefixError.html)
+
+【反例】
+
+```rust
+// 应该为 ParseAddrError
+struct AddrParseError {}
+```
+
+如果增加“解析地址错误”类型，为了保持词性一致，应该使用 `ParseAddrError` 名称，而不是 `AddrParseError`。
+
+## P.NAM.02  cargo feature 名中不应该含有无意义的占位词
+
+### 【描述】
+
+给 [Cargo feature] 命名时，不要带有无实际含义的的词语，比如无需 `use-abc` 或 `with-abc` ，而是直接以 `abc` 命名。
+
+[Cargo feature]: http://doc.crates.io/manifest.html#the-features-section
+
+这条原则经常出现在对 Rust 标准库进行 [可选依赖][optional-dependency] 配置的 crate 上。
+
+### 【示例】
+
+【正例】
+
+最简洁且正确的做法是：
+
+```toml
+# In Cargo.toml
+
+[features]
+default = ["std"]
+std = []
+```
+
+```rust,ignored
+// In lib.rs
+
+#![cfg_attr(not(feature = "std"), no_std)]
+```
+
+【反例】
+
+```toml
+# In Cargo.toml
+
+// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
+[features]
+default = ["use-std"]
+std = []
+```
+
+```rust,ignored
+// In lib.rs
+
+#![cfg_attr(not(feature = "use-std"), no_std)]
+```
+
+feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。
+
+【正例】
+
+假如 `x` crate 对 Serde 和 标准库具有可选依赖关系：
+
+```toml
+[package]
+name = "x"
+version = "0.1.0"
+
+[features]
+std = ["serde/std"]
+
+[dependencies]
+serde = { version = "1.0", optional = true }
+```
+
+当我们使用 `x` crate 时，可以使用 `features = ["serde"]` 开启 Serde 依赖。类似地，也可以使用 `features = ["std"]` 开启标准库依赖。
+Cargo 推断的隐含的 features 应该叫做 `serde` ，而不是 `use-serde` 或者 `with-serde` 。
+
+【反例】
+
+```toml
+[package]
+name = "x"
+version = "0.1.0"
+
+[features]
+std = ["serde/std"]
+// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
+no-abc=[]
+
+[dependencies]
+serde = { version = "1.0", optional = true }
+```
+
+[optional-dependency]:https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
+
+---
+
+## G.NAM.01 标识符命名应该符合阅读习惯
+
+### 【级别：必须】
+
+必须严格按此规范执行。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制化参考】
+
+检测错误的英文拼写，检测出后提示；检测拼音，检测出来提示。拼写错误可参考 [client9/misspell](https://github.com/client9/misspell) 。
 
 ### 【描述】
 
@@ -35,30 +168,7 @@ const ERROR_NO_1: u32 = 336;
 const ERROR_NO_2: u32 = 594;
 ```
 
-
-
-## P.NAM.02 避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
-
-### 【描述】
-
-命名必须要避免使用语义内置的保留字、关键字、内置类型和`trait`等特殊名称。
-
-【反例】
-
-```rust
-// Sized ： Rust 内置了同名 trait 
-type Sized = u16; 
-
-fn main() {
-    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
-    let r#try = 1;
-}
-```
-
----
-
-
-## G.NAM.01 使用统一的命名风格
+## G.NAM.02 使用统一的命名风格
 
 ### 【级别：必须】
 
@@ -67,8 +177,9 @@ fn main() {
 ### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
-| ------ | ---- | --------- | ------ | 
-| _ | yes| no | Style |
+| ------ | ---- | --------- | ------ |
+| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no | yes | Style |
+| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case) | no | yes | Style |
 
 ### 【描述】
 
@@ -110,7 +221,7 @@ Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/te
 
 
 
-## G.NAM.02 作用域越大，命名越精确；反之应简短
+## G.NAM.03 作用域越大，命名越精确；反之应简短
 
 ### 【级别：建议】
 
@@ -206,7 +317,7 @@ pub struct HeaderMap {
 ```
 
 
-## G.NAM.03 类型转换函数命名需要遵循所有权语义
+## G.NAM.04 类型转换函数命名需要遵循所有权语义
 
 ### 【级别：必须】
 
@@ -214,9 +325,9 @@ pub struct HeaderMap {
 
 ### 【Lint 检测】
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
-| ------ | ---- | --------- | ------ | 
-| wrong_self_convention| yes| no | Style |
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
+| ------ | ---- | --------- | ------ | ------ |
+| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes| no | Style | warn |
 
 ### 【描述】
 
@@ -300,7 +411,7 @@ fn as_mut_slice(&mut self) -> &mut [T];
 - [`slice::to_vec`](https://doc.rust-lang.org/std/primitive.slice.html#method.to_vec)
 - [`Option::into_iter`](https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter)
 
-## G.NAM.04 用于访问或获取数据的 `getter/setter` 类方法通常不要使用 `get_` 或 `set_` 等前缀
+## G.NAM.05 用于访问或获取数据的 `getter/setter` 类方法通常不要使用 `get_` 或 `set_` 等前缀
 
 ### 【级别：建议】
 
@@ -312,7 +423,9 @@ fn as_mut_slice(&mut self) -> &mut [T];
 | ------ | ---- | --------- | ------ | ------ |
 |  _ | no | no | _ | yes |
 
-此规则 Clippy 不可检测，属于业务逻辑层面。
+【定制化参考】
+
+检测 Struct 实现的方法名是否包含 `get_/set_` 前缀，如果包含，则给予警告。 
 
 ### 【描述】
 
@@ -323,6 +436,9 @@ fn as_mut_slice(&mut self) -> &mut [T];
 【正例】
 
 ```rust
+pub struct First;
+pub struct Second;
+
 pub struct S {
     first: First,
     second: Second,
@@ -344,6 +460,9 @@ impl S {
 【反例】
 
 ```rust
+pub struct First;
+pub struct Second;
+
 pub struct S {
     first: First,
     second: Second,
@@ -394,7 +513,7 @@ getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那�
 - [`std::collections::hash_map::OccupiedEntry::get_mut`](https://doc.rust-lang.org/std/collections/hash_map/struct.OccupiedEntry.html#method.get_mut)
 - [`<[T]>::get_unchecked`](https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked)
 
-## G.NAM.05 遵循 `iter/ iter_mut/ into_iter` 规范来生成迭代器
+## G.NAM.06 遵循 `iter/ iter_mut/ into_iter` 规范来生成迭代器
 
 ### 【级别：必须】
 
@@ -406,7 +525,9 @@ getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那�
 | ------ | ---- | --------- | ------ | ------ |
 |  _ | no | no | _ | yes |
 
-此规则 Clippy 不可检测，属于业务逻辑层面。
+【定制化参考】
+
+检测 `iter/iter_mut/into_iter` 方法的返回类型是否对应 `Iter/IterMut/IntoIter` ，如果不是，则给予警告。
 
 ### 【描述】
 
@@ -445,7 +566,7 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 [RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md
 
 
-## G.NAM.06 迭代器类型名称应该与产生它们的方法相匹配
+## G.NAM.07 迭代器类型名称应该与产生它们的方法相匹配
 
 ### 【级别：必须】
 
@@ -457,7 +578,9 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 | ------ | ---- | --------- | ------ | ------ | 
 |  _ | no | no | _ | yes |
 
-此规则 Clippy 不可检测，属于业务逻辑层面。
+【定制化参考】
+
+检测返回迭代器的方法，其返回类型应该与方法名相匹配，否则给予警告。
 
 ### 【描述】
 
@@ -489,106 +612,8 @@ fn into_iter(self) -> IntoIter     // IntoIter 实现 Iterator<Item = U>
 [btree_map::Values]: https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html
 
 
-## G.NAM.07  cargo feature 名中不应该含有无意义的占位词
 
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ------ | ---- | --------- | ------ | ------ |
-|  _ | no | no | _ | no |
-
-此规则 Clippy 不可检测，属于业务逻辑层面。
-
-### 【描述】
-
-给 [Cargo feature] 命名时，不要带有无实际含义的的词语，比如无需 `use-abc` 或 `with-abc` ，而是直接以 `abc` 命名。
-
-[Cargo feature]: http://doc.crates.io/manifest.html#the-features-section
-
-这条原则经常出现在对 Rust 标准库进行 [可选依赖][optional-dependency] 配置的 crate 上。
-
-### 【示例】
-
-【正例】
-
-最简洁且正确的做法是：
-
-```toml
-# In Cargo.toml
-
-[features]
-default = ["std"]
-std = []
-```
-
-```rust,ignored
-// In lib.rs
-
-#![cfg_attr(not(feature = "std"), no_std)]
-```
-
-【反例】
-
-```toml
-# In Cargo.toml
-
-// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
-[features]
-default = ["use-std"]
-std = []
-```
-
-```rust,ignored
-// In lib.rs
-
-#![cfg_attr(not(feature = "use-std"), no_std)]
-```
-
-feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。
-
-【正例】
-
-假如 `x` crate 对 Serde 和 标准库具有可选依赖关系：
-
-```toml
-[package]
-name = "x"
-version = "0.1.0"
-
-[features]
-std = ["serde/std"]
-
-[dependencies]
-serde = { version = "1.0", optional = true }
-```
-
-当我们使用 `x` crate 时，可以使用 `features = ["serde"]` 开启 Serde 依赖。类似地，也可以使用 `features = ["std"]` 开启标准库依赖。
-Cargo 推断的隐含的 features 应该叫做 `serde` ，而不是 `use-serde` 或者 `with-serde` 。
-
-【反例】
-
-```toml
-[package]
-name = "x"
-version = "0.1.0"
-
-[features]
-std = ["serde/std"]
-// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
-no-abc=[]
-
-[dependencies]
-serde = { version = "1.0", optional = true }
-```
-
-[optional-dependency]:https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
-
-
-## G.NAM.08  类型名称应该使用统一的词序
+## G.NAM.8  避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
 
 ### 【级别：必须】
 
@@ -597,37 +622,27 @@ serde = { version = "1.0", optional = true }
 ### 【Lint 检测】
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ------ | ---- | --------- | ------ | ------ |
-|  _ | no | no | _ | no |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
 
-此规则 Clippy 不可检测，属于业务逻辑层面。
+【定制化参考】
+
+可以检测 标识符 是否通过`r#`使用了 语言内置的保留字、关键字、内置类型和`trait`等特殊名称，如果使用，则给予警告。
 
 ### 【描述】
 
-类型名称都按照 **动词-宾语-error** 的单词顺序。
-
-具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。
-
-### 【示例】
-
-【正例】
-
-以下是来自标准库的处理错误的一些类型：
-
-- [`JoinPathsError`](https://doc.rust-lang.org/std/env/struct.JoinPathsError.html)
-- [`ParseBoolError`](https://doc.rust-lang.org/std/str/struct.ParseBoolError.html)
-- [`ParseCharError`](https://doc.rust-lang.org/std/char/struct.ParseCharError.html)
-- [`ParseFloatError`](https://doc.rust-lang.org/std/num/struct.ParseFloatError.html)
-- [`ParseIntError`](https://doc.rust-lang.org/std/num/struct.ParseIntError.html)
-- [`RecvTimeoutError`](https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html)
-- [`StripPrefixError`](https://doc.rust-lang.org/std/path/struct.StripPrefixError.html)
+命名必须要避免使用语言内置的保留字、关键字、内置类型和`trait`等特殊名称。
 
 【反例】
 
 ```rust
-// 应该为 ParseAddrError
-struct AddrParseError {}
+// Sized ： Rust 内置了同名 trait 
+type Sized = u16; 
+
+fn main() {
+    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
+    let r#try = 1;
+}
 ```
 
-如果增加“解析地址错误”类型，为了保持词性一致，应该使用 `ParseAddrError` 名称，而不是 `AddrParseError`。
-
+---
