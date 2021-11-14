@@ -170,17 +170,41 @@
                         <h1><a class="header" href="#单元类型" id="单元类型">单元类型</a></h1>
 <p>Rust 中单元类型为零大小类型。其类型签名和值都为 <code>()</code>，它也是一个空元组。</p>
 <hr />
-<h2><a class="header" href="#ptypunit01---当函数不关心返回值但要处理错误时可以考虑使用单元类型" id="ptypunit01---当函数不关心返回值但要处理错误时可以考虑使用单元类型">P.TYP.Unit.01   当函数不关心返回值但要处理错误时可以考虑使用单元类型</a></h2>
-<p>【描述】</p>
-<p>单元类型代表 <code>无返回值</code>。</p>
+<h2><a class="header" href="#gtypunit01---当函数不关心返回值但要处理错误时应使用单元类型" id="gtypunit01---当函数不关心返回值但要处理错误时应使用单元类型">G.TYP.Unit.01   当函数不关心返回值但要处理错误时应使用单元类型</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint检测" id="lint检测">【Lint检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>可以检测使用 <code>Option&lt;T&gt;</code> 包含 <code>Error</code> 类型的情况，发出警告。</p>
+<p><strong>【描述】</strong></p>
+<p>单元类型代表 <code>无返回值</code>。当返回类型无返回值但要处理错误时，应使用Result&lt;(), Error&gt;类型，</p>
+<p>而非Option类型。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 表示该函数要么成功，要么返回各自错误
 fn f() -&gt; Result&lt;(), Error&gt; {
+    
+    // ...
+    
     // Error handle
     Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn f() -&gt; Option&lt;Error&gt; {
+    
+    // ...
+    
+    None
 }
 <span class="boring">}
 </span></code></pre></pre>

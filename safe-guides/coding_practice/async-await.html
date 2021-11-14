@@ -400,6 +400,43 @@ let fut = async move {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gasy05--避免在异步处理过程中包含阻塞操作" id="gasy05--避免在异步处理过程中包含阻塞操作">G.ASY.05  避免在异步处理过程中包含阻塞操作</a></h2>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制Lint，则可以扫描异步过程，找到黑名单定义的阻塞操作调用，进行告警。</p>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<p>避免在异步编程中使用阻塞操作。</p>
+<p>【正例】</p>
+<p>使用异步运行时，如tokio提供的非阻塞函数</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use tokio::fs;
+
+async fn read_file() -&gt; std::io::Result&lt;()&gt; {
+    let _ = fs::read_to_string(&quot;test.txt&quot;).await?;
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<p>不要在异步流程中使用阻塞操作函数</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::error::Error;
+use std::{fs, io};
+    
+async fn read_file() -&gt; Result&lt;String, std::io::Error&gt; {
+    fs::read_to_string(&quot;test.txt&quot;)
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

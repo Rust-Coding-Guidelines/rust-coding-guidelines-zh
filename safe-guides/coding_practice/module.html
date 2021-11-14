@@ -176,8 +176,35 @@
 <li><code>Path</code>，则是一个命名系统，类似于命名空间。</li>
 </ol>
 <hr />
-<h2><a class="header" href="#pmod01---使用导入模块中的类型或函数在某些情况下需要带-模块名前缀" id="pmod01---使用导入模块中的类型或函数在某些情况下需要带-模块名前缀">P.MOD.01   使用导入模块中的类型或函数，在某些情况下需要带 模块名前缀</a></h2>
-<p><strong>【描述】</strong></p>
+<h2><a class="header" href="#pmod01----合理控制对外接口和模块之间的可见性" id="pmod01----合理控制对外接口和模块之间的可见性">P.MOD.01    合理控制对外接口和模块之间的可见性</a></h2>
+<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
+<p>Rust提供强大的模块（module）系统，并且可以管理这些模块之间的可见性（公有（public）或私有（private））。</p>
+<p>1、对于提供给其他crate使用的对外函数、结构体、trait等类型需要严格控制对外pub的范围，避免将内部成员对外提供。</p>
+<p>2、对于crate内部，mod之间可见的类型，需要添加上<code>pub(crate) </code>。</p>
+<p>3、对于mod内部私有的类型，不要添加<code>pub(crate) </code>或者<code>pub</code>。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// lib.rs
+pub mod sha512;
+pub use sha512::Sha512;
+
+// sha512.rs
+pub struct Sha512 {
+    inner: Sha512Inner, // inner作为内部结构体，不添加pub描述
+}
+<span class="boring">}
+</span></code></pre></pre>
+<hr />
+<h2><a class="header" href="#gmod01---使用导入模块中的类型或函数在某些情况下需要带模块名前缀" id="gmod01---使用导入模块中的类型或函数在某些情况下需要带模块名前缀">G.MOD.01   使用导入模块中的类型或函数，在某些情况下需要带模块名前缀</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <p>对于标准库中，很多人都熟知的类型 ，比如 <code>Arc</code>/ <code>Rc</code>/ <code>Cell</code>/ <code>HashMap</code> 等 ， 可以导入它们直接使用。</p>
 <p>但是对于可能引起困惑的函数，比如 <code>std::ptr::replace</code> 和 <code>std::mem::replace</code> ，在使用它们的时候，就必须得带上模块前缀。</p>
 <p>使用一些第三方库中定义的类型或函数，也建议带上crate或模块前缀。如果太长的话，可以考虑使用 <code>as</code>  或  <code>type</code> 来定义别名。</p>
@@ -200,17 +227,35 @@ let b = unsafe {
 };
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pmod02-todo-添加模块对外-pub-的结构体trait-相关规范" id="pmod02-todo-添加模块对外-pub-的结构体trait-相关规范">P.MOD.02 【TODO】 添加模块对外 pub 的结构体、trait 相关规范</a></h2>
-<hr />
-<h2><a class="header" href="#gmod01---导入模块不要随便使用-通配符" id="gmod01---导入模块不要随便使用-通配符">G.MOD.01   导入模块不要随便使用 通配符<code>*</code></a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<h2><a class="header" href="#gmod02---如果是作为库供别人使用在-librs中重新导出对外类型函数和-trait-等" id="gmod02---如果是作为库供别人使用在-librs中重新导出对外类型函数和-trait-等">G.MOD.02   如果是作为库供别人使用，在 <code>lib.rs</code>中重新导出对外类型、函数和 trait 等</a></h2>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<p>这样使用方在使用的时候，就不需要<code>use crate::mod::mod::struct</code>，可以直接使用<code>use crate::struct</code>，好处是使用方<code>use</code>的时候会比较方便和直观。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// From syn crate
+pub use crate::data::{
+    Field, Fields, FieldsNamed, FieldsUnnamed, Variant, VisCrate, VisPublic, VisRestricted,
+    Visibility,
+};
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gmod03---导入模块不要随便使用-通配符" id="gmod03---导入模块不要随便使用-通配符">G.MOD.03   导入模块不要随便使用 通配符<code>*</code></a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#wildcard_imports">wildcard_imports</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <p>该 lint 可以通过 clippy 配置项 <code>warn-on-all-wildcard-imports = false</code> 来配置，用于是否禁用 <code>prelude</code>/ <code>super</code> (测试模块中) 使用通配符导入， 默认是 <code>false</code>。</p>
-<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
 <p>使用通配符导入会污染命名空间，比如导入相同命名的函数或类型。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -223,8 +268,7 @@ foo(); // Calls crate1::foo
 <p>【反例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
-</span>
-<span class="boring">fn main() {
+</span><span class="boring">fn main() {
 </span>use crate2::*; // Has a function named foo
 foo(); // Calls crate1::foo
 <span class="boring">}
@@ -239,15 +283,15 @@ foo(); // Calls crate1::foo
 use super::*
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gmod02----一个项目中应该避免使用不同的模块布局风格" id="gmod02----一个项目中应该避免使用不同的模块布局风格">G.MOD.02    一个项目中应该避免使用不同的模块布局风格</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<h2><a class="header" href="#gmod04----一个项目中应该避免使用不同的模块布局风格" id="gmod04----一个项目中应该避免使用不同的模块布局风格">G.MOD.04    一个项目中应该避免使用不同的模块布局风格</a></h2>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#self_named_module_files">self_named_module_files</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#mod_module_files">mod_module_files</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>Rust 支持两种 模块布局，文件夹内使用 <code>mod.rs</code> 或者是使用跟文件夹同名的文件名，来组织模块。</p>
 <p>但是项目里如果混合这两种模块布局，是比较让人困惑的，最好统一为同一种风格。</p>
 <p>上面两种  lint ，选择其中一种用于检查是否存在不同的模块布局。</p>
@@ -290,15 +334,15 @@ src/
   lib.rs
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gmod03----不要在私有模块中-设置其内部类型或函数方法-为-pubcrate" id="gmod03----不要在私有模块中-设置其内部类型或函数方法-为-pubcrate">G.MOD.03    不要在私有模块中 设置其内部类型或函数方法 为 <code>pub(crate)</code></a></h2>
-<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<h2><a class="header" href="#gmod05----不要在私有模块中-设置其内部类型或函数方法-为-pubcrate" id="gmod05----不要在私有模块中-设置其内部类型或函数方法-为-pubcrate">G.MOD.05    不要在私有模块中 设置其内部类型或函数方法 为 <code>pub(crate)</code></a></h2>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#redundant_pub_crate">redundant_pub_crate</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 </tbody></table>
 <p>注意：此 lint 为 nursery，意味着有 Bug。</p>
-<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
 <p>如果在私有模块中设置  <code>pub(crate)</code> 可能会让使用者产生误解。建议用 <code>pub</code> 代替。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">

@@ -178,65 +178,19 @@
 </ul>
 <p>可见，原生指针并不受Safe Rust提供的那一层“安全外衣”保护，所以也被称为“裸指针”。</p>
 <hr />
-<h2><a class="header" href="#punsptr01---建议使用-nonnullt-来替代-mut-t" id="punsptr01---建议使用-nonnullt-来替代-mut-t">P.UNS.PTR.01   建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></h2>
+<h2><a class="header" href="#punsptr01---不要将裸指针在多线程间共享" id="punsptr01---不要将裸指针在多线程间共享">P.UNS.PTR.01   不要将裸指针在多线程间共享</a></h2>
 <p><strong>【描述】</strong></p>
-<p>尽量使用 <a href="https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 来包装 <code>*mut T</code>。</p>
-<p><code>NonNull</code> 的优势：</p>
-<ol>
-<li>非空指针。会自动检查包装的指针是否为空。</li>
-<li>协变。方便安全抽象。如果用裸指针，则需要配合 <code>PhantomData</code>类型来保证协变。</li>
-</ol>
+<p>裸指针在 Rust 中不是线程安全的，将裸指针在多线程传递编译器也会编译出错。如果需要在多线程间共享裸指针，则考虑使用 <code>NewType</code> 模式来包装它。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::ptr::NonNull;
+</span>struct MyBox(*mut u8);
 
-let mut x = 0u32;
-let ptr = NonNull::&lt;u32&gt;::new(&amp;mut x as *mut _).expect(&quot;ptr is null!&quot;);
-
-if let Some(ptr) = NonNull::&lt;u32&gt;::new(std::ptr::null_mut()) {
-    unreachable!();
-}
+unsafe impl Send for MyBox {}
+unsafe impl Sync for MyBox {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>【定制参考】</p>
-<p>检测到包含 <code>*mut T</code>类型的结构体，应该给予开发者警告或建议去使用 <code>NonNull</code> 。</p>
-<h2><a class="header" href="#punsptr02---使用指针类型构造泛型结构体时需要使用-phantomdatat-来指定-t上的协变和所有权" id="punsptr02---使用指针类型构造泛型结构体时需要使用-phantomdatat-来指定-t上的协变和所有权">P.UNS.PTR.02   使用指针类型构造泛型结构体时，需要使用 <code>PhantomData&lt;T&gt;</code> 来指定 <code>T</code>上的协变和所有权</a></h2>
-<p><strong>【描述】</strong></p>
-<p><code>PhantomData&lt;T&gt;</code> 是经常被用于 Unsafe Rust 中配合裸指针来指定协变和所有权的，为裸指针构建的类型保证安全性和有效性。否则，可能会产生未定义行为。</p>
-<p>参考： <a href="https://doc.rust-lang.org/nomicon/phantom-data.html"><code>PhantomData&lt;T&gt;</code>  的型变（variance）模式表</a> </p>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::marker;
-
-struct Vec&lt;T&gt; {
-    data: *const T, // *const for variance!
-    len: usize,
-    cap: usize,
-    _marker: marker::PhantomData&lt;T&gt;, // 让 Vec&lt;T&gt; 拥有 T，并且让 指针有了协变
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span>
-<span class="boring">fn main() {
-</span>// Vec&lt;T&gt; 不拥有类型 T，并且 data 字段的裸指针不支持协变
-// 这样的话，是有风险的。
-// 为 Vec&lt;T&gt; 实现的 Drop 可能导致 UB
-struct Vec&lt;T&gt; {
-    data: *const T, 
-    len: usize,
-    cap: usize,
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>【定制参考】</p>
-<p>检测使用指针类型构造泛型结构体时，如果没有 <code>PhantomData&lt;T&gt;</code> 类型的字段，则需要警告开发者，要考虑 为裸指针配合<code>PhantomData&lt;T&gt;</code>来指定协变和所有权</p>
 <hr />
 <h2><a class="header" href="#gunsptr01---当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用" id="gunsptr01---当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用">G.UNS.PTR.01   当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></h2>
 <h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
@@ -363,6 +317,76 @@ let _ = mut_ptr.cast::&lt;i32&gt;();
 let mut_ptr: *mut u32 = &amp;mut 42_u32;
 let _ = ptr as *const i32;
 let _ = mut_ptr as *mut i32;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gunsptr04---建议使用-nonnullt-来替代-mut-t" id="gunsptr04---建议使用-nonnullt-来替代-mut-t">G.UNS.PTR.04   建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></h2>
+<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制参考】</p>
+<p>检测到包含 <code>*mut T</code>类型的结构体，应该给予开发者警告或建议去使用 <code>NonNull</code> 。</p>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<p>尽量使用 <a href="https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 来包装 <code>*mut T</code>。</p>
+<p><code>NonNull</code> 的优势：</p>
+<ol>
+<li>非空指针。会自动检查包装的指针是否为空。</li>
+<li>协变。方便安全抽象。如果用裸指针，则需要配合 <code>PhantomData</code>类型来保证协变。</li>
+</ol>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::ptr::NonNull;
+
+let mut x = 0u32;
+let ptr = NonNull::&lt;u32&gt;::new(&amp;mut x as *mut _).expect(&quot;ptr is null!&quot;);
+
+if let Some(ptr) = NonNull::&lt;u32&gt;::new(std::ptr::null_mut()) {
+    unreachable!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gunsptr05---使用指针类型构造泛型结构体时需要使用-phantomdatat-来指定-t上的协变和所有权" id="gunsptr05---使用指针类型构造泛型结构体时需要使用-phantomdatat-来指定-t上的协变和所有权">G.UNS.PTR.05   使用指针类型构造泛型结构体时，需要使用 <code>PhantomData&lt;T&gt;</code> 来指定 <code>T</code>上的协变和所有权</a></h2>
+<h3><a class="header" href="#级别必须-1" id="级别必须-1">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制参考】</p>
+<p>检测使用指针类型构造泛型结构体时，如果没有 <code>PhantomData&lt;T&gt;</code> 类型的字段，则需要警告开发者，要考虑 为裸指针配合<code>PhantomData&lt;T&gt;</code>来指定协变和所有权</p>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<p><code>PhantomData&lt;T&gt;</code> 是经常被用于 Unsafe Rust 中配合裸指针来指定协变和所有权的，为裸指针构建的类型保证安全性和有效性。否则，可能会产生未定义行为。</p>
+<p>参考： <a href="https://doc.rust-lang.org/nomicon/phantom-data.html"><code>PhantomData&lt;T&gt;</code>  的型变（variance）模式表</a> </p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::marker;
+
+struct Vec&lt;T&gt; {
+    data: *const T, // *const for variance!
+    len: usize,
+    cap: usize,
+    _marker: marker::PhantomData&lt;T&gt;, // 让 Vec&lt;T&gt; 拥有 T，并且让 指针有了协变
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Vec&lt;T&gt; 不拥有类型 T，并且 data 字段的裸指针不支持协变
+// 这样的话，是有风险的。
+// 为 Vec&lt;T&gt; 实现的 Drop 可能导致 UB
+struct Vec&lt;T&gt; {
+    data: *const T, 
+    len: usize,
+    cap: usize,
+}
 <span class="boring">}
 </span></code></pre></pre>
 

@@ -172,15 +172,50 @@
 <p>内存布局 Union 和 Enum 相似。</p>
 <p>正因为没有 tag，Rust 编译器无法检查当前使用的正是哪个变体，所以，访问 Union 的变体是 Unsafe 的。</p>
 <hr />
-<h2><a class="header" href="#punsunion01--除了与-c-打交道尽量不要使用-union" id="punsunion01--除了与-c-打交道尽量不要使用-union">P.UNS.Union.01  除了与 C 打交道，尽量不要使用 Union</a></h2>
-<p>【描述】</p>
+<h2><a class="header" href="#gunsunion01--除了与-c-打交道尽量不要使用-union" id="gunsunion01--除了与-c-打交道尽量不要使用-union">G.UNS.Union.01  除了与 C 打交道，尽量不要使用 Union</a></h2>
+<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>这条规则如果需要定制 Lint，则可以检测 Union 联合体上方是否有 <code>#[repr(C)]</code>属性定义与C兼容的数据布局，如果没有则给予警告。</p>
+<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>Rust 支持 Union 就是为了和 C 打交道。如果不是 FFi ，就避免使用 Union。</p>
 <p>一般情况下请使用 枚举 或 结构体代替。</p>
 <p>使用 Copy 类型的值和 <code>ManuallyDrop</code> 来初始化 Union 的变体，不需要使用 Unsafe 块。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(C)]
+union MyUnion {
+    f1: u32,
+    f2: f32,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>union MyUnion {
+    f1: u32,
+    f2: f32,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gunsunion02---不要把联合体的不同变体用在不同生命周期内" id="gunsunion02---不要把联合体的不同变体用在不同生命周期内">G.UNS.Union.02   不要把联合体的不同变体用在不同生命周期内</a></h2>
+<h3><a class="header" href="#级别必须-1" id="级别必须-1">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
 <p>【定制化参考】</p>
-<p>这条规则如果需要定制 Lint，则可以检测 Union 联合体上方是否有 <code>#[repr(C)]</code>属性定义与C兼容的数据布局，如果没有则给予警告。</p>
-<h2><a class="header" href="#punsunion02---不要把联合体的不同变体用在不同生命周期内" id="punsunion02---不要把联合体的不同变体用在不同生命周期内">P.UNS.Union.02   不要把联合体的不同变体用在不同生命周期内</a></h2>
-<p>【描述】</p>
+<p>检测函数内同一个联合体实例的不同变体被用于不同的生命周期内。</p>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <p>对联合体的变体进行借用的时候，要注意其他变体也将在同一个生命周期内。抛开内存布局、安全性和所有权之外，联合体的行为和结构体完全一致，你可以将联合体当中结构体来进行判断。</p>
 <p>【反例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -201,8 +236,6 @@ fn test() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>【定制化参考】</p>
-<p>检测函数内同一个联合体实例的不同变体被用于不同的生命周期内。</p>
 
                     </main>
 

@@ -173,8 +173,20 @@
 <p>在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：<a href="../../tools/rustfmt.html">Rustfmt 配置相关说明</a> 。</p>
 <p>注意： 以下规则 针对 rustfmt  version 1.4.36 版本。</p>
 <hr />
-<h2><a class="header" href="#pfmt01-始终使用-rustfmt-进行自动格式化代码" id="pfmt01-始终使用-rustfmt-进行自动格式化代码">P.FMT.01 始终使用 rustfmt 进行自动格式化代码</a></h2>
+<h2><a class="header" href="#pfmt01-代码格式以保证可读性为前提" id="pfmt01-代码格式以保证可读性为前提">P.FMT.01 代码格式以保证可读性为前提</a></h2>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
+<p>制定统一的编码风格，是为了提升代码的可读性，让日常代码维护和团队之间审查代码更加方便。</p>
+<hr />
+<h2><a class="header" href="#gfmt01-始终使用-rustfmt-进行自动格式化代码" id="gfmt01-始终使用-rustfmt-进行自动格式化代码">G.FMT.01 始终使用 rustfmt 进行自动格式化代码</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化建议】</p>
+<p>通过检测 项目 根目录下是否存在 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code> ，如果没有该文件，则发出警告，让开发者使用 rustfmt 来格式化代码。</p>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件，即使它是空文件。这是向潜在的合作者表明你希望代码是自动格式化的。</p>
 <h3><a class="header" href="#例外" id="例外">【例外】</a></h3>
 <p>在特殊的情况下，可以通过条件编译属性 <code>#[cfg_attr(rustfmt, rustfmt_skip)]</code> 或 <code>#[rustfmt::skip]</code> 来关闭自动格式化。</p>
@@ -182,20 +194,20 @@
 <p><code>vec!</code> 中的元素排布是固定格式，这样有助于开发的便利。</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let got = vec![
-    		0x00, 0x05, 0x01, 0x00,
-    		0xff,
-    		0x00,
-    		0x00,
+            0x00, 0x05, 0x01, 0x00,
+            0xff,
+            0x00,
+            0x00,
     
-    		0x01, 0x0c, 0x02, 0x00,
-    		0xde, 0xad, 0xbe, 0xef, 0xde, 0xad, 0xbe, 0xef,
-    		b'd', b'e', b'a', b'd', b'b', b'e', b'e', b'f', 0x00,
-    		0x00,
+            0x01, 0x0c, 0x02, 0x00,
+            0xde, 0xad, 0xbe, 0xef, 0xde, 0xad, 0xbe, 0xef,
+            b'd', b'e', b'a', b'd', b'b', b'e', b'e', b'f', 0x00,
+            0x00,
     
-    		127, 0x06, 0x03, 0x00,
-    		0x01, 0x02,
-    		b'a', b'b', b'c', b'd', 0x00,
-    		b'1', b'2', b'3', b'4', 0x00,
+            127, 0x06, 0x03, 0x00,
+            0x01, 0x02,
+            b'a', b'b', b'c', b'd', 0x00,
+            b'1', b'2', b'3', b'4', 0x00,
             0x00,
     ];
 }
@@ -214,30 +226,26 @@
 <pre><pre class="playground"><code class="language-rust">fn main() {
     #[rustfmt::skip] 
     let got = vec![
-    		0x00, 0x05, 0x01, 0x00,
-    		0xff,
-    		0x00,
-    		0x00,
+            0x00, 0x05, 0x01, 0x00,
+            0xff,
+            0x00,
+            0x00,
     
-    		0x01, 0x0c, 0x02, 0x00,
-    		0xde, 0xad, 0xbe, 0xef, 0xde, 0xad, 0xbe, 0xef,
-    		b'd', b'e', b'a', b'd', b'b', b'e', b'e', b'f', 0x00,
-    		0x00,
+            0x01, 0x0c, 0x02, 0x00,
+            0xde, 0xad, 0xbe, 0xef, 0xde, 0xad, 0xbe, 0xef,
+            b'd', b'e', b'a', b'd', b'b', b'e', b'e', b'f', 0x00,
+            0x00,
     
-    		127, 0x06, 0x03, 0x00,
-    		0x01, 0x02,
-    		b'a', b'b', b'c', b'd', 0x00,
-    		b'1', b'2', b'3', b'4', 0x00,
+            127, 0x06, 0x03, 0x00,
+            0x01, 0x02,
+            b'a', b'b', b'c', b'd', 0x00,
+            b'1', b'2', b'3', b'4', 0x00,
             0x00,
     ];
 }
 
 </code></pre></pre>
-<h2><a class="header" href="#pfmt02-代码格式以保证可读性为前提" id="pfmt02-代码格式以保证可读性为前提">P.FMT.02 代码格式以保证可读性为前提</a></h2>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
-<p>制定统一的编码风格，是为了提升代码的可读性，让日常代码维护和团队之间审查代码更加方便。</p>
-<hr />
-<h2><a class="header" href="#gfmt01-缩进始终使用空格space而非制表符tab" id="gfmt01-缩进始终使用空格space而非制表符tab">G.FMT.01 缩进始终使用空格（space）而非制表符（tab）</a></h2>
+<h2><a class="header" href="#gfmt02-缩进始终使用空格space而非制表符tab" id="gfmt02-缩进始终使用空格space而非制表符tab">G.FMT.02 缩进始终使用空格（space）而非制表符（tab）</a></h2>
 <h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置" id="rustfmt-配置">【rustfmt 配置】</a></h3>
@@ -252,8 +260,8 @@
 <li>缩进要使用 四个 空格，不要使用制表符（<code>\t</code>）代替。</li>
 <li>通过 IDE/Editor 为缩进默认好设置值。</li>
 </ol>
-<h2><a class="header" href="#gfmt02-每行最大宽度为-100-个字符" id="gfmt02-每行最大宽度为-100-个字符">G.FMT.02 每行最大宽度为 100 个字符</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt03-每行最大宽度为-100-个字符" id="gfmt03-每行最大宽度为-100-个字符">G.FMT.03 每行最大宽度为 100 个字符</a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-1" id="rustfmt-配置-1">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -347,8 +355,8 @@ fn main() {
     let lorem = if ipsum { dolor } else { sit };
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt03-行间距最大宽度空一行" id="gfmt03-行间距最大宽度空一行">G.FMT.03 行间距最大宽度空一行</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt04-行间距最大宽度空一行" id="gfmt04-行间距最大宽度空一行">G.FMT.04 行间距最大宽度空一行</a></h2>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-2" id="rustfmt-配置-2">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -406,8 +414,8 @@ fn bar() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt04-语言项item-定义时花括号brace位置应该与语言项保持同一行" id="gfmt04-语言项item-定义时花括号brace位置应该与语言项保持同一行">G.FMT.04 语言项（Item) 定义时花括号（brace）位置应该与语言项保持同一行</a></h2>
-<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt05-语言项item-定义时花括号brace位置应该与语言项保持同一行" id="gfmt05-语言项item-定义时花括号brace位置应该与语言项保持同一行">G.FMT.05 语言项（Item) 定义时花括号（brace）位置应该与语言项保持同一行</a></h2>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-3" id="rustfmt-配置-3">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -586,8 +594,8 @@ fn main() {
     }
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt05-单行规则" id="gfmt05-单行规则">G.FMT.05 单行规则</a></h2>
-<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt06-单行规则" id="gfmt06-单行规则">G.FMT.06 单行规则</a></h2>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-4" id="rustfmt-配置-4">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -630,8 +638,8 @@ fn main() {
     };
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt06-存在多个标识符时应该保持块状block缩进" id="gfmt06-存在多个标识符时应该保持块状block缩进">G.FMT.06 存在多个标识符时应该保持块状（Block）缩进</a></h2>
-<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt07-存在多个标识符时应该保持块状block缩进" id="gfmt07-存在多个标识符时应该保持块状block缩进">G.FMT.07 存在多个标识符时应该保持块状（Block）缩进</a></h2>
+<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-5" id="rustfmt-配置-5">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -830,8 +838,8 @@ fn lorem(ipsum: usize,
                         sit: amet };
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt07-换行样式以文件自动检测为主" id="gfmt07-换行样式以文件自动检测为主">G.FMT.07 换行样式以文件自动检测为主</a></h2>
-<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt08-换行样式以文件自动检测为主" id="gfmt08-换行样式以文件自动检测为主">G.FMT.08 换行样式以文件自动检测为主</a></h2>
+<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-6" id="rustfmt-配置-6">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -846,8 +854,8 @@ fn lorem(ipsum: usize,
 <li><code>Windows</code> 以 <code>\r\n</code>结尾。</li>
 <li><code>Unix</code> 以 <code>\n</code> 结尾。</li>
 </ul>
-<h2><a class="header" href="#gfmt08-当有多行表达式操作时操作符应该置于行首" id="gfmt08-当有多行表达式操作时操作符应该置于行首">G.FMT.08 当有多行表达式操作时，操作符应该置于行首</a></h2>
-<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt09-当有多行表达式操作时操作符应该置于行首" id="gfmt09-当有多行表达式操作时操作符应该置于行首">G.FMT.09 当有多行表达式操作时，操作符应该置于行首</a></h2>
+<h3><a class="header" href="#级别建议-7" id="级别建议-7">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-7" id="rustfmt-配置-7">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -886,8 +894,8 @@ fn lorem(ipsum: usize,
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt09-枚举变体和结构体字段相互之间默认左对齐" id="gfmt09-枚举变体和结构体字段相互之间默认左对齐">G.FMT.09 枚举变体和结构体字段相互之间默认左对齐</a></h2>
-<h3><a class="header" href="#级别建议-7" id="级别建议-7">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt10-枚举变体和结构体字段相互之间默认左对齐" id="gfmt10-枚举变体和结构体字段相互之间默认左对齐">G.FMT.10 枚举变体和结构体字段相互之间默认左对齐</a></h2>
+<h3><a class="header" href="#级别建议-8" id="级别建议-8">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-8" id="rustfmt-配置-8">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -956,8 +964,8 @@ enum Bar {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt10-多个函数参数和导入模块的布局" id="gfmt10-多个函数参数和导入模块的布局">G.FMT.10 多个函数参数和导入模块的布局</a></h2>
-<h3><a class="header" href="#级别建议-8" id="级别建议-8">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt11-多个函数参数和导入模块的布局" id="gfmt11-多个函数参数和导入模块的布局">G.FMT.11 多个函数参数和导入模块的布局</a></h2>
+<h3><a class="header" href="#级别建议-9" id="级别建议-9">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-9" id="rustfmt-配置-9">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1053,8 +1061,8 @@ use foo::{
 
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt11--空格使用规则" id="gfmt11--空格使用规则">G.FMT.11  空格使用规则</a></h2>
-<h3><a class="header" href="#级别建议-9" id="级别建议-9">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt12--空格使用规则" id="gfmt12--空格使用规则">G.FMT.12  空格使用规则</a></h2>
+<h3><a class="header" href="#级别建议-10" id="级别建议-10">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-10" id="rustfmt-配置-10">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1135,8 +1143,8 @@ fn lorem&lt;Ipsum: Dolor+Sit=Amet&gt;() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt12--结尾逗号规则" id="gfmt12--结尾逗号规则">G.FMT.12  结尾逗号规则</a></h2>
-<h3><a class="header" href="#级别建议-10" id="级别建议-10">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt13--结尾逗号规则" id="gfmt13--结尾逗号规则">G.FMT.13  结尾逗号规则</a></h2>
+<h3><a class="header" href="#级别建议-11" id="级别建议-11">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-11" id="rustfmt-配置-11">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1214,8 +1222,8 @@ fn main() {
 }
 
 </code></pre></pre>
-<h2><a class="header" href="#gfmt13--match-分支格式" id="gfmt13--match-分支格式">G.FMT.13  <code>match</code> 分支格式</a></h2>
-<h3><a class="header" href="#级别建议-11" id="级别建议-11">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt14--match-分支格式" id="gfmt14--match-分支格式">G.FMT.14  <code>match</code> 分支格式</a></h2>
+<h3><a class="header" href="#级别建议-12" id="级别建议-12">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-12" id="rustfmt-配置-12">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1291,8 +1299,8 @@ fn foo() {
 }
 
 </code></pre></pre>
-<h2><a class="header" href="#gfmt14--导入模块分组规则" id="gfmt14--导入模块分组规则">G.FMT.14  导入模块分组规则</a></h2>
-<h3><a class="header" href="#级别建议-12" id="级别建议-12">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt15--导入模块分组规则" id="gfmt15--导入模块分组规则">G.FMT.15  导入模块分组规则</a></h2>
+<h3><a class="header" href="#级别建议-13" id="级别建议-13">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-13" id="rustfmt-配置-13">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1374,8 +1382,8 @@ use crate::models::Event;
 use core::f32;
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt15--声明宏分支格式" id="gfmt15--声明宏分支格式">G.FMT.15  声明宏分支格式</a></h2>
-<h3><a class="header" href="#级别建议-13" id="级别建议-13">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt16--声明宏分支格式" id="gfmt16--声明宏分支格式">G.FMT.16  声明宏分支格式</a></h2>
+<h3><a class="header" href="#级别建议-14" id="级别建议-14">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-14" id="rustfmt-配置-14">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1434,8 +1442,8 @@ macro_rules! foo {
 
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt16--具名结构体字段初始化不要省略字段名" id="gfmt16--具名结构体字段初始化不要省略字段名">G.FMT.16  具名结构体字段初始化不要省略字段名</a></h2>
-<h3><a class="header" href="#级别建议-14" id="级别建议-14">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt17--具名结构体字段初始化不要省略字段名" id="gfmt17--具名结构体字段初始化不要省略字段名">G.FMT.17  具名结构体字段初始化不要省略字段名</a></h2>
+<h3><a class="header" href="#级别建议-15" id="级别建议-15">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-15" id="rustfmt-配置-15">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1475,8 +1483,8 @@ fn main() {
     let a = Foo { x, y, z };
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt17--extern-外部函数需要指定-abi" id="gfmt17--extern-外部函数需要指定-abi">G.FMT.17  extern 外部函数需要指定 ABI</a></h2>
-<h3><a class="header" href="#级别建议-15" id="级别建议-15">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt18--extern-外部函数需要指定-abi" id="gfmt18--extern-外部函数需要指定-abi">G.FMT.18  extern 外部函数需要指定 ABI</a></h2>
+<h3><a class="header" href="#级别建议-16" id="级别建议-16">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-16" id="rustfmt-配置-16">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1517,8 +1525,8 @@ extern &quot;Rust&quot; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gfmt18---解构元组的时候允许使用来指代剩余元素" id="gfmt18---解构元组的时候允许使用来指代剩余元素">G.FMT.18   解构元组的时候允许使用<code>..</code>来指代剩余元素</a></h2>
-<h3><a class="header" href="#级别建议-16" id="级别建议-16">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt19---解构元组的时候允许使用来指代剩余元素" id="gfmt19---解构元组的时候允许使用来指代剩余元素">G.FMT.19   解构元组的时候允许使用<code>..</code>来指代剩余元素</a></h2>
+<h3><a class="header" href="#级别建议-17" id="级别建议-17">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-17" id="rustfmt-配置-17">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
@@ -1541,8 +1549,8 @@ extern &quot;Rust&quot; {
     let (lorem, ipsum, ..) = (1, 2, 3, 4);
 }
 </code></pre></pre>
-<h2><a class="header" href="#gfmt19----不要将多个-derive-宏合并为同一行" id="gfmt19----不要将多个-derive-宏合并为同一行">G.FMT.19    不要将多个 Derive 宏合并为同一行</a></h2>
-<h3><a class="header" href="#级别建议-17" id="级别建议-17">【级别：建议】</a></h3>
+<h2><a class="header" href="#gfmt20----不要将多个-derive-宏合并为同一行" id="gfmt20----不要将多个-derive-宏合并为同一行">G.FMT.20    不要将多个 Derive 宏合并为同一行</a></h2>
+<h3><a class="header" href="#级别建议-18" id="级别建议-18">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#rustfmt-配置-18" id="rustfmt-配置-18">【rustfmt 配置】</a></h3>
 <p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>

@@ -170,8 +170,99 @@
                         <h1><a class="header" href="#命名" id="命名">命名</a></h1>
 <p>好的命名风格能让我们快速地了解某个名字代表的含义（类型、变量、函数、常量、宏等），甚至能凸显其在整个代码上下文中的语义。命名管理对提升代码的可读性和维护性相当重要。</p>
 <hr />
-<h2><a class="header" href="#pnam01-标识符命名应该符合阅读习惯" id="pnam01-标识符命名应该符合阅读习惯">P.NAM.01 标识符命名应该符合阅读习惯</a></h2>
+<h2><a class="header" href="#pnam01--类型名称应该使用统一的词序" id="pnam01--类型名称应该使用统一的词序">P.NAM.01  类型名称应该使用统一的词序</a></h2>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
+<p>类型名称都按照 <strong>动词-宾语-error</strong> 的单词顺序。</p>
+<p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。</p>
+<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
+<p>【正例】</p>
+<p>以下是来自标准库的处理错误的一些类型：</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/env/struct.JoinPathsError.html"><code>JoinPathsError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/str/struct.ParseBoolError.html"><code>ParseBoolError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/char/struct.ParseCharError.html"><code>ParseCharError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/num/struct.ParseFloatError.html"><code>ParseFloatError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html"><code>RecvTimeoutError</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/path/struct.StripPrefixError.html"><code>StripPrefixError</code></a></li>
+</ul>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 应该为 ParseAddrError
+struct AddrParseError {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果增加“解析地址错误”类型，为了保持词性一致，应该使用 <code>ParseAddrError</code> 名称，而不是 <code>AddrParseError</code>。</p>
+<h2><a class="header" href="#pnam02--cargo-feature-名中不应该含有无意义的占位词" id="pnam02--cargo-feature-名中不应该含有无意义的占位词">P.NAM.02  cargo feature 名中不应该含有无意义的占位词</a></h2>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<p>给 <a href="http://doc.crates.io/manifest.html#the-features-section">Cargo feature</a> 命名时，不要带有无实际含义的的词语，比如无需 <code>use-abc</code> 或 <code>with-abc</code> ，而是直接以 <code>abc</code> 命名。</p>
+<p>这条原则经常出现在对 Rust 标准库进行 <a href="https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies">可选依赖</a> 配置的 crate 上。</p>
+<h3><a class="header" href="#示例-1" id="示例-1">【示例】</a></h3>
+<p>【正例】</p>
+<p>最简洁且正确的做法是：</p>
+<pre><code class="language-toml"># In Cargo.toml
+
+[features]
+default = [&quot;std&quot;]
+std = []
+</code></pre>
+<pre><code class="language-rust ignored">// In lib.rs
+
+#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
+</code></pre>
+<p>【反例】</p>
+<pre><code class="language-toml"># In Cargo.toml
+
+// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
+[features]
+default = [&quot;use-std&quot;]
+std = []
+</code></pre>
+<pre><code class="language-rust ignored">// In lib.rs
+
+#![cfg_attr(not(feature = &quot;use-std&quot;), no_std)]
+</code></pre>
+<p>feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。</p>
+<p>【正例】</p>
+<p>假如 <code>x</code> crate 对 Serde 和 标准库具有可选依赖关系：</p>
+<pre><code class="language-toml">[package]
+name = &quot;x&quot;
+version = &quot;0.1.0&quot;
+
+[features]
+std = [&quot;serde/std&quot;]
+
+[dependencies]
+serde = { version = &quot;1.0&quot;, optional = true }
+</code></pre>
+<p>当我们使用 <code>x</code> crate 时，可以使用 <code>features = [&quot;serde&quot;]</code> 开启 Serde 依赖。类似地，也可以使用 <code>features = [&quot;std&quot;]</code> 开启标准库依赖。
+Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <code>use-serde</code> 或者 <code>with-serde</code> 。</p>
+<p>【反例】</p>
+<pre><code class="language-toml">[package]
+name = &quot;x&quot;
+version = &quot;0.1.0&quot;
+
+[features]
+std = [&quot;serde/std&quot;]
+// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
+no-abc=[]
+
+[dependencies]
+serde = { version = &quot;1.0&quot;, optional = true }
+</code></pre>
+<hr />
+<h2><a class="header" href="#gnam01-标识符命名应该符合阅读习惯" id="gnam01-标识符命名应该符合阅读习惯">G.NAM.01 标识符命名应该符合阅读习惯</a></h2>
+<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>检测错误的英文拼写，检测出后提示；检测拼音，检测出来提示。拼写错误可参考 <a href="https://github.com/client9/misspell">client9/misspell</a> 。</p>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
 <p>标识符的命名要清晰、明了，有明确含义，容易理解。符合英文阅读习惯的命名将明显提高代码可读性。</p>
 <p>一些好的实践包括但不限于：</p>
 <ul>
@@ -180,18 +271,79 @@
 <li>布尔型变量或函数避免使用否定形式</li>
 <li>尽量不要使用 Unicode 标识符。</li>
 </ul>
-<h2><a class="header" href="#pnam02-作用域越大命名越精确反之应简短" id="pnam02-作用域越大命名越精确反之应简短">P.NAM.02 作用域越大，命名越精确；反之应简短</a></h2>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let first_name: &amp;str = &quot;John&quot;;
+let last_name: &amp;str = &quot;Smith&quot;;
+const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
+const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let ming: &amp;str = &quot;John&quot;;
+let xing: &amp;str = &quot;Smith&quot;;
+const ERROR_NO_1: u32 = 336;
+const ERROR_NO_2: u32 = 594;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gnam02-使用统一的命名风格" id="gnam02-使用统一的命名风格">G.NAM.02 使用统一的命名风格</a></h2>
+<h3><a class="header" href="#级别必须-1" id="级别必须-1">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
+<tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types"><code>Rustc: non_camel_case_types</code></a></td><td>no</td><td>yes</td><td>Style</td></tr>
+<tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case"><code>Rustc: non_snake_case</code></a></td><td>no</td><td>yes</td><td>Style</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有描述。总的来说，Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
+<p>下面是具体汇总。</p>
+<table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
+<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">最好使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
+<tr><td>模块（Modules）</td><td><code>snake_case</code></td></tr>
+<tr><td>类型（Types）</td><td><code>UpperCamelCase</code></td></tr>
+<tr><td>特质（Traits）</td><td><code>UpperCamelCase</code></td></tr>
+<tr><td>枚举体（Enum variants）</td><td><code>UpperCamelCase</code></td></tr>
+<tr><td>函数（Functions）</td><td><code>snake_case</code></td></tr>
+<tr><td>方法（Methods）</td><td><code>snake_case</code></td></tr>
+<tr><td>通用构造函数（General constructors）</td><td><code>new</code> 或者 <code>with_more_details</code></td></tr>
+<tr><td>转换构造函数（Conversion constructors）</td><td><code>from_some_other_type</code></td></tr>
+<tr><td>宏（Macros）</td><td><code>snake_case!</code></td></tr>
+<tr><td>本地变量（Local variables）</td><td><code>snake_case</code></td></tr>
+<tr><td>静态变量（Statics）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
+<tr><td>常量（Constants）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
+<tr><td>类型参数（Type parameters）</td><td>简明的 <code>UpperCamelCase</code> ，通常使用单个大写字母： <code>T</code></td></tr>
+<tr><td>生存期（Lifetimes）</td><td>简短的 <code>lowercase</code>，通常使用单个小写字母 <code>'a</code>, <code>'de</code>, <code>'src</code>，尽量保持语义</td></tr>
+<tr><td>特性（Features）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/101">有争议</a> ，但是一般遵照 [C-FEATURE]</td></tr>
+</tbody></table>
+<p>说明 :</p>
+<ol>
+<li>在 <code>UpperCamelCase</code>情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作一个词。比如，应该使用 <code>Uuid</code> 而非 <code>UUID</code>，使用 <code>Usize</code> 而不是 <code>USize</code>，或者是 <code>Stdin</code> 而不是 <code>StdIn</code>。</li>
+<li>在<code>snake_case</code>中，首字母缩写和缩略词是小写的：is_xid_start。</li>
+<li>在 <code>snake_case</code> 或者 <code>SCREAMING_SNAKE_CASE</code> 情况下，每个词不应该由单个字母组成——除非这个字母是最后一个词。比如，使用 <code>btree_map</code> 而不使用 <code>b_tree_map</code>，使用 <code>PI_2</code> 而不使用 <code>PI2</code> 。</li>
+</ol>
+<p>关于包命名：</p>
+<ul>
+<li><sup class="footnote-reference"><a href="#crate-name">1</a></sup>: 由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。</li>
+<li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
+</ul>
+<h2><a class="header" href="#gnam03-作用域越大命名越精确反之应简短" id="gnam03-作用域越大命名越精确反之应简短">G.NAM.03 作用域越大，命名越精确；反之应简短</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#module_name_repetitions">module_name_repetitions</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <ol>
 <li>对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一。</li>
 <li>对于函数局部变量，或者结构体、枚举中的成员变量，在其命名能够准确表达含义的前提下，应该尽量简短，避免冗余信息重复描述。</li>
 </ol>
-<p><strong>相关 Clippy lint：</strong></p>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#module_name_repetitions">module_name_repetitions</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
-</tbody></table>
-<p>注意：</p>
-<h3><a class="header" href="#示例" id="示例">【示例】</a></h3>
+<h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
 <p><strong>全局静态变量示例</strong></p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -269,73 +421,21 @@ pub struct HeaderMap {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#p03-避免使用语言内置保留字关键字内置类型和trait等特殊名称" id="p03-避免使用语言内置保留字关键字内置类型和trait等特殊名称">P.03 避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
-<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
-<p>命名必须要避免使用语义内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。</p>
-<p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">// Sized ： Rust 内置了同名 trait 
-type Sized = u16; 
-
-fn main() {
-    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
-    let r#try = 1;
-}
-</code></pre></pre>
-<hr />
-<h2><a class="header" href="#gnam01-使用统一的命名风格" id="gnam01-使用统一的命名风格">G.NAM.01 使用统一的命名风格</a></h2>
-<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<h2><a class="header" href="#gnam04-类型转换函数命名需要遵循所有权语义" id="gnam04-类型转换函数命名需要遵循所有权语义">G.NAM.04 类型转换函数命名需要遵循所有权语义</a></h2>
+<h3><a class="header" href="#级别必须-2" id="级别必须-2">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
-<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
-<tr><td>_</td><td>yes</td><td>no</td><td>Style</td></tr>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>Lint Level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention">wrong_self_convention</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
-<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有描述。总的来说，Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
-<p>下面是具体汇总。</p>
-<table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
-<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">最好使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
-<tr><td>模块（Modules）</td><td><code>snake_case</code></td></tr>
-<tr><td>类型（Types）</td><td><code>UpperCamelCase</code></td></tr>
-<tr><td>特质（Traits）</td><td><code>UpperCamelCase</code></td></tr>
-<tr><td>枚举体（Enum variants）</td><td><code>UpperCamelCase</code></td></tr>
-<tr><td>函数（Functions）</td><td><code>snake_case</code></td></tr>
-<tr><td>方法（Methods）</td><td><code>snake_case</code></td></tr>
-<tr><td>通用构造函数（General constructors）</td><td><code>new</code> 或者 <code>with_more_details</code></td></tr>
-<tr><td>转换构造函数（Conversion constructors）</td><td><code>from_some_other_type</code></td></tr>
-<tr><td>宏（Macros）</td><td><code>snake_case!</code></td></tr>
-<tr><td>本地变量（Local variables）</td><td><code>snake_case</code></td></tr>
-<tr><td>静态变量（Statics）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
-<tr><td>常量（Constants）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
-<tr><td>类型参数（Type parameters）</td><td>简明的 <code>UpperCamelCase</code> ，通常使用单个大写字母： <code>T</code></td></tr>
-<tr><td>生存期（Lifetimes）</td><td>简短的 <code>lowercase</code>，通常使用单个小写字母 <code>'a</code>, <code>'de</code>, <code>'src</code>，尽量保持语义</td></tr>
-<tr><td>特性（Features）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/101">有争议</a> ，但是一般遵照 [C-FEATURE]</td></tr>
-</tbody></table>
-<p>说明 :</p>
-<ol>
-<li>在 <code>UpperCamelCase</code>情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作一个词。比如，应该使用 <code>Uuid</code> 而非 <code>UUID</code>，使用 <code>Usize</code> 而不是 <code>USize</code>，或者是 <code>Stdin</code> 而不是 <code>StdIn</code>。</li>
-<li>在<code>snake_case</code>中，首字母缩写和缩略词是小写的：is_xid_start。</li>
-<li>在 <code>snake_case</code> 或者 <code>SCREAMING_SNAKE_CASE</code> 情况下，每个词不应该由单个字母组成——除非这个字母是最后一个词。比如，使用 <code>btree_map</code> 而不使用 <code>b_tree_map</code>，使用 <code>PI_2</code> 而不使用 <code>PI2</code> 。</li>
-</ol>
-<p>关于包命名：</p>
-<ul>
-<li><sup class="footnote-reference"><a href="#crate-name">1</a></sup>: 由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。</li>
-<li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
-</ul>
-<h2><a class="header" href="#gnam02-类型转换函数命名需要遵循所有权语义" id="gnam02-类型转换函数命名需要遵循所有权语义">G.NAM.02 类型转换函数命名需要遵循所有权语义</a></h2>
-<h3><a class="header" href="#级别必须-1" id="级别必须-1">【级别：必须】</a></h3>
-<p>必须严格按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
-<tr><td>wrong_self_convention</td><td>yes</td><td>no</td><td>Style</td></tr>
-</tbody></table>
-<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
 <p>应该使用带有以下前缀名称方法来进行特定类型转换：</p>
 <table><thead><tr><th>名称前缀</th><th>内存代价</th><th>所有权</th></tr></thead><tbody>
 <tr><td><code>as_</code></td><td>无代价</td><td>borrowed -&gt; borrowed</td></tr>
 <tr><td><code>to_</code></td><td>代价昂贵</td><td>borrowed -&gt; borrowed<br>borrowed -&gt; owned (非 Copy 类型)<br>owned -&gt; owned (Copy 类型)</td></tr>
 <tr><td><code>into_</code></td><td>看情况</td><td>owned -&gt; owned (非 Copy 类型)</td></tr>
 </tbody></table>
-<h3><a class="header" href="#示例-1" id="示例-1">【示例】</a></h3>
+<h3><a class="header" href="#示例-3" id="示例-3">【示例】</a></h3>
 <p>【正例】</p>
 <ul>
 <li><code>as_</code>
@@ -393,22 +493,26 @@ fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.to_vec"><code>slice::to_vec</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter"><code>Option::into_iter</code></a></li>
 </ul>
-<h2><a class="header" href="#gnam03-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀" id="gnam03-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀">G.NAM.03 用于访问或获取数据的 <code>getter/setter</code> 类方法通常不要使用 <code>get_</code> 或 <code>set_</code> 等前缀</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<h2><a class="header" href="#gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀" id="gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀">G.NAM.05 用于访问或获取数据的 <code>getter/setter</code> 类方法通常不要使用 <code>get_</code> 或 <code>set_</code> 等前缀</a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
-<p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<p>【定制化参考】</p>
+<p>检测 Struct 实现的方法名是否包含 <code>get_/set_</code> 前缀，如果包含，则给予警告。 </p>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
 <p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 和 setter 的语义。</p>
-<h3><a class="header" href="#示例-2" id="示例-2">【示例】</a></h3>
+<h3><a class="header" href="#示例-4" id="示例-4">【示例】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct S {
+</span>pub struct First;
+pub struct Second;
+
+pub struct S {
     first: First,
     second: Second,
 }
@@ -430,7 +534,10 @@ impl S {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct S {
+</span>pub struct First;
+pub struct Second;
+
+pub struct S {
     first: First,
     second: Second,
 }
@@ -474,22 +581,23 @@ unsafe fn get_unchecked_mut(&amp;mut self, index: K) -&gt; &amp;mut V;
 <li><a href="https://doc.rust-lang.org/std/collections/hash_map/struct.OccupiedEntry.html#method.get_mut"><code>std::collections::hash_map::OccupiedEntry::get_mut</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>&lt;[T]&gt;::get_unchecked</code></a></li>
 </ul>
-<h2><a class="header" href="#gnam04-遵循-iter-iter_mut-into_iter-规范来生成迭代器" id="gnam04-遵循-iter-iter_mut-into_iter-规范来生成迭代器">G.NAM.04 遵循 <code>iter/ iter_mut/ into_iter</code> 规范来生成迭代器</a></h2>
-<h3><a class="header" href="#级别必须-2" id="级别必须-2">【级别：必须】</a></h3>
+<h2><a class="header" href="#gnam06-遵循-iter-iter_mut-into_iter-规范来生成迭代器" id="gnam06-遵循-iter-iter_mut-into_iter-规范来生成迭代器">G.NAM.06 遵循 <code>iter/ iter_mut/ into_iter</code> 规范来生成迭代器</a></h2>
+<h3><a class="header" href="#级别必须-3" id="级别必须-3">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-5" id="lint-检测-5">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
-<p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<p>【定制化参考】</p>
+<p>检测 <code>iter/iter_mut/into_iter</code> 方法的返回类型是否对应 <code>Iter/IterMut/IntoIter</code> ，如果不是，则给予警告。</p>
+<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
 <p>对于容纳 <code>U</code> 类型的容器 (container) ，其迭代器方法应该这样命名：</p>
 <pre><code class="language-rust ignored">fn iter(&amp;self) -&gt; Iter             // Iter 实现 Iterator&lt;Item = &amp;U&gt;
 fn iter_mut(&amp;mut self) -&gt; IterMut  // IterMut 实现 Iterator&lt;Item = &amp;mut U&gt;
 fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt;
 </code></pre>
 <p>此规则适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个 URL 编码的字符串片段的迭代器。使用<code>iter/iter_mut/into_iter</code>约定的话，函数名就不会有任何明确的语义了。</p>
-<h3><a class="header" href="#示例-3" id="示例-3">【示例】</a></h3>
+<h3><a class="header" href="#示例-5" id="示例-5">【示例】</a></h3>
 <p>【正例】</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a></li>
@@ -502,18 +610,19 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、<a href="https://doc.rust-lang.org/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
 <h3><a class="header" href="#参考" id="参考">【参考】</a></h3>
 <p>参考 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md">RFC 199</a> 。</p>
-<h2><a class="header" href="#gnam05-迭代器类型名称应该与产生它们的方法相匹配" id="gnam05-迭代器类型名称应该与产生它们的方法相匹配">G.NAM.05 迭代器类型名称应该与产生它们的方法相匹配</a></h2>
-<h3><a class="header" href="#级别必须-3" id="级别必须-3">【级别：必须】</a></h3>
+<h2><a class="header" href="#gnam07-迭代器类型名称应该与产生它们的方法相匹配" id="gnam07-迭代器类型名称应该与产生它们的方法相匹配">G.NAM.07 迭代器类型名称应该与产生它们的方法相匹配</a></h2>
+<h3><a class="header" href="#级别必须-4" id="级别必须-4">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
-<p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-7" id="描述-7">【描述】</a></h3>
+<p>【定制化参考】</p>
+<p>检测返回迭代器的方法，其返回类型应该与方法名相匹配，否则给予警告。</p>
+<h3><a class="header" href="#描述-8" id="描述-8">【描述】</a></h3>
 <p>一个叫做<code>into_iter()</code>的方法应该返回一个叫做<code>IntoIter</code>的类型，同样，所有其他返回迭代器的方法也是如此。</p>
 <p>这条规则主要适用于方法，但通常对函数也有意义。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个<code>PercentEncode</code> 类型的迭代器。</p>
-<h3><a class="header" href="#示例-4" id="示例-4">【示例】</a></h3>
+<h3><a class="header" href="#示例-6" id="示例-6">【示例】</a></h3>
 <p>【正例】</p>
 <p>来自标准库的例子：</p>
 <ul>
@@ -523,102 +632,27 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html"><code>Keys</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html"><code>Values</code></a></li>
 </ul>
-<h2><a class="header" href="#gnam06--cargo-feature-名中不应该含有无意义的占位词" id="gnam06--cargo-feature-名中不应该含有无意义的占位词">G.NAM.06  cargo feature 名中不应该含有无意义的占位词</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-5" id="lint-检测-5">【Lint 检测】</a></h3>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
-<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>no</td></tr>
-</tbody></table>
-<p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
-<h3><a class="header" href="#描述-8" id="描述-8">【描述】</a></h3>
-<p>给 <a href="http://doc.crates.io/manifest.html#the-features-section">Cargo feature</a> 命名时，不要带有无实际含义的的词语，比如无需 <code>use-abc</code> 或 <code>with-abc</code> ，而是直接以 <code>abc</code> 命名。</p>
-<p>这条原则经常出现在对 Rust 标准库进行 <a href="https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies">可选依赖</a> 配置的 crate 上。</p>
-<h3><a class="header" href="#示例-5" id="示例-5">【示例】</a></h3>
-<p>【正例】</p>
-<p>最简洁且正确的做法是：</p>
-<pre><code class="language-toml"># In Cargo.toml
-
-[features]
-default = [&quot;std&quot;]
-std = []
-</code></pre>
-<pre><code class="language-rust ignored">// In lib.rs
-
-#![cfg_attr(not(feature = &quot;std&quot;), no_std)]
-</code></pre>
-<p>【反例】</p>
-<pre><code class="language-toml"># In Cargo.toml
-
-// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
-[features]
-default = [&quot;use-std&quot;]
-std = []
-</code></pre>
-<pre><code class="language-rust ignored">// In lib.rs
-
-#![cfg_attr(not(feature = &quot;use-std&quot;), no_std)]
-</code></pre>
-<p>feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。</p>
-<p>【正例】</p>
-<p>假如 <code>x</code> crate 对 Serde 和 标准库具有可选依赖关系：</p>
-<pre><code class="language-toml">[package]
-name = &quot;x&quot;
-version = &quot;0.1.0&quot;
-
-[features]
-std = [&quot;serde/std&quot;]
-
-[dependencies]
-serde = { version = &quot;1.0&quot;, optional = true }
-</code></pre>
-<p>当我们使用 <code>x</code> crate 时，可以使用 <code>features = [&quot;serde&quot;]</code> 开启 Serde 依赖。类似地，也可以使用 <code>features = [&quot;std&quot;]</code> 开启标准库依赖。
-Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <code>use-serde</code> 或者 <code>with-serde</code> 。</p>
-<p>【反例】</p>
-<pre><code class="language-toml">[package]
-name = &quot;x&quot;
-version = &quot;0.1.0&quot;
-
-[features]
-std = [&quot;serde/std&quot;]
-// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
-no-abc=[]
-
-[dependencies]
-serde = { version = &quot;1.0&quot;, optional = true }
-</code></pre>
-<h2><a class="header" href="#gnam07--类型名称应该使用统一的词序" id="gnam07--类型名称应该使用统一的词序">G.NAM.07  类型名称应该使用统一的词序</a></h2>
-<h3><a class="header" href="#级别必须-4" id="级别必须-4">【级别：必须】</a></h3>
+<h2><a class="header" href="#gnam8--避免使用语言内置保留字关键字内置类型和trait等特殊名称" id="gnam8--避免使用语言内置保留字关键字内置类型和trait等特殊名称">G.NAM.8  避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
+<h3><a class="header" href="#级别必须-5" id="级别必须-5">【级别：必须】</a></h3>
 <p>必须严格按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-7" id="lint-检测-7">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
-<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>no</td></tr>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
-<p>此规则 Clippy 不可检测，属于业务逻辑层面。</p>
+<p>【定制化参考】</p>
+<p>可以检测 标识符 是否通过<code>r#</code>使用了 语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称，如果使用，则给予警告。</p>
 <h3><a class="header" href="#描述-9" id="描述-9">【描述】</a></h3>
-<p>类型名称都按照 <strong>动词-宾语-error</strong> 的单词顺序。</p>
-<p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性，以及与标准库相似函数的一致性。</p>
-<h3><a class="header" href="#示例-6" id="示例-6">【示例】</a></h3>
-<p>【正例】</p>
-<p>以下是来自标准库的处理错误的一些类型：</p>
-<ul>
-<li><a href="https://doc.rust-lang.org/std/env/struct.JoinPathsError.html"><code>JoinPathsError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/str/struct.ParseBoolError.html"><code>ParseBoolError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/char/struct.ParseCharError.html"><code>ParseCharError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/num/struct.ParseFloatError.html"><code>ParseFloatError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html"><code>RecvTimeoutError</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/path/struct.StripPrefixError.html"><code>StripPrefixError</code></a></li>
-</ul>
+<p>命名必须要避免使用语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。</p>
 <p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 应该为 ParseAddrError
-struct AddrParseError {}
-<span class="boring">}
-</span></code></pre></pre>
-<p>如果增加“解析地址错误”类型，为了保持词性一致，应该使用 <code>ParseAddrError</code> 名称，而不是 <code>AddrParseError</code>。</p>
+<pre><pre class="playground"><code class="language-rust">// Sized ： Rust 内置了同名 trait 
+type Sized = u16; 
+
+fn main() {
+    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
+    let r#try = 1;
+}
+</code></pre></pre>
+<hr />
 
                     </main>
 

@@ -185,10 +185,28 @@ fn main(){
     hello(a);
 }
 </code></pre></pre>
-<h2><a class="header" href="#ptyptuple02--使用元组时其元素最多不要超过3个" id="ptyptuple02--使用元组时其元素最多不要超过3个">P.TYP.Tuple.02  使用元组时，其元素最多不要超过3个</a></h2>
-<p>【描述】</p>
+<h2><a class="header" href="#gtyptuple01--使用元组时其元素最多不要超过3个" id="gtyptuple01--使用元组时其元素最多不要超过3个">G.TYP.Tuple.01  使用元组时，其元素最多不要超过3个</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint检测" id="lint检测">【Lint检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>可以检测元组中元素个数，如果超过 3 个，发出警告或建议。并且可以支持配置允许个数。</p>
+<p><strong>【描述】</strong></p>
 <p>元组是异构复合类型，元素过多，其表达力会下降，影响代码可读性和可维护性。</p>
 <p>尤其是利用元组作为函数返回值时，不宜过多。</p>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">fn convert(x: i8) -&gt; (i8, i16, i32, i64, f32, f64) {
+    (x as i8, x as i16, x as i32, 
+     x as i64, x as f32, x as f64)
+}
+
+fn main(){
+    let _ = convert(3);
+}
+</code></pre></pre>
 
                     </main>
 

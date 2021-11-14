@@ -174,30 +174,13 @@
 <h2><a class="header" href="#pvar01-非必要不要像-c-语言那样先声明可变变量然后再去赋值" id="pvar01-非必要不要像-c-语言那样先声明可变变量然后再去赋值">P.VAR.01 非必要不要像 C 语言那样先声明可变变量然后再去赋值</a></h2>
 <p><strong>【描述】</strong></p>
 <p>不要先声明一个可变的变量，然后再后续过程中去改变它的值。一般情况下，声明一个变量的时候，要对其进行初始化。如果后续可能会改变其值，要考虑优先使用变量遮蔽（继承式可变）功能。如果需要在一个子作用域内改变其值，再使用可变绑定或可变引用。</p>
-<h2><a class="header" href="#pvar02-不要在子作用域中使用变量遮蔽功能" id="pvar02-不要在子作用域中使用变量遮蔽功能">P.VAR.02 不要在子作用域中使用变量遮蔽功能</a></h2>
-<p><strong>【描述】</strong></p>
-<p>当两个作用域存在包含关系时，不要使用变量遮蔽功能，即，在较小的作用域内定义与较大作用域中相同的变量名，以免引起逻辑Bug。</p>
-<p>【示例】</p>
-<pre><pre class="playground"><code class="language-rust">fn main(){
-    let mut a = 0;
-    {
-        // do something
-        a = 42;
-        
-        // bug
-        // let a = 42;
-    }
-    
-    a; // use a again
-}
-</code></pre></pre>
-<h2><a class="header" href="#pvar03-避免大量栈分配" id="pvar03-避免大量栈分配">P.VAR.03 避免大量栈分配</a></h2>
+<h2><a class="header" href="#pvar02-避免大量栈分配" id="pvar02-避免大量栈分配">P.VAR.02 避免大量栈分配</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Rust 默认在栈上存储。局部变量占用过多栈空间，会栈溢出。</p>
-<h2><a class="header" href="#pvar04-禁止将局部变量的引用返回函数外" id="pvar04-禁止将局部变量的引用返回函数外">P.VAR.04 禁止将局部变量的引用返回函数外</a></h2>
+<h2><a class="header" href="#pvar03-禁止将局部变量的引用返回函数外" id="pvar03-禁止将局部变量的引用返回函数外">P.VAR.03 禁止将局部变量的引用返回函数外</a></h2>
 <p><strong>【描述】</strong></p>
 <p>局部变量生命周期始于其声明终于其作用域结束。如果在其生命周期之外被引用，则程序的行为是未定义的。当然，Rust 编译器也会阻止你这么干。</p>
-<h2><a class="header" href="#pvar05--变量的命名中不需要添加类型标识" id="pvar05--变量的命名中不需要添加类型标识">P.VAR.05  变量的命名中不需要添加类型标识</a></h2>
+<h2><a class="header" href="#pvar04--变量的命名中不需要添加类型标识" id="pvar04--变量的命名中不需要添加类型标识">P.VAR.04  变量的命名中不需要添加类型标识</a></h2>
 <p><strong>【描述】</strong></p>
 <p>因为 Rust 语言类型系统崇尚显式的哲学，所以不需要在变量命名中也添加关于类型的标识。</p>
 <p>【正例】</p>
@@ -209,7 +192,7 @@ let account = String::from_utf8(account)?;  // account 的类型很清楚
 let account: Account = account.parse()?;   // account 的类型很清楚
 <span class="boring">}
 </span></code></pre></pre>
-<p>【 反例】</p>
+<p>【反例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -218,7 +201,7 @@ let account_str = String::from_utf8(account_bytes)?; // account 的类型很清�
 let account: Account = account_str.parse()?;   // account 的类型很清楚，没必要在命名中加 `_str`
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pvar06---利用变量遮蔽功能保证变量安全使用" id="pvar06---利用变量遮蔽功能保证变量安全使用">P.VAR.06   利用变量遮蔽功能保证变量安全使用</a></h2>
+<h2><a class="header" href="#pvar05---利用变量遮蔽功能保证变量安全使用" id="pvar05---利用变量遮蔽功能保证变量安全使用">P.VAR.05   利用变量遮蔽功能保证变量安全使用</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在某些场景，可能会临时准备或处理一些数据，但在此之后，数据只用于检查而非修改。</p>
 <p>那么可以将其通过变量遮蔽功能，重写绑定为不可变变量，来表明这种 临时可变，但后面不变的意图。</p>
@@ -292,8 +275,8 @@ single-char-binding-names-threshold=4
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let (a,b,c,d) = (...);
-let (width,high,len,shape,color, status) = (...);
+</span>let (a, b, c, d) = (...);
+let (width, high, len, shape, color, status) = (...);
 <span class="boring">}
 </span></code></pre></pre>
 <p>【反例】</p>
@@ -303,7 +286,7 @@ let (width,high,len,shape,color, status) = (...);
 </span>let (a, b, c, d, e, f, g) = (...);
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#gvar03---通常不要使用非-ascii-字符作为标识符" id="gvar03---通常不要使用非-ascii-字符作为标识符">G.VAR.03   通常，不要使用非 ASCII 字符作为标识符</a></h2>
+<h2><a class="header" href="#gvar03---通常不要使用非-ascii-字符作为标识符" id="gvar03---通常不要使用非-ascii-字符作为标识符">G.VAR.03   通常不要使用非 ASCII 字符作为标识符</a></h2>
 <h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
@@ -311,8 +294,8 @@ let (width,high,len,shape,color, status) = (...);
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#non-ascii-idents">rustc-lint: non-ascii-idents</a></td><td>no</td><td>yes</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
-<p>Rust 语言默认支持 Non Ascii 字符作为合法标识符。但是，为了统一团队代码风格，建议使用最常用的 ASCII 字符作为合法标识符。</p>
-<p>另外，只有使用英文的命名才能让 命名相关 的 Lint 生效。</p>
+<p>Rust 语言默认支持 Non ASCII 字符作为合法标识符。但是，为了统一团队代码风格，建议使用最常用的 ASCII 字符作为合法标识符。</p>
+<p>另外，只有使用英文的命名才能让<strong>命名相关</strong>的 Lint 生效。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct People {
@@ -385,6 +368,120 @@ fn main () {
 // मी: 人 { 名字: &quot;मनीष&quot;, 屋企: &quot;Berkeley&quot; }
 // माझा मित्र: 人 { 名字: &quot;مصطفى&quot;, 屋企: &quot;Oakland&quot; }
 </code></pre></pre>
+<h2><a class="header" href="#gvar04-不要在子作用域中使用变量遮蔽功能" id="gvar04-不要在子作用域中使用变量遮蔽功能">G.VAR.04 不要在子作用域中使用变量遮蔽功能</a></h2>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制Lint，则可以分别扫描当前作用域和子作用域中的变量，判断是否存在同名问题。</p>
+<p><strong>【描述】</strong></p>
+<p>当两个作用域存在包含关系时，不要使用变量遮蔽功能，即在较小的作用域内定义与较大作用域中相同的变量名，以免引起逻辑Bug。</p>
+<p><strong>【示例】</strong>
+【反例】</p>
+<pre><pre class="playground"><code class="language-rust">fn main(){
+    let mut a = 0;
+    {
+        // do something
+        a = 42;
+        
+        // bug
+        // let a = 42;
+    }
+    
+    a; // use a again
+}
+</code></pre></pre>
+<h2><a class="header" href="#gvar05--不要在当前作用域使用变量遮蔽功能" id="gvar05--不要在当前作用域使用变量遮蔽功能">G.VAR.05  不要在当前作用域使用变量遮蔽功能</a></h2>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#shadow_reuse">shadow_reuse</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#shadow_same">shadow_same</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#shadow_unrelated">shadow_unrelated</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<p>在同一个作用域中，非必要时不要通过新变量声明遮蔽旧变量声明的方式来修改变量。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 2;
+let y = x + 1; // 不改变x的值，声明新的变量y
+
+let y = &amp;x; // 不改变x的绑定，声明新的变量
+
+let w = z; // 使用不同的名字
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 2;
+let x = x + 1; // 将会改变x的值
+
+let x = &amp;x; // 只是改变引用级别
+
+let x = y; // 更早的绑定
+let x = z; // 遮蔽了更早的绑定
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gvar06--避免局部变量导致的大量栈分配" id="gvar06--避免局部变量导致的大量栈分配">G.VAR.06  避免局部变量导致的大量栈分配</a></h2>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-5" id="lint-检测-5">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制Lint，则可以分别检测每个局部变量占用的栈空间，并统计总体占用情况，进行告警。</p>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<p>Rust 局部变量默认分配在栈上。当局部变量占用栈空间过大时，可以采用Box<T>使变量在堆上分配</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let _: Box&lt;[i32; 8000]&gt; = Box::new([1; 8000]);
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let _: [i32; 8000] = [1; 8000];
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gvar07--避免在变量的命名中添加类型标识" id="gvar07--避免在变量的命名中添加类型标识">G.VAR.07  避免在变量的命名中添加类型标识</a></h2>
+<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制Lint，则可以获取变量命名的结尾部分和变量类型，进行匹配，判断是否重复。</p>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<p>变量的名字需要保持简洁清晰，不需要在变量命名中也添加关于类型的标识。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let count: i32 = 12;   // count 的类型已经很清楚
+<span class="boring">}
+</span></code></pre></pre>
+<p>更多例子: <strong>P.VAR.04  变量的命名中不需要添加类型标识</strong></p>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let count_int: i32 = 12;   // count 的类型已经很清楚，没必要在命名中加 `_int`
+<span class="boring">}
+</span></code></pre></pre>
+<p>更多例子: <strong>P.VAR.04  变量的命名中不需要添加类型标识</strong></p>
 
                     </main>
 

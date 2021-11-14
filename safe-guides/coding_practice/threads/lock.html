@@ -188,11 +188,8 @@
 <p><strong>【描述】</strong></p>
 <p>Rust 并不能保证没有死锁，要注意 <code> LockResult&lt;MutexGuard&lt;'_, T&gt;&gt;</code> 的生命周期，以防止出现锁争用的情况。</p>
 <hr />
-<h2><a class="header" href="#gmthlock01---多线程下修改布尔值或使用引用可以用原子类型代替互斥锁" id="gmthlock01---多线程下修改布尔值或使用引用可以用原子类型代替互斥锁">G.MTH.lock.01   多线程下修改布尔值或使用引用可以用原子类型代替互斥锁</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
-<hr />
 <h2><a class="header" href="#gmthlock01---对-布尔-或-引用-并发访问应该使用原子类型而非互斥锁" id="gmthlock01---对-布尔-或-引用-并发访问应该使用原子类型而非互斥锁">G.MTH.lock.01   对 布尔 或 引用 并发访问应该使用原子类型而非互斥锁</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -215,7 +212,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gmthlock02---多线程环境下要使用-arc-代替-rc" id="gmthlock02---多线程环境下要使用-arc-代替-rc">G.MTH.lock.02   多线程环境下要使用 <code>Arc</code> 代替 <code>Rc</code></a></h2>
-<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -245,7 +242,7 @@ fn foo(interned: Rc&lt;Mutex&lt;i32&gt;&gt;) { ... }
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gmthlock03---建议使用-arcstr-arct-来代替--arcstring--arcvect" id="gmthlock03---建议使用-arcstr-arct-来代替--arcstring--arcvect">G.MTH.lock.03   建议使用 <code>Arc&lt;str&gt;/ Arc&lt;[T]&gt;</code> 来代替  <code>Arc&lt;String&gt; / Arc&lt;Vec&lt;T&gt;&gt;</code></a></h2>
-<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -297,6 +294,129 @@ fn main() {
     println!(&quot;{}&quot;, b);
 }
 </code></pre></pre>
+<h2><a class="header" href="#gmthlock04----尽量避免直接使用标准库-stdsync-模块中的同步原语替换为--a-hrefhttpscratesiocratesparking_lotparking_lota" id="gmthlock04----尽量避免直接使用标准库-stdsync-模块中的同步原语替换为--a-hrefhttpscratesiocratesparking_lotparking_lota">G.MTH.lock.04    尽量避免直接使用标准库 <code>std::sync</code> 模块中的同步原语，替换为  <a href="https://crates.io/crates/parking_lot"><code>parking_lot</code></a></a></h2>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制 Lint，则可以扫描 <code>std::sync</code> 锁同步原语的使用，推荐优先选择 crate <code>parking_lot</code> 中对应的同步原语。</p>
+<p><strong>【描述】</strong></p>
+<p>尽量避免对标准库 <code>std::sync</code> 模块中锁同步原语的使用，建议使用   <a href="https://crates.io/crates/parking_lot"><code>parking_lot</code></a>  的实现。</p>
+<p>【正例】</p>
+<p>例子来源于 <a href="https://docs.rs/parking_lot/0.11.2/parking_lot/type.Mutex.html">parking_lot 文档</a></p>
+<p>相比<code>std::sync::Mutex</code>，使用 <code>parking_lot::Mutex</code> 能获得’无中毒’，锁在 panic 时正常释放，更少的空间占用等优势。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use parking_lot::Mutex;
+use std::sync::{Arc, mpsc::channel};
+use std::thread;
+
+const N: usize = 10;
+
+let data = Arc::new(Mutex::new(0));
+
+let (tx, rx) = channel();
+for _ in 0..10 {
+    let (data, tx) = (Arc::clone(&amp;data), tx.clone());
+    thread::spawn(move || {
+        let mut data = data.lock();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
+}
+
+rx.recv().unwrap();
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<p>来源于 <a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html">std标准库文档</a></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::sync::{Arc, Mutex};
+use std::thread;
+use std::sync::mpsc::channel;
+
+const N: usize = 10;
+
+let data = Arc::new(Mutex::new(0));
+
+let (tx, rx) = channel();
+for _ in 0..N {
+    let (data, tx) = (Arc::clone(&amp;data), tx.clone());
+    thread::spawn(move || {      
+        let mut data = data.lock().unwrap();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
+}
+
+rx.recv().unwrap();
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gmthlock05----尽量避免直接使用标准库-stdsyncmpsc-模块中的channel替换为--a-hrefhttpsgithubcomcrossbeam-rscrossbeamcrossbeama" id="gmthlock05----尽量避免直接使用标准库-stdsyncmpsc-模块中的channel替换为--a-hrefhttpsgithubcomcrossbeam-rscrossbeamcrossbeama">G.MTH.lock.05    尽量避免直接使用标准库 <code>std::sync::mpsc</code> 模块中的<code>channel</code>，替换为  <a href="https://github.com/crossbeam-rs/crossbeam"><code>crossbeam</code></a></a></h2>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】
+这条规则如果需要定制 Lint，则可以扫描对 <code>std::sync::mpsc::channel</code> 的使用，推荐优先选择 crate <code>crossbeam</code>。</p>
+<p><strong>【描述】</strong></p>
+<p>尽量避免使用 <code>std::sync::mpsc::channel</code> ，建议使用 <a href="https://github.com/crossbeam-rs/crossbeam"><code>crossbeam</code></a></p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use crossbeam_channel::unbounded;
+
+let (tx, rx) = unbounded();
+
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
+    });
+}
+
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 &lt;= j &amp;&amp; j &lt; 10);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<p>例子来源于 <a href="https://doc.rust-lang.org/std/sync/mpsc/"><code>std::sync::mpsc</code>文档</a></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::thread;
+use std::sync::mpsc::channel;
+
+let (tx, rx) = channel();
+
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
+    });
+}
+
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 &lt;= j &amp;&amp; j &lt; 10);
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

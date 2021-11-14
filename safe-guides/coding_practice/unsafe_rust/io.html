@@ -170,8 +170,16 @@
                         <h1><a class="header" href="#unsafe-io" id="unsafe-io">Unsafe I/O</a></h1>
 <p>Rust 标准库提供了 I/O 安全性，保证程序持有私有的原始句柄（raw handle），其他部分无法访问它。但是 <code>FromRawFd::from_raw_fd</code> 是 Unsafe 的，所以在 Safe Rust中无法做到 <code>File::from_raw(7)</code> 这种事。 在这个文件描述符上面进行<code> I/O</code> 操作，而这个文件描述符可能被程序的其他部分私自持有。</p>
 <hr />
-<h2><a class="header" href="#punsio01--在使用原始句柄的时候要注意-io-安全性" id="punsio01--在使用原始句柄的时候要注意-io-安全性">P.UNS.IO.01  在使用原始句柄的时候，要注意 I/O 安全性</a></h2>
-<p>【描述】</p>
+<h2><a class="header" href="#gunsio01--在使用原始句柄的时候要注意-io-安全性" id="gunsio01--在使用原始句柄的时候要注意-io-安全性">G.UNS.IO.01  在使用原始句柄的时候，要注意 I/O 安全性</a></h2>
+<h3><a class="header" href="#级别必须" id="级别必须">【级别：必须】</a></h3>
+<p>必须严格按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制参考】</p>
+<p>检测在 IO 时使用  <code>as_raw_fd</code> 调用时，警告开发者这是 Unsafe 的，要对传入的原始文件描述符的安全性进行考察。</p>
+<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>很多 API 通过接受 原始句柄 来进行 I/O 操作：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -186,8 +194,6 @@
 <p><strong>远隔作用</strong>（<strong>Action at a distance</strong>）是一种程式设计中的<a href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E6%A8%A1%E5%BC%8F">反模式</a>，是指程式某一部分的行为会广泛的受到程式其他部分<a href="https://zh.wikipedia.org/wiki/%E6%8C%87%E4%BB%A4">指令</a>的影响，而且要找到影响其他程式的指令很困难，甚至根本无法进行。</p>
 </blockquote>
 <p>在一些特殊的情况下，违反 I/O 安全甚至会导致内存安全。</p>
-<p>【定制参考】</p>
-<p>检测在 IO 时使用  <code>as_raw_fd</code> 调用时，警告开发者这是 Unsafe 的，要对传入的原始文件描述符的安全性进行考察。</p>
 
                     </main>
 

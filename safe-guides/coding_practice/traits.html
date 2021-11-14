@@ -174,8 +174,14 @@
 <li><a href="./traits/trait-object.html">trait 对象</a></li>
 </ul>
 <hr />
-<h2><a class="header" href="#ptra01--使用-trait-时要注意-trait-一致性规则" id="ptra01--使用-trait-时要注意-trait-一致性规则">P.TRA.01  使用 trait 时要注意 trait 一致性规则</a></h2>
-<p><strong>【描述】</strong></p>
+<h2><a class="header" href="#gtra01--使用-trait-时要注意-trait-一致性规则" id="gtra01--使用-trait-时要注意-trait-一致性规则">G.TRA.01  使用 trait 时要注意 trait 一致性规则</a></h2>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>yes</td><td>_</td><td>_</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述" id="描述"><strong>【描述】</strong></a></h3>
 <p>使用 trait 的时候，必须要满足 trait 一致性规则，即，<strong>孤儿规则（orphans rule）</strong>：类型和trait，必须有一个是在本地crate内定义的。</p>
 
                     </main>

@@ -200,11 +200,11 @@ assert_eq!(false, b == 0);
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#bool_comparison">bool_comparison </a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison">bool_assert_comparison </a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison">bool_assert_comparison </a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bool">needless_bool </a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#nonminimal_bool">nonminimal_bool  </a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">needless_bitwise_bool  </a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">assertions_on_constants  </a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">assertions_on_constants  </a></td><td>yes</td><td>no</td><td>pedantic</td><td>warn</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>在 Rust 中，返回为布尔值的表达式或函数值可以直接当作布尔值使用。</p>
@@ -251,7 +251,7 @@ assert_ne!(&quot;a&quot;.is_empty(), true);
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#logic_bug">logic_bug </a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#logic_bug">logic_bug </a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#match_bool">match_bool</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>

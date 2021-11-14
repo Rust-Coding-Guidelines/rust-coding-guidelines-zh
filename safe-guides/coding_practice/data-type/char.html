@@ -223,7 +223,7 @@ s.split(&quot;x&quot;);
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#transmute_int_to_char">transmute_int_to_char</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#transmute_int_to_char">transmute_int_to_char</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
 <p>并非每个整数都对应一个合法的 Unicode 标量值，使用 <code>transmute</code> 转换会有未定义行为。</p>

@@ -190,6 +190,12 @@
 <li>原则，就是编程开发时指导的一个大方向，或是指一类情况，没有那么具体。原则只是一种建议。</li>
 <li>规则，是相对原则而言，是更加具体的条目。规则里面有写【建议】还是【必须】遵守。规则一般是可lint检测的。</li>
 </ul>
+<p>本规范中的规则也分三种类型：</p>
+<ol>
+<li>大部分默认是Clippy支持lint检测的</li>
+<li>也有一些是当前clippy 无法检测但可以定制 lint 的规则</li>
+<li>编译器可以检测，警告或报错，但是开发者值得了解的一些规则</li>
+</ol>
 <p>原则没有办法去检测，所以只能是建议。</p>
 <p>通过标题前的编号来标识：</p>
 <ul>
@@ -210,14 +216,14 @@
 <tr><td>MAC</td><td>宏</td><td>STV</td><td>静态变量</td></tr>
 <tr><td>GEN</td><td>泛型</td><td>TRA</td><td>特质</td></tr>
 <tr><td>ASY</td><td>异步</td><td>UNS</td><td>非安全</td></tr>
-<tr><td>ABS</td><td>安全抽象</td><td>FFI</td><td>外部函数调用</td></tr>
+<tr><td>SafeAbstract</td><td>安全抽象</td><td>FFI</td><td>外部函数调用</td></tr>
 <tr><td>LAY</td><td>内存布局</td><td>ERR</td><td>错误处理</td></tr>
 <tr><td>CLT</td><td>集合</td><td>MTH</td><td>多线程</td></tr>
 <tr><td>EMB</td><td>嵌入式Rust</td><td>IO</td><td>输入输出</td></tr>
 <tr><td>Security</td><td>信息安全</td><td>OTH</td><td>其他</td></tr>
 </tbody></table>
 <h2><a class="header" href="#鸣谢" id="鸣谢">鸣谢</a></h2>
-<p>本指南参考《华为 C 语言编程指南 V 1.0》，感谢华为Rust 开源能力中心 提供编程指南规范协助！</p>
+<p>本指南参考《华为 C 语言编程指南 V 1.0》，感谢华为 开源能力中心 提供编程指南规范协助！</p>
 
                     </main>
 

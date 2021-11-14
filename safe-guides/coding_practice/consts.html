@@ -175,36 +175,7 @@
 </ul>
 <p>常量命名风格指南请看 <a href="../code_style/naming.html">编码风格-命名</a></p>
 <hr />
-<h2><a class="header" href="#pcns01-常量必须都要持有明确语义以便让人更好地理解" id="pcns01-常量必须都要持有明确语义以便让人更好地理解">P.CNS.01 常量必须都要持有明确语义以便让人更好地理解</a></h2>
-<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
-<p>常量的定义必须表达清楚相应语义，这样可以增强可读性。</p>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
-const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>const ERROR_NO_1: u32 = 336;
-const ERROR_NO_2: u32 = 594;
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#pcns02-注意根据常量和静态变量的本质区别来选择何时使用常量或静态变量" id="pcns02-注意根据常量和静态变量的本质区别来选择何时使用常量或静态变量">P.CNS.02 注意根据常量和静态变量的本质区别来选择何时使用常量或静态变量</a></h2>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
-<p>常量 vs 静态变量：</p>
-<ol>
-<li>常量会内联到使用它的地方。</li>
-<li>静态变量不会内联，它是全局的，且有一个引用地址。</li>
-</ol>
-<p>有些场合要根据常量和静态变量的本质区别来选择合适的类型。</p>
-<p>比如，当你想创建一个很大的常量数组时，应该考虑将其换成静态变量。因为常量会到处内联。</p>
-<hr />
-<h2><a class="header" href="#gcns01-对于科学计算中涉及浮点数近视值的常量要尽量使用预定义常量" id="gcns01-对于科学计算中涉及浮点数近视值的常量要尽量使用预定义常量">G.CNS.01 对于科学计算中涉及浮点数近视值的常量要尽量使用预定义常量</a></h2>
+<h2><a class="header" href="#gcns01-对于科学计算中涉及浮点数近似值的常量要尽量使用预定义常量" id="gcns01-对于科学计算中涉及浮点数近似值的常量要尽量使用预定义常量">G.CNS.01 对于科学计算中涉及浮点数近似值的常量要尽量使用预定义常量</a></h2>
 <h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
@@ -212,7 +183,7 @@ const ERROR_NO_2: u32 = 594;
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#approx_constant">approx_constant</a></td><td>yes</td><td>no</td><td>Correctness</td><td>deny</td></tr>
 </tbody></table>
 <p>该 Lint 默认为 <code>deny</code>，但在某些场景下，可以设置为<code>allow</code>.</p>
-<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -236,7 +207,7 @@ let y = 1_f64 / x;
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#assertions_on_constants">assertions_on_constants</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <p>因为有可能被编译器优化掉。最好直接使用 <code>panic!</code> 代替。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -274,7 +245,7 @@ assert!(MAX_PRINTED &lt; MIN_OVERFLOW);
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#borrow_interior_mutable_const">borrow_interior_mutable_const</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#declare_interior_mutable_const">declare_interior_mutable_const</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -308,7 +279,7 @@ assert_eq!(CONST_ATOM.load(SeqCst), 12); // because the CONST_ATOM in these line
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#redundant_static_lifetimes">redundant_static_lifetimes</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
 <p>没必要加。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -335,7 +306,7 @@ static FOO: &amp;'static [(&amp;'static str, &amp;'static str, fn(&amp;Bar) -&gt
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#missing_const_for_fn">missing_const_for_fn</a></td><td>yes</td><td>no</td><td>Perf</td><td>warn</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -354,6 +325,32 @@ static FOO: &amp;'static [(&amp;'static str, &amp;'static str, fn(&amp;Bar) -&gt
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gcns06-注意避免将量大的数据结构定义为常量" id="gcns06-注意避免将量大的数据结构定义为常量">G.CNS.06 注意避免将量大的数据结构定义为常量</a></h2>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-5" id="lint-检测-5">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>这条规则如果需要定制Lint，则需要找出每个定义的常量再判断其空间占用，或可直接排除基础类型以外的数据类型。</p>
+<p><strong>【描述】</strong></p>
+<p>常量会内联到使用它的地方而静态变量不会内联，它是全局的，且有一个引用地址。
+当创建一个很大的常量数组时，应该考虑将其换成静态变量，因为常量会到处内联。</p>
+<p><strong>【示例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    static MONTHS: [&amp;str; 12] = [&quot;January&quot;, &quot;Feburary&quot;, &quot;March&quot;, &quot;April&quot;,
+                                &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;,
+                                &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;];
+}
+</code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    const MONTHS: [&amp;str; 12] = [&quot;January&quot;, &quot;Feburary&quot;, &quot;March&quot;, &quot;April&quot;,
+                                &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;,
+                                &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;];
+}
+</code></pre></pre>
 
                     </main>
 

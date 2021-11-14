@@ -176,7 +176,7 @@
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic">integer_arithmetic</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic">manual_saturating_arithmetic</a></td><td>yes</td><td>no</td><td>style</td><td>allow</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic">manual_saturating_arithmetic</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>需要结合场景和业务来考虑如果发生溢出、回绕或截断的时候，是否会引起严重的问题。</p>

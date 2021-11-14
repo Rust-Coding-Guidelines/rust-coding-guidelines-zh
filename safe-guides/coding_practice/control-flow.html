@@ -555,7 +555,7 @@ if !sad_people.is_empty() {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#filter_map_identity">filter_map_identity</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#filter_next">filter_next</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#flat_map_identity">flat_map_identity</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#flat_map_option">flat_map_option</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#flat_map_option">flat_map_option</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
 <p>Rust 标准库中提供了很多迭代器方法，要学会使用它们，选择合适的方法来满足自己的需求。</p>
@@ -615,6 +615,34 @@ iter.flat_map(|x| x);
 let nums: Vec&lt;i32&gt; = [&quot;1&quot;, &quot;2&quot;, &quot;whee!&quot;].iter().flat_map(|x| x.parse().ok()).collect();
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gctl07---在-match-分支的-guard-语句中不要使用带有副作用的条件表达式" id="gctl07---在-match-分支的-guard-语句中不要使用带有副作用的条件表达式">G.CTL.07   在 Match 分支的 Guard 语句中不要使用带有副作用的条件表达式</a></h2>
+<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<p>【定制化参考】</p>
+<p>可以检测 match分支中 Guard 的 if 表达式是否使用 <code>{}</code> ，如果是的话，发出警告，不要带有副作用。</p>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<p>因为在 mactch 分支中， 匹配几次就会执行 Guard 几次。如果携带副作用，会产生意料之外的情况。</p>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">// 下面代码会输出两次 &quot;ha&quot;
+fn main() {
+    use std::cell::Cell;
+    let i: Cell&lt;i32&gt; = Cell::new(0);
+    match 1 {
+        1 | _  // 这里匹配两次
+            if { // 这个 Guard 条件表达式带有副作用：打印，因为匹配两次，所以会执行两次
+                println!(&quot;ha&quot;);
+                i.set(i.get() + 1);
+                false
+            } =&gt; {}
+        _ =&gt; {}
+    }
+    assert_eq!(i.get(), 2);
+}
+</code></pre></pre>
 
                     </main>
 

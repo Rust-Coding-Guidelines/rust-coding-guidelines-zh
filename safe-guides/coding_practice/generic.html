@@ -266,8 +266,121 @@ fn main() {
 }
 
 </code></pre></pre>
-<h2><a class="header" href="#pgen02-----泛型参数必须先声明再使用" id="pgen02-----泛型参数必须先声明再使用">P.GEN.02     泛型参数必须先声明再使用</a></h2>
+<h2><a class="header" href="#pgen02--不要随便使用-impl-trait-语法替代泛型限定" id="pgen02--不要随便使用-impl-trait-语法替代泛型限定">P.GEN.02  不要随便使用 <code>impl Trait</code> 语法替代泛型限定</a></h2>
 <p><strong>【描述】</strong></p>
+<p><code>impl Trait</code> 语法 和 泛型限定，虽然都是静态分发，且效果类似，但是它们的语义是不同的。</p>
+<p><strong>在类型系统层面上的语义：</strong></p>
+<ol>
+<li><code>impl Trait</code> 是 存在量化类型。意指，存在某一个被限定的类型。</li>
+<li>泛型限定 是 通用量化类型。意指，所有被限定的类型。</li>
+</ol>
+<p>要根据它们的语义来选择不同的写法。</p>
+<p>另外，<code>impl Trait</code> 可以用在函数参数位置和返回值位置，但是不同位置意义不同。</p>
+<p><strong>函数参数位置</strong></p>
+<p>等价于 泛型参数。</p>
+<p>但要注意：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn f(b1: impl Bar, b2: impl Bar) -&gt; usize
+<span class="boring">}
+</span></code></pre></pre>
+<p>等价于：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn f&lt;B1: Bar, B2: Bar&gt;(b1: B1, b2: B2) -&gt; usize
+<span class="boring">}
+</span></code></pre></pre>
+<p>而不是</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn f&lt;B: Bar&gt;(b1: B, b2: B) -&gt; usize
+<span class="boring">}
+</span></code></pre></pre>
+<p>证明示例：</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+
+// 函数参数可以传入 整数，但是函数返回值是 String
+fn func(arg: impl Display) -&gt; impl Display {
+    format!(&quot;Hay! I am not the same as \&quot;{}\&quot;&quot;, arg)
+}
+
+// 很明显不等价于下面这类
+// fn somefunc2&lt;T: Display&gt;(arg: T) -&gt; T {
+//     // 需要指定同一个类型 T 的行为
+// }
+
+fn main(){
+    let a  = 42;
+    let a = func(42);
+}
+</code></pre></pre>
+<p><strong>函数返回值</strong></p>
+<p>在返回值位置上，如果是泛型参数，则是由调用者来选择具体类型，比如 <code>parse::&lt;i32&gt;(&quot;32&quot;)</code> ； 如果是 <code>impl Trait</code>，则是由被调用者来决定具体类型，但只能有一种类型。</p>
+<p>在返回值位置上的 <code>impl Trait</code> 会根据函数体的返回值自动推断实现了哪些  auto trait。这意味着你不必在 <code>impl Trait</code> 后面再 加 <code>Sync + Send </code> 这种auto trait。</p>
+<p>注意下面代码：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Error： 这里只允许有同一种具体类型，Foo 和 Baz 都实现了 Bar 也是错的。
+fn f(a: bool) -&gt; impl Bar {
+    if a {
+        Foo { ... }
+    } else {
+        Baz { ... }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间" id="pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间">P.GEN.03   不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></h2>
+<p><strong>【描述】</strong></p>
+<p>为泛型函数添加详细的trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
+<p>【正例】</p>
+<p>来自于 Web 框架 Axum 的代码：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    // From: https://github.com/tokio-rs/axum/pull/198
+    fn handle_error&lt;ReqBody, F&gt;(
+        self,
+        f: F,
+    ) -&gt; HandleError&lt;Self, F, ReqBody, HandleErrorFromRouter&gt; {
+        HandleError::new(self, f)
+    }   
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<p>以下写法比上面的写法编译时间要多十倍。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    // From: https://github.com/tokio-rs/axum/pull/198
+    fn handle_error&lt;ReqBody, ResBody, F, Res, E&gt;(
+        self,
+        f: F,
+    ) -&gt; HandleError&lt;Self, F, ReqBody, HandleErrorFromRouter&gt;
+    where
+        Self: Service&lt;Request&lt;ReqBody&gt;, Response = Response&lt;ResBody&gt;&gt;,
+        F: FnOnce(Self::Error) -&gt; Result&lt;Res, E&gt;,
+        Res: IntoResponse,
+        ResBody: http_body::Body&lt;Data = Bytes&gt; + Send + Sync + 'static,
+        ResBody::Error: Into&lt;BoxError&gt; + Send + Sync + 'static,
+    {
+        HandleError::new(self, f)
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<hr />
+<h2><a class="header" href="#ggen01-----泛型参数必须先声明再使用" id="ggen01-----泛型参数必须先声明再使用">G.GEN.01     泛型参数必须先声明再使用</a></h2>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>yes</td><td>_</td><td>_</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述" id="描述"><strong>【描述】</strong></a></h3>
 <p>泛型参数必须先被声明，才能被使用。如果一个类型中包含泛型类型，也必须为其声明泛型参数。</p>
 <p>【正例】</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -287,41 +400,75 @@ struct Bar&lt;T&gt; { x: Foo&lt;T&gt; }
 struct Bar { x: Foo } // error[E0107]: missing generics for struct `Foo`
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pgen03---定义泛型函数时如果该函数实现用到来自-trait-定义的相关行为需要为泛型指定相关-trait-的限定" id="pgen03---定义泛型函数时如果该函数实现用到来自-trait-定义的相关行为需要为泛型指定相关-trait-的限定">P.GEN.03   定义泛型函数时，如果该函数实现用到来自 trait 定义的相关行为，需要为泛型指定相关 trait 的限定</a></h2>
-<p><strong>【描述】</strong></p>
-<p>泛型，在 Rust 类型系统中的语义是一种 通用量化l类型（Universally-quantified type），即，泛型类型<code> T</code> 的所有可能 的单态类型。</p>
-<p>在泛型函数内部，如果使用了来自某个 trait 定义的行为，则需要为泛型指定相关的 trait 限定，来排除其他没有实现该trait 的类型。</p>
+<h2><a class="header" href="#ggen02---不要在泛型位置上使用内建类型" id="ggen02---不要在泛型位置上使用内建类型">G.GEN.02   不要在泛型位置上使用内建类型</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#builtin_type_shadow">builtin_type_shadow</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
 <p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">use std::fmt;
-
-// 为泛型类型 T 指派 Debug triat 限定
-fn some_func&lt;T: fmt::Debug&gt;(foo: T) {
-    println!(&quot;{:?}&quot;, foo); 
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;T&gt; Foo&lt;T&gt; {
+    fn impl_func(&amp;self) -&gt; T {
+        42
+    }
 }
-
-struct A;
-
-fn main() {
-   some_func(5i32);
-   
-   // A 没有实现 Debug trait，会被排除掉
-   some_func(A); // error[E0277]: `A` doesn't implement `Debug`
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<p>这里 <code>u32</code> 会被认为是一个类型参数。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;u32&gt; Foo&lt;u32&gt; {
+    fn impl_func(&amp;self) -&gt; u32 {
+        42
+    }
 }
-</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#ggen03---使用-rust-标准库中某些方法要注意避免使用其泛型默认实现而应该使用具体类型的实现" id="ggen03---使用-rust-标准库中某些方法要注意避免使用其泛型默认实现而应该使用具体类型的实现">G.GEN.03   使用 Rust 标准库中某些方法，要注意避免使用其泛型默认实现，而应该使用具体类型的实现</a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#inefficient_to_string">inefficient_to_string</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<p>Rust 标准库内部某些类型使用了 泛型特化（未稳定特性），比如 <code>ToString</code> trait。</p>
+<p>该 trait 有一个<a href="https://doc.rust-lang.org/stable/src/alloc/string.rs.html#2369">泛型默认实现</a>， 并且一些具体类型也实现了它，比如 <code>char</code>/ <code>str</code> /  <code>u8</code>/ <code>i8</code> 等。</p>
+<p>在实际代码中，应该选择去调用具体类型实现的 <code>to_string()</code> 方法，而非调用泛型的默认实现。 </p>
+<p><strong>这一规则要求开发者对 Rust 标准库的一些方法实现有一定了解。</strong> </p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 闭包参数中， s 为 `&amp;&amp;str` 类型，使用 `|&amp;s|` 对参数模式匹配后，闭包体内 `s` 就变成了 `&amp;str` 类型
+// 经过这样的转换，直接调用 `&amp;str`的 `to_string()` 方法，而如果是 `&amp;&amp;str` 就会去调用泛型的默认实现。 
+[&quot;foo&quot;, &quot;bar&quot;].iter().map(|&amp;s| s.to_string() );
+<span class="boring">}
+</span></code></pre></pre>
 <p>【反例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::fmt;
-
-// println! 中 `{:?}` 为 Debug triat 定义行为
-fn some_func&lt;T&gt;(foo: T) {
-    println!(&quot;{:?}&quot;, foo); // error[E0277]: `T` doesn't implement `Debug`
-}
+</span>// 闭包参数中， s 为 `&amp;&amp;str` 类型
+//  `&amp;&amp;str` 就会去调用泛型的默认实现
+[&quot;foo&quot;, &quot;bar&quot;].iter().map(|&amp;s| s.to_string() );
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pgen04--为泛型类型实现方法时impl-中声明的泛型类型参数一定要被用到" id="pgen04--为泛型类型实现方法时impl-中声明的泛型类型参数一定要被用到">P.GEN.04  为泛型类型实现方法时，<code>impl</code> 中声明的泛型类型参数一定要被用到</a></h2>
-<p><strong>【描述】</strong></p>
+<h2><a class="header" href="#ggen04--为泛型类型实现方法时impl-中声明的泛型类型参数一定要被用到" id="ggen04--为泛型类型实现方法时impl-中声明的泛型类型参数一定要被用到">G.GEN.04  为泛型类型实现方法时，<code>impl</code> 中声明的泛型类型参数一定要被用到</a></h2>
+<h3><a class="header" href="#级别规则-1" id="级别规则-1">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>yes</td><td>_</td><td>_</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-3" id="描述-3"><strong>【描述】</strong></a></h3>
 <p>在 <code>impl</code> 中被声明的类型参数，至少要满足下面三种形式：</p>
 <ol>
 <li><code>impl&lt;T&gt; Foo&lt;T&gt;</code>，  <code>T</code>  出现在实现的<code>Self</code> 类型<code>Foo&lt;T&gt;</code> 中 。</li>
@@ -420,172 +567,43 @@ trait Foo {}
 impl&lt;F, A&gt; Foo for F where F: Fn(A) {} // error
 <span class="boring">}
 </span></code></pre></pre>
-<h2><a class="header" href="#pgen05--不要随便使用-impl-trait-语法替代泛型限定" id="pgen05--不要随便使用-impl-trait-语法替代泛型限定">P.GEN.05  不要随便使用 <code>impl Trait</code> 语法替代泛型限定</a></h2>
-<p><strong>【描述】</strong></p>
-<p><code>impl Trait</code> 语法 和 泛型限定，虽然都是静态分发，且效果类似，但是它们的语义是不同的。</p>
-<p><strong>在类型系统层面上的语义：</strong></p>
-<ol>
-<li><code>impl Trait</code> 是 存在量化类型。意指，存在某一个被限定的类型。</li>
-<li>泛型限定 是 通用量化类型。意指，所有被限定的类型。</li>
-</ol>
-<p>要根据它们的语义来选择不同的写法。</p>
-<p>另外，<code>impl Trait</code> 可以用在函数参数位置和返回值位置，但是不同位置意义不同。</p>
-<p><strong>函数参数位置</strong></p>
-<p>等价于 泛型参数。</p>
-<p>但要注意：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn f(b1: impl Bar, b2: impl Bar) -&gt; usize
-<span class="boring">}
-</span></code></pre></pre>
-<p>等价于：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn f&lt;B1: Bar, B2: Bar&gt;(b1: B1, b2: B2) -&gt; usize
-<span class="boring">}
-</span></code></pre></pre>
-<p>而不是</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn f&lt;B: Bar&gt;(b1: B, b2: B) -&gt; usize
-<span class="boring">}
-</span></code></pre></pre>
-<p>证明示例：</p>
-<pre><pre class="playground"><code class="language-rust">use std::fmt::Display;
+<h2><a class="header" href="#ggen05---定义泛型函数时如果该函数实现用到来自-trait-定义的相关行为需要为泛型指定相关-trait-的限定" id="ggen05---定义泛型函数时如果该函数实现用到来自-trait-定义的相关行为需要为泛型指定相关-trait-的限定">G.GEN.05   定义泛型函数时，如果该函数实现用到来自 trait 定义的相关行为，需要为泛型指定相关 trait 的限定</a></h2>
+<h3><a class="header" href="#级别规则-2" id="级别规则-2">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>yes</td><td>_</td><td>_</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-4" id="描述-4"><strong>【描述】</strong></a></h3>
+<p>泛型，在 Rust 类型系统中的语义是一种 通用量化l类型（Universally-quantified type），即，泛型类型<code> T</code> 的所有可能 的单态类型。</p>
+<p>在泛型函数内部，如果使用了来自某个 trait 定义的行为，则需要为泛型指定相关的 trait 限定，来排除其他没有实现该trait 的类型。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
 
-// 函数参数可以传入 整数，但是函数返回值是 String
-fn func(arg: impl Display) -&gt; impl Display {
-    format!(&quot;Hay! I am not the same as \&quot;{}\&quot;&quot;, arg)
+// 为泛型类型 T 指派 Debug triat 限定
+fn some_func&lt;T: fmt::Debug&gt;(foo: T) {
+    println!(&quot;{:?}&quot;, foo); 
 }
 
-// 很明显不等价于下面这类
-// fn somefunc2&lt;T: Display&gt;(arg: T) -&gt; T {
-//     // 需要指定同一个类型 T 的行为
-// }
+struct A;
 
-fn main(){
-    let a  = 42;
-    let a = func(42);
+fn main() {
+   some_func(5i32);
+   
+   // A 没有实现 Debug trait，会被排除掉
+   some_func(A); // error[E0277]: `A` doesn't implement `Debug`
 }
 </code></pre></pre>
-<p><strong>函数返回值</strong></p>
-<p>在返回值位置上，如果是泛型参数，则是由调用者来选择具体类型，比如 <code>parse::&lt;i32&gt;(&quot;32&quot;)</code> ； 如果是 <code>impl Trait</code>，则是由被调用者来决定具体类型，但只能有一种类型。</p>
-<p>在返回值位置上的 <code>impl Trait</code> 会根据函数体的返回值自动推断实现了哪些  auto trait。这意味着你不必在 <code>impl Trait</code> 后面再 加 <code>Sync + Send </code> 这种auto trait。</p>
-<p>注意下面代码：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Error： 这里只允许有同一种具体类型，Foo 和 Baz 都实现了 Bar 也是错的。
-fn f(a: bool) -&gt; impl Bar {
-    if a {
-        Foo { ... }
-    } else {
-        Baz { ... }
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#pgen06---不要使用太多泛型参数和-trait-限定否则会增长编译时间" id="pgen06---不要使用太多泛型参数和-trait-限定否则会增长编译时间">P.GEN.06   不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></h2>
-<p><strong>【描述】</strong></p>
-<p>为泛型函数添加详细的trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
-<p>【正例】</p>
-<p>来自于 Web 框架 Axum 的代码：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>    // From: https://github.com/tokio-rs/axum/pull/198
-    fn handle_error&lt;ReqBody, F&gt;(
-        self,
-        f: F,
-    ) -&gt; HandleError&lt;Self, F, ReqBody, HandleErrorFromRouter&gt; {
-        HandleError::new(self, f)
-    }   
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<p>以下写法比上面的写法编译时间要多十倍。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>    // From: https://github.com/tokio-rs/axum/pull/198
-    fn handle_error&lt;ReqBody, ResBody, F, Res, E&gt;(
-        self,
-        f: F,
-    ) -&gt; HandleError&lt;Self, F, ReqBody, HandleErrorFromRouter&gt;
-    where
-        Self: Service&lt;Request&lt;ReqBody&gt;, Response = Response&lt;ResBody&gt;&gt;,
-        F: FnOnce(Self::Error) -&gt; Result&lt;Res, E&gt;,
-        Res: IntoResponse,
-        ResBody: http_body::Body&lt;Data = Bytes&gt; + Send + Sync + 'static,
-        ResBody::Error: Into&lt;BoxError&gt; + Send + Sync + 'static,
-    {
-        HandleError::new(self, f)
-    }
-<span class="boring">}
-</span></code></pre></pre>
-<hr />
-<h2><a class="header" href="#ggen01-不要在泛型位置上使用内建类型" id="ggen01-不要在泛型位置上使用内建类型">G.GEN.01 不要在泛型位置上使用内建类型</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#builtin_type_shadow">builtin_type_shadow</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
-</tbody></table>
-<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Foo&lt;T&gt; {
-    fn impl_func(&amp;self) -&gt; T {
-        42
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<p>这里 <code>u32</code> 会被认为是一个类型参数。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;u32&gt; Foo&lt;u32&gt; {
-    fn impl_func(&amp;self) -&gt; u32 {
-        42
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#ggen02---使用-rust-标准库中某些方法要注意避免使用其泛型默认实现而应该使用具体类型的实现" id="ggen02---使用-rust-标准库中某些方法要注意避免使用其泛型默认实现而应该使用具体类型的实现">G.GEN.02   使用 Rust 标准库中某些方法，要注意避免使用其泛型默认实现，而应该使用具体类型的实现</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#inefficient_to_string">inefficient_to_string</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
-</tbody></table>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
-<p>Rust 标准库内部某些类型使用了 泛型特化（未稳定特性），比如 <code>ToString</code> trait。</p>
-<p>该 trait 有一个<a href="https://doc.rust-lang.org/stable/src/alloc/string.rs.html#2369">泛型默认实现</a>， 并且一些具体类型也实现了它，比如 <code>char</code>/ <code>str</code> /  <code>u8</code>/ <code>i8</code> 等。</p>
-<p>在实际代码中，应该选择去调用具体类型实现的 <code>to_string()</code> 方法，而非调用泛型的默认实现。 </p>
-<p><strong>这一规则要求开发者对 Rust 标准库的一些方法实现有一定了解。</strong> </p>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 闭包参数中， s 为 `&amp;&amp;str` 类型，使用 `|&amp;s|` 对参数模式匹配后，闭包体内 `s` 就变成了 `&amp;str` 类型
-// 经过这样的转换，直接调用 `&amp;str`的 `to_string()` 方法，而如果是 `&amp;&amp;str` 就会去调用泛型的默认实现。 
-[&quot;foo&quot;, &quot;bar&quot;].iter().map(|&amp;s| s.to_string() );
-<span class="boring">}
-</span></code></pre></pre>
 <p>【反例】</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 闭包参数中， s 为 `&amp;&amp;str` 类型
-//  `&amp;&amp;str` 就会去调用泛型的默认实现
-[&quot;foo&quot;, &quot;bar&quot;].iter().map(|&amp;s| s.to_string() );
+</span>use std::fmt;
+
+// println! 中 `{:?}` 为 Debug triat 定义行为
+fn some_func&lt;T&gt;(foo: T) {
+    println!(&quot;{:?}&quot;, foo); // error[E0277]: `T` doesn't implement `Debug`
+}
 <span class="boring">}
 </span></code></pre></pre>
 

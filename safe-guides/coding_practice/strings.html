@@ -292,7 +292,7 @@ pub fn find&lt;'a, S: Into&lt;Cow&lt;'a, str&gt;&gt;&gt;(input: S) -&gt; Cow&lt;
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#to_string_in_display">to_string_in_display</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#to_string_in_display">to_string_in_display</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
 <p>因为 <code>to_string</code> 是间接通过 <code>Display</code> 来实现的，如果实现 <code>Display</code> 的时候再使用 <code>to_tring</code> 的话，将会无限递归。</p>
@@ -357,7 +357,7 @@ x = x + &quot;, World&quot;;
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes">string_lit_as_bytes</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes">string_lit_as_bytes</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 </tbody></table>
 <h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
 <p>这是为了增强可读性，让代码更简洁。</p>

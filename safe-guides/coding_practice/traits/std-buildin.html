@@ -169,12 +169,7 @@
                     <main>
                         <h1><a class="header" href="#内置-trait" id="内置-trait">内置 trait</a></h1>
 <p>Rust 标准库内置了很多 trait，在使用这些 trait 的时候也需要注意。</p>
-<hr />
-<h2><a class="header" href="#ptrabuitin01-不要随便使用-deref-trait----来模拟继承" id="ptrabuitin01-不要随便使用-deref-trait----来模拟继承">P.TRA.Buitin.01 不要随便使用 <code>Deref</code> trait    来模拟继承</a></h2>
-<p><strong>【描述】</strong></p>
-<p><code>Deref</code> trait是专门用于实现自定义指针类型而存在的。虽然可以实现 <code>Deref</code> 来达到某种类似于继承的行为，但 Rust 中不推荐这样做。</p>
-<p>这是因为 Rust 语言推崇显式的转换，而 <code>Deref</code> 则是 Rust 中为数不多的隐式行为。如果 <code>Deref</code> 被滥用，那么程序中隐式行为可能会增多，隐式的转换是 Bug 的温床。</p>
-<h2><a class="header" href="#ptrabuitin02--在实现-borrow-trait--的时候需要注意一致性" id="ptrabuitin02--在实现-borrow-trait--的时候需要注意一致性">P.TRA.Buitin.02  在实现 <code>Borrow</code> trait  的时候，需要注意一致性</a></h2>
+<h2><a class="header" href="#ptrabuitin01--在实现-borrow-trait--的时候需要注意一致性" id="ptrabuitin01--在实现-borrow-trait--的时候需要注意一致性">P.TRA.Buitin.01  在实现 <code>Borrow</code> trait  的时候，需要注意一致性</a></h2>
 <p><strong>【描述】</strong></p>
 <p>当你想把不同类型的借用进行统一抽象，或者当你要建立一个数据结构，以同等方式处理自拥有值（ownered）和借用值（borrowed）时，例如散列（hash）和比较（compare）时，选择<code> Borrow</code>。当把某个类型直接转换为引用，选择 <code>AsRef</code> 。</p>
 <p>但是使用 <code>Borrow</code> 的时候，需要注意一致性问题。具体请看示例。</p>
@@ -253,8 +248,8 @@ iter.collect();
 </span></code></pre></pre>
 <p>如果它实现了 Copy，示例中 iter 的值将不会被改变，这样就不符合预期结果。</p>
 <h2><a class="header" href="#gtrabuitin03---能使用derive-自动实现default--trait-就不要用手工实现" id="gtrabuitin03---能使用derive-自动实现default--trait-就不要用手工实现">G.TRA.Buitin.03   能使用<code>derive</code> 自动实现<code>Default</code>  trait 就不要用手工实现</a></h2>
-<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#derivable_impls">derivable_impls</a></td><td>yes</td><td>no</td><td><strong>complexity</strong></td><td>warn</td></tr>
@@ -290,7 +285,7 @@ impl std::default::Default for Foo {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin04---在使用derivehash-的时候避免再手工实现-partialeq" id="gtrabuitin04---在使用derivehash-的时候避免再手工实现-partialeq">G.TRA.Buitin.04   在使用<code>#[derive(Hash)]</code> 的时候，避免再手工实现 <code>PartialEq</code></a></h2>
-<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -335,7 +330,7 @@ impl PartialEq for Foo {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin05---在使用deriveord-的时候避免再手工实现-partialord" id="gtrabuitin05---在使用deriveord-的时候避免再手工实现-partialord">G.TRA.Buitin.05   在使用<code>#[derive(Ord)]</code> 的时候，避免再手工实现 <code>PartialOrd</code></a></h2>
-<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-3" id="级别建议-3">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-4" id="lint-检测-4">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -422,7 +417,7 @@ impl Ord for JsonObject
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin06----不要对实现-copy--或引用类型调用--stdmemdrop-和-stdmemforgot" id="gtrabuitin06----不要对实现-copy--或引用类型调用--stdmemdrop-和-stdmemforgot">G.TRA.Buitin.06    不要对实现 <code>Copy</code>  或引用类型调用  <code>std::mem::drop</code> 和 <code>std::mem::forgot</code></a></h2>
-<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-4" id="级别建议-4">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-5" id="lint-检测-5">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -467,7 +462,7 @@ pub fn format(&amp;mut self) -&gt; String {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin07---对实现-copy-的可迭代类型来说要通过迭代器拷贝其所有元素时应该使用-copied方法而非cloned" id="gtrabuitin07---对实现-copy-的可迭代类型来说要通过迭代器拷贝其所有元素时应该使用-copied方法而非cloned">G.TRA.Buitin.07   对实现 <code>Copy</code> 的可迭代类型来说，要通过迭代器拷贝其所有元素时，应该使用 <code>copied</code>方法，而非<code>cloned</code></a></h2>
-<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-5" id="级别建议-5">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -494,7 +489,7 @@ let v_copied: Vec&lt;_&gt; = a.iter().cloned().collect();
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin08-实现-from-而不是-into" id="gtrabuitin08-实现-from-而不是-into">G.TRA.Buitin.08 实现 <code>From</code> 而不是 <code>Into</code></a></h2>
-<h3><a class="header" href="#级别建议-7" id="级别建议-7">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-7" id="lint-检测-7">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -584,7 +579,7 @@ impl&lt;T&gt; Into&lt;Vec&lt;T&gt;&gt; for Wrapper&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#gtrabuitin09---一般情况下不要给-copy-类型手工实现-clone" id="gtrabuitin09---一般情况下不要给-copy-类型手工实现-clone">G.TRA.Buitin.09   一般情况下不要给 Copy 类型手工实现 Clone</a></h2>
-<h3><a class="header" href="#级别建议-8" id="级别建议-8">【级别：建议】</a></h3>
+<h3><a class="header" href="#级别建议-7" id="级别建议-7">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
 <h3><a class="header" href="#lint-检测-8" id="lint-检测-8">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
@@ -634,6 +629,16 @@ fn main() {
     let m2 = m.clone();
 }
 </code></pre></pre>
+<h2><a class="header" href="#ptrabuitin10-不要随便使用-deref-trait----来模拟继承" id="ptrabuitin10-不要随便使用-deref-trait----来模拟继承">P.TRA.Buitin.10 不要随便使用 <code>Deref</code> trait    来模拟继承</a></h2>
+<h3><a class="header" href="#级别建议-8" id="级别建议-8">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-9" id="lint-检测-9">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-9" id="描述-9"><strong>【描述】</strong></a></h3>
+<p><code>Deref</code> trait是专门用于实现自定义指针类型而存在的。虽然可以实现 <code>Deref</code> 来达到某种类似于继承的行为，但 Rust 中不推荐这样做。</p>
+<p>这是因为 Rust 语言推崇显式的转换，而 <code>Deref</code> 则是 Rust 中为数不多的隐式行为。如果 <code>Deref</code> 被滥用，那么程序中隐式行为可能会增多，隐式的转换是 Bug 的温床。</p>
 
                     </main>
 

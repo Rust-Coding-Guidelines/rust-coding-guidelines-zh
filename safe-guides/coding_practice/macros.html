@@ -210,55 +210,7 @@ cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 <p>尤其是过程宏，它有一定复杂性，且很难调试，不卫生，也容易出错，不适合新手使用它。</p>
 <p>【参考】</p>
 <p><a href="https://github.com/dtolnay/case-studies">Rust 社区顶级专家 Dtolnay 写的 宏学习案例 </a></p>
-<h2><a class="header" href="#pmac02---在多个地方使用println-或-panic-之类的内置宏-时可以将其包装到函数内使用-cold-和-inlinenever-属性避免其内联从而避免编译文件膨胀" id="pmac02---在多个地方使用println-或-panic-之类的内置宏-时可以将其包装到函数内使用-cold-和-inlinenever-属性避免其内联从而避免编译文件膨胀">P.MAC.02   在多个地方使用<code>println!</code> 或 <code>panic!</code> 之类的内置宏 时，可以将其包装到函数内，使用 <code>#[cold]</code> 和 <code>#[inline(never)]</code> 属性避免其内联，从而避免编译文件膨胀</a></h2>
-<p><strong>【描述】</strong></p>
-<p>因为像 <code>println!</code> 或 <code>panic!</code> 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。</p>
-<p>【正例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[inline(never)]
-#[cold]
-#[track_caller] // 为了定位 panic 发生时的调用者的位置
-fn unwrap_failed(msg: &amp;str, error: &amp;dyn fmt::Debug) -&gt; ! {
-    panic!(&quot;{}: {:?}&quot;, msg, error)
-}
-
-pub fn expect(self, msg: &amp;str) -&gt; T {
-    match self {
-        Ok(t) =&gt; t,
-        Err(e) =&gt; unwrap_failed(msg, &amp;e),
-    }
-}
-
-pub fn unwrap_err(self) -&gt; E {
-    match self {
-        Ok(t) =&gt; unwrap_failed(&quot;called `Result::unwrap_err()` on an `Ok` value&quot;, &amp;t),
-        Err(e) =&gt; e,
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>【反例】</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn expect(self, msg: &amp;str) -&gt; T {
-    match self {
-        Ok(t) =&gt; t,
-        Err(e) =&gt; panic!(&quot;{}: {:?}&quot;, msg, &amp;e),
-    }
-}
-
-pub fn unwrap_err(self) -&gt; E {
-    match self {
-        Ok(t) =&gt; panic!(&quot;{}: {:?}&quot;, &quot;called `Result::unwrap_err()` on an `Ok` value&quot;, &amp;t),
-        Err(e) =&gt; e,
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h2><a class="header" href="#pmac03-实现宏语法的时候应该尽量贴近-rust-语法" id="pmac03-实现宏语法的时候应该尽量贴近-rust-语法">P.MAC.03 实现宏语法的时候，应该尽量贴近 Rust 语法</a></h2>
+<h2><a class="header" href="#pmac02-实现宏语法的时候应该尽量贴近-rust-语法" id="pmac02-实现宏语法的时候应该尽量贴近-rust-语法">P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Rust 宏可以让开发者定义自己的DSL，但是，在使用宏的时候，要尽可能贴近Rust的语法。这样可以增强可读性，让其他开发者在使用宏的时候，可以猜测出它的生成的代码。</p>
 <p>【正例】</p>
@@ -303,8 +255,8 @@ bitflags! {
 </span></code></pre></pre>
 <hr />
 <h2><a class="header" href="#gmac01---dbg-宏只应该在-debug-模式下使用" id="gmac01---dbg-宏只应该在-debug-模式下使用">G.MAC.01   <code>dbg!()</code> 宏只应该在 Debug 模式下使用</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
 <h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#dbg_macro">dbg_macro</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
@@ -332,6 +284,60 @@ let foo = false;
 </span>// Release 模式编译
 let foo = false;
 dbg!(foo); 
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#gmac02---在多个地方使用println-或-panic-之类的内置宏-时可以将其包装到函数内使用-cold-和-inlinenever-属性避免其内联从而避免编译文件膨胀" id="gmac02---在多个地方使用println-或-panic-之类的内置宏-时可以将其包装到函数内使用-cold-和-inlinenever-属性避免其内联从而避免编译文件膨胀">G.MAC.02   在多个地方使用<code>println!</code> 或 <code>panic!</code> 之类的内置宏 时，可以将其包装到函数内，使用 <code>#[cold]</code> 和 <code>#[inline(never)]</code> 属性避免其内联，从而避免编译文件膨胀</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
+<p>建议按此规范执行</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-1" id="描述-1"><strong>【描述】</strong></a></h3>
+<p>因为像 <code>println!</code> 或 <code>panic!</code> 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。</p>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[inline(never)]
+#[cold]
+#[track_caller] // 为了定位 panic 发生时的调用者的位置
+fn unwrap_failed(msg: &amp;str, error: &amp;dyn fmt::Debug) -&gt; ! {
+    panic!(&quot;{}: {:?}&quot;, msg, error)
+}
+
+pub fn expect(self, msg: &amp;str) -&gt; T {
+    match self {
+        Ok(t) =&gt; t,
+        Err(e) =&gt; unwrap_failed(msg, &amp;e),
+    }
+}
+
+pub fn unwrap_err(self) -&gt; E {
+    match self {
+        Ok(t) =&gt; unwrap_failed(&quot;called `Result::unwrap_err()` on an `Ok` value&quot;, &amp;t),
+        Err(e) =&gt; e,
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn expect(self, msg: &amp;str) -&gt; T {
+    match self {
+        Ok(t) =&gt; t,
+        Err(e) =&gt; panic!(&quot;{}: {:?}&quot;, msg, &amp;e),
+    }
+}
+
+pub fn unwrap_err(self) -&gt; E {
+    match self {
+        Ok(t) =&gt; panic!(&quot;{}: {:?}&quot;, &quot;called `Result::unwrap_err()` on an `Ok` value&quot;, &amp;t),
+        Err(e) =&gt; e,
+    }
+}
 <span class="boring">}
 </span></code></pre></pre>
 

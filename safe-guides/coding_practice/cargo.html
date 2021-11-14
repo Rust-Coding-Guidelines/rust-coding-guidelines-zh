@@ -171,13 +171,25 @@
 <p>Cargo 不仅仅是包管理，它还是一个 Workflow 工具。这一节包含 Cargo 和 Crate 相关内容。</p>
 <hr />
 <h2><a class="header" href="#pcar01---应该尽量把项目划分为合理的-crate-组合" id="pcar01---应该尽量把项目划分为合理的-crate-组合">P.CAR.01   应该尽量把项目划分为合理的 crate 组合</a></h2>
-<p><strong>【描述】</strong></p>
+<h3><a class="header" href="#描述" id="描述"><strong>【描述】</strong></a></h3>
 <p>将整个项目按一定逻辑划分为合理的 crate，在工程方面，有利于组件化。并且 crate 是 Rust 的编译单元，也有助于提升编译时间。</p>
 <p>但需要注意，crate 之间的依赖关系应该是单向的，避免相互依赖的情况。</p>
 <p>但 Rust 中 编译时间、性能、编译大小之间，在考虑优化的时候，也是需要权衡的。 </p>
 <p>内联是优化的关键，当编译单元越大，内联优化效果就越好。所以需要权衡 crate 划分的粒度。</p>
-<h2><a class="header" href="#pcar02----当项目是可执行程序而非库时建议使用-srcmainrs-和-srclibrs-模式" id="pcar02----当项目是可执行程序而非库时建议使用-srcmainrs-和-srclibrs-模式">P.CAR.02    当项目是可执行程序而非库时，建议使用 <code>src/main.rs</code> 和 <code>src/lib.rs</code> 模式</a></h2>
-<p><strong>【描述】</strong></p>
+<h2><a class="header" href="#pcar02----不要滥用-features" id="pcar02----不要滥用-features">P.CAR.02    不要滥用 <code>features</code></a></h2>
+<h3><a class="header" href="#描述-1" id="描述-1"><strong>【描述】</strong></a></h3>
+<p>Rust 的 features ，提供了方便的条件编译功能。从软件工程来说，features 应该是为了避免让用户依赖没必要依赖的功能而使用的。</p>
+<p>在使用 features 的时候，应该考虑到底是不是真的需要 features。</p>
+<p>滥用features会带来额外的测试和静态检查的难度，需要保证不同features下的测试覆盖和静态检查情况。</p>
+<hr />
+<h2><a class="header" href="#gcar01----当项目是可执行程序而非库时建议使用-srcmainrs-和-srclibrs-模式" id="gcar01----当项目是可执行程序而非库时建议使用-srcmainrs-和-srclibrs-模式">G.CAR.01    当项目是可执行程序而非库时，建议使用 <code>src/main.rs</code> 和 <code>src/lib.rs</code> 模式</a></h2>
+<h3><a class="header" href="#级别规则" id="级别规则">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
+<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-2" id="描述-2"><strong>【描述】</strong></a></h3>
 <p><code>crate</code> 结构类似于：</p>
 <pre><code class="language-text">src/
   -- lib.rs
@@ -194,21 +206,16 @@ bin/
 <li>便于单元测试。</li>
 <li>这样拆分有利于面向接口思考，让代码架构和逻辑更加清晰。</li>
 </ol>
-<p>如果你编写的可执行程序比较复杂时，在 <code>main.rs</code>里需要依赖太多东西，那就需要创建 Workspace， 把 <code>main.rs</code> 在独立为一个 crate 了，而在这个 crate 内也没有必要在拆分为 <code>main</code>和 <code>lib</code> 了。</p>
-<h2><a class="header" href="#pcar03----不要滥用-features" id="pcar03----不要滥用-features">P.CAR.03    不要滥用 <code>features</code></a></h2>
-<p><strong>【描述】</strong></p>
-<p>Rust 的 features ，提供了方便的条件编译功能。从软件工程来说，features 应该是为了避免让用户依赖没必要依赖的功能而使用的。</p>
-<p>在使用 features 的时候，应该考虑到底是不是真的需要 features。</p>
-<hr />
-<h2><a class="header" href="#gcar01--crate-的-cargotoml--中应该包含必要的元信息" id="gcar01--crate-的-cargotoml--中应该包含必要的元信息">G.CAR.01  Crate 的 Cargo.toml  中应该包含必要的元信息</a></h2>
-<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
-<p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测" id="lint-检测">【Lint 检测】</a></h3>
+<p>如果你编写的可执行程序比较复杂时，在 <code>main.rs</code>里需要依赖太多东西，那就需要创建 Workspace， 把 <code>main.rs</code> 在独立为一个 crate 了，而在这个 crate 内也没有必要再拆分为 <code>main</code>和 <code>lib</code> 了。</p>
+<h2><a class="header" href="#gcar02--crate-的-cargotoml--中应该包含必要的元信息" id="gcar02--crate-的-cargotoml--中应该包含必要的元信息">G.CAR.02  Crate 的 Cargo.toml  中应该包含必要的元信息</a></h2>
+<h3><a class="header" href="#级别规则-1" id="级别规则-1">【级别：规则】</a></h3>
+<p>按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#cargo_common_metadata">cargo_common_metadata</a></td><td>yes</td><td>no</td><td>cargo</td><td>allow</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述" id="描述">【描述】</a></h3>
-<p>在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。</p>
+<h3><a class="header" href="#描述-3" id="描述-3">【描述】</a></h3>
+<p>在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。并且后续上传到crates.io上，这些信息也是必须的。</p>
 <p>【正例】</p>
 <pre><code class="language-toml"># This `Cargo.toml` includes all common metadata
 [package]
@@ -232,15 +239,15 @@ license = &quot;MIT OR Apache-2.0&quot;
 keywords = [&quot;clippy&quot;, &quot;lint&quot;, &quot;plugin&quot;]
 categories = [&quot;development-tools&quot;, &quot;development-tools::cargo-plugins&quot;]
 </code></pre>
-<h2><a class="header" href="#gcar02---feature-命名应该避免否定式或多余的前后缀" id="gcar02---feature-命名应该避免否定式或多余的前后缀">G.CAR.02   Feature 命名应该避免否定式或多余的前后缀</a></h2>
-<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
+<h2><a class="header" href="#gcar03---feature-命名应该避免否定式或多余的前后缀" id="gcar03---feature-命名应该避免否定式或多余的前后缀">G.CAR.03   Feature 命名应该避免否定式或多余的前后缀</a></h2>
+<h3><a class="header" href="#级别建议" id="级别建议">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-1" id="lint-检测-1">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#negative_feature_names">negative_feature_names</a></td><td>yes</td><td>no</td><td>cargo</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#redundant_feature_names">redundant_feature_names</a></td><td>yes</td><td>no</td><td>cargo</td><td>allow</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-1" id="描述-1">【描述】</a></h3>
+<h3><a class="header" href="#描述-4" id="描述-4">【描述】</a></h3>
 <p>Feature 命名应该避免出现 <code>no-</code> 或 <code>not-</code> 之类的否定前缀，或诸如 <code>use-</code>，<code>with-</code> 前缀或 <code>-support</code>后缀。Feature 的目的是正向的，可选的特性，使用否定式命名和它的目的背道而驰。</p>
 <p>【正例】</p>
 <pre><code class="language-toml">[features]
@@ -257,14 +264,14 @@ no-abc = []
 with-def = []   // redundant
 ghi-support = []   // redundant
 </code></pre>
-<h2><a class="header" href="#gcar03---cargotoml--中依赖包版本不要使用通配符" id="gcar03---cargotoml--中依赖包版本不要使用通配符">G.CAR.03   Cargo.toml  中依赖包版本不要使用通配符</a></h2>
-<h3><a class="header" href="#级别建议-2" id="级别建议-2">【级别：建议】</a></h3>
+<h2><a class="header" href="#gcar04---cargotoml--中依赖包版本不要使用通配符" id="gcar04---cargotoml--中依赖包版本不要使用通配符">G.CAR.04   Cargo.toml  中依赖包版本不要使用通配符</a></h2>
+<h3><a class="header" href="#级别建议-1" id="级别建议-1">【级别：建议】</a></h3>
 <p>建议按此规范执行。</p>
-<h3><a class="header" href="#lint-检测-2" id="lint-检测-2">【Lint 检测】</a></h3>
+<h3><a class="header" href="#lint-检测-3" id="lint-检测-3">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#wildcard_dependencies">wildcard_dependencies</a></td><td>yes</td><td>no</td><td>cargo</td><td>allow</td></tr>
 </tbody></table>
-<h3><a class="header" href="#描述-2" id="描述-2">【描述】</a></h3>
+<h3><a class="header" href="#描述-5" id="描述-5">【描述】</a></h3>
 <p>【正例】</p>
 <pre><code class="language-toml">[dependencies]
 regex = &quot;1.5&quot;

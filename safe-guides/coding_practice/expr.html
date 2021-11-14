@@ -346,6 +346,34 @@ x -= 1;
 -1i32.abs()
 <span class="boring">}
 </span></code></pre></pre>
+<h2><a class="header" href="#gexp07----避免在比较中添加无用的掩码操作" id="gexp07----避免在比较中添加无用的掩码操作">G.EXP.07    避免在比较中添加无用的掩码操作</a></h2>
+<h3><a class="header" href="#级别建议-6" id="级别建议-6">【级别：建议】</a></h3>
+<p>建议按此规范执行。</p>
+<h3><a class="header" href="#lint-检测-6" id="lint-检测-6">【Lint 检测】</a></h3>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#ineffective_bit_mask">ineffective_bit_mask</a></td><td>yes</td><td>no</td><td>correctness</td><td><strong>deny</strong></td></tr>
+</tbody></table>
+<h3><a class="header" href="#描述-6" id="描述-6">【描述】</a></h3>
+<p>检查比较中的无用位掩码操作，可以在不改变结果的情况下删除该位掩码操作。</p>
+<p>可以对照下面表格进行检查。</p>
+<table><thead><tr><th>Comparison</th><th>Bit Op</th><th>Example</th><th>equals</th></tr></thead><tbody>
+<tr><td>&gt; / &lt;=</td><td>| / ^</td><td>x | 2 &gt; 3</td><td>x &gt; 3</td></tr>
+<tr><td>&lt; / &gt;=</td><td>| / ^</td><td>x ^ 1 &lt; 4</td><td>x &lt; 4</td></tr>
+</tbody></table>
+<p>【正例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if (x &gt; 3) {  }
+<span class="boring">}
+</span></code></pre></pre>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if (x | 1 &gt; 3) {  }
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
