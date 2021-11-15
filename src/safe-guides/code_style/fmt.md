@@ -533,8 +533,8 @@ rustfmt 配置：
 | 对应选项 | 默认值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
 | [`empty_item_single_line`](https://rust-lang.github.io/rustfmt/?#empty_item_single_line) | true（默认） | No| 当语言项内容为空时，要保持单行 |
-| [`fn_single_line`](https://rust-lang.github.io/rustfmt/?#empty_item_single_line) | false（默认） | No| 当函数中只有一个表达式时不要保持单行 |
-| [`struct_lit_single_line`](https://rust-lang.github.io/rustfmt/?#struct_lit_single_line) | true（默认） | No| 当函数中只有一个表达式时不要保持单行 |
+| [`fn_single_line`](https://rust-lang.github.io/rustfmt/?#fn_single_line) | false（默认） | No| 当函数中只有一个表达式时，不要保持单行 |
+| [`struct_lit_single_line`](https://rust-lang.github.io/rustfmt/?#struct_lit_single_line) | true（默认） | No| 当结构体字面量中只有少量表达式时，要保持单行 |
 
 
 ### 【描述】
