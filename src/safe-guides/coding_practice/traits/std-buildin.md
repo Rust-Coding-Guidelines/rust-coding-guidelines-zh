@@ -543,7 +543,7 @@ fn main() {
 
 
 
-## P.TRA.Buitin.10 不要随便使用 `Deref` trait    来模拟继承
+## G.TRA.Buitin.10 不要随便使用 `Deref` trait    来模拟继承
 
 ### 【级别：建议】
 
