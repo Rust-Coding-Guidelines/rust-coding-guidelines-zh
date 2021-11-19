@@ -60,6 +60,7 @@
         - [内存](./safe-guides/coding_practice/unsafe_rust/mem.md)
         - [FFi 规范](./safe-guides/coding_practice/unsafe_rust/ffi.md)
         - [I/O](./safe-guides/coding_practice/unsafe_rust/io.md)
+        - [Unsafe 代码术语指南](./safe-guides/coding_practice/unsafe_rust/glossary.md)
     - [no-std](./safe-guides/coding_practice/no-std.md)
     - [I/O](./safe-guides/coding_practice/io.md)
     - [信息安全](./safe-guides/coding_practice/security.md)

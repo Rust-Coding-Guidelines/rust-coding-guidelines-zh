@@ -26,8 +26,7 @@ Unsafe Rust 是 Safe Rust 的超集，意味着在 Unsafe Rust 中也会有 Safe
 - [联合体](./unsafe_rust/union.md)
 - [FFi](./unsafe_rust/ffi.md)
 - [IO](./unsafe_rust/io.md)
-
-
+- [Unsafe 代码术语指南](./unsafe_rust/glossary.md)
 
 ---
 
