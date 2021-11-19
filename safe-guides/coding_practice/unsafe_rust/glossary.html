@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Unsafe 代码术语指南 - RustCodingGuidelines</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../../favicon.png">
+        
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">介绍</li><li class="chapter-item "><a href="../../../index.html"><strong aria-hidden="true">1.</strong> Rust 编码规范介绍</a></li><li class="chapter-item "><a href="../../../contribution.html"><strong aria-hidden="true">2.</strong> 贡献说明</a></li><li class="chapter-item affix "><li class="part-title">安全编码规范</li><li class="chapter-item "><a href="../../../safe-guides/intro.html"><strong aria-hidden="true">3.</strong> 前言</a></li><li class="chapter-item "><a href="../../../safe-guides/dev_env.html"><strong aria-hidden="true">4.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../../safe-guides/code_style.html"><strong aria-hidden="true">5.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/code_style/naming.html"><strong aria-hidden="true">5.1.</strong> 命名</a></li><li class="chapter-item "><a href="../../../safe-guides/code_style/fmt.html"><strong aria-hidden="true">5.2.</strong> 格式</a></li><li class="chapter-item "><a href="../../../safe-guides/code_style/comments.html"><strong aria-hidden="true">5.3.</strong> 注释</a></li></ol></li><li class="chapter-item expanded "><a href="../../../safe-guides/coding_practice.html"><strong aria-hidden="true">6.</strong> 编程实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/consts.html"><strong aria-hidden="true">6.1.</strong> 常量</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/statics.html"><strong aria-hidden="true">6.2.</strong> 静态变量</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/variables.html"><strong aria-hidden="true">6.3.</strong> 本地变量</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type.html"><strong aria-hidden="true">6.4.</strong> 数据类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/unit.html"><strong aria-hidden="true">6.4.1.</strong> 单元类型</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/bool.html"><strong aria-hidden="true">6.4.2.</strong> 布尔</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/char.html"><strong aria-hidden="true">6.4.3.</strong> 字符</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/int.html"><strong aria-hidden="true">6.4.4.</strong> 整数</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/float.html"><strong aria-hidden="true">6.4.5.</strong> 浮点数</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/ref.html"><strong aria-hidden="true">6.4.6.</strong> 引用</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/slice.html"><strong aria-hidden="true">6.4.7.</strong> 切片</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/tuple.html"><strong aria-hidden="true">6.4.8.</strong> 元组</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/array.html"><strong aria-hidden="true">6.4.9.</strong> 固定长度数组</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/vec.html"><strong aria-hidden="true">6.4.10.</strong> 动态数组</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/struct.html"><strong aria-hidden="true">6.4.11.</strong> 结构体</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/data-type/enum.html"><strong aria-hidden="true">6.4.12.</strong> 枚举体</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/expr.html"><strong aria-hidden="true">6.5.</strong> 表达式</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/control-flow.html"><strong aria-hidden="true">6.6.</strong> 流程控制</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/strings.html"><strong aria-hidden="true">6.7.</strong> 字符串</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/collections.html"><strong aria-hidden="true">6.8.</strong> 集合容器</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/fn-and-closure.html"><strong aria-hidden="true">6.9.</strong> 函数与闭包</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/generic.html"><strong aria-hidden="true">6.10.</strong> 泛型</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/traits.html"><strong aria-hidden="true">6.11.</strong> 特质</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/traits/std-buildin.html"><strong aria-hidden="true">6.11.1.</strong> 标准库内置 trait</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/traits/trait-object.html"><strong aria-hidden="true">6.11.2.</strong> trait 对象</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/error-handle.html"><strong aria-hidden="true">6.12.</strong> 错误处理</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/memory.html"><strong aria-hidden="true">6.13.</strong> 内存管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/memory/lifetime.html"><strong aria-hidden="true">6.13.1.</strong> 生存期</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/memory/box.html"><strong aria-hidden="true">6.13.2.</strong> Box&lt;T&gt;</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/memory/drop.html"><strong aria-hidden="true">6.13.3.</strong> Drop 析构</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/module.html"><strong aria-hidden="true">6.14.</strong> 模块</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">6.15.</strong> 包管理</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/macros.html"><strong aria-hidden="true">6.16.</strong> 宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/macros/decl.html"><strong aria-hidden="true">6.16.1.</strong> 声明宏</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/macros/proc.html"><strong aria-hidden="true">6.16.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/threads.html"><strong aria-hidden="true">6.17.</strong> 多线程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/threads/lock.html"><strong aria-hidden="true">6.17.1.</strong> 锁同步</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/threads/lock-free.html"><strong aria-hidden="true">6.17.2.</strong> 无锁</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/async-await.html"><strong aria-hidden="true">6.18.</strong> 异步编程</a></li><li class="chapter-item expanded "><a href="../../../safe-guides/coding_practice/unsafe_rust.html"><strong aria-hidden="true">6.19.</strong> Unsafe Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">6.19.1.</strong> 安全抽象</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/raw_ptr.html"><strong aria-hidden="true">6.19.2.</strong> 裸指针操作</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/union.html"><strong aria-hidden="true">6.19.3.</strong> 联合体</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/mem.html"><strong aria-hidden="true">6.19.4.</strong> 内存</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/ffi.html"><strong aria-hidden="true">6.19.5.</strong> FFi 规范</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/unsafe_rust/io.html"><strong aria-hidden="true">6.19.6.</strong> I/O</a></li><li class="chapter-item expanded "><a href="../../../safe-guides/coding_practice/unsafe_rust/glossary.html" class="active"><strong aria-hidden="true">6.19.7.</strong> Unsafe 代码术语指南</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/no-std.html"><strong aria-hidden="true">6.20.</strong> no-std</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/io.html"><strong aria-hidden="true">6.21.</strong> I/O</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/security.html"><strong aria-hidden="true">6.22.</strong> 信息安全</a></li><li class="chapter-item "><a href="../../../safe-guides/coding_practice/others.html"><strong aria-hidden="true">6.23.</strong> 其他</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/toc.html"><strong aria-hidden="true">7.</strong> 附录</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/Appendix/test.html"><strong aria-hidden="true">7.1.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/Appendix/test/unit_test.html"><strong aria-hidden="true">7.1.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/test/benchmark.html"><strong aria-hidden="true">7.1.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/test/fuzz.html"><strong aria-hidden="true">7.1.3.</strong> 模糊测试</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/terms.html"><strong aria-hidden="true">7.2.</strong> 术语解释</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/templates/intro.html"><strong aria-hidden="true">7.3.</strong> 模板</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/Appendix/templates/rustfmt.toml.html"><strong aria-hidden="true">7.3.1.</strong> rustfmt 模板</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/templates/clippy.toml.html"><strong aria-hidden="true">7.3.2.</strong> clippy 模板</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/templates/deny.toml.html"><strong aria-hidden="true">7.3.3.</strong> deny 模板</a></li></ol></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/tools/intro.html"><strong aria-hidden="true">7.4.</strong> 工具链</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../safe-guides/Appendix/tools/rustfmt.html"><strong aria-hidden="true">7.4.1.</strong> rustfmt</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/tools/noisy-clippy.html"><strong aria-hidden="true">7.4.2.</strong> noisy-clippy</a></li><li class="chapter-item "><a href="../../../safe-guides/Appendix/tools/cargo-udeps.html"><strong aria-hidden="true">7.4.3.</strong> cargo-udeps</a></li></ol></li></ol></li><li class="chapter-item "><li class="part-title">领域最佳实践</li><li class="chapter-item "><a href="../../../best-practices/intro.html"><strong aria-hidden="true">8.</strong> 介绍</a></li><li class="chapter-item "><a href="../../../best-practices/hpc.html"><strong aria-hidden="true">9.</strong> 高性能计算</a></li><li class="chapter-item "><a href="../../../best-practices/embedded.html"><strong aria-hidden="true">10.</strong> 嵌入式 Rust</a></li><li class="chapter-item "><a href="../../../best-practices/databases.html"><strong aria-hidden="true">11.</strong> 数据库</a></li><li class="chapter-item "><a href="../../../best-practices/games.html"><strong aria-hidden="true">12.</strong> 游戏</a></li><li class="chapter-item "><a href="../../../best-practices/cli_app.html"><strong aria-hidden="true">13.</strong> Cli App</a></li><li class="chapter-item "><a href="../../../best-practices/gui.html"><strong aria-hidden="true">14.</strong> GUI</a></li><li class="chapter-item "><a href="../../../best-practices/web.html"><strong aria-hidden="true">15.</strong> Web 开发</a></li><li class="chapter-item "><a href="../../../best-practices/networks.html"><strong aria-hidden="true">16.</strong> 网络服务</a></li><li class="chapter-item "><a href="../../../best-practices/webassembly.html"><strong aria-hidden="true">17.</strong> WebAssembly</a></li><li class="chapter-item affix "><li class="part-title">Cheat Sheet</li><li class="chapter-item "><a href="../../../cheat-sheet/index.html"><strong aria-hidden="true">18.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust 优化指南</li><li class="chapter-item "><a href="../../../optimizing/intro.html"><strong aria-hidden="true">19.</strong> 介绍</a></li><li class="chapter-item affix "><li class="part-title">Rust Cookbook</li><li class="chapter-item "><a href="../../../cookbook/intro.html"><strong aria-hidden="true">20.</strong> 介绍</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">RustCodingGuidelines</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/Rust-Coding-Guidelines/rust-coding-guidelines-zh" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#unsafe-代码术语指南" id="unsafe-代码术语指南">Unsafe 代码术语指南</a></h2>
+<p>来自于：<a href="https://rust-lang.github.io/unsafe-code-guidelines/glossary.html">Unsafe Code Guidelines Reference | Glossary</a></p>
+<table><thead><tr><th>术语</th><th>中文</th><th>意义</th></tr></thead><tbody>
+<tr><td>Alias</td><td>别名</td><td>当一个指针或引用指向的内存范围（Span）和另一个指针或引用指向的内存区域重叠时，就会产生别名</td></tr>
+<tr><td>(Pointer) Provenance</td><td>指针来源</td><td>用于区分指向相同内存地址的指针</td></tr>
+<tr><td>Interior mutability</td><td>内部可变性</td><td>意味着一块可变的内存，同时还拥有一个共享引用，并且对其执行内部可变还不会引起 UB</td></tr>
+<tr><td>Validity and safety invariant</td><td>有效性和安全性不变量</td><td>数据必须是有效的，但它只在安全的代码中才能保证安全</td></tr>
+<tr><td>Undefined Behavior</td><td>未定义行为</td><td>最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现不同</td></tr>
+<tr><td>Soundness</td><td>健全性</td><td>意味着类型系统是正确的，健全性是类型良好的程序所需的属性</td></tr>
+<tr><td>Layout</td><td>数据布局</td><td>用于定义类型的大小和对齐方式，以及它的子对象的偏移量</td></tr>
+<tr><td>Zero-sized type / ZST</td><td>零大小类型</td><td>不占用空间的类型，即对齐要求为 <code>1</code> 的类型</td></tr>
+<tr><td>Niche</td><td>利基</td><td>一个类型的利基决定了布局优化将使用的 无效位模式（bit-pattern）</td></tr>
+<tr><td>Padding</td><td>填充</td><td>指编译器在结构体或枚举变体的字段之间填充空间，以满足对齐要求</td></tr>
+<tr><td>Place</td><td>位置</td><td>位置是对位置表达式的求值结果（C 语言中叫&quot;左值，lvalue&quot;，C++中叫 &quot;广义左值，glvalue&quot;）</td></tr>
+<tr><td>Value</td><td>值</td><td>值是对值表达式的求值结果 （其他语言叫 “右值，rvalue”）</td></tr>
+<tr><td>Representation</td><td>表征</td><td>用于描述一个类型的值和内存中存储这个值的字节序列之间的关系</td></tr>
+</tbody></table>
+<p>​	</p>
+<h2><a class="header" href="#别名alias" id="别名alias">别名（Alias）</a></h2>
+<p>当一个指针或引用指向的内存区域（Span）和另一个指针或引用指向的内存区域重叠时，就会产生别名。</p>
+<p>对零大小类型（ZST）的引用和指针从不互相别名，因为它们的内存范围长度总是<code>0</code>字节。</p>
+<p>【示例】</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let u: u64 = 7_u64;
+    let r: &amp;u64 = &amp;u;
+    let s: &amp;[u8] = unsafe {
+        core::slice::from_raw_parts(&amp;u as *const u64 as *const u8, 8)
+    };
+    let (head, tail) = s.split_first().unwrap();
+}
+</code></pre></pre>
+<p>该示例中，<code>r</code>  和 <code>s</code> 是互为别名，因为它们都指向 <code>u</code> 的内存。</p>
+<p>然而，<code>head</code> 和 <code>tail</code> 不是互为别名，<code>head</code> 指向 <code>u</code>  的第一个字节，<code>tail</code> 指向其余字节。但是  <code>head</code> 和 <code>tail</code>  共同与 <code>s</code>  互为别名。</p>
+<p>内存范围（Span）是指 引用或指针 指向值（Value）的大小，主要依赖于类型，按以下方式确定：</p>
+<ol>
+<li>对于一个是 <code>Sized</code> 的类型<code>T</code>，用 <code>size_of::&lt;T&gt;()</code> 可以获取 <code>T</code>的引用或指针的 内存范围长度。</li>
+<li>当 <code>T</code>不是 <code>Sized</code> 时，就有点麻烦：
+<ol>
+<li>如果你有一个引用<code>r</code>，你可以使用<code>size_of_val(r)</code>来确定该引用的内存范围。</li>
+<li>如果你有一个指针<code>p</code>，你必须在使用<code>size_of_val</code>之前不安全地(unsafely)将其转换为一个引用。目前还没有一个安全的方法来确定一个非<code>Sized</code>类型的指针的内存范围。</li>
+</ol>
+</li>
+</ol>
+<h2><a class="header" href="#指针来源pointer-provenance" id="指针来源pointer-provenance">指针来源（(Pointer) Provenance）</a></h2>
+<p>用于区分指向相同内存地址的指针，即，当强转为 <code>usize</code> 时，会比较是否相等。指针来源只存在于 Rust 的抽象层，在转译以后的二进制文件中，将无法区分指针来源，但是它可以影响编译器对程序的转译。</p>
+<pre><pre class="playground"><code class="language-rust">
+#![allow(unused)]
+fn main() {
+// 我们假设这里的两个分配的基本地址是 0x100 和 0x200
+// 我们把指针的出处写成`@N`，其中`N`是某种唯一的ID，用来识别该分配
+let raw1 = Box::into_raw(Box::new(13u8));
+let raw2 = Box::into_raw(Box::new(42u8));
+let raw2_wrong = raw1.wrapping_add(raw2.wrapping_sub(raw1 as usize) as usize);
+// 这些指针现在有以下值:
+//   raw1指向地址 0x100，其出处为 @1
+//   raw2指向地址 0x200，并有出处 @2
+//   raw2_wrong 指向地址 0x200，并有出处 @1
+// 换句话说，raw2和raw2_wrong有相同的地址 
+assert_eq!(raw2 as usize, raw2_wrong as usize);
+// ...但是对 raw2_wrong 解引用将是不合法的，因为它有错误的来源（provenance）:
+// 它指向地址 0x200，这是在分配 @2中，但这个指针的出处是 @1
+}
+</code></pre></pre>
+<h2><a class="header" href="#内部可变性interior-mutability" id="内部可变性interior-mutability">内部可变性（Interior mutability）</a></h2>
+<p>意味着一块可变的内存，同时还拥有一个共享引用，并且对其执行内部可变还不会引起 UB。</p>
+<p>如果由<code>&amp;T</code>或<code>&amp;mut T</code>立即指向的数据被改变，这就是内部可变。如果由<code>*const T</code>或<code>&amp;*const T</code>直接指向的数据被改变，就不是内部可变性。</p>
+<p>Rust中所有的内部可变都必须发生在<code>UnsafeCell</code>内部，所以，所有具有内部可变性的数据结构都必须（直接或间接）使用<code>UnsafeCell</code>来实现这一目的。</p>
+<h2><a class="header" href="#有效性安全不变性validity-and-safety-invariant" id="有效性安全不变性validity-and-safety-invariant">有效性安全不变性（Validity and safety invariant）</a></h2>
+<p>有效性（Validity）是指提供的数据必须与其对应类型一致，在其类型下必须有效。</p>
+<p>安全性（safety）是指，可能引起 UB。</p>
+<p>有效但不安全的一个示例是 <code>&amp;str</code> 或 <code>String</code> 类型。在 Unsafe Rust 下，可能会出现违反 UTF-8 编码的字符串，而 <code>&amp;str</code> 或 <code>String</code>  假设字符串都是合法的 UTF-8 编码，所以可能会出现 UB。</p>
+<p>数据必须是有效的，但它只在安全的代码中才能保证安全。</p>
+<h2><a class="header" href="#未定义行为-undefined-behavior" id="未定义行为-undefined-behavior">未定义行为 （Undefined Behavior）</a></h2>
+<p>程序员承诺，代码不会出现未定义行为。作为回报，编译器承诺以这样的方式编译代码：最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现相同。如果发现程序确实有未定义的行为，那么程序员和编译器之间的契约就无效了，编译器产生的程序基本上是垃圾（特别是，它不受任何规范的约束；程序甚至不一定是格式良好的可执行代码）。</p>
+<p>未定义行为列表：</p>
+<ul>
+<li>数据竞争。</li>
+<li>解引用悬空指针或者是未对齐指针</li>
+<li>打破指针别名规则（引用生命周期不能长于其引用的对象，可变引用不能被别名）。</li>
+<li>使用错误的 调用 ABI</li>
+<li>执行使用当前执行线程不支持的目标特性（target features）编译的代码</li>
+<li>产生无效的值
+<ul>
+<li>非<code>0</code>和 <code>1</code> 表达的 bool </li>
+<li>具有无效判别式的 枚举</li>
+<li>在 <code>[0x0, 0xD7FF] </code>和 <code>[0xE000, 0x10FFFF]</code> 范围之外的 字符</li>
+<li>来自于未初始化内存的整数、浮点数、指针读取或字符串</li>
+<li>悬垂引用或 Box</li>
+<li>宽引用、Box 或 裸指针有无效的元数据
+<ul>
+<li><code>dyn Trait</code> 如果元数据不是指向， Trait 与指针或引用指向的实际动态 trait 匹配的 vtable，的指针，则元数据无效</li>
+<li>如果长度无效，则切片数据无效</li>
+</ul>
+</li>
+<li>具有自定义无效值的类型，比如 <code>NonNull</code></li>
+</ul>
+</li>
+</ul>
+<p>参考：<a href="https://doc.rust-lang.org/nomicon/what-unsafe-does.html">Nomicon Rust</a></p>
+<h2><a class="header" href="#健全性soundness" id="健全性soundness">健全性（Soundness）</a></h2>
+<p>健全性是一个类型系统的概念，意味着类型系统是正确的，即，类型良好的程序实际上应该具有该属性。对于 Rust 来说，意味着类型良好的程序不会导致未定义行为。但是这个承诺只适用于 Safe Rust。对于 Unsafe Rust要有开发者/程序员来维护这个契约。</p>
+<p>因此，如果Safe 代码的公开 API 不可能导致未定义行为，就可以说这个库是健全的。反之，如果安全代码导致未定义行为，那么这个库就是不健全的。</p>
+<h2><a class="header" href="#数据布局layout" id="数据布局layout">数据布局（Layout）</a></h2>
+<p>一个类型的布局定义了它的大小和对齐方式，以及它的子对象的偏移量（例如，结构体/联合体/枚举体/...的字段或数组的元素）。此外，一个类型的布局记录了它的函数调用ABI（或简称ABI）。</p>
+<p>注意：最初，布局和表征（representation ）被视为同义词，Rust语言的特性，如<code>#[repr]</code>属性反映了这一点。在本文档中，布局和表征不是同义词。</p>
+<h2><a class="header" href="#零大小类型zst" id="零大小类型zst">零大小类型（ZST）</a></h2>
+<p>零大小类型是指不会占用实际内存空间的类型，其对齐要求是 <code>1</code>。 比如 单元类型 <code>()</code> 的对齐要求就是 <code>1</code>，而 <code>[u16;0]</code> 的对齐要求就是 <code>2</code> 。</p>
+<h2><a class="header" href="#利基niche" id="利基niche">利基（Niche）</a></h2>
+<p>一个类型的利基决定了其布局优化将使用的无效位模式。</p>
+<p>比如， <code>Option&lt;Nonull&gt;</code> 具有和 <code>*mut T</code>相同的大小。</p>
+<h2><a class="header" href="#填充padding" id="填充padding">填充（Padding）</a></h2>
+<p>指编译器在结构体或枚举变体的字段之间填充空间，以满足对齐要求。</p>
+<p>填充可以被认为是 <code>[Pad; N] </code>，其中 <code>Pad</code>  大小假设为<code>1</code>，具有以下属性：</p>
+<ol>
+<li>对任何字节都有效。与<code> MaybeUninit&lt;u8&gt;</code>具有相同有效性。</li>
+<li>复制 Pad 时忽略源字节，并向目标字节写入任何值。</li>
+<li>复制 Pad 标记目标为未初始化。</li>
+</ol>
+<h2><a class="header" href="#位置place" id="位置place">位置（Place）</a></h2>
+<p>位置是 对 位置表达式的求值结果。在其他语言中，一般将其称为左值。</p>
+<p>位置基本上是一个指针，但可能包含更多信息，比如 大小、 对齐方式等。</p>
+<p>关于位置的关键操作：</p>
+<ol>
+<li>在其中存储相同类型的值（当它用于赋值的左侧时，let 绑定）</li>
+<li>从它那里加载一个相同类型的值</li>
+<li>使用 <code>&amp;</code>  或 <code>*</code> 操作符在一个位置（<code>T</code>）和一个指针值（<code>&amp;T</code> / <code>&amp;mut T</code>/ <code>*const T</code>/ 或 <code>*mut T</code> ）之间转换。</li>
+</ol>
+<h2><a class="header" href="#值value" id="值value">值（Value）</a></h2>
+<p>值是对值表达式的求值结果，或是被存储在某个地方的东西。 在其他语言中，一般将其称为右值。</p>
+<h2><a class="header" href="#表征representation" id="表征representation">表征（Representation）</a></h2>
+<p>表征，用于描述一个类型的值和内存中存储这个值的字节序列之间的关系。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../safe-guides/coding_practice/unsafe_rust/io.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../safe-guides/coding_practice/no-std.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../safe-guides/coding_practice/unsafe_rust/io.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../safe-guides/coding_practice/no-std.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
