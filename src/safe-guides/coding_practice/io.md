@@ -7,6 +7,8 @@
 本部分只关注 Safe Rust 下 I/O 相关规范。
 
 ---
+<!-- toc -->
+---
 
 ## P.IO.01   文件读取建议使用 `BufReader/BufWriter` 来代替 `Reader/Write`
 

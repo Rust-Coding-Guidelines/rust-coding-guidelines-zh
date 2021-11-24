@@ -22,6 +22,8 @@ enum DataCarrying {
 Rust 中枚举体用处很多，你甚至可以将其作为一种接口使用。
 
 ---
+<!-- toc -->
+---
 
 ## P.TYP.Enum.01 修改 Enum 中值的时候建议使用 `std::mem::take` 
 

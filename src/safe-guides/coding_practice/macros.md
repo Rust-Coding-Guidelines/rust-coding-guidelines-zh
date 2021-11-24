@@ -35,7 +35,8 @@ rustc -Z unstable-options --pretty expanded hello.rs
 # 对项目里的二进制 rs 文件
 cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 ```
-
+---
+<!-- toc -->
 ---
 
 ## P.MAC.01  不要轻易使用宏

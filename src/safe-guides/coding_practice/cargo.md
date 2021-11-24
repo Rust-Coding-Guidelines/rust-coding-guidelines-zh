@@ -3,6 +3,8 @@
 Cargo 不仅仅是包管理，它还是一个 Workflow 工具。这一节包含 Cargo 和 Crate 相关内容。
 
 ---
+<!-- toc -->
+---
 
 ## P.CAR.01   应该尽量把项目划分为合理的 crate 组合
 

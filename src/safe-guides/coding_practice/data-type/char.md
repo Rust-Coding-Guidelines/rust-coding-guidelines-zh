@@ -3,6 +3,8 @@
 在 Rust 中，字符是一个合法的 Unicode 标量值（Unicode scalar value），一个字符大小为 4 字节，对应一个 Unicode 码位（CodePoint）。
 
 ---
+<!-- toc -->
+---
 
 ## G.TYP.Char.01  不要将 字符字面量强转为 `u8` 去使用
 

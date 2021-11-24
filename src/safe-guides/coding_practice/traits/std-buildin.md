@@ -2,6 +2,10 @@
 
 Rust 标准库内置了很多 trait，在使用这些 trait 的时候也需要注意。
 
+---
+<!-- toc -->
+---
+
 ## P.TRA.Buitin.01  在实现 `Borrow` trait  的时候，需要注意一致性
 
 **【描述】**
