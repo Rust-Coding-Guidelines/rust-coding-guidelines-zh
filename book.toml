@@ -11,6 +11,7 @@ create-missing = true
 [preprocessor.toc]
 command = "mdbook-toc"
 renderer = ["html"]
+max-level = 2
 
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
