@@ -3,6 +3,8 @@
 Rust 中多线程并发使用锁来进行线程同步。
 
 ---
+<!-- toc -->
+---
 
 ## P.MTH.lock.01  首选  [`parking_lot`](https://crates.io/crates/parking_lot) 中定义的 同步原语，而非标准库 `std::sync` 模块
 
