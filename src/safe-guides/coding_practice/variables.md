@@ -82,19 +82,26 @@ let data = {
 
 ---
 
-## G.VAR.01 交换两个变量的值应该使用 `std::mem::swap` 而非赋值
+## G.VAR.01 交换两个变量的值应该使用 `swap` 而非赋值
 
-### 【级别：必须】
+### 【级别：建议】
 
-必须按此规范执行。
+建议按此规范执行。
+对于
 
-### 【Lint 检测】
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| _ | no           | no           | _   | yes |
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [almost_swapped](https://rust-lang.github.io/rust-clippy/master/#almost_swapped) | yes| no | Correctness | deny |
+【定制化参考】
+
+这条规则如果需要定制Lint，则可以检测变量赋值操作，识别交换语义，推荐用户使用 `swap` 函数。
 
 ### 【描述】
+
+对于包含 `swap` 方法的类型，如 `ptr`、`slice`、`Cell`、`RefCell`、`VecDeque` 等建议使用该类型的 `swap` 方法进行交换。
+
+对其他类型可以使用函数 `std::mem::swap` 进行变量值的交换。
 
 【正例】
 
@@ -109,8 +116,10 @@ std::mem::swap(&mut a, &mut b);
 ```rust
 let mut a = 1;
 let mut b = 2;
+let mut c = 0; // 辅助交换的变量
+c = a;
 a = b;
-b = a;  
+b = c;  
 ```
 
 
