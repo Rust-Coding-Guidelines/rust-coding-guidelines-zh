@@ -203,7 +203,6 @@ const FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
 | [redundant_static_lifetimes](https://rust-lang.github.io/rust-clippy/master/#redundant_static_lifetimes) | yes| no | Style | warn |
 
 
-<性能问题待讨论>
 ## G.CNS.06  对于适用 `const fn` 的函数或方法宜尽可能地使用 `const fn`
 
 **【级别】** 建议
