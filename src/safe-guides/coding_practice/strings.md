@@ -142,7 +142,7 @@ pub fn find<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 	println!("{:#?}", hw);
  }
  
- // 在追加字符串的时候，可以使用`push_str`方法
+ // 在追加字符串的时候，可以使用`push_str`方法,`push_str`性能比`format!`更好
  fn main() {
     let mut hw = String::new();
     hw.push_str("hello");
