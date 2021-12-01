@@ -10,15 +10,15 @@
 <!-- toc -->
 ---
 
-## P.TYP.Array.01 当数组长度在编译期就已经确定，应该优先使用固定长度数组，而非动态数组（ `Vec<T>`）
+## P.TYP.Array.01 当数组长度在编译期就已经确定，应优先使用固定长度数组，而非动态数组（ `Vec<T>`）
 
-【描述】
+**【描述】**
 
 固定长度数组会根据元素类型，优先选择存储在栈上，可以优化内存分配。
 
 当编译期长度可以确定，但长度并不是唯一确定的，那么可以考虑使用常量泛型。注意：常量泛型特性从 Rust 1.51版稳定。
 
-【正例】
+【示例】
 
 ```rust
 pub struct Grid {
@@ -92,11 +92,25 @@ fn main(){
 
 ---
 
-## G.TYP.Array.01 当创建大的全局数组时应该使用静态变量而非常量
+## G.TYP.Array.01 创建大全局数组时宜使用静态变量而非常量
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
+**【描述】**
+
+因为常量会内联，对于大的数组，使用静态变量定义更好。
+
+【反例】
+
+```rust
+pub const A: [u32;1_000_000] = [0u32; 1_000_000];
+```
+
+【正例】
+
+```rust
+pub static A: [u32;1_000_000] = [0u32; 1_000_000];
+```
 
 ### 【Lint 检测】
 
@@ -107,47 +121,15 @@ fn main(){
 
 注意： `large_stack_arrays` 会检查在栈上分配的大数组，但clippy默认是 allow，根据实际使用场景决定是否针对这种情况发出警告。
 
-### 【描述】
-
-因为常量会内联，对于大的数组，使用静态变量定义更好。
-
-【正例】
-
-```rust
-pub static A: [u32;1_000_000] = [0u32; 1_000_000];
-```
-
-【反例】
-
-```rust
-pub const A: [u32;1_000_000] = [0u32; 1_000_000];
-```
 
 
+## G.TYP.Array.02  使用数组索引时禁止越界访问
 
-## G.TYP.Array.02  使用数组索引时不要越界访问
+**【级别】** 要求
 
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [out_of_bounds_indexing](https://rust-lang.github.io/rust-clippy/master/#out_of_bounds_indexing) | yes           | no           | **correctness** | deny  |
-
-### 【描述】
+**【描述】**
 
 越界访问在运行时会 Panic！
-
-【正例】
-
-```rust
-let x = [1, 2, 3, 4];
-x[0];
-x[3];
-```
 
 【反例】
 
@@ -157,38 +139,43 @@ x[9];
 &x[2..9];
 ```
 
-## G.TYP.Array.03  当数组元素为原生数据类型（Primitive）的值时，对其排序应该优先考虑非稳定排序
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [stable_sort_primitive](https://rust-lang.github.io/rust-clippy/master/#stable_sort_primitive) | yes           | no           | **perf**   | warn  |
-
-当确实需要稳定排序时，需要修改该 lint 的设置为 `allow`。
-
-### 【描述】
-
-因为稳定排序会消耗更多的内存和 CPU 周期，相对而言，非稳定排序性能更佳。
-
-当然，在必须要稳定排序的场合，不应该使用非稳定排序。
-
 【正例】
 
 ```rust
-let mut vec = vec![2, 1, 3];
-vec.sort_unstable(); // unstable sort
+let x = [1, 2, 3, 4];
+x[0];
+x[3];
 ```
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
+| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
+| [out_of_bounds_indexing](https://rust-lang.github.io/rust-clippy/master/#out_of_bounds_indexing) | yes           | no           | **correctness** | deny  |
+
+
+## G.TYP.Array.03  当数组元素为原生数据类型（Primitive），排序时宜使用非稳定排序
+
+**【级别】** 建议
+
+**【描述】**
+
+稳定排序会消耗更多的内存和 CPU 周期，相对而言，非稳定排序性能更佳。
+
+当然，在必须要稳定排序的场合，不应该使用非稳定排序。
 
 【反例】
 
 ```rust
 let mut vec = vec![2, 1, 3];
 vec.sort();  // stable sort
+```
+
+【正例】
+
+```rust
+let mut vec = vec![2, 1, 3];
+vec.sort_unstable(); // unstable sort
 ```
 
 【例外】
@@ -202,4 +189,12 @@ vec.sort();  // stable sort
         // ...
 }
 ```
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [stable_sort_primitive](https://rust-lang.github.io/rust-clippy/master/#stable_sort_primitive) | yes           | no           | **perf**   | warn  |
+
+当确实需要稳定排序时，需要修改该 lint 的设置为 `allow`。
 
