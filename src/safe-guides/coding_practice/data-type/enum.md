@@ -25,9 +25,13 @@ Rust 中枚举体用处很多，你甚至可以将其作为一种接口使用。
 <!-- toc -->
 ---
 
-## P.TYP.Enum.01 修改 Enum 中值的时候建议使用 `std::mem::take` 
+## P.TYP.Enum.01 修改 Enum 中值的时候宜使用 `std::mem::take` 
 
 **【描述】**
+
+略
+
+【示例】
 
 ```rust
 use std::mem;
@@ -52,37 +56,16 @@ fn swizzle(e: &mut MultiVariateEnum) {
 }
 ```
 
-
-
-
 ---
 
 
-## G.TYP.Enum.01 要避免使用`and_then`而使用`map`
+## G.TYP.Enum.01 避免使用`and_then`而使用`map`
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [bind_instead_of_map ](https://rust-lang.github.io/rust-clippy/master/#bind_instead_of_map ) | yes| no | complexity | warn |
-
-### 【描述】
+**【描述】**
 
 为了让代码更加简单明了增强可读性，建议使用 `map`。
-
-【正例】
-
-```rust
-# fn opt() -> Option<&'static str> { Some("42") }
-# fn res() -> Result<&'static str, &'static str> { Ok("42") }
-let _ = opt().map(|s| s.len());
-let _ = res().map(|s| if s.len() == 42 { 10 } else { 20 });
-let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
-```
 
 【反例】
 
@@ -95,23 +78,38 @@ let _ = res().or_else(|s| if s.len() == 42 { Err(10) } else { Err(20) });
 
 ```
 
+【正例】
 
-
-## G.TYP.Enum.02  除非必要，不要自己创建空枚举
-
-### 【级别：建议】
-
-建议按此规范执行。
+```rust
+# fn opt() -> Option<&'static str> { Some("42") }
+# fn res() -> Result<&'static str, &'static str> { Ok("42") }
+let _ = opt().map(|s| s.len());
+let _ = res().map(|s| if s.len() == 42 { 10 } else { 20 });
+let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
+```
 
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [empty_enum](https://rust-lang.github.io/rust-clippy/master/#empty_enum) | yes           | no           | **pedantic** | allow |
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [bind_instead_of_map ](https://rust-lang.github.io/rust-clippy/master/#bind_instead_of_map ) | yes| no | complexity | warn |
 
-### 【描述】
+
+
+## G.TYP.Enum.02  非必要时不应自行创建空枚举
+
+**【级别】** 建议
+
+**【描述】**
 
 在 Rust 中 只有 `never` 类型（`!`）才是唯一合法表达 无法被实例化类型 的类型。但目前 `never` 类型还未稳定，只能在 Nightly 下使用。
+
+
+【反例】
+
+```rust
+enum Test {}
+```
 
 【正例】
 
@@ -120,12 +118,6 @@ let _ = res().or_else(|s| if s.len() == 42 { Err(10) } else { Err(20) });
 ```rust
 // 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
 pub type Infallible = !;
-```
-
-【反例】
-
-```rust
-enum Test {}
 ```
 
 【例外】
@@ -143,25 +135,34 @@ impl Display for NoUserError {
 
 ```
 
-
-
-## G.TYP.Enum.03  在使用类似 C 语言的枚举写法且使用`repr(isize/usize)` 布局时要注意 32位架构上截断的问题
-
-### 【级别：建议】
-
-建议按此规范执行。
-
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [enum_clike_unportable_variant](https://rust-lang.github.io/rust-clippy/master/#enum_clike_unportable_variant) | yes           | no           | correctness | deny  |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
+| [empty_enum](https://rust-lang.github.io/rust-clippy/master/#empty_enum) | yes           | no           | **pedantic** | allow |
 
-### 【描述】
+
+
+## G.TYP.Enum.03  在使用类似 C 语言的枚举写法且使用`repr(isize/usize)` 布局时注意 32位架构上截断的问题
+
+**【级别】** 建议
+
+**【描述】**
 
  在使用类似 C 语言的枚举写法且使用`repr(isize/usize)` 布局时，在32位架构上会截断变体值，但在64位上工作正常。
 
 但是没有这种风险的时候，可以正常使用。
+
+【反例】
+
+```rust
+#[cfg(target_pointer_width = "64")]
+#[repr(usize)]
+enum NonPortable {
+    X = 0x1_0000_0000,
+    Y = 0,
+}
+```
 
 【正例】
 
@@ -187,47 +188,33 @@ pub(crate) enum PropertyType {
 }
 ```
 
-【反例】
-
-```rust
-#[cfg(target_pointer_width = "64")]
-#[repr(usize)]
-enum NonPortable {
-    X = 0x1_0000_0000,
-    Y = 0,
-}
-```
-
-
-
-## G.TYP.Enum.04    一般情况下，不要使用  `use` 对 Enum 的全部变体（variants）
-
-### 【级别：建议】
-
-建议按此规范执行。
-
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [enum_glob_use](https://rust-lang.github.io/rust-clippy/master/#enum_glob_use) | yes           | no           | pedantic   | allow |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [enum_clike_unportable_variant](https://rust-lang.github.io/rust-clippy/master/#enum_clike_unportable_variant) | yes           | no           | correctness | deny  |
 
-### 【描述】
 
-因为使用 Enum 的类型前缀可以使代码更加可读。
+## G.TYP.Enum.04 不宜在`use`语句中引入Enum的全部变体（variants）
 
-【正例】
+**【级别】** 建议
 
-```rust
-use std::cmp::Ordering;
-foo(Ordering::Less)
-```
+**【描述】**
+
+使用 Enum 的类型前缀可以使代码更加可读。
 
 【反例】
 
 ```rust
 use std::cmp::Ordering::*; // 这里导入了全部变体
 foo(Less);
+```
+
+【正例】
+
+```rust
+use std::cmp::Ordering;
+foo(Ordering::Less)
 ```
 
 【例外】
@@ -253,32 +240,21 @@ pub fn default_key_bindings() -> Vec<KeyBinding> {
     }
 ```
 
-## G.TYP.Enum.05    对外导出的公开的 Enum，建议增加 `#[non_exhaustive]`属性
-
-### 【级别：建议】
-
-建议按此规范执行。
-
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [exhaustive_enums](https://rust-lang.github.io/rust-clippy/master/#exhaustive_enums) | yes           | no           | restriction | allow |
-| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn  |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [enum_glob_use](https://rust-lang.github.io/rust-clippy/master/#enum_glob_use) | yes           | no           | pedantic   | allow |
 
-### 【描述】
+
+## G.TYP.Enum.05 对外导出的公开Enum，宜添加`#[non_exhaustive]`属性
+
+**【级别】** 建议
+
+**【描述】**
 
 作为对外公开的 Enum，为了保持稳定性，应该使用 `#[non_exhaustive]`属性，避免因为将来Enum 枚举变体的变化而影响到下游的使用。
 
-【正例】
-
-```rust
-#[non_exhaustive]
-enum E {
-    A,
-    B,
-}
-```
 
 【反例】
 
@@ -294,27 +270,44 @@ enum E {
 // 用户无法自定义实现该 枚举的方法，达到一种稳定公开枚举的目的。
 ```
 
+【正例】
 
-
-## G.TYP.Enum.06    注意 Enum 内变体的大小差异不要过大
-
-### 【级别：建议】
-
-建议按此规范执行。
+```rust
+#[non_exhaustive]
+enum E {
+    A,
+    B,
+}
+```
 
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [large_enum_variant](https://rust-lang.github.io/rust-clippy/master/#large_enum_variant) | yes           | no           | perf       | warn  |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [exhaustive_enums](https://rust-lang.github.io/rust-clippy/master/#exhaustive_enums) | yes           | no           | restriction | allow |
+| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn  |
 
-该 lint 可以通过 clippy 配置项 `enum-variant-size-threshold = 200` 来配置，默认是 `200` 字节。
 
-### 【描述】
 
-要注意 Enum 内 变体 的大小差异不要过大，因为 Enum 内存布局是以最大的那个变体进行对齐。根据场景，如果该Enum 实例中小尺寸变体的实例使用很多的话，那内存就会有所浪费。但是如果小尺寸变体的实例使用很少，则无所谓。
+## G.TYP.Enum.06  Enum内变体的大小差异不宜过大
+
+**【级别】** 建议
+
+**【描述】**
+
+要注意 Enum 内变体的大小差异不要过大，因为 Enum 内存布局是以最大的变体进行对齐。根据场景，如果该Enum 实例中小尺寸变体的实例使用很多的话，内存就会有所浪费。如果小尺寸变体的实例使用很少，则影响不大。
 
 解决办法就是把大尺寸变体包到 `Box<T>`中。
+
+【反例】
+
+```rust
+enum Test {
+    A(i32),
+    B([i32; 1000]),
+    C([i32; 8000]),
+}
+```
 
 【正例】
 
@@ -326,13 +319,11 @@ enum Test {
 }
 ```
 
-【反例】
+### 【Lint 检测】
 
-```rust
-enum Test {
-    A(i32),
-    B([i32; 1000]),
-    C([i32; 8000]),
-}
-```
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [large_enum_variant](https://rust-lang.github.io/rust-clippy/master/#large_enum_variant) | yes           | no           | perf       | warn  |
+
+该 lint 可以通过 clippy 配置项 `enum-variant-size-threshold = 200` 来配置，默认是 `200` 字节。
 
