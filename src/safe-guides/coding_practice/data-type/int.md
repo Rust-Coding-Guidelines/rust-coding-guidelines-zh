@@ -8,18 +8,9 @@ Rust 中有目前有 十二种整数类型：`i8/u8`, `i16/u16`, `i32/u32`, `i64
 
 ## G.TYP.INT.01  在用整数计算的时候需要考虑整数溢出、回绕和截断的风险
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic) | yes           | no           | restriction | allow |
-| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | warn |
-
-### 【描述】
+**【描述】**
 
 需要结合场景和业务来考虑如果发生溢出、回绕或截断的时候，是否会引起严重的问题。
 
@@ -35,13 +26,6 @@ Rust 编译器在编译时默认没有溢出检查（可通过编译参数来引
 
 无符号整数使用时要注意回绕(wrap around)，不同整数类型转换时需注意截断。
 
-【正例】
-
-```rust
-assert_eq!((-5i32).checked_abs(), Some(5));
-assert_eq!(100i32.saturating_add(1), 101);
-```
-
 【反例】
 
 ```rust
@@ -49,29 +33,29 @@ assert_eq!((-5i32).abs(), 5);
 assert_eq!(100i32+1, 101);
 ```
 
+【正例】
 
-
-## G.TYP.INT.02 对于大整数字面量使用十六进制表示比十进制更好
-
-### 【级别：建议】
-
-建议按此规范执行。
+```rust
+assert_eq!((-5i32).checked_abs(), Some(5));
+assert_eq!(100i32.saturating_add(1), 101);
+```
 
 ### 【Lint 检测】
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [decimal_literal_representation](https://rust-lang.github.io/rust-clippy/master/#decimal_literal_representation) | yes           | no           | restriction | allow |
+| [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic) | yes           | no           | restriction | allow |
+| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | warn |
 
-### 【描述】
 
-【正例】
 
-```rust
-let a = `0xFF`
-let b = `0xFFFF`
-let c = `0xF0F0_F0F0
-```
+## G.TYP.INT.02 对于大整数字面量宜使用十六进制表示
+
+**【级别】** 建议
+
+**【描述】**
+
+略
 
 【反例】
 
@@ -81,24 +65,35 @@ let b = `65_535`
 let c =`4_042_322_160` 
 ```
 
+【正例】
 
-## G.TYP.INT.03  避免将有符号整数和无符号整数之间强制转换
-
-### 【级别：建议】
-
-建议按此规范执行。
+```rust
+let a = `0xFF`
+let b = `0xFFFF`
+let c = `0xF0F0_F0F0
+```
 
 ### 【Lint 检测】
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cast_sign_loss](https://rust-lang.github.io/rust-clippy/master/#cast_sign_loss) | yes           | no           | pedantic   | allow |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [decimal_literal_representation](https://rust-lang.github.io/rust-clippy/master/#decimal_literal_representation) | yes           | no           | restriction | allow |
 
-注意：默认情况下该 lint 是` allow`，如果需要检查这种转换，则需要设置为 `warn`或 `deny`。
 
-### 【描述】
+## G.TYP.INT.03  避免有符号整数和无符号整数之间的强制转换
+
+**【级别】** 建议
+
+**【描述】**
 
 当有符号整数被强制转换为无符号整数时，负值会发生回绕，变成更大的正值，这在实际应用时有可能助长缓冲区溢出风险。
+
+【反例】
+
+```rust
+let y: i8 = -1;
+y as u128; // will return 18446744073709551615
+```
 
 【正例】
 
@@ -110,30 +105,33 @@ let y : i8 = -1;
 let z = u128::from(y);
 ```
 
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [cast_sign_loss](https://rust-lang.github.io/rust-clippy/master/#cast_sign_loss) | yes           | no           | pedantic   | allow |
+
+注意：默认情况下该 lint 是` allow`，如果需要检查这种转换，则需要设置为 `warn`或 `deny`。
+
+
+## G.TYP.INT.04  对负数取模计算的时候不应使用`%`
+
+**【级别】** 建议
+
+**【描述】**
+
+Rust 当前的这个 `%`形式是余数运算符，它的行为与`C`或`Java`等语言中相同符号的运算符相同。它也类似于`Python`或`Haskell`等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。
+
 【反例】
 
 ```rust
-let y: i8 = -1;
-y as u128; // will return 18446744073709551615
+fn main() {
+    let a: i32 = -1;
+    let b: i32 = 6;
+    // 余数运算符只是返回第一个操作数除以第二个操作数的余数。所以 -1/6 给出 0，余数为 -1
+    assert_eq!(a % b, -1);
+}
 ```
-
-
-
-## G.TYP.INT.04  对负数取模计算的时候不要使用 `%`
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [modulo_arithmetic](https://rust-lang.github.io/rust-clippy/master/#modulo_arithmetic) | yes           | no           | restriction | allow |
-
-### 【描述】
-
-Rust 当前的这个 `%`形式是余数运算符，它的行为与`C`或`Java`等语言中相同符号的运算符相同。它也类似于`Python`或`Haskell`等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。
 
 【正例】
 
@@ -147,16 +145,11 @@ fn main() {
 }
 ```
 
-【反例】
+### 【Lint 检测】
 
-```rust
-fn main() {
-    let a: i32 = -1;
-    let b: i32 = 6;
-    // 余数运算符只是返回第一个操作数除以第二个操作数的余数。所以 -1/6 给出 0，余数为 -1
-    assert_eq!(a % b, -1);
-}
-```
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [modulo_arithmetic](https://rust-lang.github.io/rust-clippy/master/#modulo_arithmetic) | yes           | no           | restriction | allow |
 
 
 

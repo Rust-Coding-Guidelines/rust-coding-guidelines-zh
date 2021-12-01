@@ -5,11 +5,20 @@ Rust 包含了三种结构体： 命名结构体、元组结构体、单元结�
 ---
 <!-- toc -->
 ---
-## P.TYP.Struct.01 为结构体实现构造性方法时，应该避免构造后再初始化的情况
+## P.TYP.Struct.01 为结构体实现构造性方法时，避免构造后再初始化的情况
 
 **【描述】**
 
 跟其他OOP 或 FP 语言不一样， Rust 的惯用方式是构建即初始化。
+
+【反例】
+
+```rust
+// 先构建
+let mut dict = Dictionary::new();
+// 后初始化
+dict.load_from_file("./words.txt")?;
+```
 
 【正例】
 
@@ -30,18 +39,8 @@ impl Dictionary {
 }
 ```
 
-【反例】
 
-```rust
-// 先构建
-let mut dict = Dictionary::new();
-// 后初始化
-dict.load_from_file("./words.txt")?;
-```
-
-
-
-## P.TYP.Struct.02  当你需要很多构造函数，或者构造时有很多可选配置项时，建议使用 构建者模式
+## P.TYP.Struct.02  当需要很多构造函数，或构造含有很多可选配置项时，宜使用构建者模式
 
 **【描述】**
 
@@ -49,7 +48,7 @@ Rust 中没有默认的构造函数，都是自定义构造函数。
 
 如果需要多个构造函数，或者构造时需要很多可选配置的复杂场景，那么构建者模式是适合你的选择。
 
- 【正例】
+ 【示例】
 
 ```rust
 #[derive(Debug, PartialEq)]
@@ -105,13 +104,13 @@ fn builder_test() {
 }
 ```
 
-## P.TYP.Struct.03  结构体实例需要默认实现时，建议为其实现 `Default` 
+## P.TYP.Struct.03  结构体实例需要默认实现时，宜使用`Default`特征
 
 **【描述】**
 
 为结构体实现 `Default` 对于简化代码提高可读性很有帮助。
 
-【正例】
+【示例】
 
  ```rust
  use std::{path::PathBuf, time::Duration};
@@ -150,39 +149,15 @@ fn builder_test() {
  ```
 
 
-
-
-
-
-
 ---
 
-## G.TYP.Struct.01    对外导出的公开的 Struct，建议增加 `#[non_exhaustive]`属性
+## G.TYP.Struct.01    对外导出的公开的 Struct，宜添加`#[non_exhaustive]`属性
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [exhaustive_structs](https://rust-lang.github.io/rust-clippy/master/#exhaustive_structs) | yes           | no           | restriction | allow |
-| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn  |
-
-### 【描述】
+**【描述】**
 
 作为对外公开的 结构体，为了保持稳定性，应该使用 `#[non_exhaustive]`属性，避免因为将来结构体字段发生变化而影响到下游的使用。主要涉及命名结构体和元组结构体。
-
-【正例】
-
-```rust
-#[non_exhaustive]
-struct Foo {
-    bar: u8,
-    baz: String,
-}
-```
 
 【反例】
 
@@ -196,6 +171,16 @@ struct S {
 }
 
 // 用户无法自定义实现该结构体的方法。
+```
+
+【正例】
+
+```rust
+#[non_exhaustive]
+struct Foo {
+    bar: u8,
+    baz: String,
+}
 ```
 
 【例外】
@@ -240,13 +225,41 @@ impl<T, U> FramedParts<T, U> {
 }
 ```
 
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [exhaustive_structs](https://rust-lang.github.io/rust-clippy/master/#exhaustive_structs) | yes           | no           | restriction | allow |
+| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn  |
 
 
-## G.TYP.Struct.02  结构体中有超过三个布尔类型的字段，建议将其独立为一个枚举
+## G.TYP.Struct.02  当结构体中有超过三个布尔类型的字段，宜将其独立为一个枚举
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
+**【描述】**
+
+这样有助于提升 代码可读性和 API 。
+
+【反例】
+
+```rust
+struct S {
+    is_pending: bool,
+    is_processing: bool,
+    is_finished: bool,
+}
+```
+
+【正例】
+
+```rust
+enum S {
+    Pending,
+    Processing,
+    Finished,
+}
+```
 
 ### 【Lint 检测】
 
@@ -261,43 +274,20 @@ impl<T, U> FramedParts<T, U> {
 max-struct-bools=3 
 ```
 
-### 【描述】
+## G.TYP.Struct.03  宜使用结构体功能更新语法来提升代码可读性
 
-这样有助于提升 代码可读性和 API 。
+**【级别】** 建议
 
-【正例】
+**【描述】**
 
-```rust
-enum S {
-    Pending,
-    Processing,
-    Finished,
-}
-```
+略
 
 【反例】
 
 ```rust
-struct S {
-    is_pending: bool,
-    is_processing: bool,
-    is_finished: bool,
-}
+let mut a: A = Default::default();
+a.i = 42;
 ```
-
-## G.TYP.Struct.03    善用结构体功能更新语法来提升代码可读性
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [field_reassign_with_default](https://rust-lang.github.io/rust-clippy/master/#field_reassign_with_default) | yes           | no           | style      | warn  |
-
-### 【描述】
 
 【正例】
 
@@ -308,10 +298,10 @@ let a = A {
 };
 ```
 
-【反例】
+### 【Lint 检测】
 
-```rust
-let mut a: A = Default::default();
-a.i = 42;
-```
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [field_reassign_with_default](https://rust-lang.github.io/rust-clippy/master/#field_reassign_with_default) | yes           | no           | style      | warn  |
+
 

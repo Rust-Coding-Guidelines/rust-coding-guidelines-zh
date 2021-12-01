@@ -8,7 +8,7 @@
 <!-- toc -->
 ---
 
-## P.TYP.Slice.01   利用切片迭代器来代替手工索引
+## P.TYP.Slice.01  宜使用切片迭代器来代替手工索引
 
 **【描述】**
 
@@ -42,13 +42,13 @@ for i in 1..points.len() [
 ]
 ```
 
-## P.TYP.Slice.02    可以利用切片模式来提升代码的可读性
+## P.TYP.Slice.02 宜使用切片模式来提升代码的可读性
 
-【描述】
+**【描述】**
 
 切片也支持模式匹配，适当应用切片模式，可以有效提升代码可读性。
 
-【正例】
+【示例】
 
 利用切片模式编写判断回文字符串的函数。代码来自于：[Daily Rust: Slice Patterns](https://adventures.michaelfbryan.com/posts/daily/slice-patterns/#matching-the-start-of-a-slice)  ，还有更多用例。
 
