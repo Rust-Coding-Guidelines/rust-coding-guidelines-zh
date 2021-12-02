@@ -36,39 +36,15 @@ unsafe impl Sync for MyBox {}
 
 ## G.UNS.PTR.01   当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用
 
-### 【级别：建议】
+**【级别：建议】**
 
 建议按此规范执行。
 
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cast_ptr_alignment](https://rust-lang.github.io/rust-clippy/master/#cast_ptr_alignment) | yes           | no           | style      | warn  |
-
-### 【描述】
+**【描述】**
 
 该 Lint 会检查是否出现 指针类型被强转为和当前内存对齐不一致的指针类型 的情况，要注意不要对这类强转后的指针进行解引用操作，否则会有未定义行为。
 
-【正例】
-
-```rust
-fn main() {
-    let a = (&1u8 as *const u8) as *const u8;
-    let b = (&mut 1u8 as *mut u8) as *mut u8;
-
-    let c =  (&1u8 as *const u8).cast::<u8>();
-   
-    // safe
-    unsafe { *a }; 
-    // safe
-    unsafe { *b }; 
-    // safe
-    unsafe { *c }; 
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 fn main() {
@@ -87,23 +63,51 @@ fn main() {
 
 ```
 
+**【正例】**
+
+```rust
+fn main() {
+    let a = (&1u8 as *const u8) as *const u8;
+    let b = (&mut 1u8 as *mut u8) as *mut u8;
+
+    let c =  (&1u8 as *const u8).cast::<u8>();
+   
+    // safe
+    unsafe { *a }; 
+    // safe
+    unsafe { *b }; 
+    // safe
+    unsafe { *c }; 
+}
+```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [cast_ptr_alignment](https://rust-lang.github.io/rust-clippy/master/#cast_ptr_alignment) | yes           | no           | style      | warn  |
+
+
+
 ## G.UNS.PTR.02   禁止将不可变指针手工转换为可变指针
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [cast_ref_to_mut](https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut) | yes           | no           | **correctness** | deny  |
-
-### 【描述】
+**【描述】**
 
 因为将不可变指针手工转换为可变指针可能会引发未定义行为。通常有这种需求，合法的手段是使用 `UnsafeCell<T>`。
 
-【正例】
+**【 反例】**
+
+```rust
+fn x(r: &i32) {
+    unsafe {
+        *(r as *const _ as *mut _) += 1;
+    }
+}
+```
+
+**【正例】**
 
  ```rust
 use std::cell::UnsafeCell;
@@ -115,17 +119,7 @@ fn x(r: &UnsafeCell<i32>) {
 }
  ```
 
-【 反例】
-
-```rust
-fn x(r: &i32) {
-    unsafe {
-        *(r as *const _ as *mut _) += 1;
-    }
-}
-```
-
-【例外】
+**【例外】**
 
 也有例外情况，当明确知道这种转换会出现什么风险的时候，可以使用，或者在找到合适的解决办法之前 作为一种临时方案，但要加上注释。
 
@@ -150,32 +144,29 @@ unsafe fn mut_self(&self) -> &mut Self {
 }
 ```
 
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
+| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
+| [cast_ref_to_mut](https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut) | yes           | no           | **correctness** | deny  |
+
+### 
+
 ## G.UNS.PTR.03   尽量使用 `pointer::cast` 来代替 使用 `as` 强转指针
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
 | ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
 | [ptr_as_ptr](https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr) | yes           | no           | **correctness** | deny  |
 
-### 【描述】
+**【描述】**
 
 使用 `pointer::cast` 方法转换更加安全，它不会意外地改变指针的可变性，也不会将指针转换为其他类型。
 
-【正例】
-
-```rust
-let ptr: *const u32 = &42_u32;
-let mut_ptr: *mut u32 = &mut 42_u32;
-let _ = ptr.cast::<i32>();
-let _ = mut_ptr.cast::<i32>();
-```
-
-【反例】
+**【反例】**
 
 ```rust
 let ptr: *const u32 = &42_u32;
@@ -184,23 +175,22 @@ let _ = ptr as *const i32;
 let _ = mut_ptr as *mut i32;
 ```
 
+**【正例】**
+
+```rust
+let ptr: *const u32 = &42_u32;
+let mut_ptr: *mut u32 = &mut 42_u32;
+let _ = ptr.cast::<i32>();
+let _ = mut_ptr.cast::<i32>();
+```
+
 ## G.UNS.PTR.04   建议使用 `NonNull<T>` 来替代 `*mut T`
 
-### 【级别：必须】
+**【级别：必须】**
 
 必须严格按此规范执行。
 
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-
-【定制参考】
-
-检测到包含 `*mut T`类型的结构体，应该给予开发者警告或建议去使用 `NonNull` 。
-
-### 【描述】
+**【描述】**
 
 尽量使用 [`NonNull`](https://doc.rust-lang.org/stable/std/ptr/struct.NonNull.html) 来包装 `*mut T`。
 
@@ -209,7 +199,7 @@ let _ = mut_ptr as *mut i32;
 1. 非空指针。会自动检查包装的指针是否为空。
 2. 协变。方便安全抽象。如果用裸指针，则需要配合 `PhantomData`类型来保证协变。
 
-【正例】
+**【正例】**
 
 ```rust
 use std::ptr::NonNull;
@@ -222,13 +212,7 @@ if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
 }
 ```
 
-## G.UNS.PTR.05   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
-
-### 【级别：必须】
-
-必须严格按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
 | --------- | ------------- | ------------ | ---------- | ---------- |
@@ -236,7 +220,11 @@ if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
 
 【定制参考】
 
-检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权
+检测到包含 `*mut T`类型的结构体，应该给予开发者警告或建议去使用 `NonNull` 。
+
+## G.UNS.PTR.05   使用指针类型构造泛型结构体时，需要使用 `PhantomData<T>` 来指定 `T`上的协变和所有权
+
+**【级别：必须】**
 
 ### 【描述】
 
@@ -244,20 +232,7 @@ if let Some(ptr) = NonNull::<u32>::new(std::ptr::null_mut()) {
 
   参考： [`PhantomData<T>`  的型变（variance）模式表](https://doc.rust-lang.org/nomicon/phantom-data.html) 
 
-【正例】
-
-```rust
-use std::marker;
-
-struct Vec<T> {
-    data: *const T, // *const for variance!
-    len: usize,
-    cap: usize,
-    _marker: marker::PhantomData<T>, // 让 Vec<T> 拥有 T，并且让 指针有了协变
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 // Vec<T> 不拥有类型 T，并且 data 字段的裸指针不支持协变
@@ -270,3 +245,25 @@ struct Vec<T> {
 }
 ```
 
+**【正例】**
+
+```rust
+use std::marker;
+
+struct Vec<T> {
+    data: *const T, // *const for variance!
+    len: usize,
+    cap: usize,
+    _marker: marker::PhantomData<T>, // 让 Vec<T> 拥有 T，并且让 指针有了协变
+}
+```
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+检测使用指针类型构造泛型结构体时，如果没有 `PhantomData<T>` 类型的字段，则需要警告开发者，要考虑 为裸指针配合`PhantomData<T>`来指定协变和所有权

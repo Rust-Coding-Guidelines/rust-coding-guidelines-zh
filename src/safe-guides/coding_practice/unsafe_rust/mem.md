@@ -45,15 +45,13 @@ Rust 中结构体和元组 ，编译器会随意重排其字段来优化布局�
 
 ## P.UNS.MEM.02 不能修改其它进程/动态库的存变量
 
-### 【级别：必须】
+**【级别：必须】**
 
-必须按此规范执行。
-
-### 【描述】
+**【描述】**
 
 不要尝试修改其它进程/动态库的内存数据，否则会出现内存段错误(SIGSEGV)。
 
-【反例】
+**【反例】**
 
 `sqlite3_libversion()` 返回的 sqlite 版本信息指针指向 `/usr/lib/libsqlite3.so` 动态库的 static 字符串。
 
@@ -78,15 +76,13 @@ fn edit_sqlite_version() {
 
 ## P.UNS.MEM.03 不能让 String/Vec 自动 Drop 其它进程/动态库的内存数据
 
-### 【级别：必须】
+**【级别：必须】**
 
-必须按此规范执行。
-
-### 【描述】
+**【描述】**
 
 使用 String/Vec 指向其它进程/动态库的内存数据时，一定要手动禁止 String/Vec 的 Drop 方法(析构函数)的调用，避免 free 其它进程/动态库的内存数据。
 
-【反例】
+**【反例】**
 
 `sqlite3_libversion()` 返回的 sqlite 版本信息指针指向 `/usr/lib/libsqlite3.so` 动态库的 static 字符串。
 
@@ -109,7 +105,7 @@ fn print_sqlite_version() {
 }
 ```
 
-【正例】
+**【正例】**
 
 除了用 mem::forget 或者 ManualDrop 禁止 String drop 其它动态库的内存，也可以用标准库 ptr/slice 的 copy 或者 `libc::strdup` 将 sqlite 的版本信息字符串**复制到当前进程的内存空间**再进行操作
 
@@ -128,11 +124,9 @@ fn print_sqlite_version() {
 
 ## P.UNS.MEM.04 尽量用可重入(reentrant)版本的 C API/系统调用
 
-### 【级别：必须】
+**【级别：必须】**
 
-必须按此规范执行。
-
-### 【描述】
+**【描述】**
 
 以 Linux 系统为例，在 **glibc**(/usr/lib/libc.so) 等知名 C 语言库中，
 
@@ -159,34 +153,23 @@ libc 中不可重入函数的执行过程一般是将函数的输出写到动态
 
 使用不可重入函数的危害例如 P.UNS.MEM.02 和 P.UNS.MEM.03 规范的反例中的 sqlite3_libversion() 会导致开发人员带来很大的心智负担，需要人工 code review 确保没有线程安全和内存安全问题，因此必须尽量使用可重入版本的函数。
 
-【正例】
+**【反例】**
+
+`ctime`, `gmtime`,` localtime`, `gethostbyname`
+
+**【正例】**
 
 `chrono` 库中用` libc::localtime_r` 获取本地时间而不用` libc::localtime`
 
 `ctime_r`, `gmtime_r`,` localtime_r`, `gethostbyname_r`
 
-【反例】
-
-`ctime`, `gmtime`,` localtime`, `gethostbyname`
-
-
-
 ---
 
 ## G.UNS.MEM.01   使用 `MaybeUninit<T>` 来处理未初始化的内存
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [uninit_assumed_init](https://rust-lang.github.io/rust-clippy/master/#uninit_assumed_init) | yes           | no           | correctness | deny  |
-| [uninit_vec](https://rust-lang.github.io/rust-clippy/master/#uninit_vec) | yes           | no           | correctness | deny  |
-
-### 【描述】
+**【描述】**
 
  Rust 编译器要求变量要根据其类型正确初始化。
 
@@ -196,7 +179,32 @@ libc 中不可重入函数的执行过程一般是将函数的输出写到动态
 
 使用前请仔细查看 `MaybeUninit<T>` 相关文档。
 
-【正例】
+**【反例】**
+
+由调用者来保证`MaybeUninit<T>`确实处于初始化状态。当内存尚未完全初始化时调用 `assume_init()` 会导致立即未定义的行为。
+
+```rust
+use std::mem::{self, MaybeUninit};
+// 零初始化引用
+let x: &i32 = unsafe { mem::zeroed() }; // undefined behavior! ⚠️
+// The equivalent code with `MaybeUninit<&i32>`:
+let x: &i32 = unsafe { MaybeUninit::zeroed().assume_init() }; // undefined behavior! 
+// 布尔值必须初始化
+let b: bool = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
+// The equivalent code with `MaybeUninit<bool>`:
+let b: bool = unsafe { MaybeUninit::uninit().assume_init() }; // undefined behavior! 
+// 整数类型也必须初始化
+let x: i32 = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
+// The equivalent code with `MaybeUninit<i32>`:
+let x: i32 = unsafe { MaybeUninit::uninit().assume_init() }; 
+
+// Vec未初始化内存使用 set_len 是未定义行为
+let mut vec: Vec<u8> = Vec::with_capacity(1000);
+unsafe { vec.set_len(1000); }
+reader.read(&mut vec); // undefined behavior!
+```
+
+**【正例】**
 
 ```rust
 use std::mem::MaybeUninit;
@@ -224,32 +232,7 @@ let remaining = vec.spare_capacity_mut();  // `&mut [MaybeUninit<u8>]`
 vec.set_len(...);  // Safe to call `set_len()` on initialized part
 ```
 
-【反例】
-
-由调用者来保证`MaybeUninit<T>`确实处于初始化状态。当内存尚未完全初始化时调用 `assume_init()` 会导致立即未定义的行为。
-
-```rust
-use std::mem::{self, MaybeUninit};
-// 零初始化引用
-let x: &i32 = unsafe { mem::zeroed() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<&i32>`:
-let x: &i32 = unsafe { MaybeUninit::zeroed().assume_init() }; // undefined behavior! 
-// 布尔值必须初始化
-let b: bool = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<bool>`:
-let b: bool = unsafe { MaybeUninit::uninit().assume_init() }; // undefined behavior! 
-// 整数类型也必须初始化
-let x: i32 = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<i32>`:
-let x: i32 = unsafe { MaybeUninit::uninit().assume_init() }; 
-
-// Vec未初始化内存使用 set_len 是未定义行为
-let mut vec: Vec<u8> = Vec::with_capacity(1000);
-unsafe { vec.set_len(1000); }
-reader.read(&mut vec); // undefined behavior!
-```
-
-【例外】
+**【例外】**
 
 在能保证` MaybeUninit` 不需要初始化的情况下使用 `assume_init` 是安全的。
 
@@ -283,4 +266,11 @@ pub unsafe trait Array: Sized {
     }
 }
 ```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [uninit_assumed_init](https://rust-lang.github.io/rust-clippy/master/#uninit_assumed_init) | yes           | no           | correctness | deny  |
+| [uninit_vec](https://rust-lang.github.io/rust-clippy/master/#uninit_vec) | yes           | no           | correctness | deny  |
 

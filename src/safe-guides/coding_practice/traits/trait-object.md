@@ -14,7 +14,7 @@ trait 对象存在一定运行时开销，除非必要，不要滥用，但 tria
 
 在性能有严格要求的情况下，可以考虑 `Enum` 或 泛型静态分发 代替。
 
-【示例】
+**【正例】**
 
 使用 Enum 代替 trait 对象。 示例来自于 [enum_dispatch](https://docs.rs/enum_dispatch/0.3.7/enum_dispatch/)
 
