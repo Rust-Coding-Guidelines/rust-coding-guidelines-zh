@@ -63,7 +63,7 @@ if !y {}
 assert!(!"a".is_empty());
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -90,7 +90,7 @@ if a && b || a { ... }
 
 该示例中，条件 `b` 是不需要的，它等价于 `if a {...}`。
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -130,7 +130,7 @@ if condition {
 }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -156,7 +156,7 @@ unsafe {
 
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -190,7 +190,7 @@ let res = { let x = somefunc(); x };
 if res { /* ... */ }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -219,7 +219,7 @@ let (x,y) = (true, false);
 if x && !y {} //  逻辑运算符，支持短路
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |

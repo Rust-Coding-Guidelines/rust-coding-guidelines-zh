@@ -67,7 +67,7 @@ let remaining = vec.spare_capacity_mut();  // `&mut [MaybeUninit<u8>]`
 vec.set_len(...);  // Safe to call `set_len()` on initialized part
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
