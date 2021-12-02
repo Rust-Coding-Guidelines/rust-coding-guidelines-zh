@@ -20,13 +20,13 @@
 
 预分配足够的容量，避免后续内存分配，可以提升代码性能。
 
-【反例】
+**【反例】**
 
 ```rust
 let mut output = Vec::new();
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let mut output = Vec::with_capacity(input.len());
@@ -42,7 +42,7 @@ let mut output = Vec::with_capacity(input.len());
 
 访问未初始化数组的内存会导致 未定义行为。
 
-【反例】
+**【反例】**
 
  ```rust
  let mut vec: Vec<u8> = Vec::with_capacity(1000);
@@ -50,7 +50,7 @@ let mut output = Vec::with_capacity(input.len());
  reader.read(&mut vec); // error: Undefined Behavior: using uninitialized data, but this operation requires initialized memory
  ```
 
-【正例】
+**【正例】**
 
 ```rust
 let mut vec: Vec<u8> = vec![0; 1000];

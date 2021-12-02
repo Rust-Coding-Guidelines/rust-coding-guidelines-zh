@@ -16,7 +16,7 @@
 
 利用 切片自带的方法，并利用迭代器，可以避免这种错误。
 
-【正例】
+**【正例】**
 
 ```rust
 let points: Vec<Coordinate> = ...;
@@ -28,7 +28,7 @@ for [previous, current] in points.array_windows().copied() {
 }
 ```
 
-【反例】
+**【反例】**
 
 ```rust
 let points: Vec<Coordinate> = ...;

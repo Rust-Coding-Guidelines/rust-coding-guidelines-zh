@@ -11,7 +11,7 @@ Rust 包含了三种结构体： 命名结构体、元组结构体、单元结�
 
 跟其他OOP 或 FP 语言不一样， Rust 的惯用方式是构建即初始化。
 
-【反例】
+**【反例】**
 
 ```rust
 // 先构建
@@ -20,7 +20,7 @@ let mut dict = Dictionary::new();
 dict.load_from_file("./words.txt")?;
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 // 构建即初始化
@@ -48,7 +48,7 @@ Rust 中没有默认的构造函数，都是自定义构造函数。
 
 如果需要多个构造函数，或者构造时需要很多可选配置的复杂场景，那么构建者模式是适合你的选择。
 
- 【示例】
+**【示例】**
 
 ```rust
 #[derive(Debug, PartialEq)]
@@ -110,7 +110,7 @@ fn builder_test() {
 
 为结构体实现 `Default` 对于简化代码提高可读性很有帮助。
 
-【示例】
+**【示例】**
 
  ```rust
  use std::{path::PathBuf, time::Duration};
@@ -159,7 +159,7 @@ fn builder_test() {
 
 作为对外公开的 结构体，为了保持稳定性，应该使用 `#[non_exhaustive]`属性，避免因为将来结构体字段发生变化而影响到下游的使用。主要涉及命名结构体和元组结构体。
 
-【反例】
+**【反例】**
 
 在 `#[non_exhaustive]` 属性稳定之前，社区内还有一种约定俗成的写法来达到防止下游自定义枚举方法。通过 `manual_non_exhaustive` 可以监控这类写法。
 
@@ -173,7 +173,7 @@ struct S {
 // 用户无法自定义实现该结构体的方法。
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 #[non_exhaustive]
@@ -183,7 +183,7 @@ struct Foo {
 }
 ```
 
-【例外】
+**【例外】**
 
 也有例外情况！
 
@@ -241,7 +241,7 @@ impl<T, U> FramedParts<T, U> {
 
 这样有助于提升 代码可读性和 API 。
 
-【反例】
+**【反例】**
 
 ```rust
 struct S {
@@ -251,7 +251,7 @@ struct S {
 }
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 enum S {
@@ -282,14 +282,14 @@ max-struct-bools=3
 
 略
 
-【反例】
+**【反例】**
 
 ```rust
 let mut a: A = Default::default();
 a.i = 42;
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let a = A {

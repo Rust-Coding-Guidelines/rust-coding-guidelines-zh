@@ -14,7 +14,7 @@ Rust 中布尔值就是 `true`  和 `false`。 不要试图使用数字 `1` 和 
 
 不要通过判断数字来代替 布尔值，除非是 FFi 场景通过 C-ABI 和其他语言打交道。
 
-【反例】
+**【反例】**
 
 ```rust
 let a = 1;
@@ -23,7 +23,7 @@ assert_eq!(true, a == 1);
 assert_eq!(false, b == 0);
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let a = true;
@@ -44,7 +44,7 @@ assert_eq!(0, b as u32);
 
 总之，使用布尔表达式的时候，要尽可能地简洁明了。
 
-【反例】
+**【反例】**
 
 ```rust
 if x == true {}
@@ -54,7 +54,7 @@ assert_eq!("a".is_empty(), false);
 assert_ne!("a".is_empty(), true);
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 if x {}
@@ -82,7 +82,7 @@ assert!(!"a".is_empty());
 
 略
 
-【反例】
+**【反例】**
 
 ```rust
 if a && b || a { ... }
@@ -105,7 +105,7 @@ if a && b || a { ... }
 
 对于布尔表达式更倾向于使用 `if ... else ...`，相比较 `match` 模式匹配更有利于代码可读性。
 
-【反例】
+**【反例】**
 
 ```rust
 # fn foo() {}
@@ -117,7 +117,7 @@ match condition {
 }
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 # fn foo() {}
@@ -146,7 +146,7 @@ if condition {
 
 这可能会让布尔值在内存中的表示无效。
 
-【反例】
+**【反例】**
 
 ```rust
 let x = 1_u8;
@@ -171,7 +171,7 @@ unsafe {
 
 为了增加可读性。
 
-【反例】
+**【反例】**
 
 ```rust
 if { true } { /* ... */ }
@@ -180,7 +180,7 @@ if { true } { /* ... */ }
 if { let x = somefunc(); x } { /* ... */ }
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 if true { /* ... */ }
@@ -205,14 +205,14 @@ if res { /* ... */ }
 
 位运算不支持短路（short-circuiting），所以会影响性能。逻辑运算符则支持短路。
 
-【反例】
+**【反例】**
 
 ```rust
 let (x,y) = (true, false);
 if x & !y {} //  位运算符，不支持短路
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let (x,y) = (true, false);

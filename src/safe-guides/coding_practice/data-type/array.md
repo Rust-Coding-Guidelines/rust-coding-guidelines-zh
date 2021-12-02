@@ -18,7 +18,7 @@
 
 当编译期长度可以确定，但长度并不是唯一确定的，那么可以考虑使用常量泛型。注意：常量泛型特性从 Rust 1.51版稳定。
 
-【示例】
+**【示例】**
 
 ```rust
 pub struct Grid {
@@ -100,13 +100,13 @@ fn main(){
 
 因为常量会内联，对于大的数组，使用静态变量定义更好。
 
-【反例】
+**【反例】**
 
 ```rust
 pub const A: [u32;1_000_000] = [0u32; 1_000_000];
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 pub static A: [u32;1_000_000] = [0u32; 1_000_000];
@@ -131,7 +131,7 @@ pub static A: [u32;1_000_000] = [0u32; 1_000_000];
 
 越界访问在运行时会 Panic！
 
-【反例】
+**【反例】**
 
 ```rust
 let x = [1, 2, 3, 4];
@@ -139,7 +139,7 @@ x[9];
 &x[2..9];
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let x = [1, 2, 3, 4];
@@ -164,21 +164,21 @@ x[3];
 
 当然，在必须要稳定排序的场合，不应该使用非稳定排序。
 
-【反例】
+**【反例】**
 
 ```rust
 let mut vec = vec![2, 1, 3];
 vec.sort();  // stable sort
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 let mut vec = vec![2, 1, 3];
 vec.sort_unstable(); // unstable sort
 ```
 
-【例外】
+**【例外】**
 
 ```rust
 // https://docs.rs/crate/solana-runtime/1.7.11/source/src/accounts_db.rs#:~:text=clippy%3a%3astable_sort_primitive
