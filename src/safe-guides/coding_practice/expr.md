@@ -68,25 +68,47 @@ if (x & 1 == 2) { }
 | [bad_bit_mask](https://rust-lang.github.io/rust-clippy/master/#bad_bit_mask) | yes| no | correctness | deny |
 
 
-## G.EXP.03   不应使用子表达式调用
+## G.EXP.03   不要利用数组表达式的边界检查来 Panic，而应该用 断言
 
 **【级别】** 建议
 
 **【描述】**
 
-这样会影响代码可读性。
+这样会影响代码可读性。使用断言可以更好的描述代码的意图。
 
 **【反例】**
 
 ```rust
-let first = compute_array()[0];
+fn main(){
+    [42, 55][get_usize()];
+    compute_array()[0];
+}
+
+fn get_usize() -> usize {
+   6
+}
+
+
+fn compute_array() -> [i32; 3] {
+   [1,2,3]
+}
 ```
 
 **【正例】**
 
 ```rust
-let arr = compute_array();
-let first = arr[0];
+fn main(){
+    assert!([42, 55].len() > get_usize());
+    assert!(compute_array().len() > 0);
+}
+
+fn get_usize() -> usize {
+   6
+}
+
+fn compute_array() -> [i32; 3] {
+   [1,2,3]
+}
 ```
 
 **【Lint 检测】**
@@ -243,5 +265,4 @@ if (x > 3) {  }
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
 | [ineffective_bit_mask](https://rust-lang.github.io/rust-clippy/master/#ineffective_bit_mask) | yes           | no           | correctness | **deny**  |
-
 

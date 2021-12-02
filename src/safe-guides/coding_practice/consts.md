@@ -94,6 +94,8 @@ assert!(MAX_PRINTED < MIN_OVERFLOW);
 因为[常量会到处内联](https://doc.rust-lang.org/reference/items/constant-items.html#constant-items)，即复制到各个使用到它的地方。而静态变量不会内联，它是全局的且有一个引用地址。
 所以当要创建一个很大的常量数组时，应该考虑将其换成静态变量以提高程序运行效率。（详情可见：[const-vs-static](https://rust-lang.github.io/rfcs/0246-const-vs-static.html#motivation)）
 
+相关：[G.TYP.Array.01 ](./data-type/array.md)
+
 **【反例】**
 
 ```rust

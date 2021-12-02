@@ -7,13 +7,13 @@
 
 ## P.ASY.01  异步编程并不适合所有场景，计算密集型场景应该考虑同步编程
 
-【描述】
+**【描述】**
 
 异步编程适合 I/O 密集型应用，如果是计算密集型场景应该考虑使用同步编程。
 
 ## P.ASY.02  异步编程中要避免阻塞操作
 
-【描述】
+**【描述】**
 
 异步编程中如果出现阻塞，则会阻止同一线程上其他异步任务的执行，从而导致很大的延迟，或者死锁。
 
@@ -24,34 +24,13 @@
 
 ## G.ASY.01 在 `async` 块/函数中调用 `async` 函数/闭包请不要忘记添加`.await`
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
+**【描述】**
 
-### 【Lint 检测】
+ 略。
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [async_yields_async](https://rust-lang.github.io/rust-clippy/master/#async_yields_async) | yes| no | correctness | deny |
-
-也有例外情况。
-
-### 【描述】
-
-
-【正例】
-
-```rust
-async fn foo() {}
-
-fn bar() {
-  let x = async {
-    foo().await
-  };
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 async fn foo() {}
@@ -63,7 +42,19 @@ fn bar() {
 }
 ```
 
-【例外】
+**【正例】**
+
+```rust
+async fn foo() {}
+
+fn bar() {
+  let x = async {
+    foo().await
+  };
+}
+```
+
+**【例外】**
 
 ```rust
 // https://docs.rs/crate/fishrock_lambda_runtime/0.3.0-patched.1/source/src/lib.rs#:~:text=clippy%3a%3aasync_yields_async
@@ -77,20 +68,19 @@ let req = match task.await {
 
 ```
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [async_yields_async](https://rust-lang.github.io/rust-clippy/master/#async_yields_async) | yes           | no           | correctness | deny  |
+
+
 
 ## G.ASY.02 在 跨`await` 调用中持有同步互斥锁需要进行处理
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes| no | pedantic | allow |
-
-### 【描述】
+**【描述】**
 
 同步互斥锁本来就不是为异步上下文跨 `await` 调用而设计的，在这种场景中使用同步互斥锁容易造成死锁。当同步互斥锁被跨 await 时，有可能很长时间都不会返回这个调用点，在其他任务中再次用到这个互斥锁的时候，容易造成死锁。
 
@@ -99,7 +89,19 @@ let req = match task.await {
 1. 使用异步互斥锁。但是异步互斥锁的开销要大于同步互斥锁。
 2. 确保同步互斥锁在调用 `await` 之前已经释放。
 
- 【正例】
+**【反例】**
+
+```rust
+use std::sync::Mutex;
+
+async fn foo(x: &Mutex<u32>) {
+  let guard = x.lock().unwrap();
+  *guard += 1;
+  bar.await;
+}
+```
+
+ **【正例】**
 
 ```rust
 use std::sync::Mutex;
@@ -143,19 +145,7 @@ async fn main() {
 }
 ```
 
-【反例】
-
-```rust
-use std::sync::Mutex;
-
-async fn foo(x: &Mutex<u32>) {
-  let guard = x.lock().unwrap();
-  *guard += 1;
-  bar.await;
-}
-```
-
-【例外】
+**【例外】**
 
 ```rust
     // FROM: https://github.com/khonsulabs/kludgine/blob/main/app/src/runtime/smol.rs#L31
@@ -180,29 +170,26 @@ async fn foo(x: &Mutex<u32>) {
     });
 ```
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes           | no           | pedantic   | allow |
+
 
 
 
 ## G.ASY.03 在 跨`await` 调用持有`RefCell`的引用需要进行处理
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [await_holding_refcell_ref](https://rust-lang.github.io/rust-clippy/master/#await_holding_refcell_ref) | yes| no | pedantic | allow |
-
-
-### 【描述】
+**【描述】**
 
 跟不要在异步上下文中跨 `await` 使用  同步互斥锁类似，使用 `RefCell` 的独占（可变）借用会导致 Panic。因为 `RefCell` 是运行时检查独占的可变访问，如果 跨 `await` 持有一个可变引用则可能会因为共享的可变引用而引起 Panic。
 
 这种共享可变在编译期是无法被检查出来的。
 
-【正例】
+**【正例】**
 
 ```rust
 use std::cell::RefCell;
@@ -216,7 +203,7 @@ async fn foo(x: &RefCell<u32>) {
 }
 ```
 
-【反例】
+**【反例】**
 
 ```rust
 use std::cell::RefCell;
@@ -228,7 +215,7 @@ async fn foo(x: &RefCell<u32>) {
 }
 ```
 
-【例外】
+**【例外】**
 
 跨 `await` 持有 `RefCell` 的可变借用，但是当前场景确信永远不会 Panic，则可以使用。
 
@@ -243,32 +230,23 @@ let fut = async move {
 };
 ```
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [await_holding_refcell_ref](https://rust-lang.github.io/rust-clippy/master/#await_holding_refcell_ref) | yes           | no           | pedantic   | allow |
+
+
+
 ## G.ASY.04 避免定义不必要的异步函数
 
-### 【描述】
+**【级别：建议】**
+
+**【描述】**
 
 如果一个异步函数内部没有任何异步代码，相比一个同步函数，它会产生额外的调用成本。
 
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [unused_async](https://rust-lang.github.io/rust-clippy/master/#unused_async) | yes| no | pedantic | allow |
-
-
-【正例】
-
-```rust
-fn add(value: i32) -> i32 {
-    value + 1
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 async fn add(value: i32) -> i32 {
@@ -276,39 +254,32 @@ async fn add(value: i32) -> i32 {
 }
 ```
 
-## G.ASY.05  避免在异步处理过程中包含阻塞操作
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| _ | no           | no           | _   | yes |
-
-【定制化参考】
-这条规则如果需要定制Lint，则可以扫描异步过程，找到黑名单定义的阻塞操作调用，进行告警。
-
-### 【描述】
-
-避免在异步编程中使用阻塞操作。
-
-【正例】
-
-使用异步运行时，如tokio提供的非阻塞函数
+**【正例】**
 
 ```rust
-use tokio::fs;
-
-async fn read_file() -> std::io::Result<()> {
-    let _ = fs::read_to_string("test.txt").await?;
-    Ok(())
+fn add(value: i32) -> i32 {
+    value + 1
 }
 ```
 
-【反例】
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [unused_async](https://rust-lang.github.io/rust-clippy/master/#unused_async) | yes           | no           | pedantic   | allow |
+
+
+
+
+## G.ASY.05  避免在异步处理过程中包含阻塞操作
+
+**【级别：建议】**
+
+**【描述】**
+
+避免在异步编程中使用阻塞操作。
+
+**【反例】**
 
 不要在异步流程中使用阻塞操作函数
 
@@ -321,3 +292,24 @@ async fn read_file() -> Result<String, std::io::Error> {
 }
 ```
 
+**【正例】**
+
+使用异步运行时，如tokio提供的非阻塞函数
+
+```rust
+use tokio::fs;
+
+async fn read_file() -> std::io::Result<()> {
+    let _ = fs::read_to_string("test.txt").await?;
+    Ok(())
+}
+```
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制化参考】
+这条规则如果需要定制Lint，则可以扫描异步过程，找到黑名单定义的阻塞操作调用，进行告警。
