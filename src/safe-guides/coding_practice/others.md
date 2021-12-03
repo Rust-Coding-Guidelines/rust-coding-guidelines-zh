@@ -1,24 +1,14 @@
 # 其他
 
-
+---
+<!-- toc -->
+---
 
 ## G.OTH.01    对于某些场景下不建议使用的方法可以通过配置 `clippy.toml` 来拒绝
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [disallowed_method](https://rust-lang.github.io/rust-clippy/master/#disallowed_method) | yes           | no           | nursery         | allow |
-| [disallowed_script_idents](https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents) | yes           | no           | **restriction** | allow |
-| [disallowed_type](https://rust-lang.github.io/rust-clippy/master/#disallowed_type) | yes           | no           | **nursery**     | allow |
-
-这些lint 作用相似，但注意`nursery` 的lint 还未稳定。 
-
-### 【描述】
+**【描述】**
 
 有些场合可能需要拒绝使用一些容易出错的方法或函数，可以在 `clippy.toml` 中通过配置 `disallowed_method` 来满足这个需求。
 
@@ -39,7 +29,7 @@ disallowed-methods = [
 allowed-locales = ["Latin", "Cyrillic"] 
 ```
 
-【反例】
+**【反例】**
 
 当 `clippy.toml` 做了上面配置时，下面代码会曝出警告。
 
@@ -54,28 +44,32 @@ let _now = Instant::now(); // Instant::now is disallowed in the config.
 let _box = Box::new(3); // Box::new is disallowed in the config.
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 // Example code which does not raise clippy warning
 let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 ```
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
+| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
+| [disallowed_method](https://rust-lang.github.io/rust-clippy/master/#disallowed_method) | yes           | no           | nursery         | allow |
+| [disallowed_script_idents](https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents) | yes           | no           | **restriction** | allow |
+| [disallowed_type](https://rust-lang.github.io/rust-clippy/master/#disallowed_type) | yes           | no           | **nursery**     | allow |
+
+这些lint 作用相似，但注意`nursery` 的lint 还未稳定。 
+
 ## G.OTH.02   【标准库】 计算秒级、毫秒级、微秒级的时间请使用对应的方法
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
+**【描述】**
 
-### 【Lint 检测】
+略。
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [duration_subsec](https://rust-lang.github.io/rust-clippy/master/#duration_subsec) | yes           | no           | complexity | warn  |
-
-### 【描述】
-
-【正例】
+**【正例】**
 
 ```rust
 # use std::time::Duration;
@@ -86,7 +80,7 @@ let _micros = dur.subsec_micros(); // 得到微秒
 let _millis = dur.subsec_millis(); // 得到毫秒
 ```
 
-【反例】
+**【反例】**
 
 ```rust
 # use std::time::Duration;
@@ -98,47 +92,11 @@ let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
 
 ```
 
+**【Lint 检测】**
 
-
-## G.OTH.03   代码中不要出现隐藏的 Unicode 字符
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [invisible_characters](https://rust-lang.github.io/rust-clippy/master/#invisible_characters) | yes           | no           | correctness | deny  |
-
-### 【描述】
-
-该 Lint 可以检测代码中出现的隐藏 Unicode 字符。
-
-但也有例外，比如你的代码恰好是要处理这些特殊Unicode字符的。
-
-【例外】
-
-```rust
-// From: https://docs.rs/crate/lingo/0.1.2/source/src/generated.rs
-#[allow(clippy::invisible_characters)]
-pub fn get_embed_languages() -> FileContent {
-    let mut f = FileContent::from_vec(vec![
-        (
-            Language::Afrikaans.name(),
-            vec![
-                "e", "a", "i", "n", "s", "r", "o", "t", "d", "e_", "l", "k", "g", "ie", "n_",
-                // 省略很多字符，包括特殊的隐藏 unicode 字符
-            ]
-        )
-    )
- }
-```
-
-
-
-
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [duration_subsec](https://rust-lang.github.io/rust-clippy/master/#duration_subsec) | yes           | no           | complexity | warn  |
 
 
 

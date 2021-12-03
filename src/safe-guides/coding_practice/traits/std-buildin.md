@@ -3,16 +3,10 @@
 Rust 标准库内置了很多 trait，在使用这些 trait 的时候也需要注意。
 
 ---
+<!-- toc -->
+---
 
-## P.TRA.Buitin.01 不要随便使用 `Deref` trait    来模拟继承
-
-**【描述】**
-
-`Deref` trait是专门用于实现自定义指针类型而存在的。虽然可以实现 `Deref` 来达到某种类似于继承的行为，但 Rust 中不推荐这样做。
-
-这是因为 Rust 语言推崇显式的转换，而 `Deref` 则是 Rust 中为数不多的隐式行为。如果 `Deref` 被滥用，那么程序中隐式行为可能会增多，隐式的转换是 Bug 的温床。
-
-## P.TRA.Buitin.02  在实现 `Borrow` trait  的时候，需要注意一致性
+## P.TRA.Buitin.01  在实现 `Borrow` trait  的时候，需要注意一致性
 
 **【描述】**
 
@@ -20,7 +14,7 @@ Rust 标准库内置了很多 trait，在使用这些 trait 的时候也需要�
 
 但是使用 `Borrow` 的时候，需要注意一致性问题。具体请看示例。
 
-【示例】
+**【示例】**
 
 ```rust
 // 这个结构体能不能作为 HashMap 的 key？
@@ -56,49 +50,41 @@ impl Hash for CaseInsensitiveString {
 
 ## G.TRA.Buitin.01   应该具体类型的 `default()` 方法代替 ` Default::default()` 调用
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [default_trait_access](https://rust-lang.github.io/rust-clippy/master/#default_trait_access) | yes           | no           | **pedantic** | allow |
-
-### 【描述】
+**【描述】**
 
 为了增强可读性。
 
-【正例】
+**【正例】**
 
 ```rust
 let s = String::default();
 ```
 
-【反例】
+**【反例】**
 
 ```rust
 let s: String = Default::default();
 ```
 
-## G.TRA.Buitin.02    不要为迭代器实现`Copy` trait 
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [copy_iterator](https://rust-lang.github.io/rust-clippy/master/#copy_iterator) | yes           | no           | **pedantic** | allow |
+| [default_trait_access](https://rust-lang.github.io/rust-clippy/master/#default_trait_access) | yes           | no           | **pedantic** | allow |
 
-### 【描述】
+
+
+## G.TRA.Buitin.02    不要为迭代器实现`Copy` trait 
+
+**【级别：建议】**
+
+**【描述】**
 
 在 Rust 中，迭代器是不能实现 Copy 的。因为在需要迭代修改的场景，因为 Copy 的存在，而失去效果。
 
-【反例】
+**【反例】**
 
 比如，对于标准库里的 `Range<T>` 就不能实现 Copy，因为它也是一个迭代器。
 
@@ -110,34 +96,23 @@ iter.collect();
 
 如果它实现了 Copy，示例中 iter 的值将不会被改变，这样就不符合预期结果。
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
+| [copy_iterator](https://rust-lang.github.io/rust-clippy/master/#copy_iterator) | yes           | no           | **pedantic** | allow |
+
+### 
+
 ## G.TRA.Buitin.03   能使用`derive` 自动实现`Default`  trait 就不要用手工实现 
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
-| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
-| [derivable_impls](https://rust-lang.github.io/rust-clippy/master/#derivable_impls) | yes           | no           | **complexity** | warn  |
-
-该lint不能用于检测泛型参数类型的 Default 手工实现。
-
-### 【描述】
+**【描述】**
 
 手工实现 Default，代码不精炼。 
 
-【正例】
-
-```rust
-#[derive(Default)]
-struct Foo {
-    bar: bool
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 struct Foo {
@@ -153,19 +128,30 @@ impl std::default::Default for Foo {
 }
 ```
 
+**【正例】**
+
+```rust
+#[derive(Default)]
+struct Foo {
+    bar: bool
+}
+```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
+| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
+| [derivable_impls](https://rust-lang.github.io/rust-clippy/master/#derivable_impls) | yes           | no           | **complexity** | warn  |
+
+该lint不能用于检测泛型参数类型的 Default 手工实现。
+
+### 
+
 ## G.TRA.Buitin.04   在使用`#[derive(Hash)]` 的时候，避免再手工实现 `PartialEq`
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [derive_hash_xor_eq](https://rust-lang.github.io/rust-clippy/master/#derive_hash_xor_eq) | yes           | no           | correctness | deny  |
-
-### 【描述】
+**【描述】**
 
 实现 Hash 和 Eq 必须要满足下面一个等式：
 
@@ -179,14 +165,7 @@ k1 == k2  -> hash(k1) == hash(k2)
 
 但也有例外。
 
-【正例】
-
-```rust
-#[derive(PartialEq, Eq, Hash)]
-struct Foo;
-```
-
-【反例】
+**【反例】**
 
 ```rust
 #[derive(Hash)]
@@ -197,7 +176,14 @@ impl PartialEq for Foo {
 }
 ```
 
-【例外】
+**【正例】**
+
+```rust
+#[derive(PartialEq, Eq, Hash)]
+struct Foo;
+```
+
+**【例外】**
 
 ```rust
 // From: https://docs.rs/crate/blsttc/3.3.0/source/src/lib.rs
@@ -207,19 +193,19 @@ impl PartialEq for Foo {
 #![allow(clippy::derive_hash_xor_eq)]
 ```
 
-## G.TRA.Buitin.05   在使用`#[derive(Ord)]` 的时候，避免再手工实现 `PartialOrd`
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [derive_ord_xor_partial_ord](https://rust-lang.github.io/rust-clippy/master/#derive_ord_xor_partial_ord) | yes           | no           | correctness | deny  |
+| [derive_hash_xor_eq](https://rust-lang.github.io/rust-clippy/master/#derive_hash_xor_eq) | yes           | no           | correctness | deny  |
 
-### 【描述】
+
+
+## G.TRA.Buitin.05   在使用`#[derive(Ord)]` 的时候，避免再手工实现 `PartialOrd`
+
+**【级别：建议】**
+
+**【描述】**
 
 跟实现 Hash 和 Eq 的要求类似，对于实现` Ord` 的类型来说，必须要满足下面一个等式：
 
@@ -232,6 +218,17 @@ k1.cmp(&k2) == k1.partial_cmp(&k2).unwrap()
 通过`#[derive(Ord)]` 并手动实现`PartialOrd`，很容易意外地使cmp和partial_cmp不一致。
 
 但也有例外。
+
+**【反例】**
+
+```rust
+#[derive(Ord, PartialEq, Eq)]
+struct Foo;
+
+impl PartialOrd for Foo {
+    ...
+}
+```
 
 【正例】
 
@@ -256,18 +253,7 @@ impl Ord for Foo {
 
 ```
 
-【反例】
-
-```rust
-#[derive(Ord, PartialEq, Eq)]
-struct Foo;
-
-impl PartialOrd for Foo {
-    ...
-}
-```
-
-【例外】
+**【例外】**
 
 使用 `#[derive(PartialOrd)]` 自动实现 `PartialOrd`，然后再手工实现 `Ord`的时候在内部调用自动实现的`partial_cmp` ，应该是满足 `k1.cmp(&k2) == k1.partial_cmp(&k2).unwrap()` 了。
 
@@ -304,13 +290,19 @@ impl Ord for JsonObject
 }
 ```
 
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [derive_ord_xor_partial_ord](https://rust-lang.github.io/rust-clippy/master/#derive_ord_xor_partial_ord) | yes           | no           | correctness | deny  |
+
+
+
 ## G.TRA.Buitin.06    不要对实现 `Copy`  或引用类型调用  `std::mem::drop` 和 `std::mem::forgot`
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
@@ -320,7 +312,7 @@ impl Ord for JsonObject
 | [forget_ref](https://rust-lang.github.io/rust-clippy/master/#forget_ref) | yes           | no           | correctness | deny  |
 | [undropped_manually_drops](https://rust-lang.github.io/rust-clippy/master/#undropped_manually_drops) | yes           | no           | correctness | deny  |
 
-### 【描述】
+**【描述】**
 
 `std::mem::drop` 函数只是利用 Rust 所有权的一个技巧，对于 实现了 Copy 的类型 或引用，是无效的。如果使用它，对导致代码可读方便产生误导作用。
 
@@ -330,7 +322,7 @@ impl Ord for JsonObject
 
 但是也存在例外的情况。
 
-【反例】
+**【反例】**
 
 ```rust
 let x: i32 = 42; // i32 implements Copy
@@ -338,7 +330,7 @@ std::mem::drop(x) // A copy of x is passed to the function, leaving the
                   // original unaffected
 ```
 
-【例外】
+**【例外】**
 
 在某些情况下，虽然不会有实际效果，但是为了提升语义，也可以使用。
 
@@ -363,29 +355,13 @@ pub fn format(&mut self) -> String {
 
 ## G.TRA.Buitin.07   对实现 `Copy` 的可迭代类型来说，要通过迭代器拷贝其所有元素时，应该使用 `copied`方法，而非`cloned`
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cloned_instead_of_copied](https://rust-lang.github.io/rust-clippy/master/#cloned_instead_of_copied) | yes           | no           | pedantic   | allow |
-
-### 【描述】
+**【描述】**
 
 `copied` 方法在语义层面，是针对实现 `Copy` 的类型，所以应该使用 `copied` 来增加代码可读性。
 
-【正例】
-
-```rust
-let a = [1, 2, 3];
-
-let v_copied: Vec<_> = a.iter().copied().collect();
-```
-
-【反例】
+**【反例】**
 
 ```rust
 let a = [1, 2, 3];
@@ -393,19 +369,33 @@ let a = [1, 2, 3];
 let v_copied: Vec<_> = a.iter().cloned().collect();
 ```
 
+**【正例】**
+
+```rust
+let a = [1, 2, 3];
+
+let v_copied: Vec<_> = a.iter().copied().collect();
+```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [cloned_instead_of_copied](https://rust-lang.github.io/rust-clippy/master/#cloned_instead_of_copied) | yes           | no           | pedantic   | allow |
+
+
+
 ## G.TRA.Buitin.08 实现 `From` 而不是 `Into`
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
 | [from_over_into](https://rust-lang.github.io/rust-clippy/master/#from_over_into) | yes           | no           | style      | warn  |
 
-### 【描述】
+**【描述】**
 
 优先为类型实现 `From` 而非 `Into`。因为实现了 `From`，`Into` 也会被自动实现。并且在错误处理的时候，`?` 操作符会通过调用 `From` 实现自动进行错误类型转换。
 
@@ -413,19 +403,7 @@ let v_copied: Vec<_> = a.iter().cloned().collect();
 
 当然，也存在例外。
 
-【正例】
-
-```rust
-struct StringWrapper(String);
-
-impl From<String> for StringWrapper {
-    fn from(s: String) -> StringWrapper {
-        StringWrapper(s)
-    }
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 struct StringWrapper(String);
@@ -437,7 +415,19 @@ impl Into<StringWrapper> for String {
 }
 ```
 
-【例外】
+**【正例】**
+
+```rust
+struct StringWrapper(String);
+
+impl From<String> for StringWrapper {
+    fn from(s: String) -> StringWrapper {
+        StringWrapper(s)
+    }
+}
+```
+
+**【例外】**
 
 有两类情况，可以直接实现 `Into`。
 
@@ -493,28 +483,13 @@ impl<T> Into<Vec<T>> for Wrapper<T> {
 
 ## G.TRA.Buitin.09   一般情况下不要给 Copy 类型手工实现 Clone 
 
-### 【级别：建议】
+**【级别：建议】**
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [expl_impl_clone_on_copy](https://rust-lang.github.io/rust-clippy/master/#expl_impl_clone_on_copy) | yes           | no           | pedantic   | allow |
-
-### 【描述】
+**【描述】**
 
 手工为 Copy 类型实现 Clone ，并不能改变 Copy 类型的行为。除非你显式地去调用 `clone()`方法。
 
-【正例】
-
-```rust
-#[derive(Copy, Clone)]
-struct Foo;
-```
-
-【反例】
+**【反例】**
 
 ```rust
 #[derive(Copy)]
@@ -525,7 +500,14 @@ impl Clone for Foo {
 }
 ```
 
-【例外】
+**【正例】**
+
+```rust
+#[derive(Copy, Clone)]
+struct Foo;
+```
+
+**【例外】**
 
 在有些情况下，需要手动实现 Copy 和 Clone 。 相关 issues : [https://github.com/rust-lang/rust/issues/26925](https://github.com/rust-lang/rust/issues/26925) 
 
@@ -550,4 +532,28 @@ fn main() {
     let m2 = m.clone();
 }
 ```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [expl_impl_clone_on_copy](https://rust-lang.github.io/rust-clippy/master/#expl_impl_clone_on_copy) | yes           | no           | pedantic   | allow |
+
+
+
+## G.TRA.Buitin.10 不要随便使用 `Deref` trait    来模拟继承
+
+**【级别：建议】**
+
+**【描述】**
+
+`Deref` trait是专门用于实现自定义指针类型而存在的。虽然可以实现 `Deref` 来达到某种类似于继承的行为，但 Rust 中不推荐这样做。
+
+这是因为 Rust 语言推崇显式的转换，而 `Deref` 则是 Rust 中为数不多的隐式行为。如果 `Deref` 被滥用，那么程序中隐式行为可能会增多，隐式的转换是 Bug 的温床。
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
 

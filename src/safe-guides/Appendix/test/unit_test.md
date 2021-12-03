@@ -31,3 +31,7 @@ proptest! {
 }
 ```
 
+## 代码测试率覆盖检测工具
+
+[tarpaulin](https://github.com/xd009642/tarpaulin) 是 Cargo 构建系统的代码覆盖率报告工具，目前 **仅支持运行 Linux 的 x86_64 处理器**。
+

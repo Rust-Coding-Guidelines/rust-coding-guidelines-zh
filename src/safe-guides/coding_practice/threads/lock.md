@@ -3,6 +3,8 @@
 Rust 中多线程并发使用锁来进行线程同步。
 
 ---
+<!-- toc -->
+---
 
 ## P.MTH.lock.01  首选  [`parking_lot`](https://crates.io/crates/parking_lot) 中定义的 同步原语，而非标准库 `std::sync` 模块
 
@@ -30,29 +32,15 @@ parking_lot 也提供了一些有用的 feature，比如 死锁检测（deadlock
 
 标准库中的 channel 实现并不好，也许会被移使用 `crossbeam` 或 `flume`  目前是约定俗成。
 
-
-
 ## P.MTH.lock.04    多线程下要注意识别锁争用的情况，避免死锁
 
 **【描述】**
 
 Rust 并不能保证没有死锁，要注意 ` LockResult<MutexGuard<'_, T>>` 的生命周期，以防止出现锁争用的情况。
 
-
-
-
-
-
-
 ---
 
-## G.MTH.lock.01   多线程下修改布尔值或使用引用可以用原子类型代替互斥锁
 
-### 【级别：建议】
-
-
-
----
 
 ## G.MTH.lock.01   对 布尔 或 引用 并发访问应该使用原子类型而非互斥锁
 
@@ -183,3 +171,141 @@ fn main() {
 }
 ```
 
+## G.MTH.lock.04    尽量避免直接使用标准库 `std::sync` 模块中的同步原语，替换为  [`parking_lot`](https://crates.io/crates/parking_lot)
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 是否可定制 |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| _ | no           | no           | _ | yes |
+
+【定制化参考】
+这条规则如果需要定制 Lint，则可以扫描 `std::sync` 锁同步原语的使用，推荐优先选择 crate `parking_lot` 中对应的同步原语。
+
+**【描述】**
+
+尽量避免对标准库 `std::sync` 模块中锁同步原语的使用，建议使用   [`parking_lot`](https://crates.io/crates/parking_lot)  的实现。
+
+【正例】
+
+例子来源于 [parking_lot 文档](https://docs.rs/parking_lot/0.11.2/parking_lot/type.Mutex.html)
+
+相比`std::sync::Mutex`，使用 `parking_lot::Mutex` 能获得’无中毒’，锁在 panic 时正常释放，更少的空间占用等优势。
+
+```rust
+use parking_lot::Mutex;
+use std::sync::{Arc, mpsc::channel};
+use std::thread;
+
+const N: usize = 10;
+
+let data = Arc::new(Mutex::new(0));
+
+let (tx, rx) = channel();
+for _ in 0..10 {
+    let (data, tx) = (Arc::clone(&data), tx.clone());
+    thread::spawn(move || {
+        let mut data = data.lock();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
+}
+
+rx.recv().unwrap();
+```
+
+【反例】
+
+来源于 [std标准库文档](https://doc.rust-lang.org/std/sync/struct.Mutex.html)
+
+```rust
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::sync::mpsc::channel;
+
+const N: usize = 10;
+
+let data = Arc::new(Mutex::new(0));
+
+let (tx, rx) = channel();
+for _ in 0..N {
+    let (data, tx) = (Arc::clone(&data), tx.clone());
+    thread::spawn(move || {      
+        let mut data = data.lock().unwrap();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
+}
+
+rx.recv().unwrap();
+```
+
+## G.MTH.lock.05    尽量避免直接使用标准库 `std::sync::mpsc` 模块中的`channel`，替换为  [`crossbeam`](https://github.com/crossbeam-rs/crossbeam)
+
+### 【级别：建议】
+
+建议按此规范执行。
+
+### 【Lint 检测】
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 是否可定制 |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| _ | no           | no           | _ | yes |
+
+【定制化参考】
+这条规则如果需要定制 Lint，则可以扫描对 `std::sync::mpsc::channel` 的使用，推荐优先选择 crate `crossbeam`。
+
+**【描述】**
+
+尽量避免使用 `std::sync::mpsc::channel` ，建议使用 [`crossbeam`](https://github.com/crossbeam-rs/crossbeam)
+
+【正例】
+
+```rust
+use crossbeam_channel::unbounded;
+
+let (tx, rx) = unbounded();
+
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
+    });
+}
+
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 <= j && j < 10);
+}
+```
+
+【反例】
+
+例子来源于 [`std::sync::mpsc`文档](https://doc.rust-lang.org/std/sync/mpsc/)
+
+```rust
+use std::thread;
+use std::sync::mpsc::channel;
+
+let (tx, rx) = channel();
+
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
+    });
+}
+
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 <= j && j < 10);
+}
+```

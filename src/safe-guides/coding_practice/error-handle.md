@@ -13,6 +13,8 @@ Rust 语言针对这三类非正常情况分别提供了专门的处理方式，
 - 对于异常，Rust 将其看作无法被合理解决的问题，提供了线程恐慌机制，在发生异常的时候，线程可以安全地退出。
 
 ---
+<!-- toc -->
+---
 
 ## P.ERR.01   当传入函数的参数值因为超出某种限制可能会导致函数调用失败，应该使用断言
 
@@ -182,11 +184,33 @@ fn main() {
 }
 ```
 
-## P.ERR.05   如果编写应用，建议使用` Error` trait对象；如果编写库，则建议返回自定义错误类型，方便下游处理
+## P.ERR.06   根据 应用 还是 库 来选择不同的错误处理方式
 
 **【描述】**
 
+如果编写应用，建议使用` Error` trait对象；如果编写库，则建议返回自定义错误类型，方便下游处理
 
+【正例】
+
+```rust
+// 对于应用使用 Error trait 对象更加方便
+pub fn print(&self, languages: &Languages) -> Result<String, Box<dyn Error>> {
+     // do something
+}
+
+
+// 对于库，暴露自定义错误类型更加方便下游处理错误
+#[derive(Debug)]
+pub struct SendError<T>(pub T);
+
+impl<T> fmt::Display for SendError<T> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(fmt, "channel closed")
+    }
+}
+
+impl<T: fmt::Debug> std::error::Error for SendError<T> {}
+```
 
 
 

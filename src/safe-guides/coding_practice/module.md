@@ -9,10 +9,49 @@ Rust 中一个文件 即一个模块，也可以通过  `mod` 来创建模块。
 3. `Path`，则是一个命名系统，类似于命名空间。
 
 ---
+<!-- toc -->
+---
 
-## P.MOD.01   使用导入模块中的类型或函数，在某些情况下需要带 模块名前缀
+## P.MOD.01    合理控制对外接口和模块之间的可见性
 
-**【描述】**
+### 【描述】
+
+Rust提供强大的模块（module）系统，并且可以管理这些模块之间的可见性（公有（public）或私有（private））。
+
+1、对于提供给其他crate使用的对外函数、结构体、trait等类型需要严格控制对外pub的范围，避免将内部成员对外提供。
+
+2、对于crate内部，mod之间可见的类型，需要添加上`pub(crate) `。
+
+3、对于mod内部私有的类型，不要添加`pub(crate) `或者`pub`。
+
+【正例】
+
+```rust
+// lib.rs
+pub mod sha512;
+pub use sha512::Sha512;
+
+// sha512.rs
+pub struct Sha512 {
+    inner: Sha512Inner, // inner作为内部结构体，不添加pub描述
+}
+```
+
+---
+
+## G.MOD.01   使用导入模块中的类型或函数，在某些情况下需要带模块名前缀
+
+### 【级别：建议】
+
+建议按此规范执行
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+### 【描述】
 
 对于标准库中，很多人都熟知的类型 ，比如 `Arc`/ `Rc`/ `Cell`/ `HashMap` 等 ， 可以导入它们直接使用。
 
@@ -41,9 +80,35 @@ let b = unsafe {
 
 
 
----
+## G.MOD.02   如果是作为库供别人使用，在 `lib.rs`中重新导出对外类型、函数和 trait 等
 
-## G.MOD.01   导入模块不要随便使用 通配符`*` 
+### 【级别：规则】
+
+按此规范执行
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+### 【描述】
+
+这样使用方在使用的时候，就不需要`use crate::mod::mod::struct`，可以直接使用`use crate::struct`，好处是使用方`use`的时候会比较方便和直观。
+
+【正例】
+
+```rust
+// From syn crate
+pub use crate::data::{
+    Field, Fields, FieldsNamed, FieldsUnnamed, Variant, VisCrate, VisPublic, VisRestricted,
+    Visibility,
+};
+```
+
+
+
+## G.MOD.03   导入模块不要随便使用 通配符`*` 
 
 ### 【级别：建议】
 
@@ -71,7 +136,6 @@ foo(); // Calls crate1::foo
 【反例】
 
 ```rust
-
 use crate2::*; // Has a function named foo
 foo(); // Calls crate1::foo
 ```
@@ -85,7 +149,7 @@ use prelude::*;
 use super::*
 ```
 
-## G.MOD.02    一个项目中应该避免使用不同的模块布局风格
+## G.MOD.04    一个项目中应该避免使用不同的模块布局风格
 
 ### 【级别：建议】
 
@@ -145,7 +209,7 @@ src/
 
 
 
-## G.MOD.03    不要在私有模块中 设置其内部类型或函数方法 为 `pub(crate)`
+## G.MOD.05    不要在私有模块中 设置其内部类型或函数方法 为 `pub(crate)`
 
 ### 【级别：建议】
 

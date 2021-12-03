@@ -59,7 +59,11 @@
         - [联合体](./safe-guides/coding_practice/unsafe_rust/union.md)
         - [内存](./safe-guides/coding_practice/unsafe_rust/mem.md)
         - [FFi 规范](./safe-guides/coding_practice/unsafe_rust/ffi.md)
+        - [I/O](./safe-guides/coding_practice/unsafe_rust/io.md)
+        - [Unsafe 代码术语指南](./safe-guides/coding_practice/unsafe_rust/glossary.md)
     - [no-std](./safe-guides/coding_practice/no-std.md)
+    - [I/O](./safe-guides/coding_practice/io.md)
+    - [信息安全](./safe-guides/coding_practice/security.md)
     - [其他](./safe-guides/coding_practice/others.md)
 - [附录](./safe-guides/Appendix/toc.md)
     - [测试](./safe-guides/Appendix/test.md)
@@ -71,10 +75,15 @@
         - [rustfmt 模板](./safe-guides/Appendix/templates/rustfmt.toml.md)
         - [clippy 模板](./safe-guides/Appendix/templates/clippy.toml.md)
         - [deny 模板](./safe-guides/Appendix/templates/deny.toml.md)
+    - [工具链](./safe-guides/Appendix/tools/intro.md)
+        - [rustfmt](./safe-guides/Appendix/tools/rustfmt.md)
+        - [noisy-clippy](./safe-guides/Appendix/tools/noisy-clippy.md)
+        - [cargo-udeps](./safe-guides/Appendix/tools/cargo-udeps.md) 
 
 # 领域最佳实践
 
 - [介绍](./best-practices/intro.md)
+- [高性能计算](./best-practices/hpc.md)
 - [嵌入式 Rust](./best-practices/embedded.md)
 - [数据库](./best-practices/databases.md)
 - [游戏](./best-practices/games.md)
@@ -90,19 +99,16 @@
 
 - [介绍](./cheat-sheet/README.md)
 
-# 工具链使用指南
 
-- [介绍](./tools/intro.md)
-- [Rustfmt 配置相关说明](./tools/rustfmt.md)
 
 # Rust 优化指南
 
 - [介绍](./optimizing/intro.md)
 
 
-# Rust 常用基础库指南
+# Rust Cookbook
 
-- [介绍](./libs/intro.md)
+- [介绍](./cookbook/intro.md)
 
 
 

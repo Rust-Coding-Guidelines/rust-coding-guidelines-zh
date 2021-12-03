@@ -13,11 +13,11 @@ Unsafe Rust 中 API 的安全性设计通常有两种方式：
 
 ---
 
-## P.UNS.SafeAbstract.01   代码中要注意是否会因为恐慌（Panic）发生而导致内存安全问题
+## P.UNS.SafeAbstract.01   代码中要注意是否会因为 Panic 发生而导致内存安全问题
 
 **【描述】**
 
-恐慌一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了 `UnwindSafe` trait 的类型捕获恐慌。
+Panic 一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了 `UnwindSafe` trait 的类型捕获恐慌。
 
 当 Panic 发生时，会引发栈回退（stack unwind），调用栈分配对象的析构函数，并将控制流转移给恐慌处理程序中。所以，当恐慌发生的时候，当前存活变量的析构函数将会被调用，从而导致一些内存安全问题，比如释放已经释放过的内存。
 
@@ -25,7 +25,7 @@ Unsafe Rust 中 API 的安全性设计通常有两种方式：
 
 想要正确的推理在 Unsafe 代码中的恐慌安全，是非常困难且易于出错的。即便如此，在编写代码的时候也要刻意注意此类问题发生的可能性。
 
-【示例】
+**【示例】**
 
 ```rust
 // 标准库 `String::retain()` 曝出的 CVE-2020-36317 Panic safety bug
@@ -86,7 +86,7 @@ fn main(){
 2. 纯洁性。相同的输入总是要返回相同的输出。
 3. 语义约束。传入的参数要合法，满足数据类型。
 
-【示例】
+**【示例】**
 
 该代码是为 `Borrow<str>`实现 join 方法内部调用的一个函数 `join_generic_copy`的展示。 在 `join_generic_copy` 内部，会对 `slice` 进行两次转换，而在 `spezialize_for_lengths!` 宏内部，调用了`.borrow()`方法，如果第二次转换和第一次不一样，而会返回一个未初始化字节的字符串。
 
@@ -136,161 +136,13 @@ arr.join("-");
 
 
 
-## P.UNS.SafeAbstract.03    Unsafe 代码中手动实现 auto trait 需要注意
-
-**【描述】**
-
-所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
-
-所以，在手动实现的时候要充分考虑其安全性。
-
-【示例】
-
-Rust futures 库中发现的问题，错误的手工 `Send/Sync`实现 破坏了线程安全保证。
-
-受影响的版本中，`MappedMutexGuard`的`Send/Sync`实现只考虑了`T`上的差异，而`MappedMutexGuard`则取消了对`U`的引用。
-
-当`MutexGuard::map()`中使用的闭包返回与`T`无关的`U`时，这可能导致安全Rust代码中的数据竞争。
-
-这个问题通过修正`Send/Sync`的实现，以及在`MappedMutexGuard`类型中添加一个`PhantomData<&'a mut U>`标记来告诉编译器，这个防护也是在U之上。
-
-```rust
-// CVE-2020-35905: incorrect uses of Send/Sync on Rust's futures
-pub struct MappedMutexGuard<'a, T: ?Sized, U: ?Sized> {
-    mutex: &'a Mutex<T>,
-    value: *mut U,
-    _marker: PhantomData<&'a mut U>, // + 修复代码
-}
-
-impl<'a, T: ?Sized> MutexGuard<'a, T> {
-    pub fn map<U: ?Sized, F>(this: Self, f: F)
-        -> MappedMutexGuard<'a, T, U>
-        where F: FnOnce(&mut T) -> &mut U {
-            let mutex = this.mutex;
-            let value = f(unsafe { &mut *this.mutex.value.get() });
-                mem::forget(this);
-                // MappedMutexGuard { mutex, value }
-                MappedMutexGuard { mutex, value, _marker: PhantomData } //  + 修复代码
-    }
-}
-
-// unsafe impl<T: ?Sized + Send, U: ?Sized> Send
-unsafe impl<T: ?Sized + Send, U: ?Sized + Send> Send // + 修复代码
-for MappedMutexGuard<'_, T, U> {}
-//unsafe impl<T: ?Sized + Sync, U: ?Sized> Sync
-unsafe impl<T: ?Sized + Sync, U: ?Sized + Sync> Sync // + 修复代码
-for MappedMutexGuard<'_, T, U> {}
-
-// PoC: this safe Rust code allows race on reference counter
-* MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
-```
-
-
-
-## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
-
-**【描述】**
-
-在公开的API中暴露裸指针，可能会被用户修改为空指针，从而有段错误风险。
-
-【示例】
-
-```rust
-use cache;
-
-
-/**
-
-    `cache crate` 内部代码：
-
-    ```rust
-    pub enum Cached<'a, V: 'a> {
-        /// Value could not be put on the cache, and is returned in a box
-        /// as to be able to implement `StableDeref`
-        Spilled(Box<V>),
-        /// Value resides in cache and is read-locked.
-        Cached {
-            /// The readguard from a lock on the heap
-            guard: RwLockReadGuard<'a, ()>,
-            /// A pointer to a value on the heap
-            // 漏洞风险
-            ptr: *const ManuallyDrop<V>,
-        },
-        /// A value that was borrowed from outside the cache.
-        Borrowed(&'a V),
-    }
-
-    ```
-**/
-fn main() {
-    let c = cache::Cache::new(8, 4096);
-    c.insert(1, String::from("test"));
-    let mut e = c.get::<String>(&1).unwrap();
-
-    match &mut e {
-        cache::Cached::Cached { ptr, .. } => {
-            // 将 ptr 设置为 空指针，导致段错误
-            *ptr = std::ptr::null();
-        },
-        _ => panic!(),
-    }
-    // 输出：3851，段错误
-    println!("Entry: {}", *e);
-}
-```
-
-## P.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露未初始化内存
+## P.UNS.SafeAbstract.03    不要随便在公开的 API 中暴露未初始化内存
 
 **【描述】**
 
 在公开的API中暴露未初始化内存可能导致 UB。
 
-【正例】
-
- ```rust
- // 修正以后的代码示例，去掉了未初始化的buf：
- impl<R> BufRead for GreedyAccessReader<R>
-     where
-         R: Read,
- {
-     fn fill_buf(&mut self) -> IoResult<&[u8]> {
-         if self.buf.capacity() == self.consumed {
-             self.reserve_up_to(self.buf.capacity() + 16);
-         }
- 
-         let b = self.buf.len();
-         self.buf.resize(self.buf.capacity(), 0);
-         let buf = &mut self.buf[b..];
-         let o = self.inner.read(buf)?;
- 
-         // truncate to exclude non-written portion
-         self.buf.truncate(b + o);
- 
-         Ok(&self.buf[self.consumed..])
-     }
- 
-     fn consume(&mut self, amt: usize) {
-         self.consumed += amt;
-     }
- }
- 
- // 另外一个已修正漏洞的代码
- fn read_vec(&mut self) -> Result<Vec<u8>> {
-     let len: u32 = de::Deserialize::deserialize(&mut *self)?;
-     // 创建了未初始化buf
-     let mut buf = Vec::with_capacity(len as usize);
-     // 初始化为 0；
-     buf.resize(len as usize, 0);
-     self.read_size(u64::from(len))?;
-     // 将其传递给了用户提供的`Read`实现
-     self.reader.read_exact(&mut buf[..])?;
-     Ok(buf)
- }
- ```
-
-
-
-【反例】
+**【反例】**
 
 ```rust
 // 以下是有安全风险的代码示例：
@@ -345,9 +197,50 @@ fn read_vec(&mut self) -> Result<Vec<u8>> {
 }
 ```
 
+**【正例】**
 
+ ```rust
+ // 修正以后的代码示例，去掉了未初始化的buf：
+ impl<R> BufRead for GreedyAccessReader<R>
+     where
+         R: Read,
+ {
+     fn fill_buf(&mut self) -> IoResult<&[u8]> {
+         if self.buf.capacity() == self.consumed {
+             self.reserve_up_to(self.buf.capacity() + 16);
+         }
+ 
+         let b = self.buf.len();
+         self.buf.resize(self.buf.capacity(), 0);
+         let buf = &mut self.buf[b..];
+         let o = self.inner.read(buf)?;
+ 
+         // truncate to exclude non-written portion
+         self.buf.truncate(b + o);
+ 
+         Ok(&self.buf[self.consumed..])
+     }
+ 
+     fn consume(&mut self, amt: usize) {
+         self.consumed += amt;
+     }
+ }
+ 
+ // 另外一个已修正漏洞的代码
+ fn read_vec(&mut self) -> Result<Vec<u8>> {
+     let len: u32 = de::Deserialize::deserialize(&mut *self)?;
+     // 创建了未初始化buf
+     let mut buf = Vec::with_capacity(len as usize);
+     // 初始化为 0；
+     buf.resize(len as usize, 0);
+     self.read_size(u64::from(len))?;
+     // 将其传递给了用户提供的`Read`实现
+     self.reader.read_exact(&mut buf[..])?;
+     Ok(buf)
+ }
+ ```
 
-## P.UNS.SafeAbstract.05   要考虑 Panic Safety 的情况
+## P.UNS.SafeAbstract.04   要考虑 Panic Safety 的情况
 
 **【描述】**
 
@@ -355,7 +248,32 @@ fn read_vec(&mut self) -> Result<Vec<u8>> {
 
 在使用 `std::ptr` 模块中接口需要注意，容易产生 UB 问题，要多多查看 API 文档。
 
-【正例】
+**【反例】**
+
+```rust
+//case 1
+macro_rules! from_event_option_array_into_event_list(
+    ($e:ty, $len:expr) => (
+        impl<'e> From<[Option<$e>; $len]> for EventList {
+                fn from(events: [Option<$e>; $len]) -> EventList {
+                    let mut el = EventList::with_capacity(events.len());
+                    for idx in 0..events.len() {
+                    // 这个 unsafe 用法在 `event.into()`调用panic的时候会导致双重释放
+                        let event_opt = unsafe { ptr::read(events.get_unchecked(idx)) };
+                        if let Some(event) = event_opt { el.push::<Event>(event.into()); }
+                    }
+                    // 此处 mem::forget 就是为了防止 `dobule free`。
+                    // 因为 `ptr::read` 也会制造一次 drop。
+                    // 所以上面如果发生了panic，那就相当于注释了 `mem::forget`，导致`dobule free`
+                    mem::forget(events);
+                    el
+                }
+        }
+    )
+);
+```
+
+**【正例】**
 
  ```rust
  macro_rules! from_event_option_array_into_event_list(
@@ -392,60 +310,30 @@ fn read_vec(&mut self) -> Result<Vec<u8>> {
 
 
 
-【反例】
-
-```rust
-//case 1
-macro_rules! from_event_option_array_into_event_list(
-    ($e:ty, $len:expr) => (
-        impl<'e> From<[Option<$e>; $len]> for EventList {
-                fn from(events: [Option<$e>; $len]) -> EventList {
-                    let mut el = EventList::with_capacity(events.len());
-                    for idx in 0..events.len() {
-                    // 这个 unsafe 用法在 `event.into()`调用panic的时候会导致双重释放
-                        let event_opt = unsafe { ptr::read(events.get_unchecked(idx)) };
-                        if let Some(event) = event_opt { el.push::<Event>(event.into()); }
-                    }
-                    // 此处 mem::forget 就是为了防止 `dobule free`。
-                    // 因为 `ptr::read` 也会制造一次 drop。
-                    // 所以上面如果发生了panic，那就相当于注释了 `mem::forget`，导致`dobule free`
-                    mem::forget(events);
-                    el
-                }
-        }
-    )
-);
-```
-
-
-
-
-
 ---
 
 
 
-## G.UNS.ABS.01  在 公开的 unsafe 函数的文档中必须增加 `# Safety` 注释
+## G.UNS.SafeAbstract.01  在 公开的 unsafe 函数的文档中必须增加 `# Safety` 注释
 
-### 【级别：必须】
+**【级别：必须】**
 
-必须按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
-| [missing_safety_doc](https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc) | yes           | no           | Style      | warn       |
-
-### 【描述】
+**【描述】**
 
 在公开（pub）的 unsafe 函数文档中，必须增加 `# Safety` 注释来解释该函数的安全边界，这样使用该函数的用户才可以安全地使用它。
 
 说明： 该规则通过 cargo clippy 来检测。默认会发出警告。
 
-### 【示例】
+**【反例】**
 
-【正例】
+```rust
+    /// Creates a `Vec<T>` directly from the raw components of another vector.
+    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
+        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
+    }
+```
+
+**【正例】**
 
 示例来自于标准库文档： [https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167](https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167)
 
@@ -470,50 +358,25 @@ macro_rules! from_event_option_array_into_event_list(
     }
 ```
 
-
-【反例】
-
-```rust
-    /// Creates a `Vec<T>` directly from the raw components of another vector.
-    pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
-        unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
-    }
-```
-
-## G.UNS.ABS.02   在 Unafe 函数中应该使用 `assert!` 而非 `debug_assert!` 去校验边界条件
-
-### 【级别：必须】
-
-必须按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
-| [debug_assert_with_mut_call](https://rust-lang.github.io/rust-clippy/master/index.html#debug_assert_with_mut_call) | yes           | no           | nursery    | allow      |
+| [missing_safety_doc](https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc) | yes           | no           | Style      | warn       |
 
-注意该 lint 当前是 Nursery Group，意味着可能会产生误报 Bug。
 
-### 【描述】
+
+## G.UNS.SafeAbstract.02   在 Unafe 函数中应该使用 `assert!` 而非 `debug_assert!` 去校验边界条件
+
+**【级别：必须】**
+
+**【描述】**
 
 `assert!` 宏 在 Release 和 Debug 模式下都会被检查，并且不能被禁用。它通常用来在  unsafe 函数中判断传入的参数是否满足某种边界条件，以此来防止不合法的参数传入导致未定义行为。
 
 但是 `debug_assert!` 则可以通过配置 `-C debug-assertions` 来禁用它， 而且 `debug_assert!`    在 Release 模式下也会被编译器优化。所以，一旦使用了 `debug_assert!` 在 unsafe 函数中用来防范不合法参数，那有可能会失效。
 
-【正例】
-
-来自标准库 `slice` 的代码示例。
-
-```rust
-	pub fn split_at_mut(&mut self, mid: usize) -> (&mut [T], &mut [T]) {
-        assert!(mid <= self.len()); // 判断边界条件，杜绝非法参数
-        // SAFETY: `[ptr; mid]` and `[mid; len]` are inside `self`, which
-        // fulfills the requirements of `from_raw_parts_mut`.
-        unsafe { self.split_at_mut_unchecked(mid) }
-    }
-```
-
-【反例】
+**【反例】**
 
 ```rust
 	// 使用了 debug_assert! 那就说明这个校验在 Release 模式不一定有效
@@ -530,4 +393,152 @@ macro_rules! from_event_option_array_into_event_list(
    // 也会因为 debug_assert_ 系列的断言宏在 Release 下产生不可预料的结果，它是 unsafe 的
    debug_assert_eq!(vec![3].pop(), Some(3));
 ```
+
+**【正例】**
+
+来自标准库 `slice` 的代码示例。
+
+```rust
+	pub fn split_at_mut(&mut self, mid: usize) -> (&mut [T], &mut [T]) {
+        assert!(mid <= self.len()); // 判断边界条件，杜绝非法参数
+        // SAFETY: `[ptr; mid]` and `[mid; len]` are inside `self`, which
+        // fulfills the requirements of `from_raw_parts_mut`.
+        unsafe { self.split_at_mut_unchecked(mid) }
+    }
+```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
+| [debug_assert_with_mut_call](https://rust-lang.github.io/rust-clippy/master/index.html#debug_assert_with_mut_call) | yes           | no           | nursery    | allow      |
+
+注意该 lint 当前是 Nursery Group，意味着可能会产生误报 Bug。
+
+
+
+## G.UNS.SafeAbstract.03    Unsafe 代码中手动实现 auto trait 需要注意
+
+**【级别：必须】**
+
+**【描述】**
+
+所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
+
+所以，在手动实现的时候要充分考虑其安全性。
+
+**【示例】**
+
+Rust futures 库中发现的问题，错误的手工 `Send/Sync`实现 破坏了线程安全保证。
+
+受影响的版本中，`MappedMutexGuard`的`Send/Sync`实现只考虑了`T`上的差异，而`MappedMutexGuard`则取消了对`U`的引用。
+
+当`MutexGuard::map()`中使用的闭包返回与`T`无关的`U`时，这可能导致安全Rust代码中的数据竞争。
+
+这个问题通过修正`Send/Sync`的实现，以及在`MappedMutexGuard`类型中添加一个`PhantomData<&'a mut U>`标记来告诉编译器，这个防护也是在U之上。
+
+```rust
+// CVE-2020-35905: incorrect uses of Send/Sync on Rust's futures
+pub struct MappedMutexGuard<'a, T: ?Sized, U: ?Sized> {
+    mutex: &'a Mutex<T>,
+    value: *mut U,
+    _marker: PhantomData<&'a mut U>, // + 修复代码
+}
+
+impl<'a, T: ?Sized> MutexGuard<'a, T> {
+    pub fn map<U: ?Sized, F>(this: Self, f: F)
+        -> MappedMutexGuard<'a, T, U>
+        where F: FnOnce(&mut T) -> &mut U {
+            let mutex = this.mutex;
+            let value = f(unsafe { &mut *this.mutex.value.get() });
+                mem::forget(this);
+                // MappedMutexGuard { mutex, value }
+                MappedMutexGuard { mutex, value, _marker: PhantomData } //  + 修复代码
+    }
+}
+
+// unsafe impl<T: ?Sized + Send, U: ?Sized> Send
+unsafe impl<T: ?Sized + Send, U: ?Sized + Send> Send // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+//unsafe impl<T: ?Sized + Sync, U: ?Sized> Sync
+unsafe impl<T: ?Sized + Sync, U: ?Sized + Sync> Sync // + 修复代码
+for MappedMutexGuard<'_, T, U> {}
+
+// PoC: this safe Rust code allows race on reference counter
+* MutexGuard::map(guard, |_| Box::leak(Box::new(Rc::new(true))));
+```
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+Lint 需要检测 手工实现 auto trait 的行为，比如 `Sync/Send`，对开发者发出警告，要注意考虑其安全性
+
+### 
+
+## G.UNS.SafeAbstract.04    不要随便在公开的 API 中暴露裸指针
+
+**【级别：必须】**
+
+**【描述】**
+
+在公开的API中暴露裸指针，可能会被用户修改为空指针，从而有段错误风险。
+
+**【示例】**
+
+```rust
+use cache;
+
+
+/**
+
+    `cache crate` 内部代码：
+
+    ```rust
+    pub enum Cached<'a, V: 'a> {
+        /// Value could not be put on the cache, and is returned in a box
+        /// as to be able to implement `StableDeref`
+        Spilled(Box<V>),
+        /// Value resides in cache and is read-locked.
+        Cached {
+            /// The readguard from a lock on the heap
+            guard: RwLockReadGuard<'a, ()>,
+            /// A pointer to a value on the heap
+            // 漏洞风险
+            ptr: *const ManuallyDrop<V>,
+        },
+        /// A value that was borrowed from outside the cache.
+        Borrowed(&'a V),
+    }
+**/
+fn main() {
+    let c = cache::Cache::new(8, 4096);
+    c.insert(1, String::from("test"));
+    let mut e = c.get::<String>(&1).unwrap();
+
+    match &mut e {
+        cache::Cached::Cached { ptr, .. } => {
+            // 将 ptr 设置为 空指针，导致段错误
+            *ptr = std::ptr::null();
+        },
+        _ => panic!(),
+    }
+    // 输出：3851，段错误
+    println!("Entry: {}", *e);
+}
+```
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
+【定制参考】
+
+Lint需要检测在 pub 的结构体、枚举等类型中有裸指针字段或变体，对开发者发出警告，要注意考虑其安全性
 

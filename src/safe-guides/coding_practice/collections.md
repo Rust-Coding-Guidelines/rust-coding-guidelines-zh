@@ -8,6 +8,8 @@ Rust 中的集合类型包括四大类：
 - 其他： [`BinaryHeap`](https://doc.rust-lang.org/stable/std/collections/struct.BinaryHeap.html)
 
 ---
+<!-- toc -->
+---
 
 ## P.CLT.01  根据集合各自的特点选择合适的集合类型
 
