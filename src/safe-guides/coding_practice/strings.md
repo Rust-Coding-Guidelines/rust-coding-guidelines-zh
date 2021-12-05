@@ -25,25 +25,26 @@ Rust 字符串类型众多，但本节内容主要围绕 ：`String` / `&str`
 
 预分配足够的容量，避免后续内存分配，可以提升代码性能。
 
-【正例】
-
-```rust
-let mut output = String::with_capacity(input.len());
-```
-
-【反例】
+**【反例】**
 
 ```rust
 let mut output = String::new();
 ```
 
-## P.STR.03    可以使用 `Cow<str>` 来代替直接使用字符串，它可以减少 Copy
+**【正例】**
+
+```rust
+let mut output = String::with_capacity(input.len());
+```
+
+
+## P.STR.03    可以使用`Cow<str>`来代替直接使用字符串，它可以减少Copy
 
 **【描述】**
 
 使用 `Cow<str>` 作为字符串处理函数参数和返回值，可以尽可能地减少数据Copy 和 内存分配。当字符串没有修改的时候，实际使用的是 `&'a str`，只有当数据修改的时候才会使用`String`。对于读操作大于写操作的场景，使用 `Cow<str>` 比较合适。
 
-【正例】
+**【示例】**
 
 ```rust
 // 对输入的字符串进行转义
@@ -74,7 +75,7 @@ pub fn naive<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 
 
 
-## P.STR.04     在使用内建字符串处理函数或方法的时候，应该注意避免隐藏的嵌套迭代 或 多次迭代
+## P.STR.04 在使用内建字符串处理函数或方法的时候，应该注意避免隐藏的嵌套迭代或多次迭代
 
 **【描述】**
 
@@ -82,7 +83,7 @@ pub fn naive<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 
 所以，在使用内建函数的时候要注意它的实现，选择合适的函数或方法，来避免这类问题。
 
-【正例】
+**【示例】**
 
 ```rust
 // 对输入的字符串进行转义
@@ -119,7 +120,7 @@ pub fn find<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 
 
 
-## P.STR.05     只有在合适的场景下，才使用第三方库正则表达式`regex`  
+## P.STR.05     只有在合适的场景下，才使用第三方库正则表达式`regex`
 
 **【描述】**
 
@@ -128,13 +129,14 @@ pub fn find<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 1. 不在乎编译文件大小。`regex` 正则引擎是第三方库，引入它的时候意味着还会引入其他依赖，对编译文件大小有要求可以考虑，是否使用 `Cow` 和 内建函数方法来替代。
 2. 对字符串查找性能有极致需求。`regex` 的  `find` 实现性能很好，但是 `replace` 替换就不一定了。对于替换需求，在适合 `Cow<str>` 的场景下，使用 `Cow` 和 内建函数方法来替代 regex 可能更好。
 
-## P.STR.06    在拼接字符串时，建议使用 `format!` 
+
+## P.STR.06    在拼接字符串时，建议使用`format!`
 
 **【描述】**
 
 在Rust中有很多方法可以连接字符串，不同的连接方法适用于不同的场景，性能也会有所差别。
 
-【正例】
+**【示例】**
 
 ```rust
  // 组合字符串是最简单和直观的方法，尤其是在字符串和非字符串混合的情况下。
@@ -197,42 +199,15 @@ pub fn find<'a, S: Into<Cow<'a, str>>>(input: S) -> Cow<'a, str> {
 
 
 
+## G.STR.01   在实现`Display`trait 时不要调用`to_string()`方法
 
+**【级别】** 建议
 
----
-
-
-
-## G.STR.01   在实现  `Display` trait 时不要调用 `to_string()` 方法
-
-### 【级别：建议】
-
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [to_string_in_display](https://rust-lang.github.io/rust-clippy/master/#to_string_in_display) | yes           | no           | correctness | deny |
-
-### 【描述】
+**【描述】**
 
 因为 `to_string` 是间接通过 `Display` 来实现的，如果实现 `Display` 的时候再使用 `to_tring` 的话，将会无限递归。
 
-【正例】
-
-```rust
-use std::fmt;
-
-struct Structure(i32);
-impl fmt::Display for Structure {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-```
-
-【反例】
+**【反例】**
 
 ```rust
 use std::fmt;
@@ -245,22 +220,43 @@ impl fmt::Display for Structure {
 }
 ```
 
-## G.STR.02   在追加字符串时使用 `push_str`方法可读性更强
+**【正例】**
 
-### 【级别：建议】
+```rust
+use std::fmt;
 
-建议按此规范执行。
+struct Structure(i32);
+impl fmt::Display for Structure {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [string_add_assign](https://rust-lang.github.io/rust-clippy/master/#string_add_assign) | yes           | no           | pedantic    | allow |
-| [string_add](https://rust-lang.github.io/rust-clippy/master/#string_add) | yes           | no           | restriction | allow |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [to_string_in_display](https://rust-lang.github.io/rust-clippy/master/#to_string_in_display) | yes           | no           | correctness | deny |
 
-### 【描述】
 
-【正例】
+
+## G.STR.02   在追加字符串时使用`push_str`方法可读性更强
+
+**【级别】** 建议
+
+**【描述】**
+
+略
+
+**【反例】**
+
+```rust
+let mut x = "Hello".to_owned();
+x = x + ", World";
+```
+
+**【正例】**
 
 ```rust
 let mut x = "Hello".to_owned();
@@ -270,75 +266,56 @@ x += ", World";
 x.push_str(", World");
 ```
 
-【反例】
+**【Lint 检测】**
 
-```rust
-let mut x = "Hello".to_owned();
-x = x + ", World";
-```
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [string_add_assign](https://rust-lang.github.io/rust-clippy/master/#string_add_assign) | yes           | no           | pedantic    | allow |
+| [string_add](https://rust-lang.github.io/rust-clippy/master/#string_add) | yes           | no           | restriction | allow |
 
 
 
 ## G.STR.03    将只包含 `ASCII`字符的字符串字面量转为字节序列可以直接使用`b"str"` 语法代替调用`as_bytes`方法
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [string_lit_as_bytes](https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes) | yes           | no           | nursery | allow |
-
-### 【描述】
+**【描述】**
 
 这是为了增强可读性，让代码更简洁。
 
 注意，`"str".as_bytes()` 并不等价于  `b"str"`，而是等价于 `&b"str"[..]`  。
 
-【正例】
-
-```rust
-let bs = b"a byte string";
-```
-
-【反例】
+**【反例】**
 
 ```rust
 let bs = "a byte string".as_bytes();
 ```
 
-## G.STR.04   需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较
+**【正例】**
 
-### 【级别：建议】
+```rust
+let bs = b"a byte string";
+```
 
-建议按此规范执行。
-
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [chars_last_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_last_cmp) | yes           | no           | style      | warn  |
-| [chars_next_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_next_cmp) | yes           | no           | style      | warn  |
+| [string_lit_as_bytes](https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes) | yes           | no           | nursery | allow |
 
-### 【描述】
+
+
+## G.STR.04   需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较
+
+**【级别】** 建议
+
+**【描述】**
 
 Rust 语言 核心库 和 标准库都对字符串内置了一些方便的方法来处理这类需求。
 
 迭代字符的性能虽然也很快（对500多个字符迭代转义处理大概需要4.5微秒左右），但这种场景用迭代的话，代码可读性更差一些。
 
-【正例】
-
-```rust
-let name = "_";
-name.ends_with('_') || name.ends_with('-');
-
-let name = "foo";
-if name.starts_with('_') {};
-```
-
- 【反例】
+**【反例】**
 
 ```rust
 let name = "_";
@@ -348,23 +325,44 @@ let name = "foo";
 if name.chars().next() == Some('_') {};
 ```
 
+**【正例】**
+
+```rust
+let name = "_";
+name.ends_with('_') || name.ends_with('-');
+
+let name = "foo";
+if name.starts_with('_') {};
+```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [chars_last_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_last_cmp) | yes           | no           | style      | warn  |
+| [chars_next_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_next_cmp) | yes           | no           | style      | warn  |
+
+
+
 ## G.STR.05   对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [string_slice](https://rust-lang.github.io/rust-clippy/master/#string_slice) | yes           | no           | restriction | allow |
-
-### 【描述】
+**【描述】**
 
 字符串默认是合法的 `UTF-8`字节序列，如果通过指定索引位置来对字符串进行切片，有可能破坏其合法 `UTF-8` 编码，除非这个位置是确定的，比如按 `char_indices` 方法来定位是合法的。
 
-【正例】
+**【反例】**
+
+```rust
+let s = "Ölkanne";
+// thread 'main' panicked at 'byte index 1 is not a char boundary; 
+// it is inside 'Ö' (bytes 0..2) of `Ölkanne`'
+let sub_s = &s[1..];
+// println!("{:?}", sub_s);
+```
+
+**【正例】**
 
 ```rust
 let s = "Ölkanne";
@@ -376,13 +374,12 @@ let sub_s = &s[pos..];
 assert_eq!("lkanne", sub_s);
 ```
 
-【反例】
+**【Lint 检测】**
 
-```rust
-let s = "Ölkanne";
-// thread 'main' panicked at 'byte index 1 is not a char boundary; 
-// it is inside 'Ö' (bytes 0..2) of `Ölkanne`'
-let sub_s = &s[1..];
-// println!("{:?}", sub_s);
-```
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [string_slice](https://rust-lang.github.io/rust-clippy/master/#string_slice) | yes           | no           | restriction | allow |
+
+
+
 
