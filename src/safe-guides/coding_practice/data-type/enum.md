@@ -2,7 +2,7 @@
 
 Rust 的枚举是一种带 Tag 的联合体。 一般分为三类：空枚举、无字段（fieldless）枚举和数据承载（data carrying）枚举。
 
-【示例】
+**【示例】**
 
 ```rust
 enum Empty {}
@@ -31,7 +31,7 @@ Rust 中枚举体用处很多，你甚至可以将其作为一种接口使用。
 
 略
 
-【示例】
+**【示例】**
 
 ```rust
 use std::mem;
@@ -67,7 +67,7 @@ fn swizzle(e: &mut MultiVariateEnum) {
 
 为了让代码更加简单明了增强可读性，建议使用 `map`。
 
-【反例】
+**【反例】**
 
 ```rust
 # fn opt() -> Option<&'static str> { Some("42") }
@@ -78,7 +78,7 @@ let _ = res().or_else(|s| if s.len() == 42 { Err(10) } else { Err(20) });
 
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 # fn opt() -> Option<&'static str> { Some("42") }
@@ -88,7 +88,7 @@ let _ = res().map(|s| if s.len() == 42 { 10 } else { 20 });
 let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
@@ -105,13 +105,13 @@ let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
 在 Rust 中 只有 `never` 类型（`!`）才是唯一合法表达 无法被实例化类型 的类型。但目前 `never` 类型还未稳定，只能在 Nightly 下使用。
 
 
-【反例】
+**【反例】**
 
 ```rust
 enum Test {}
 ```
 
-【正例】
+**【正例】**
 
 所以，如果想在 稳定版 Rust 中使用，建议使用[`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 。 `Infallible` 枚举是一个合法的 空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  `never`   类型。
 
@@ -120,7 +120,7 @@ enum Test {}
 pub type Infallible = !;
 ```
 
-【例外】
+**【例外】**
 
 因为 [`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 默认实现了很多 trait，如果不想依赖其他 trait ，那么可以用 空枚举。
 
@@ -135,7 +135,7 @@ impl Display for NoUserError {
 
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
@@ -153,7 +153,7 @@ impl Display for NoUserError {
 
 但是没有这种风险的时候，可以正常使用。
 
-【反例】
+**【反例】**
 
 ```rust
 #[cfg(target_pointer_width = "64")]
@@ -164,7 +164,7 @@ enum NonPortable {
 }
 ```
 
-【正例】
+**【正例】**
 
 因为当前 lint 默认是` deny`，所以需要将其配置为 `allow`。
 
@@ -188,7 +188,7 @@ pub(crate) enum PropertyType {
 }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
@@ -203,21 +203,21 @@ pub(crate) enum PropertyType {
 
 使用 Enum 的类型前缀可以使代码更加可读。
 
-【反例】
+**【反例】**
 
 ```rust
 use std::cmp::Ordering::*; // 这里导入了全部变体
 foo(Less);
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 use std::cmp::Ordering;
 foo(Ordering::Less)
 ```
 
-【例外】
+**【例外】**
 
 当枚举体非常多的时候，比如 [ glutin::event::VirtualKeyCode](https://docs.rs/glutin/0.27.0/glutin/event/enum.VirtualKeyCode.html) 这类对应键盘按键的枚举，并且上下文比较明确，都是在处理和 Key 相关的内容时，可以直接全部导入。
 
@@ -240,7 +240,7 @@ pub fn default_key_bindings() -> Vec<KeyBinding> {
     }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
@@ -256,7 +256,7 @@ pub fn default_key_bindings() -> Vec<KeyBinding> {
 作为对外公开的 Enum，为了保持稳定性，应该使用 `#[non_exhaustive]`属性，避免因为将来Enum 枚举变体的变化而影响到下游的使用。
 
 
-【反例】
+**【反例】**
 
 在 `#[non_exhaustive]` 属性稳定之前，社区内还有一种约定俗成的写法来达到防止下游自定义枚举方法。通过 `manual_non_exhaustive` 可以监控这类写法。
 
@@ -270,7 +270,7 @@ enum E {
 // 用户无法自定义实现该 枚举的方法，达到一种稳定公开枚举的目的。
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 #[non_exhaustive]
@@ -280,7 +280,7 @@ enum E {
 }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
@@ -299,7 +299,7 @@ enum E {
 
 解决办法就是把大尺寸变体包到 `Box<T>`中。
 
-【反例】
+**【反例】**
 
 ```rust
 enum Test {
@@ -309,7 +309,7 @@ enum Test {
 }
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 enum Test {
@@ -319,7 +319,7 @@ enum Test {
 }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
