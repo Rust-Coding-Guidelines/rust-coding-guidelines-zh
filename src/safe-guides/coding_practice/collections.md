@@ -43,71 +43,17 @@ Rust 标准库内置的集合类型，在安全和性能方面还是比较靠谱
 - 你需要一个可以排序的 `HashMap`
 - 你希望可以按需获取一系列元素
 - 你对最小或最大的 KV 感兴趣
-- 你想要寻找比某个值更大或更小的键
+- 你想要找到比某物小或大的最大或最小键
 
 **下列场景考虑使用 `Set` 系列**
 
-- 你只是需要一个 Set 集合，而不需要键值对。
+- 你只是需要一个 集合
 
 **下列场景考虑使用 `BinaryHeap`**
 
 - 你想存储一堆元素，但只想在任何给定时间内处理 最大 或 最重要的元素
 - 你想要一个优先队列
 
-
-## P.CLT.02   创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配
-
-**【描述】**
-
-预分配足够的容量，避免后续内存分配，可以提升代码性能。
-
-**【反例】**
-
-```rust
-use std::collections::HashMap;
-use std::collections::VecDeque;
-
-fn main() {
-
-    // HashMap
-    let mut map = HashMap::new();
-    map.insert("a", 1);
-    map.insert("b", 2);
-    map.insert("c", 3);
-    println!("{:#?}", map);
-    
-    // VecDeque
-    let mut deque = VecDeque::new();
-    deque.push_back(1);
-    deque.push_back(2);
-    deque.push_back(3);
-    println!("{:#?}", deque);
-}
-```
-
-**【正例】**
-
-```rust
-use std::collections::HashMap;
-use std::collections::VecDeque;
-
-fn main() {
-
-    // HashMap
-    let mut map = HashMap::with_capacity(3);
-    map.insert("a", 1);
-    map.insert("b", 2);
-    map.insert("c", 3);
-    println!("{:#?}", map);
-    
-    // VecDeque
-    let mut deque = VecDeque::with_capacity(3);
-    deque.push_back(1);
-    deque.push_back(2);
-    deque.push_back(3);
-    println!("{:#?}", deque);
-}
-```
 
 
 ## G.CLT.01   非必要情况下，不要使用`LinkedList`，而用`Vec`或`VecDeque`代替
