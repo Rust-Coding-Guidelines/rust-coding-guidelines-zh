@@ -1,20 +1,32 @@
-## G.MAC.02   在多个地方使用`println!` 或 `panic!` 之类的内置宏 时，可以将其包装到函数内，使用 `#[cold]` 和 `#[inline(never)]` 属性避免其内联，从而避免编译文件膨胀
+## G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响
 
-### 【级别：建议】
+**【级别】** 建议
 
-建议按此规范执行
+**【描述】**
 
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-
-### **【描述】**
+在多个地方使用 `println!` 或 `panic!` 之类的内置宏时，可以将其包装到函数内，使用 `#[cold]` 和 `#[inline(never)]` 属性避免其内联，从而避免编译文件膨胀。
 
 因为像 `println!` 或 `panic!` 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。
 
-【正例】
+**【反例】**
+
+```rust
+pub fn expect(self, msg: &str) -> T {
+    match self {
+        Ok(t) => t,
+        Err(e) => panic!("{}: {:?}", msg, &e),
+    }
+}
+
+pub fn unwrap_err(self) -> E {
+    match self {
+        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
+        Err(e) => e,
+    }
+}
+```
+
+**【正例】**
 
 ```rust
 #[inline(never)]
@@ -39,20 +51,9 @@ pub fn unwrap_err(self) -> E {
 }
 ```
 
-【反例】
+**【Lint 检测】**
 
-```rust
-pub fn expect(self, msg: &str) -> T {
-    match self {
-        Ok(t) => t,
-        Err(e) => panic!("{}: {:?}", msg, &e),
-    }
-}
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
 
-pub fn unwrap_err(self) -> E {
-    match self {
-        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
-        Err(e) => e,
-    }
-}
-```

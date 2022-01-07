@@ -1,6 +1,6 @@
-## G.ASY.02 在 跨`await` 调用中持有同步互斥锁需要进行处理
+## G.ASY.02 在 跨 `await` 调用中持有同步互斥锁需要进行处理
 
-**【级别：建议】**
+**【级别】** 建议
 
 **【描述】**
 
@@ -23,7 +23,7 @@ async fn foo(x: &Mutex<u32>) {
 }
 ```
 
- **【正例】**
+**【正例】**
 
 ```rust
 use std::sync::Mutex;
@@ -97,6 +97,3 @@ async fn main() {
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
 | [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes           | no           | pedantic   | allow |
-
-
-
