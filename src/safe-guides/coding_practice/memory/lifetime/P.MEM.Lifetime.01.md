@@ -1,4 +1,4 @@
-## P.MEM.Lifetime.01 生命周期参数命名尽量简单
+## P.MEM.Lifetime.01 生命周期参数命名尽量有意义且简洁
 
 **【描述】**
 
@@ -8,7 +8,20 @@
 
 适当简单的携带语义的缩写，可以最小化对业务代码的干扰。并且在生命周期参数较多的情况下，清晰地表达具体哪个引用属于哪个生命周期。
 
-【正例】
+**【反例】**
+
+```rust
+struct ConstraintGeneration<'a, 'b, 'c> {
+    infcx: &'c InferCtxt<'b, 'c>,
+    all_facts: &'a mut Option<AllFacts>,
+    location_table: &'a LocationTable,
+    liveness_constraints: &'a mut LivenessValues<RegionVid>,
+    borrow_set: &'a BorrowSet<'c>,
+    body: &'c Body<'c>,
+}
+```
+
+**【正例】**
 
 ```rust
 /// 'cg = the duration of the constraint generation process itself.
@@ -20,20 +33,4 @@ struct ConstraintGeneration<'cg, 'cx, 'tcx> {
     borrow_set: &'cg BorrowSet<'tcx>,
     body: &'cg Body<'tcx>,
 }
-
-```
-
-【反例】
-
-```rust
-
-struct ConstraintGeneration<'a, 'b, 'c> {
-    infcx: &'cg InferCtxt<'b, 'c>,
-    all_facts: &'a mut Option<AllFacts>,
-    location_table: &'a LocationTable,
-    liveness_constraints: &'a mut LivenessValues<RegionVid>,
-    borrow_set: &'a BorrowSet<'c>,
-    body: &'cg Body<'c>,
-}
-
 ```

@@ -1,10 +1,19 @@
 ## P.MAC.Proc.04 给出正确的错误位置
 
-【描述】
+**【描述】**
 
 过程宏发生错误时，返回的错误应该有正确的位置信息。
 
-【正例】
+**【反例】**
+
+```rust
+// 直接用Span::call_site()
+Error::new(Span::call_site(), "requires unit variant")
+    .to_compile_error()
+    .into()
+```
+
+**【正例】**
 
 ```rust
 #[proc_macro_derive(MyMacro)]
@@ -24,13 +33,4 @@ pub fn derive_my_macro(input: TokenStream) -> TokenStream {
 
     todo!()
 }
-```
-
-【反例】
-
-```rust
-// 直接用Span::call_site()
-Error::new(Span::call_site(), "requires unit variant")
-    .to_compile_error()
-    .into()
 ```
