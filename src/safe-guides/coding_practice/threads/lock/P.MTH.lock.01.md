@@ -1,4 +1,4 @@
-## P.MTH.lock.02   根据场景选择使用互斥锁还是 Channel 
+## P.MTH.lock.01 根据场景选择使用互斥锁还是 Channel 
 
 **【描述】**
 

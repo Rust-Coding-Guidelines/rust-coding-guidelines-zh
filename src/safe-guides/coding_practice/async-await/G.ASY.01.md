@@ -1,6 +1,6 @@
 ## G.ASY.01 在 `async` 块/函数中调用 `async` 函数/闭包请不要忘记添加`.await`
 
-**【级别：建议】**
+**【级别】** 建议
 
 **【描述】**
 
@@ -49,4 +49,3 @@ let req = match task.await {
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
 | [async_yields_async](https://rust-lang.github.io/rust-clippy/master/#async_yields_async) | yes           | no           | correctness | deny  |
-
