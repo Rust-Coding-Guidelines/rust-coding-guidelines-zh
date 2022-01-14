@@ -1,10 +1,10 @@
-## G.ASY.02 在 跨 `await` 调用中持有同步互斥锁需要进行处理
+## G.ASY.02 在跨 `await` 调用中，需要对其持有的同步互斥锁进行处理
 
 **【级别】** 建议
 
 **【描述】**
 
-同步互斥锁本来就不是为异步上下文跨 `await` 调用而设计的，在这种场景中使用同步互斥锁容易造成死锁。当同步互斥锁被跨 await 时，有可能很长时间都不会返回这个调用点，在其他任务中再次用到这个互斥锁的时候，容易造成死锁。
+同步互斥锁本来就不是为异步上下文跨 `await` 调用而设计的，在这种场景中使用同步互斥锁容易造成死锁。当同步互斥锁被跨 `await` 时，有可能很长时间都不会返回这个调用点，在其他任务中再次用到这个互斥锁的时候，容易造成死锁。
 
 这里有三种解决方案：
 
@@ -29,11 +29,11 @@ async fn foo(x: &Mutex<u32>) {
 use std::sync::Mutex;
 // 使用同步互斥锁
 async fn foo(x: &Mutex<u32>) {
-  {
-    let guard = x.lock().unwrap();
-    *guard += 1;
-  }
-  bar.await;
+    {
+        let guard = x.lock().unwrap();
+        *guard += 1;
+    }
+    bar.await;
 }
 
 // 使用异步互斥锁
@@ -69,27 +69,28 @@ async fn main() {
 
 **【例外】**
 
+用例来源：[kludgine](https://github.com/khonsulabs/kludgine/blob/dafc1b5bab10702265cdd1d8ab210ce882d0f998/app/src/runtime/smol.rs#L31)
+
 ```rust
-    // FROM: https://github.com/khonsulabs/kludgine/blob/main/app/src/runtime/smol.rs#L31
-    // Launch a thread pool
-    std::thread::spawn(|| {
-        let (signal, shutdown) = flume::unbounded::<()>();
+// Launch a thread pool
+std::thread::spawn(|| {
+    let (signal, shutdown) = flume::unbounded::<()>();
 
-        easy_parallel::Parallel::new()
-            // Run four executor threads.
-            .each(0..4, |_| {
-                #[allow(clippy::await_holding_lock)] // 这里是 读写锁，不是互斥锁
-                futures::executor::block_on(async {
-                    let guard = GLOBAL_THREAD_POOL.read(); // 获取读写锁的读锁，不会出现锁争用情况，所以是线程安全的
-                    let executor = guard.as_ref().unwrap();
-                    executor.run(shutdown.recv_async()).await
-                })
+    easy_parallel::Parallel::new()
+        // Run four executor threads.
+        .each(0..4, |_| {
+            #[allow(clippy::await_holding_lock)] // 这里是 读写锁，不是互斥锁
+            futures::executor::block_on(async {
+                let guard = GLOBAL_THREAD_POOL.read(); // 获取读写锁的读锁，不会出现锁争用情况，所以是线程安全的
+                let executor = guard.as_ref().unwrap();
+                executor.run(shutdown.recv_async()).await
             })
-            // Run the main future on the current thread.
-            .finish(|| {});
+        })
+        // Run the main future on the current thread.
+        .finish(|| {});
 
-        drop(signal);
-    });
+    drop(signal);
+});
 ```
 
 **【Lint 检测】**

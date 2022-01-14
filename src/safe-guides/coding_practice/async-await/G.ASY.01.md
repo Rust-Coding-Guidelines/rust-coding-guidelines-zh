@@ -32,16 +32,15 @@ fn bar() {
 
 **【例外】**
 
-```rust
-// https://docs.rs/crate/fishrock_lambda_runtime/0.3.0-patched.1/source/src/lib.rs#:~:text=clippy%3a%3aasync_yields_async
+用例来源：[fishrock_lambda_runtime](https://docs.rs/crate/fishrock_lambda_runtime/0.3.0-patched.1/source/src/lib.rs#:~:text=clippy%3a%3aasync_yields_async)
 
+```rust
 #[allow(clippy::async_yields_async)]
 let task = tokio::spawn(async move { handler.call(body, ctx) });
 
 let req = match task.await {
     // ...
 }
-
 ```
 
 **【Lint 检测】**

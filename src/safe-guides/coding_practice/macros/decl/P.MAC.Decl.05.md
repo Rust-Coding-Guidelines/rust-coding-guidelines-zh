@@ -1,4 +1,4 @@
-## P.MAC.Decl.05    使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符
+## P.MAC.Decl.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符
 
 **【描述】**
 
