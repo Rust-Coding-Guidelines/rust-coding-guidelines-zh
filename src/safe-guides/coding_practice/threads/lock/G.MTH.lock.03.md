@@ -8,7 +8,7 @@
 
 因为 ：
 
-- `Arc<String> / Arc<Vec<T>>` 有一层中间层： `arc -> String len/Vec<T> len -> text/data`，它是一个 薄指针（thin pointer）。
+- `Arc<String> / Arc<Vec<T>>` 有一层中间层： `arc -> String len/Vec<T> len -> text/data`，它是一个薄指针（thin pointer）。
 - `Arc<str>/ Arc<[T]>` 则没有中间层： `arc & string len / [T] len -> text/data`，它是一个胖指针（fat pointer）。
 
 **【反例】**

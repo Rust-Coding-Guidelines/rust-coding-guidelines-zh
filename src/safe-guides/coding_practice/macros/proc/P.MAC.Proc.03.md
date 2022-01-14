@@ -22,12 +22,12 @@ quote!(a.to_string())
 **【正例】**
 
 ```rust
-quote!(::std::ToString::to_string(a))
+quote!(std::string::ToString::to_string(a))
 ```
 
 ```rust
 quote! {{
-    use ::std::ToString;
+    use std::string::ToString;
     a.to_string()
 }}
 ```

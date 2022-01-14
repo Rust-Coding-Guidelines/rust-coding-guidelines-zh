@@ -2,7 +2,7 @@
 
 **【描述】**
 
-能使用宏写出强大和用户友好的宏API的人，重点不是因为他们对宏如何实现掌握的好，而是因为他们也掌握了宏之外关于 Rust 的一切。
+能使用宏写出强大和用户友好的宏API的人，重点不仅是因为他们对宏如何实现掌握的好，而是因为他们同时也掌握了宏之外关于 Rust 的一切。
 
 宏设计的重点在于宏生成什么样的代码，而不是宏如何生成代码。
 
@@ -14,4 +14,4 @@
 
 **【参考】**
 
-[Rust 社区顶级专家 Dtolnay 写的宏学习案例](https://github.com/dtolnay/case-studies)
+[Rust 社区顶级专家 David Tolnay 写的宏学习案例](https://github.com/dtolnay/case-studies)

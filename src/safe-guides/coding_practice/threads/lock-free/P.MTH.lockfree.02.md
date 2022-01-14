@@ -2,12 +2,12 @@
 
 **【描述】**
 
-Rust 原子类型使用 `C++20` 的内存顺序模型来指定原子操作的内存同步方式，但也不是完全采用 `C++20` 的内存顺序模型。
+Rust 原子类型使用 [`C++20` 的内存顺序模型](https://zh.cppreference.com/w/cpp/atomic/memory_order) 来指定原子操作的内存同步方式，但也不是完全采用此模型。
 
 目前 Rust 引入五种内存顺序：`Relaxed / Release / Acquire / AcqRel / SeqCst`。
 
 在无锁编程中，指定正确的内存顺序是很重要很复杂的一件事，这里有一些建议：
-1. 如果你对程序中的原子类型同步方式的判断没有太多信息，建议你使用 `SeqCst`，它表示顺序一致性，会强制所有线程都同意程序指令以单一全局线性的方式来执行。这样可以保证安全性，但对性能有一定损失。
+1. 如果你对程序中的原子类型同步方式的判断没有太多信息，建议你使用 `SeqCst`，它表示顺序一致性，会强制所有线程都同意程序指令以单一全局线性的方式来执行。这样可以保证安全性，但性能有一定损失。
 2. 如果你对无锁实现中线程间发生的数据竞争带来的后果不是特别关心，则可以放心使用 `Relaxed`，因为它性能最好。
 3. 当多个线程之间操作内存中同一个位置有因果关系时，适合使用 `Acquire / Release / AcqRel` 来配对。比如，线程 A 写 (`Release`) 内存中的一个位置，然后线程 B 随后读 (`Acquire`) 内存中一个相同的位置，就会产生一个因果关系，所以为了保证 A 的每次写入都能在 B 读取之前被观察到。如果 A 和 B 访问不同内存位置，则没有因果关系。
 
@@ -21,7 +21,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::thread;
 
 fn main() {
-    let lock = Arc::new(AtomicBool::new(false)); // 这个原子类型的值用来表示，是否获取到锁
+    let lock = Arc::new(AtomicBool::new(false)); // 这个原子类型的值用来表示 "是否获取到锁"
 
     // ... distribute lock to threads somehow ...
 

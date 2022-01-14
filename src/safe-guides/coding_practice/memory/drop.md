@@ -1,6 +1,6 @@
 # Drop 析构
 
-在 Safe Rust 中 ，Drop 比较安全。在 Unsafe Rust 中则需要注意更多关于 Drop 的问题。 
+在 Safe Rust 中，Drop 比较安全。在 Unsafe Rust 中则需要注意更多关于 Drop 的问题。 
 
 ---
 <!-- toc -->

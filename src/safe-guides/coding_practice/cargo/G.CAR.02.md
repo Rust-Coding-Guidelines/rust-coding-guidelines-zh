@@ -4,7 +4,8 @@
 
 **【描述】**
 
-在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。并且后续上传到 crates.io 上，这些信息也是必须的。
+在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。
+此外，若要将 `crate` 发布到 crates.io 上的话，这些信息也是必须的。可参考 The Cargo Book 中的[相关介绍](https://doc.rust-lang.org/cargo/reference/manifest.html)。
 
 **【反例】**
 
