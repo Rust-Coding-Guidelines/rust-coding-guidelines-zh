@@ -1,14 +1,6 @@
 ## G.NAM.04 类型转换函数命名需要遵循所有权语义
 
-### 【级别：必须】
-
-必须严格按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
-| ------ | ---- | --------- | ------ | ------ |
-| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes| no | Style | warn |
+### 【级别：建议】
 
 ### 【描述】
 
@@ -20,9 +12,19 @@
 | `to_` | 代价昂贵 | borrowed -\> borrowed<br>borrowed -\> owned (非 Copy 类型)<br>owned -\> owned (Copy 类型) |
 | `into_` | 看情况 | owned -\> owned (非 Copy 类型) |
 
-### 【示例】
+以 `as_` 和 `into_` 作为前缀的类型转换通常是 *降低抽象层次* ，要么是查看背后的数据 ( `as` ) ，要么是分解 (deconstructe) 背后的数据 ( `into` ) 。
+相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。
 
-【正例】
+当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 `into_inner()` 方法名来取出被封装的值。
+
+这适用于以下封装器：
+
+读取缓存 ([`BufReader`]) 、编码或解码 ([`GzDecoder`]) 、取出原子 ([`AtomicBool`]) 、
+或者任何相似的语义 ([`BufWriter`])。
+
+
+### 【正例】
+
 
 - `as_`
     - [`str::as_bytes()`] 
@@ -52,42 +54,22 @@
     - [`BufWriter::into_inner()`] 
       转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。
 
-[`str::as_bytes()`]: https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes
-[`Path::to_str`]: https://doc.rust-lang.org/std/path/struct.Path.html#method.to_str
-[`str::to_lowercase()`]: https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase
-[`f64::to_radians()`]: https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians
-[`String::into_bytes()`]: https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes
-[`BufReader::into_inner()`]: https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner
-[`BufWriter::into_inner()`]: https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner
-
-以 `as_` 和 `into_` 作为前缀的类型转换通常是 *降低抽象层次* ，要么是查看背后的数据 ( `as` ) ，要么是分解 (deconstructe) 背后的数据 ( `into` ) 。
-相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。
-
-当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 `into_inner()` 方法名来取出被封装的值。
-
-这适用于以下封装器：
-
-读取缓存 ([`BufReader`]) 、编码或解码 ([`GzDecoder`]) 、取出原子 ([`AtomicBool`]) 、
-或者任何相似的语义 ([`BufWriter`])。
-
-[`BufReader`]: https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner
-[`GzDecoder`]: https://docs.rs/flate2/1.0.20/flate2/read/struct.GzDecoder.html#method.into_inner
-[`AtomicBool`]: https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner
-[`BufWriter`]: https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner
-
 如果类型转换方法返回的类型具有 `mut` 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 `mut` 名。
 比如 [`Vec::as_mut_slice`] 返回 `mut slice` 类型，这个方法的功能正如其名称所述，所以这个名称优于 `as_slice_mut` 。
-
-[`Vec::as_mut_slice`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice
 
 ```rust.ignored
 // Return type is a mut slice.
 fn as_mut_slice(&mut self) -> &mut [T];
 ```
 
-更多来自标准库的例子：
-
 - [`Result::as_ref`](https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref)
 - [`RefCell::as_ptr`](https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr)
 - [`slice::to_vec`](https://doc.rust-lang.org/std/primitive.slice.html#method.to_vec)
 - [`Option::into_iter`](https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter)
+
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
+| ------ | ---- | --------- | ------ | ------ |
+| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes| no | Style | warn |

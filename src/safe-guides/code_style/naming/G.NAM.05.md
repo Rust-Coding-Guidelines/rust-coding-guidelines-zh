@@ -2,49 +2,12 @@
 
 ### 【级别：建议】
 
-建议按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |是否可定制|
-| ------ | ---- | --------- | ------ | ------ |
-|  _ | no | no | _ | yes |
-
-【定制化参考】
-
-检测 Struct 实现的方法名是否包含 `get_/set_` 前缀，如果包含，则给予警告。 
-
 ### 【描述】
 
 因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 `&self` 和 独占引用 `&mut self`，分别代表了 getter 和 setter 的语义。
 
-### 【示例】
+### 【反例】
 
-【正例】
-
-```rust
-pub struct First;
-pub struct Second;
-
-pub struct S {
-    first: First,
-    second: Second,
-}
-
-impl S {
-    // 不建议 `get_first`。
-    pub fn first(&self) -> &First {
-        &self.first
-    }
-
-    // 不建议 `get_first_mut`, `get_mut_first`, or `mut_first`.
-    pub fn first_mut(&mut self) -> &mut First {
-        &mut self.first
-    }
-}
-```
-
-【反例】
 
 ```rust
 pub struct First;
@@ -69,7 +32,34 @@ impl S {
 }
 ```
 
-【例外】
+
+### 【正例】
+
+```rust
+pub struct First;
+pub struct Second;
+
+pub struct S {
+    first: First,
+    second: Second,
+}
+
+impl S {
+    // 不建议 `get_first`。
+    pub fn first(&self) -> &First {
+        &self.first
+    }
+
+    // 不建议 `get_first_mut`, `get_mut_first`, or `mut_first`.
+    pub fn first_mut(&mut self) -> &mut First {
+        &mut self.first
+    }
+}
+```
+
+
+
+### 【例外】
 
 但也存在例外情况：只有当有一个明显的东西可以通过`getter`得到时，才会使用`get`命名。例如，`Cell::get`可以访问一个`Cell`的内容。
 
@@ -99,3 +89,15 @@ getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那�
 - [`std::sync::atomic::AtomicBool::get_mut`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.get_mut)
 - [`std::collections::hash_map::OccupiedEntry::get_mut`](https://doc.rust-lang.org/std/collections/hash_map/struct.OccupiedEntry.html#method.get_mut)
 - [`<[T]>::get_unchecked`](https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked)
+
+
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |是否可定制|
+| ------ | ---- | --------- | ------ | ------ |
+|  _ | no | no | _ | yes |
+
+【定制化参考】
+
+检测 Struct 实现的方法名是否包含 `get_/set_` 前缀，如果包含，则给予警告。 

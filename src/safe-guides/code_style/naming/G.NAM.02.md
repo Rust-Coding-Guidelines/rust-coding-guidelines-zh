@@ -1,20 +1,11 @@
 
 ## G.NAM.02 使用统一的命名风格
 
-### 【级别：必须】
-
-必须严格按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
-| ------ | ---- | --------- | ------ |
-| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no | yes | Style |
-| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case) | no | yes | Style |
+### 【级别：要求】
 
 ### 【描述】
 
-Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有描述。总的来说，Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风格，在 “值（实例）级别”的结构中使用 `snake_case`命名风格。
+Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风格，在 “值（实例）级别”的结构中使用 `snake_case`命名风格。
 
 下面是具体汇总。
 
@@ -48,3 +39,13 @@ Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/te
 
 - [^crate-name]: 由于历史问题，包名有两种形式 `snake_case` 或 `kebab-case` ，但实际在代码中需要引入包名的时候，Rust 只能识别 `snake_case`，也会自动将 `kebab-case` 识别为  `kebab_case`。
 - Crate 的名称通常不应该使用 `-rs` 或者 `-rust` 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 `-rs` 后缀来表明这是 Rust 实现的版本。
+
+【参考】
+Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有描述。
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
+| ------ | ---- | --------- | ------ |
+| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no | yes | Style |
+| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case) | no | yes | Style |
