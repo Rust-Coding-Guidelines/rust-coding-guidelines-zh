@@ -1,18 +1,6 @@
 ## G.NAM.07 迭代器类型名称应该与产生它们的方法相匹配
 
-### 【级别：必须】
-
-必须严格按此规范执行。
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ------ | ---- | --------- | ------ | ------ | 
-|  _ | no | no | _ | yes |
-
-【定制化参考】
-
-检测返回迭代器的方法，其返回类型应该与方法名相匹配，否则给予警告。
+### 【级别：建议】
 
 ### 【描述】
 
@@ -20,9 +8,7 @@
 
 这条规则主要适用于方法，但通常对函数也有意义。例如，第三方库 `url`  中的 [percent_encode](https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html) 返回一个`PercentEncode` 类型的迭代器。
 
-### 【示例】
-
-【正例】
+### 【正例】
 
 来自标准库的例子：
 
@@ -42,3 +28,15 @@
 [btree_map::Keys]: https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html
 [`BTreeMap::values`]: https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values
 [btree_map::Values]: https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html
+
+
+### 【Lint 检测】
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| ------ | ---- | --------- | ------ | ------ | 
+|  _ | no | no | _ | yes |
+
+
+【定制化参考】
+
+检测返回迭代器的方法，其返回类型应该与方法名相匹配，否则给予警告。
