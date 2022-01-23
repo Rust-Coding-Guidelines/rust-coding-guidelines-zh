@@ -21,8 +21,6 @@
 
 **【反例】**
 
-`use_small_heuristics` 默认配置示例。
-
 当`use_small_heuristics` 配置为 `Off` :
 
 ```rust
@@ -70,6 +68,9 @@ fn main() {
 ```
 
 **【正例】**
+
+`use_small_heuristics` 默认配置示例。
+
 
 ```rust
 enum Lorem {

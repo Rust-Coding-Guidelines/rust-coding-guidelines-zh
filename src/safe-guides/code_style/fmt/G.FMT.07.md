@@ -6,9 +6,10 @@
 
 当在表达式或语言项定义中出现多个标识符，则应该让其保持块状风格缩进。
 
-#### 数组
+#### 【反例】
 
-**【反例】**
+数组
+
 
 ```rust
 fn main() {
@@ -22,25 +23,7 @@ fn main() {
 }
 ```
 
-**【正例】**
-
-```rust
-fn main() {
-    let lorem = vec![
-        "ipsum",
-        "dolor",
-        "sit",
-        "amet",
-        "consectetur",
-        "adipiscing",
-        "elit",
-    ];
-}
-```
-
-#### 流程控制
-
-**【反例】**
+流程控制
 
 ```rust
 fn main() {
@@ -57,26 +40,8 @@ fn main() {
 }
 ```
 
-**【正例】**
+函数参数
 
-```rust
-fn main() {
-    if lorem_ipsum
-        && dolor_sit
-        && amet_consectetur
-        && lorem_sit
-        && dolor_consectetur
-        && amet_ipsum
-        && lorem_consectetur
-    {
-        // ...
-    }
-}
-```
-
-#### 函数参数
-
-**【反例】**
 
 ```rust
 fn lorem() {}
@@ -94,30 +59,7 @@ fn lorem(ipsum: usize,
 }
 ```
 
-**【正例】**
-
-```rust
-fn lorem() {}
-
-fn lorem(ipsum: usize) {}
-
-fn lorem(
-    ipsum: usize,
-    dolor: usize,
-    sit: usize,
-    amet: usize,
-    consectetur: usize,
-    adipiscing: usize,
-    elit: usize,
-) {
-    // body
-}
-
-```
-
-#### 函数调用
-
-**【反例】**
+函数调用
 
 ```rust
 fn main() {
@@ -132,26 +74,8 @@ fn main() {
 }
 ```
 
-**【正例】**
+泛型
 
-```rust
-fn main() {
-    lorem(
-        "lorem",
-        "ipsum",
-        "dolor",
-        "sit",
-        "amet",
-        "consectetur",
-        "adipiscing",
-        "elit",
-    );
-}
-```
-
-#### 泛型
-
-**【反例】**
 
 ```rust
 fn lorem<Ipsum: Eq = usize,
@@ -173,7 +97,90 @@ fn lorem<Ipsum: Eq = usize,
 }
 ```
 
-**【正例】**
+结构体
+
+```rust
+fn main() {
+    let lorem = Lorem { ipsum: dolor,
+                        sit: amet };
+}
+```
+
+
+#### 【正例】
+
+数组
+
+```rust
+fn main() {
+    let lorem = vec![
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet",
+        "consectetur",
+        "adipiscing",
+        "elit",
+    ];
+}
+```
+
+流程控制
+
+```rust
+fn main() {
+    if lorem_ipsum
+        && dolor_sit
+        && amet_consectetur
+        && lorem_sit
+        && dolor_consectetur
+        && amet_ipsum
+        && lorem_consectetur
+    {
+        // ...
+    }
+}
+```
+
+函数参数
+
+```rust
+fn lorem() {}
+
+fn lorem(ipsum: usize) {}
+
+fn lorem(
+    ipsum: usize,
+    dolor: usize,
+    sit: usize,
+    amet: usize,
+    consectetur: usize,
+    adipiscing: usize,
+    elit: usize,
+) {
+    // body
+}
+
+```
+
+函数调用
+
+```rust
+fn main() {
+    lorem(
+        "lorem",
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet",
+        "consectetur",
+        "adipiscing",
+        "elit",
+    );
+}
+```
+
+泛型
 
 ```rust
 fn lorem<
@@ -197,18 +204,7 @@ fn lorem<
 }
 ```
 
-#### 结构体
-
-**【反例】**
-
-```rust
-fn main() {
-    let lorem = Lorem { ipsum: dolor,
-                        sit: amet };
-}
-```
-
-**【正例】**
+结构体
 
 ```rust
 fn main() {

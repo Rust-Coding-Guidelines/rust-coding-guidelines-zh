@@ -1,4 +1,4 @@
-## G.CMT.03  在每一个文件开头加入版权公告
+## G.CMT.03  在每一个文件开头加入版权公告、创建和修改年份和功能描述
 
 **【级别】** 建议
 
@@ -7,13 +7,15 @@
 每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。
 
 可以通过 `rustfmt` 的 `license_template_path` 配置项 和 `license.template`来自动化此操作。
+另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。但这两项无法通过rustfmt自动插入
+对于文件修改时间，部分VSCode的一些插件也可以帮忙做到。
 
 **【正例】**
 
-来自 [TiKV](https://github.com/tikv/tikv/blob/master/etc/license.template) 项目的案例。可以命名为`.rustfmt.license-template`许可证模版。
+可以命名为`.rustfmt.license-template`许可证模版。
 
 ```rust
-// Copyright {\d+} TiKV Project Authors. Licensed under Apache-2.0.
+// Copyright {\d+} YOURCOMPANY Project Authors. Licensed under Apache-2.0.
 ```
 
 在 `rustfmt.toml` 中配置：
@@ -25,7 +27,7 @@ license_template_path = ".rustfmt.license-template"
 在代码文件中手工添加对应的注释 （自动插入功能还未支持）：
 
 ```rust
-// Copyright 2021 TiKV Project Authors. Licensed under Apache-2.0.
+// Copyright 2021 YOURCOMPANY Project Authors. Licensed under Apache-2.0.
 ```
 
 **【rustfmt 配置】**

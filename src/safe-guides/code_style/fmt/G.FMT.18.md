@@ -1,10 +1,11 @@
-## G.FMT.18  extern 外部函数需要指定 ABI
+## G.FMT.18  extern 外部函数需要显式指定 ABI
 
 **【级别】** 建议
 
 **【描述】**
 
-当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。`extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。如果是 `Rust-ABI`则不会省略。
+当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。`extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。
+如果是 `Rust-ABI`则不会省略。
 
 **【反例】**
 
@@ -24,6 +25,7 @@ extern "Rust" {
 **【正例】**
 
 ```rust
+// 默认就是 `C-ABI`
 extern "C" {
     pub static lorem: c_int;
 }
