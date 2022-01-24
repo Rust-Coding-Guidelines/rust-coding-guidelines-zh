@@ -44,9 +44,7 @@ Rust 语言虽然以类型安全、内存安全、线程安全和高性能等特
 - 标识为`G`为规则（Guideline）。编号方式为`G.Element.Number`。
 - 当有子目录时。编号方式为 `P.Element.SubElement.Number` 或 `G.Element.SubElement.Number`。
 
-其中 `Element` 为领域知识中关键元素（本规范中对应的二级目录）的3位英文字母缩略语。
-
-Number 从`01`开始递增。`Element`为领域知识中关键元素的三位英文字母缩略语。（术语参考： [SEI CERT C Coding Standard](https://wiki.sei.cmu.edu/confluence/display/c/SEI+CERT+C+Coding+Standard)）
+Number 从`01`开始递增。其中 `Element` 为领域知识中关键元素（本规范中对应的二级目录）的三位英文字母缩略语。（术语参考： [SEI CERT C Coding Standard](https://wiki.sei.cmu.edu/confluence/display/c/SEI+CERT+C+Coding+Standard)）
 
 
 | Element | 解释   | Element | 解释     |
