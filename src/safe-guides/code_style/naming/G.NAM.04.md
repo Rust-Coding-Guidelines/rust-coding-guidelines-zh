@@ -1,8 +1,8 @@
 ## G.NAM.04 类型转换函数命名需要遵循所有权语义
 
-### 【级别：建议】
+**【级别】** 建议
 
-### 【描述】
+**【描述】**
 
 应该使用带有以下前缀名称方法来进行特定类型转换：
 
@@ -23,7 +23,7 @@
 或者任何相似的语义 ([`BufWriter`])。
 
 
-### 【正例】
+**【正例】**
 
 
 - `as_`
@@ -68,7 +68,7 @@ fn as_mut_slice(&mut self) -> &mut [T];
 - [`Option::into_iter`](https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter)
 
 
-### 【Lint 检测】
+**【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
 | ------ | ---- | --------- | ------ | ------ |

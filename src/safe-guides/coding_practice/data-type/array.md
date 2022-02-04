@@ -4,3 +4,9 @@
 
 从  Rust 1.51 版本开始，稳定了 常量泛型（const generics）功能，形如  `[T;1]`和 `[T;3]` 这种不同的类型可以统一为 `[T; N]`。
 
+## 列表
+
+- [P.TYP.ARR.01 当数组长度在编译期就已经确定，应优先使用固定长度数组，而非动态数组（ Vec<T>）](./array/P.TYP.ARR.01.md)
+- [G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量](./array/G.TYP.ARR.01.md)
+- [G.TYP.ARR.02 使用数组索引时禁止越界访问](./array/G.TYP.ARR.02.md)
+- [G.TYP.ARR.03 当数组元素为原生数据类型（Primitive），排序时宜使用非稳定排序](./array/G.TYP.ARR.03.md)

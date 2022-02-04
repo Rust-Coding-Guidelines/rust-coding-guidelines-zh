@@ -9,3 +9,7 @@ Rust 中常见的智能指针包括：
 - 自动管理堆内存：`Box<T>`
 - 引用计数：`Rc<T> / Arc<T>`
 - 内部可变性容器：`Cell<T> / RefCell<T>`
+
+## 列表
+
+- [P.MEM.SPT.01 使用 `RefCell<T>` 时宜使用 `try_borrow/try_borrow_mut` 方法](./smart-ptr/P.MEM.SPT.01.md)

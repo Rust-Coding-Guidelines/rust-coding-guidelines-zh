@@ -1,9 +1,9 @@
-# rust-coding-guidelines-zh
-Rust 编码规范 中文版
+# Rust 编码规范 中文版
 
 ## 状态
 
-- [《Rust 安全编码规范》](https://rust-coding-guidelines.github.io/rust-coding-guidelines-zh/safe-guides/intro.html) 初稿发布 2021-10-31 (V 0.1)
+- 《Rust 安全编码规范》初稿发布 2021-10-31 (V 0.1)
+- 《Rust 安全编码规范》经社区和公司内第一次评审版本发布 2022-02-06 (V 0.2) ，改进内容参考 [Changelog](./Changelog.md)。
 
 ## 介绍
 
@@ -27,13 +27,11 @@ Rust 编码规范 中文版
 
 但是随着 Rust 日益普及，统一的编码规范需求也逐渐浮出水面，本规范应运而生。
 
-![org](img/org.png)
+![org](./src/img/org.png)
 
 本规范致力于成为统一的 Rust 编码规范，并联合国内外公司共同维护。
 
 公司可以依赖本规范，结合自己的业务领域和团队习惯，形成自己的编码规范，并可以在日常实践中反哺本规范，让本规范更加完善。
 
-如何参与贡献？
 
-请阅读 [贡献说明](./src/contribution.md) 。
 

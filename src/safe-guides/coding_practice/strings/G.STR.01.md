@@ -1,4 +1,4 @@
-## G.STR.01   在实现`Display`trait 时不要调用`to_string()`方法
+## G.STR.01   在实现`Display`特质时不要调用`to_string()`方法
 
 **【级别】** 建议
 
