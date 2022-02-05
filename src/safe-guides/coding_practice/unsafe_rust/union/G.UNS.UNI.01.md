@@ -1,4 +1,4 @@
-## G.UNS.Union.01  除了与 C 打交道，尽量不要使用 Union
+## G.UNS.UNI.01  除了与 C 交互，尽量不要使用 Union
 
 **【级别】** 要求
 

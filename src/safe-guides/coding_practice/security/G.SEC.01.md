@@ -44,6 +44,20 @@ fn main() {
 }
 ```
 
+或者
+
+```rust
+#![deny(text_direction_codepoint_in_comment)]
+fn main() {
+    println!("{:?}"); // '‮');
+}
+
+#![deny(text_direction_codepoint_in_literal)]
+fn main() {
+    println!("{:?}", '‮');
+}
+```
+
 **【例外】**
 
 但也有例外，比如你的代码恰好是要处理这些特殊Unicode字符的。

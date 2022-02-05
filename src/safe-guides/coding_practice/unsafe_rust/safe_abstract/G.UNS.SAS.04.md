@@ -1,4 +1,4 @@
-## G.UNS.SafeAbstract.04  不要随便在公开的 API 中暴露裸指针
+## G.UNS.SAS.04  不要随便在公开的 API 中暴露裸指针
 
 **【级别】** 要求
 

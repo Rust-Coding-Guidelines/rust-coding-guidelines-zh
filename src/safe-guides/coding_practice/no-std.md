@@ -7,3 +7,9 @@
 Rust 也有 `#![no_core]` 属性，但是还未稳定，不建议使用。
 
 >  参考数据： `core` 在编译后文件大小中只占大约 3k 大小。
+
+## 列表
+
+- [P.EMB.01 `no-std` 下必须定义一个Panic行为以确保安全](./no-std/P.EMB.01.md)
+- [P.EMB.02 要确保程序中的类型有正确的内存布局](./no-std/P.EMB.02.md)
+- [P.EMB.03 将一些公用的类型、函数、宏等集中到一个自定义的 `baremetal-std`](./no-std/P.EMB.03.md)

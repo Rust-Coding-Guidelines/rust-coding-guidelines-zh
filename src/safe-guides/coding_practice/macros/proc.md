@@ -15,3 +15,12 @@ syn/quote 不仅能用于过程宏，还广泛用于代码生成(*codegen*)、�
 过程宏不具有卫生性（hygiene），这意味着它会受到外部语法项（item）的影响，也会影响到外部导入。
 
 过程宏可以在编译期执行任意代码。
+
+## 列表
+
+- [P.MAC.PRO.01 不要使用过程宏来规避静态分析检查](.proc/P.MAC.PRO.01.md)
+- [P.MAC.PRO.02 实现过程宏时要对关键特性增加测试](.proc/P.MAC.PRO.02.md)
+- [P.MAC.PRO.03 保证过程宏的卫生性](.proc/P.MAC.PRO.03.md)
+- [P.MAC.PRO.04 给出正确的错误位置](.proc/P.MAC.PRO.04.md)
+- [P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs](.proc/P.MAC.PRO.05.md)
+- [P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告](.proc/P.MAC.PRO.06.md)

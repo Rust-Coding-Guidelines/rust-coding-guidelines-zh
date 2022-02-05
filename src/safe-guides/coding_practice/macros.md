@@ -36,166 +36,26 @@ rustc -Z unstable-options --pretty expanded hello.rs
 # 对项目里的二进制 rs 文件
 cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 ```
----
-<!-- toc -->
----
 
-## P.MAC.01  不要轻易使用宏
+## 列表
 
-【描述】
-
-能使用宏写出强大和用户友好的宏API的人，重点不是因为他们对宏如何实现掌握的好，而是因为他们也掌握了宏之外关于 Rust 的一切。
-
-宏设计的重点在于宏生成什么样的代码，而不是宏如何生成代码。
-
-宏只是将 Rust 语言特性以一种有趣的方式组合在一起能自动生成代码的创造力。
-
-尤其是过程宏，它有一定复杂性，且很难调试，不卫生，也容易出错，不适合新手使用它。
-
-【参考】
-
-[Rust 社区顶级专家 Dtolnay 写的 宏学习案例 ](https://github.com/dtolnay/case-studies)
-
-## P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法   
-
-**【描述】**
-
-Rust 宏可以让开发者定义自己的DSL，但是，在使用宏的时候，要尽可能贴近Rust的语法。这样可以增强可读性，让其他开发者在使用宏的时候，可以猜测出它的生成的代码。
-
-【正例】
-
-```rust
-bitflags! {
-    struct S: u32 { /* ... */ }
-}
-
-// 也要注意结尾是正确的分号或逗号
-bitflags! {
-    struct S: u32 {
-        const C = 0b000100;
-        const D = 0b001000;
-    }
-}
-```
-
-【反例】
-
-```rust
-// ...over no keyword...
-bitflags! {
-    S: u32 { /* ... */ }
-}
-
-// ...or some ad-hoc word.
-bitflags! {
-    flags S: u32 { /* ... */ }
-}
-
-// or
-bitflags! {
-    struct S: u32 {
-        const E = 0b010000, // 结尾应该是分号更符合 Rust 语法
-        const F = 0b100000,
-    }
-}
-```
-
----
-
-## G.MAC.01   `dbg!()` 宏只应该在 Debug 模式下使用
-
-### 【级别：规则】
-
-按此规范执行。
-
-### 【Lint 检测】
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [dbg_macro](https://rust-lang.github.io/rust-clippy/master/#dbg_macro) | yes           | no           | restriction | allow |
-
-### 【描述】
-
-`dbg!()` 宏是 Rust 内置的宏，其目的是用于调试代码，仅用于 Debug 模式。 
-
-将其用在 Release 模式下，调试信息也会被打印出来，不安全。
-
-【正例】
-
-```rust
-// Debug 模式编译
-let foo = false;
-dbg!(foo); 
-
-// Release 模式编译
-let foo = false;
-// dbg!(foo); 
-```
-
-【反例】
-
-```rust
-// Release 模式编译
-let foo = false;
-dbg!(foo); 
-```
-
-## G.MAC.02   在多个地方使用`println!` 或 `panic!` 之类的内置宏 时，可以将其包装到函数内，使用 `#[cold]` 和 `#[inline(never)]` 属性避免其内联，从而避免编译文件膨胀
-
-### 【级别：建议】
-
-建议按此规范执行
-
-### 【Lint 检测】
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-
-### **【描述】**
-
-因为像 `println!` 或 `panic!` 之类的宏，如果到处使用，就会到处展开代码，会导致编译文件大小膨胀。尤其在嵌入式领域需要注意。
-
-【正例】
-
-```rust
-#[inline(never)]
-#[cold]
-#[track_caller] // 为了定位 panic 发生时的调用者的位置
-fn unwrap_failed(msg: &str, error: &dyn fmt::Debug) -> ! {
-    panic!("{}: {:?}", msg, error)
-}
-
-pub fn expect(self, msg: &str) -> T {
-    match self {
-        Ok(t) => t,
-        Err(e) => unwrap_failed(msg, &e),
-    }
-}
-
-pub fn unwrap_err(self) -> E {
-    match self {
-        Ok(t) => unwrap_failed("called `Result::unwrap_err()` on an `Ok` value", &t),
-        Err(e) => e,
-    }
-}
-```
-
-【反例】
-
-```rust
-pub fn expect(self, msg: &str) -> T {
-    match self {
-        Ok(t) => t,
-        Err(e) => panic!("{}: {:?}", msg, &e),
-    }
-}
-
-pub fn unwrap_err(self) -> E {
-    match self {
-        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
-        Err(e) => e,
-    }
-}
-```
-
+- [P.MAC.01 不要轻易使用宏](./macros/P.MAC.01.md)
+- [P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法](./macros/P.MAC.02.md)
+- [G.MAC.01 dbg!() 宏只应该在 Debug 模式下使用](./macros/G.MAC.01.md)
+- [G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响](./macros/G.MAC.02.md)
+- [声明宏](./macros/decl.md)
+    - [P.MAC.DCL.01 不要将声明宏内的变量作为外部变量使用](./macros/decl/P.MAC.DCL.01.md)
+    - [P.MAC.DCL.02 在编写多个宏规则时，应该先从匹配粒度最小的开始写](./macros/decl/P.MAC.DCL.02.md)
+    - [P.MAC.DCL.03 不要在片段分类符跟随它不匹配的符号](./macros/decl/P.MAC.DCL.03.md)
+    - [P.MAC.DCL.04 匹配规则要精准，不要模糊不清](./macros/decl/P.MAC.DCL.04.md)
+    - [P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符](./macros/decl/P.MAC.DCL.05.md)
+    - [P.MAC.DCL.06 当宏需要接收 self 时需要注意](./macros/decl/P.MAC.DCL.06.md)
+    - [P.MAC.DCL.07 确保在宏定义之后再去调用宏](./macros/decl/P.MAC.DCL.07.md)
+    - [P.MAC.DCL.08 同一个 crate 内定义的宏相互调用时，需要注意卫生性](./macros/decl/P.MAC.DCL.08.md)
+- [过程宏](./macros/proc.md)
+    - [P.MAC.PRO.01 不要使用过程宏来规避静态分析检查](./macros/proc/P.MAC.PRO.01.md)
+    - [P.MAC.PRO.02 实现过程宏时要对关键特性增加测试](./macros/proc/P.MAC.PRO.02.md)
+    - [P.MAC.PRO.03 保证过程宏的卫生性](./macros/proc/P.MAC.PRO.03.md)
+    - [P.MAC.PRO.04 给出正确的错误位置](./macros/proc/P.MAC.PRO.04.md)
+    - [P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs](./macros/proc/P.MAC.PRO.05.md)
+    - [P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告](./macros/proc/P.MAC.PRO.06.md)
