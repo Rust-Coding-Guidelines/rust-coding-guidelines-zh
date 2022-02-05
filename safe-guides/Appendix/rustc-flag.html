@@ -1,0 +1,545 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>编译参数说明 - Rust 编码规范</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../../safe-guides/overview.html"><strong aria-hidden="true">1.</strong> 概述</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/overview/why.html"><strong aria-hidden="true">1.1.</strong> 为什么需要 Rust 编码规范</a></li><li class="chapter-item "><a href="../../safe-guides/overview/convention.html"><strong aria-hidden="true">1.2.</strong> 编码规范基本约定</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/code_style.html"><strong aria-hidden="true">2.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/code_style/naming.html"><strong aria-hidden="true">2.1.</strong> 命名</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/code_style/naming/P.NAM.01.html"><strong aria-hidden="true">2.1.1.</strong> P.NAM.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/P.NAM.02.html"><strong aria-hidden="true">2.1.2.</strong> P.NAM.02</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.01.html"><strong aria-hidden="true">2.1.3.</strong> G.NAM.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.02.html"><strong aria-hidden="true">2.1.4.</strong> G.NAM.02</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.03.html"><strong aria-hidden="true">2.1.5.</strong> G.NAM.03</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.04.html"><strong aria-hidden="true">2.1.6.</strong> G.NAM.04</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.05.html"><strong aria-hidden="true">2.1.7.</strong> G.NAM.05</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.06.html"><strong aria-hidden="true">2.1.8.</strong> G.NAM.06</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.07.html"><strong aria-hidden="true">2.1.9.</strong> G.NAM.07</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.08.html"><strong aria-hidden="true">2.1.10.</strong> G.NAM.08</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.09.html"><strong aria-hidden="true">2.1.11.</strong> G.NAM.09</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/naming/G.NAM.10.html"><strong aria-hidden="true">2.1.12.</strong> G.NAM.10</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt.html"><strong aria-hidden="true">2.2.</strong> 格式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/P.FMT.01.html"><strong aria-hidden="true">2.2.1.</strong> P.FMT.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.01.html"><strong aria-hidden="true">2.2.2.</strong> G.FMT.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.02.html"><strong aria-hidden="true">2.2.3.</strong> G.FMT.02</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.03.html"><strong aria-hidden="true">2.2.4.</strong> G.FMT.03</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.04.html"><strong aria-hidden="true">2.2.5.</strong> G.FMT.04</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.05.html"><strong aria-hidden="true">2.2.6.</strong> G.FMT.05</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.06.html"><strong aria-hidden="true">2.2.7.</strong> G.FMT.06</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.07.html"><strong aria-hidden="true">2.2.8.</strong> G.FMT.07</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.08.html"><strong aria-hidden="true">2.2.9.</strong> G.FMT.08</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.09.html"><strong aria-hidden="true">2.2.10.</strong> G.FMT.09</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.10.html"><strong aria-hidden="true">2.2.11.</strong> G.FMT.10</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.11.html"><strong aria-hidden="true">2.2.12.</strong> G.FMT.11</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.12.html"><strong aria-hidden="true">2.2.13.</strong> G.FMT.12</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.13.html"><strong aria-hidden="true">2.2.14.</strong> G.FMT.13</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.14.html"><strong aria-hidden="true">2.2.15.</strong> G.FMT.14</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.15.html"><strong aria-hidden="true">2.2.16.</strong> G.FMT.15</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.16.html"><strong aria-hidden="true">2.2.17.</strong> G.FMT.16</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.17.html"><strong aria-hidden="true">2.2.18.</strong> G.FMT.17</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.18.html"><strong aria-hidden="true">2.2.19.</strong> G.FMT.18</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.19.html"><strong aria-hidden="true">2.2.20.</strong> G.FMT.19</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/fmt/G.FMT.20.html"><strong aria-hidden="true">2.2.21.</strong> G.FMT.20</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments.html"><strong aria-hidden="true">2.3.</strong> 注释</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.01.html"><strong aria-hidden="true">2.3.1.</strong> P.CMT.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.02.html"><strong aria-hidden="true">2.3.2.</strong> P.CMT.02</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.03.html"><strong aria-hidden="true">2.3.3.</strong> P.CMT.03</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.04.html"><strong aria-hidden="true">2.3.4.</strong> P.CMT.04</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.05.html"><strong aria-hidden="true">2.3.5.</strong> P.CMT.05</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/P.CMT.06.html"><strong aria-hidden="true">2.3.6.</strong> P.CMT.06</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.01.html"><strong aria-hidden="true">2.3.7.</strong> G.CMT.01</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.02.html"><strong aria-hidden="true">2.3.8.</strong> G.CMT.02</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.03.html"><strong aria-hidden="true">2.3.9.</strong> G.CMT.03</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.04.html"><strong aria-hidden="true">2.3.10.</strong> G.CMT.04</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.05.html"><strong aria-hidden="true">2.3.11.</strong> G.CMT.05</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.06.html"><strong aria-hidden="true">2.3.12.</strong> G.CMT.06</a></li><li class="chapter-item "><a href="../../safe-guides/code_style/comments/G.CMT.07.html"><strong aria-hidden="true">2.3.13.</strong> G.CMT.07</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice.html"><strong aria-hidden="true">3.</strong> 编码实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts.html"><strong aria-hidden="true">3.1.</strong> 常量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.01.html"><strong aria-hidden="true">3.1.1.</strong> G.CNS.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.02.html"><strong aria-hidden="true">3.1.2.</strong> G.CNS.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.03.html"><strong aria-hidden="true">3.1.3.</strong> G.CNS.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.04.html"><strong aria-hidden="true">3.1.4.</strong> G.CNS.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.05.html"><strong aria-hidden="true">3.1.5.</strong> G.CNS.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/consts/G.CNS.06.html"><strong aria-hidden="true">3.1.6.</strong> G.CNS.06</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/statics.html"><strong aria-hidden="true">3.2.</strong> 静态变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/statics/G.STV.01.html"><strong aria-hidden="true">3.2.1.</strong> G.STV.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables.html"><strong aria-hidden="true">3.3.</strong> 本地变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/P.VAR.01.html"><strong aria-hidden="true">3.3.1.</strong> P.VAR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/P.VAR.02.html"><strong aria-hidden="true">3.3.2.</strong> P.VAR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/P.VAR.03.html"><strong aria-hidden="true">3.3.3.</strong> P.VAR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/G.VAR.01.html"><strong aria-hidden="true">3.3.4.</strong> G.VAR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/G.VAR.02.html"><strong aria-hidden="true">3.3.5.</strong> G.VAR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/G.VAR.03.html"><strong aria-hidden="true">3.3.6.</strong> G.VAR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/G.VAR.04.html"><strong aria-hidden="true">3.3.7.</strong> G.VAR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/variables/G.VAR.05.html"><strong aria-hidden="true">3.3.8.</strong> G.VAR.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type.html"><strong aria-hidden="true">3.4.</strong> 数据类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/P.TYP.01.html"><strong aria-hidden="true">3.4.1.</strong> P.TYP.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/P.TYP.02.html"><strong aria-hidden="true">3.4.2.</strong> P.TYP.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/P.TYP.03.html"><strong aria-hidden="true">3.4.3.</strong> P.TYP.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/G.TYP.01.html"><strong aria-hidden="true">3.4.4.</strong> G.TYP.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/G.TYP.02.html"><strong aria-hidden="true">3.4.5.</strong> G.TYP.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/G.TYP.03.html"><strong aria-hidden="true">3.4.6.</strong> G.TYP.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/unit.html"><strong aria-hidden="true">3.4.7.</strong> 单元类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/unit/G.TYP.UNT.01.html"><strong aria-hidden="true">3.4.7.1.</strong> G.TYP.UNT.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool.html"><strong aria-hidden="true">3.4.8.</strong> 布尔</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.01.html"><strong aria-hidden="true">3.4.8.1.</strong> G.TYP.BOL.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.02.html"><strong aria-hidden="true">3.4.8.2.</strong> G.TYP.BOL.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.03.html"><strong aria-hidden="true">3.4.8.3.</strong> G.TYP.BOL.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.04.html"><strong aria-hidden="true">3.4.8.4.</strong> G.TYP.BOL.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.05.html"><strong aria-hidden="true">3.4.8.5.</strong> G.TYP.BOL.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/bool/G.TYP.BOL.06.html"><strong aria-hidden="true">3.4.8.6.</strong> G.TYP.BOL.06</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/char.html"><strong aria-hidden="true">3.4.9.</strong> 字符</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/char/G.TYP.CHR.01.html"><strong aria-hidden="true">3.4.9.1.</strong> G.TYP.CHR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/char/G.TYP.CHR.02.html"><strong aria-hidden="true">3.4.9.2.</strong> G.TYP.CHR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/char/G.TYP.CHR.03.html"><strong aria-hidden="true">3.4.9.3.</strong> G.TYP.CHR.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/int.html"><strong aria-hidden="true">3.4.10.</strong> 整数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/int/G.TYP.INT.01.html"><strong aria-hidden="true">3.4.10.1.</strong> G.TYP.INT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/int/G.TYP.INT.02.html"><strong aria-hidden="true">3.4.10.2.</strong> G.TYP.INT.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/int/G.TYP.INT.03.html"><strong aria-hidden="true">3.4.10.3.</strong> G.TYP.INT.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/int/G.TYP.INT.04.html"><strong aria-hidden="true">3.4.10.4.</strong> G.TYP.INT.04</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float.html"><strong aria-hidden="true">3.4.11.</strong> 浮点数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.01.html"><strong aria-hidden="true">3.4.11.1.</strong> G.TYP.FLT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.02.html"><strong aria-hidden="true">3.4.11.2.</strong> G.TYP.FLT.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.03.html"><strong aria-hidden="true">3.4.11.3.</strong> G.TYP.FLT.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.04.html"><strong aria-hidden="true">3.4.11.4.</strong> G.TYP.FLT.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.05.html"><strong aria-hidden="true">3.4.11.5.</strong> G.TYP.FLT.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/float/G.TYP.FLT.06.html"><strong aria-hidden="true">3.4.11.6.</strong> G.TYP.FLT.06</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/ref.html"><strong aria-hidden="true">3.4.12.</strong> 引用</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/ref/P.TYP.REF.01.html"><strong aria-hidden="true">3.4.12.1.</strong> P.TYP.REF.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/slice.html"><strong aria-hidden="true">3.4.13.</strong> 切片</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/slice/P.TYP.SLC.01.html"><strong aria-hidden="true">3.4.13.1.</strong> P.TYP.SLC.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/slice/P.TYP.SLC.02.html"><strong aria-hidden="true">3.4.13.2.</strong> P.TYP.SLC.02</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/tuple.html"><strong aria-hidden="true">3.4.14.</strong> 元组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/tuple/P.TYP.TUP.01.html"><strong aria-hidden="true">3.4.14.1.</strong> P.TYP.TUP.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/tuple/G.TYP.TUP.01.html"><strong aria-hidden="true">3.4.14.2.</strong> G.TYP.TUP.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/array.html"><strong aria-hidden="true">3.4.15.</strong> 固定长度数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/array/P.TYP.ARR.01.html"><strong aria-hidden="true">3.4.15.1.</strong> P.TYP.ARR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/array/G.TYP.ARR.01.html"><strong aria-hidden="true">3.4.15.2.</strong> G.TYP.ARR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/array/G.TYP.ARR.02.html"><strong aria-hidden="true">3.4.15.3.</strong> G.TYP.ARR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/array/G.TYP.ARR.03.html"><strong aria-hidden="true">3.4.15.4.</strong> G.TYP.ARR.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/vec.html"><strong aria-hidden="true">3.4.16.</strong> 动态数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/vec/P.TYP.VEC.01.html"><strong aria-hidden="true">3.4.16.1.</strong> P.TYP.VEC.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/vec/P.TYP.VEC.02.html"><strong aria-hidden="true">3.4.16.2.</strong> P.TYP.VEC.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/vec/G.TYP.VEC.01.html"><strong aria-hidden="true">3.4.16.3.</strong> G.TYP.VEC.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct.html"><strong aria-hidden="true">3.4.17.</strong> 结构体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/P.TYP.SCT.01.html"><strong aria-hidden="true">3.4.17.1.</strong> P.TYP.SCT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/P.TYP.SCT.02.html"><strong aria-hidden="true">3.4.17.2.</strong> P.TYP.SCT.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/P.TYP.SCT.03.html"><strong aria-hidden="true">3.4.17.3.</strong> P.TYP.SCT.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/G.TYP.SCT.01.html"><strong aria-hidden="true">3.4.17.4.</strong> G.TYP.SCT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/G.TYP.SCT.02.html"><strong aria-hidden="true">3.4.17.5.</strong> G.TYP.SCT.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/struct/G.TYP.SCT.03.html"><strong aria-hidden="true">3.4.17.6.</strong> G.TYP.SCT.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum.html"><strong aria-hidden="true">3.4.18.</strong> 枚举体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/P.TYP.ENM.01.html"><strong aria-hidden="true">3.4.18.1.</strong> P.TYP.ENM.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.01.html"><strong aria-hidden="true">3.4.18.2.</strong> G.TYP.ENM.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.02.html"><strong aria-hidden="true">3.4.18.3.</strong> G.TYP.ENM.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.03.html"><strong aria-hidden="true">3.4.18.4.</strong> G.TYP.ENM.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.04.html"><strong aria-hidden="true">3.4.18.5.</strong> G.TYP.ENM.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.05.html"><strong aria-hidden="true">3.4.18.6.</strong> G.TYP.ENM.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/data-type/enum/G.TYP.ENM.06.html"><strong aria-hidden="true">3.4.18.7.</strong> G.TYP.ENM.06</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr.html"><strong aria-hidden="true">3.5.</strong> 表达式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.01.html"><strong aria-hidden="true">3.5.1.</strong> G.EXP.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.02.html"><strong aria-hidden="true">3.5.2.</strong> G.EXP.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.03.html"><strong aria-hidden="true">3.5.3.</strong> G.EXP.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.04.html"><strong aria-hidden="true">3.5.4.</strong> G.EXP.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.05.html"><strong aria-hidden="true">3.5.5.</strong> G.EXP.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.06.html"><strong aria-hidden="true">3.5.6.</strong> G.EXP.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/expr/G.EXP.07.html"><strong aria-hidden="true">3.5.7.</strong> G.EXP.07</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow.html"><strong aria-hidden="true">3.6.</strong> 控制流程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/P.CTF.01.html"><strong aria-hidden="true">3.6.1.</strong> P.CTF.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/P.CTF.02.html"><strong aria-hidden="true">3.6.2.</strong> P.CTF.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.01.html"><strong aria-hidden="true">3.6.3.</strong> G.CTF.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.02.html"><strong aria-hidden="true">3.6.4.</strong> G.CTF.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.03.html"><strong aria-hidden="true">3.6.5.</strong> G.CTF.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.04.html"><strong aria-hidden="true">3.6.6.</strong> G.CTF.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.05.html"><strong aria-hidden="true">3.6.7.</strong> G.CTF.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.06.html"><strong aria-hidden="true">3.6.8.</strong> G.CTF.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/control-flow/G.CTF.07.html"><strong aria-hidden="true">3.6.9.</strong> G.CTF.07</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings.html"><strong aria-hidden="true">3.7.</strong> 字符串</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.01.html"><strong aria-hidden="true">3.7.1.</strong> P.STR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.02.html"><strong aria-hidden="true">3.7.2.</strong> P.STR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.03.html"><strong aria-hidden="true">3.7.3.</strong> P.STR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.04.html"><strong aria-hidden="true">3.7.4.</strong> P.STR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.05.html"><strong aria-hidden="true">3.7.5.</strong> P.STR.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/P.STR.06.html"><strong aria-hidden="true">3.7.6.</strong> P.STR.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/G.STR.01.html"><strong aria-hidden="true">3.7.7.</strong> G.STR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/G.STR.02.html"><strong aria-hidden="true">3.7.8.</strong> G.STR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/G.STR.03.html"><strong aria-hidden="true">3.7.9.</strong> G.STR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/G.STR.04.html"><strong aria-hidden="true">3.7.10.</strong> G.STR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/strings/G.STR.05.html"><strong aria-hidden="true">3.7.11.</strong> G.STR.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/collections.html"><strong aria-hidden="true">3.8.</strong> 集合容器</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/collections/P.CLT.01.html"><strong aria-hidden="true">3.8.1.</strong> P.CLT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/collections/P.CLT.02.html"><strong aria-hidden="true">3.8.2.</strong> P.CLT.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/collections/G.CLT.01.html"><strong aria-hidden="true">3.8.3.</strong> G.CLT.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design.html"><strong aria-hidden="true">3.9.</strong> 函数设计</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/P.FUD.01.html"><strong aria-hidden="true">3.9.1.</strong> P.FUD.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/P.FUD.02.html"><strong aria-hidden="true">3.9.2.</strong> P.FUD.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.01.html"><strong aria-hidden="true">3.9.3.</strong> G.FUD.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.02.html"><strong aria-hidden="true">3.9.4.</strong> G.FUD.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.03.html"><strong aria-hidden="true">3.9.5.</strong> G.FUD.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.04.html"><strong aria-hidden="true">3.9.6.</strong> G.FUD.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.05.html"><strong aria-hidden="true">3.9.7.</strong> G.FUD.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/fn-design/G.FUD.06.html"><strong aria-hidden="true">3.9.8.</strong> G.FUD.06</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic.html"><strong aria-hidden="true">3.10.</strong> 泛型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/P.GEN.01.html"><strong aria-hidden="true">3.10.1.</strong> P.GEN.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/P.GEN.02.html"><strong aria-hidden="true">3.10.2.</strong> P.GEN.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/P.GEN.03.html"><strong aria-hidden="true">3.10.3.</strong> P.GEN.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/P.GEN.04.html"><strong aria-hidden="true">3.10.4.</strong> P.GEN.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/P.GEN.05.html"><strong aria-hidden="true">3.10.5.</strong> P.GEN.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/G.GEN.01.html"><strong aria-hidden="true">3.10.6.</strong> G.GEN.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/generic/G.GEN.02.html"><strong aria-hidden="true">3.10.7.</strong> G.GEN.02</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits.html"><strong aria-hidden="true">3.11.</strong> 特质</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/P.TRA.01.html"><strong aria-hidden="true">3.11.1.</strong> P.TRA.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin.html"><strong aria-hidden="true">3.11.2.</strong> 标准库内置 trait</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/P.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.1.</strong> P.TRA.BLN.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.2.</strong> G.TRA.BLN.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.02.html"><strong aria-hidden="true">3.11.2.3.</strong> G.TRA.BLN.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.03.html"><strong aria-hidden="true">3.11.2.4.</strong> G.TRA.BLN.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.04.html"><strong aria-hidden="true">3.11.2.5.</strong> G.TRA.BLN.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.05.html"><strong aria-hidden="true">3.11.2.6.</strong> G.TRA.BLN.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.06.html"><strong aria-hidden="true">3.11.2.7.</strong> G.TRA.BLN.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.07.html"><strong aria-hidden="true">3.11.2.8.</strong> G.TRA.BLN.07</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.08.html"><strong aria-hidden="true">3.11.2.9.</strong> G.TRA.BLN.08</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.09.html"><strong aria-hidden="true">3.11.2.10.</strong> G.TRA.BLN.09</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.10.html"><strong aria-hidden="true">3.11.2.11.</strong> G.TRA.BLN.10</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/trait-object.html"><strong aria-hidden="true">3.11.3.</strong> trait 对象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.01.html"><strong aria-hidden="true">3.11.3.1.</strong> P.TRA.OBJ.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.02.html"><strong aria-hidden="true">3.11.3.2.</strong> P.TRA.OBJ.02</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle.html"><strong aria-hidden="true">3.12.</strong> 错误处理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.01.html"><strong aria-hidden="true">3.12.1.</strong> P.ERR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.02.html"><strong aria-hidden="true">3.12.2.</strong> P.ERR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.03.html"><strong aria-hidden="true">3.12.3.</strong> P.ERR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.04.html"><strong aria-hidden="true">3.12.4.</strong> P.ERR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.05.html"><strong aria-hidden="true">3.12.5.</strong> P.ERR.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/P.ERR.06.html"><strong aria-hidden="true">3.12.6.</strong> P.ERR.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/G.ERR.01.html"><strong aria-hidden="true">3.12.7.</strong> G.ERR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/error-handle/G.ERR.02.html"><strong aria-hidden="true">3.12.8.</strong> G.ERR.02</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory.html"><strong aria-hidden="true">3.13.</strong> 内存管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/lifetime.html"><strong aria-hidden="true">3.13.1.</strong> 生命周期</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.01.html"><strong aria-hidden="true">3.13.1.1.</strong> P.MEM.LFT.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.02.html"><strong aria-hidden="true">3.13.1.2.</strong> P.MEM.LFT.02</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/smart-ptr.html"><strong aria-hidden="true">3.13.2.</strong> 智能指针</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/smart-ptr/P.MEM.SPT.01.html"><strong aria-hidden="true">3.13.2.1.</strong> P.MEM.SPT.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/box.html"><strong aria-hidden="true">3.13.3.</strong> Box 类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/box/G.MEM.BOX.01.html"><strong aria-hidden="true">3.13.3.1.</strong> G.MEM.BOX.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/box/G.MEM.BOX.02.html"><strong aria-hidden="true">3.13.3.2.</strong> G.MEM.BOX.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/box/G.MEM.BOX.03.html"><strong aria-hidden="true">3.13.3.3.</strong> G.MEM.BOX.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/drop.html"><strong aria-hidden="true">3.13.4.</strong> Drop 析构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/memory/drop/G.MEM.DRP.01.html"><strong aria-hidden="true">3.13.4.1.</strong> G.MEM.DRP.01</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module.html"><strong aria-hidden="true">3.14.</strong> 模块</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/P.MOD.01.html"><strong aria-hidden="true">3.14.1.</strong> P.MOD.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/P.MOD.02.html"><strong aria-hidden="true">3.14.2.</strong> P.MOD.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/G.MOD.01.html"><strong aria-hidden="true">3.14.3.</strong> G.MOD.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/G.MOD.02.html"><strong aria-hidden="true">3.14.4.</strong> G.MOD.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/G.MOD.03.html"><strong aria-hidden="true">3.14.5.</strong> G.MOD.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/G.MOD.04.html"><strong aria-hidden="true">3.14.6.</strong> G.MOD.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/module/G.MOD.05.html"><strong aria-hidden="true">3.14.7.</strong> G.MOD.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">3.15.</strong> 包管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/P.CAR.01.html"><strong aria-hidden="true">3.15.1.</strong> P.CAR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/P.CAR.02.html"><strong aria-hidden="true">3.15.2.</strong> P.CAR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/P.CAR.03.html"><strong aria-hidden="true">3.15.3.</strong> P.CAR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/P.CAR.04.html"><strong aria-hidden="true">3.15.4.</strong> P.CAR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/G.CAR.01.html"><strong aria-hidden="true">3.15.5.</strong> G.CAR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/G.CAR.02.html"><strong aria-hidden="true">3.15.6.</strong> G.CAR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/G.CAR.03.html"><strong aria-hidden="true">3.15.7.</strong> G.CAR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/cargo/G.CAR.04.html"><strong aria-hidden="true">3.15.8.</strong> G.CAR.04</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros.html"><strong aria-hidden="true">3.16.</strong> 宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/P.MAC.01.html"><strong aria-hidden="true">3.16.1.</strong> P.MAC.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/P.MAC.02.html"><strong aria-hidden="true">3.16.2.</strong> P.MAC.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/G.MAC.01.html"><strong aria-hidden="true">3.16.3.</strong> G.MAC.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/G.MAC.02.html"><strong aria-hidden="true">3.16.4.</strong> G.MAC.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl.html"><strong aria-hidden="true">3.16.5.</strong> 声明宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.01.html"><strong aria-hidden="true">3.16.5.1.</strong> P.MAC.DCL.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.02.html"><strong aria-hidden="true">3.16.5.2.</strong> P.MAC.DCL.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.03.html"><strong aria-hidden="true">3.16.5.3.</strong> P.MAC.DCL.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.04.html"><strong aria-hidden="true">3.16.5.4.</strong> P.MAC.DCL.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.05.html"><strong aria-hidden="true">3.16.5.5.</strong> P.MAC.DCL.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.06.html"><strong aria-hidden="true">3.16.5.6.</strong> P.MAC.DCL.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.07.html"><strong aria-hidden="true">3.16.5.7.</strong> P.MAC.DCL.07</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/decl/P.MAC.DCL.08.html"><strong aria-hidden="true">3.16.5.8.</strong> P.MAC.DCL.08</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc.html"><strong aria-hidden="true">3.16.6.</strong> 过程宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.01.html"><strong aria-hidden="true">3.16.6.1.</strong> P.MAC.PRO.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.02.html"><strong aria-hidden="true">3.16.6.2.</strong> P.MAC.PRO.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.03.html"><strong aria-hidden="true">3.16.6.3.</strong> P.MAC.PRO.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.04.html"><strong aria-hidden="true">3.16.6.4.</strong> P.MAC.PRO.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.05.html"><strong aria-hidden="true">3.16.6.5.</strong> P.MAC.PRO.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/macros/proc/P.MAC.PRO.06.html"><strong aria-hidden="true">3.16.6.6.</strong> P.MAC.PRO.06</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads.html"><strong aria-hidden="true">3.17.</strong> 多线程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock.html"><strong aria-hidden="true">3.17.1.</strong> 锁同步</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/P.MTH.LOK.01.html"><strong aria-hidden="true">3.17.1.1.</strong> P.MTH.LOK.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/P.MTH.LOK.02.html"><strong aria-hidden="true">3.17.1.2.</strong> P.MTH.LOK.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/G.MTH.LOK.01.html"><strong aria-hidden="true">3.17.1.3.</strong> G.MTH.LOK.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/G.MTH.LOK.02.html"><strong aria-hidden="true">3.17.1.4.</strong> G.MTH.LOK.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/G.MTH.LOK.03.html"><strong aria-hidden="true">3.17.1.5.</strong> G.MTH.LOK.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/G.MTH.LOK.04.html"><strong aria-hidden="true">3.17.1.6.</strong> G.MTH.LOK.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock/G.MTH.LOK.05.html"><strong aria-hidden="true">3.17.1.7.</strong> G.MTH.LOK.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock-free.html"><strong aria-hidden="true">3.17.2.</strong> 无锁</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.01.html"><strong aria-hidden="true">3.17.2.1.</strong> P.MTH.LKF.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.02.html"><strong aria-hidden="true">3.17.2.2.</strong> P.MTH.LKF.02</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await.html"><strong aria-hidden="true">3.18.</strong> 异步编程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/P.ASY.01.html"><strong aria-hidden="true">3.18.1.</strong> P.ASY.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/G.ASY.01.html"><strong aria-hidden="true">3.18.2.</strong> G.ASY.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/G.ASY.02.html"><strong aria-hidden="true">3.18.3.</strong> G.ASY.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/G.ASY.03.html"><strong aria-hidden="true">3.18.4.</strong> G.ASY.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/G.ASY.04.html"><strong aria-hidden="true">3.18.5.</strong> G.ASY.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/async-await/G.ASY.05.html"><strong aria-hidden="true">3.18.6.</strong> G.ASY.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust.html"><strong aria-hidden="true">3.19.</strong> Unsafe Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/P.UNS.01.html"><strong aria-hidden="true">3.19.1.</strong> P.UNS.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/P.UNS.02.html"><strong aria-hidden="true">3.19.2.</strong> P.UNS.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/G.UNS.01.html"><strong aria-hidden="true">3.19.3.</strong> G.UNS.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">3.19.4.</strong> 安全抽象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.1.</strong> P.UNS.SAS.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.2.</strong> P.UNS.SAS.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.03.html"><strong aria-hidden="true">3.19.4.3.</strong> P.UNS.SAS.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.04.html"><strong aria-hidden="true">3.19.4.4.</strong> P.UNS.SAS.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.5.</strong> G.UNS.SAS.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.6.</strong> G.UNS.SAS.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.03.html"><strong aria-hidden="true">3.19.4.7.</strong> G.UNS.SAS.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.04.html"><strong aria-hidden="true">3.19.4.8.</strong> G.UNS.SAS.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.05.html"><strong aria-hidden="true">3.19.4.9.</strong> G.UNS.SAS.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.06.html"><strong aria-hidden="true">3.19.4.10.</strong> G.UNS.SAS.06</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr.html"><strong aria-hidden="true">3.19.5.</strong> 裸指针操作</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.1.</strong> P.UNS.PTR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.2.</strong> G.UNS.PTR.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.02.html"><strong aria-hidden="true">3.19.5.3.</strong> G.UNS.PTR.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.03.html"><strong aria-hidden="true">3.19.5.4.</strong> G.UNS.PTR.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.04.html"><strong aria-hidden="true">3.19.5.5.</strong> G.UNS.PTR.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.05.html"><strong aria-hidden="true">3.19.5.6.</strong> G.UNS.PTR.05</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/union.html"><strong aria-hidden="true">3.19.6.</strong> 联合体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/union/G.UNS.UNI.01.html"><strong aria-hidden="true">3.19.6.1.</strong> G.UNS.UNI.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/union/G.UNS.UNI.02.html"><strong aria-hidden="true">3.19.6.2.</strong> G.UNS.UNI.02</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem.html"><strong aria-hidden="true">3.19.7.</strong> 内存</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.1.</strong> P.UNS.MEM.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.02.html"><strong aria-hidden="true">3.19.7.2.</strong> P.UNS.MEM.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.03.html"><strong aria-hidden="true">3.19.7.3.</strong> P.UNS.MEM.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.04.html"><strong aria-hidden="true">3.19.7.4.</strong> P.UNS.MEM.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.05.html"><strong aria-hidden="true">3.19.7.5.</strong> P.UNS.MEM.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/mem/G.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.6.</strong> G.UNS.MEM.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi.html"><strong aria-hidden="true">3.19.8.</strong> FFi</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.01.html"><strong aria-hidden="true">3.19.8.1.</strong> P.UNS.FFI.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.02.html"><strong aria-hidden="true">3.19.8.2.</strong> P.UNS.FFI.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.03.html"><strong aria-hidden="true">3.19.8.3.</strong> P.UNS.FFI.03</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.04.html"><strong aria-hidden="true">3.19.8.4.</strong> P.UNS.FFI.04</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.05.html"><strong aria-hidden="true">3.19.8.5.</strong> P.UNS.FFI.05</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.06.html"><strong aria-hidden="true">3.19.8.6.</strong> P.UNS.FFI.06</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.07.html"><strong aria-hidden="true">3.19.8.7.</strong> P.UNS.FFI.07</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.08.html"><strong aria-hidden="true">3.19.8.8.</strong> P.UNS.FFI.08</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.09.html"><strong aria-hidden="true">3.19.8.9.</strong> P.UNS.FFI.09</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.10.html"><strong aria-hidden="true">3.19.8.10.</strong> P.UNS.FFI.10</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.11.html"><strong aria-hidden="true">3.19.8.11.</strong> P.UNS.FFI.11</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.01.html"><strong aria-hidden="true">3.19.8.12.</strong> G.UNS.FFI.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.02.html"><strong aria-hidden="true">3.19.8.13.</strong> G.UNS.FFI.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.03.html"><strong aria-hidden="true">3.19.8.14.</strong> G.UNS.FFI.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/io.html"><strong aria-hidden="true">3.19.9.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/io/G.UNS.IO.01.html"><strong aria-hidden="true">3.19.9.1.</strong> G.UNS.IO.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/unsafe_rust/glossary.html"><strong aria-hidden="true">3.19.10.</strong> Unsafe 代码术语指南</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/no-std.html"><strong aria-hidden="true">3.20.</strong> no-std</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/no-std/P.EMB.01.html"><strong aria-hidden="true">3.20.1.</strong> P.EMB.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/no-std/P.EMB.02.html"><strong aria-hidden="true">3.20.2.</strong> P.EMB.02</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/no-std/P.EMB.03.html"><strong aria-hidden="true">3.20.3.</strong> P.EMB.03</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/io.html"><strong aria-hidden="true">3.21.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/io/P.IO.01.html"><strong aria-hidden="true">3.21.1.</strong> P.IO.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/io/G.IO.01.html"><strong aria-hidden="true">3.21.2.</strong> G.IO.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/security.html"><strong aria-hidden="true">3.22.</strong> 信息安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/security/G.SEC.01.html"><strong aria-hidden="true">3.22.1.</strong> G.SEC.01</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/others.html"><strong aria-hidden="true">3.23.</strong> 其他</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/coding_practice/others/G.OTH.01.html"><strong aria-hidden="true">3.23.1.</strong> G.OTH.01</a></li><li class="chapter-item "><a href="../../safe-guides/coding_practice/others/G.OTH.02.html"><strong aria-hidden="true">3.23.2.</strong> G.OTH.01</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../safe-guides/Appendix/toc.html"><strong aria-hidden="true">4.</strong> 附录</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/dev_env.html"><strong aria-hidden="true">4.1.</strong> 开发环境</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/test.html"><strong aria-hidden="true">4.2.</strong> 测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/test/unit_test.html"><strong aria-hidden="true">4.2.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/test/benchmark.html"><strong aria-hidden="true">4.2.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/test/fuzz.html"><strong aria-hidden="true">4.2.3.</strong> 模糊测试</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/Appendix/terms.html"><strong aria-hidden="true">4.3.</strong> 术语解释</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/templates/intro.html"><strong aria-hidden="true">4.4.</strong> 模板</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/templates/rustfmt.toml.html"><strong aria-hidden="true">4.4.1.</strong> rustfmt 模板</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/templates/clippy.toml.html"><strong aria-hidden="true">4.4.2.</strong> clippy 模板</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/templates/deny.toml.html"><strong aria-hidden="true">4.4.3.</strong> deny 模板</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/Appendix/tools/intro.html"><strong aria-hidden="true">4.5.</strong> 工具链</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/tools/rustfmt.html"><strong aria-hidden="true">4.5.1.</strong> rustfmt</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/tools/noisy-clippy.html"><strong aria-hidden="true">4.5.2.</strong> noisy-clippy</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/tools/cargo-udeps.html"><strong aria-hidden="true">4.5.3.</strong> cargo-udeps</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/Appendix/cheat-sheet/index.html"><strong aria-hidden="true">4.6.</strong> Cheat Sheet</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/cheat-sheet/Numbers/float.html"><strong aria-hidden="true">4.6.1.</strong> 浮点数</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/Appendix/optimizing/intro.html"><strong aria-hidden="true">4.7.</strong> 优化指南</a></li><li class="chapter-item expanded "><a href="../../safe-guides/Appendix/rustc-flag.html" class="active"><strong aria-hidden="true">4.8.</strong> 编译参数说明</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/best-practice/intro.html"><strong aria-hidden="true">4.9.</strong> 最佳实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../safe-guides/Appendix/best-practice/qa.html"><strong aria-hidden="true">4.9.1.</strong> 初学者常见问题Q&amp;A</a></li><li class="chapter-item "><a href="../../safe-guides/Appendix/best-practice/tips.html"><strong aria-hidden="true">4.9.2.</strong> Rust 编程技巧</a></li></ol></li><li class="chapter-item "><a href="../../safe-guides/Appendix/contribution.html"><strong aria-hidden="true">4.10.</strong> 贡献说明</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust 编码规范</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/Rust-Coding-Guidelines/rust-coding-guidelines-zh" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="hrust编译器编译参数说明"><a class="header" href="#hrust编译器编译参数说明">H.Rust编译器编译参数说明</a></h1>
+<h2 id="rustc-说明"><a class="header" href="#rustc-说明">Rustc 说明</a></h2>
+<p>通过以下命令可以打印编译器相关参数选项：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>$ rustc -h 
+// 或
+$ rustc --help
+// 在 Nightly Rust 下，比 Stable Rust 多一个 `-Z` 参数，用于传递 unstable compiler options
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="参数功能"><a class="header" href="#参数功能">参数功能</a></h2>
+<h3 id="-h----help"><a class="header" href="#-h----help"><code>-h</code> / <code>--help</code></a></h3>
+<p>用于打印 <code>rustc</code> 的帮助信息</p>
+<h3 id="--cfg"><a class="header" href="#--cfg"><code>--cfg</code></a></h3>
+<p>用于打开或关闭 <code>#[cfg]</code> 变量中的各种条件编译设置。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>--cfg 'verbose'  // 对应 #[cfg(verbose)]
+// or
+--cfg 'feature=&quot;serde&quot;' // 对应 #[cfg(feature = &quot;serde&quot;)]
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="-l"><a class="header" href="#-l"><code>-L</code></a></h3>
+<p><code>-L</code> 用于将一个目录添加到外部搜索路径。命令格式如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>-L [KIND=]PATH
+<span class="boring">}
+</span></code></pre></pre>
+<p>当 <code>KIND</code> 是以下情况之一时，可以使用 <code>-L KIND=PATH </code>这种形式指定搜索路径的类型：</p>
+<ul>
+<li><code>dependency</code> — 仅在该目录中搜索传递依赖项。</li>
+<li><code>crate</code> — 仅在该目录中搜索此 crate 的直接依赖项。</li>
+<li><code>native</code> — 仅在该目录中搜索本地库。</li>
+<li><code>framework</code> — 仅用于在该目录中搜索 macOS 框架。</li>
+<li><code>all</code> — 搜索此目录中的所有库类型。如果 KIND 没有指定，这将是默认值.</li>
+</ul>
+<h3 id="-l-1"><a class="header" href="#-l-1"><code>-l</code></a></h3>
+<p>用于将生成的 crate 链接到本地库。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>-l [KIND[:MODIFIERS]=]NAME[:RENAME]
+<span class="boring">}
+</span></code></pre></pre>
+<p>当 <code>KIND</code> 是以下情况之一时，库的种类可以使用 <code>-l KIND=lib</code> 这种形式指定:</p>
+<ul>
+<li><code>dylib</code> — 本地动态库</li>
+<li><code>static</code> — 本地静态库 (例如 .a archive 文件)</li>
+<li><code>framework</code> — macOS 框架</li>
+</ul>
+<p>可以用<code>#[link]</code>属性指定库的种类。 如果未在 <code>link </code>属性或命令行中指定 <code>KIND</code> ，它将链接到可用动态库，否则将使用静态库。 如果在命令行中指定了库类型，其将会覆盖 <code>link</code> 属性指定的库类型。</p>
+<p><code>link</code> 属性中使用的名称可以使用形如<code> -l ATTR_NAME:LINK_NAME</code> 形式覆盖，其中 <code>ATTR_NAME</code> 是 <code>link</code> 属性中的名称，<code>LINK_NAME </code>是将要链接到的实际库的名称。</p>
+<h4 id="--crate-type"><a class="header" href="#--crate-type"><code>--crate-type</code></a></h4>
+<p>这将指示 rustc 以何种 crate type 去构建。该 Flag 接收逗号分隔的值列表，也可以多次指定。有效的 crate type 如下：</p>
+<ul>
+<li><code>lib</code> — 编译器生成的首选库类型， 目前默认为 rlib。</li>
+<li><code>rlib</code> — Rust 静态库。</li>
+<li><code>staticlib</code> — 本地静态库。</li>
+<li><code>dylib</code> — Rust 动态库。</li>
+<li><code>cdylib</code> — 本地动态库。</li>
+<li><code>bin</code> — 可执行程序。</li>
+<li><code>proc-macro</code> — 生成格式化且编译器可加载的过程宏库。</li>
+</ul>
+<p>可以使用 <code>crate_type</code>属性来指定 crate 类型，注意  <code>--crate-type</code> 命令行的值会覆盖 crate_type 属性的值。更多细节可以参阅 reference 中的<a href="https://doc.rust-lang.org/stable/reference/linkage.html"> 链接章节</a>。</p>
+<h4 id="--crate-name"><a class="header" href="#--crate-name"><code>--crate-name</code></a></h4>
+<p>用于指定正在构建的 crate 名称</p>
+<h4 id="--edition"><a class="header" href="#--edition"><code>--edition</code></a></h4>
+<p>用于指定编译器使用哪个 版次（edition），可选项 <code>2015|2018|2021</code>。</p>
+<h4 id="--emit"><a class="header" href="#--emit"><code>--emit</code></a></h4>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span> --emit [asm|llvm-bc|llvm-ir|obj|metadata|link|dep-info|mir]
+<span class="boring">}
+</span></code></pre></pre>
+<p>该 Flag 控制编译器生成的输出文件的类型。其接收以逗号分隔的值列表，也可以多次指定。有效的生成类型有：</p>
+<ul>
+<li><code>asm</code> — 生成在 crate 中的一个汇编代码文件。 默认的输出文件是 CRATE_NAME.s。</li>
+<li><code>dep-info</code> — 生成一个包含 Makefile 语法的文件，指示加载以生成 crate 的所有源文件。 默认输出文件是 CRATE_NAME.d。</li>
+<li><code>link</code> — 生成由 --crate-type 指定的 crates 。 默认输出文件取决于平台和 crate 类型。 如果未指定 --emit 这将是默认值。</li>
+<li><code>llvm-bc</code> — 生成一个包含 LLVM bitcode 的二进制文件。默认输出文件是 CRATE_NAME.bc。</li>
+<li><code>llvm-ir</code> — 生成一个包含 LLVM IR（ LLVM 中间语言）的文件。默认的输出文件是 CRATE_NAME.ll。</li>
+<li><code>metadata</code> — 生成一个关于该 crate 的元数据的文件。 默认输出文件是 CRATE_NAME.rmeta。</li>
+<li><code>mir</code> — 生成一个包含 Rust 中级中间表示（即中级中间语言）的文件。默认输出文件名是 <code>CRATE_NAME.mir</code>。</li>
+<li><code>obj</code> — 生成一个本地对象文件，默认输出文件是 <code>CRATE_NAME.o</code>。</li>
+</ul>
+<p>输出文件名可以用 <code>-o flag</code> 进行设置。使用<code> -C extra-filename</code>。Flag 可以添加文件名后缀。文件将被写入当前目录除非使用<code>--out-dir flag</code> 标签。 每一个生成类型也可以使用 <code>KIND=PATH </code>的形式指定输出文件名，它优先于 <code>-o </code>标签。</p>
+<h3 id="--print"><a class="header" href="#--print"><code>--print</code></a></h3>
+<p>用于打印有关编译器的各种信息。指定<code>--print</code>标签通常会禁用 <code>--emit </code>步骤且只打印请求的信息。打印的有效值类型为：</p>
+<ul>
+<li><code>crate-name</code> — crate 的名称。</li>
+<li><code>file-names</code> — 文件名由 link 命令执行的种类所决定。</li>
+<li><code>sysroot</code> — 系统根目录路径，即<code>.rustup</code> 下的 <code>toolchains</code> 文件夹。</li>
+<li><code>target-libdir</code> - 目标<code>lib</code>文件夹路径（同上）。</li>
+<li><code>cfg</code> — 条件编译值列表。 了解更多条件编译值信息，请参阅 条件编译。</li>
+<li><code>target-list</code> — 已知目标列表。 可以使用<code>--target </code>标签选择目标。</li>
+<li><code>target-cpus </code>— 当前目标的可用 CPU 值列表。可以使用 <code>-C target-cpu=val</code>  Flag 选择目标。</li>
+<li><code>target-features</code>— 当前目标的可用 目标 <code>features</code> 列表。目标 <code>features</code> 可以使用<code>-C target-feature=val</code>flag 启用。该Flag是不安全（ unsafe ）的。</li>
+<li><code>relocation-models</code> — 重定位模型列表。重定位模型可以用 <code>-C relocation-model=val </code> Flag 选择。</li>
+<li><code>code-models</code> — 代码模型列表。代码模型可以用<code> -C code-model=val</code> flag 进行设置。</li>
+<li><code>tls-models</code> — 支持的线程本地存储模型列表。 模型可以用<code>-Z tls-model=val</code> Flag 来选择（仅限 Nightly Rust）。</li>
+<li><code>native-static-libs</code> — 当创建一个<code> staticlib crate</code> 类型时可以使用此选项。 如果这是唯一的标志，它将执行一个完整的编译，并包含一个指出链接生成静态库时要使用的链接器 Flag 的诊断说明。该说明以文本 <code>native-static-libs:</code> 开始，以便更容易获取输出信息。</li>
+</ul>
+<h3 id="-g"><a class="header" href="#-g"><code>-g</code></a></h3>
+<p>等价于 <code>-C debuginfo=2</code>，用于输出调试信息。</p>
+<p><strong>调试信息说明：</strong></p>
+<ul>
+<li><code>0</code>：根本没有调试信息（默认）。</li>
+<li><code>1</code>: 仅行表。</li>
+<li><code>2</code>：完整的调试信息。</li>
+</ul>
+<h3 id="-o-大写的字母o优化"><a class="header" href="#-o-大写的字母o优化"><code>-O</code> （大写的字母o，优化）</a></h3>
+<p>等价于 <code>-C opt-level=2</code>，用于编译优化，level为2。</p>
+<p><strong>优化级别说明：</strong></p>
+<ul>
+<li><code>0</code>：没有优化，也打开 <a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#debug-assertions"><code>cfg(debug_assertions)</code></a>（默认）。</li>
+<li><code>1</code>: 基本优化。</li>
+<li><code>2</code>: 一些优化。</li>
+<li><code>3</code>: 所有优化。</li>
+<li><code>s</code>:  优化二进制大小。</li>
+<li><code>z</code>：优化二进制大小，但也关闭循环向量化。 </li>
+</ul>
+<p>默认值为<code>0</code>.</p>
+<h3 id="-o"><a class="header" href="#-o"><code>-o</code></a></h3>
+<p>用于控制输出的文件名。</p>
+<h4 id="--out-dir-dir"><a class="header" href="#--out-dir-dir"><code>--out-dir DIR</code></a></h4>
+<p>用于指定输出目录位置。</p>
+<h4 id="--explain-opt"><a class="header" href="#--explain-opt"><code>--explain OPT</code></a></h4>
+<p>用于提供错误消息的详细说明。<code>rustc</code> 对于每一个（检测到的）错误都会返回一个错误码，这将打印给定错误的更详细说明。</p>
+<h4 id="--test"><a class="header" href="#--test"><code>--test</code></a></h4>
+<p>构建测试工具。</p>
+<h4 id="--target-target"><a class="header" href="#--target-target"><code>--target TARGET</code></a></h4>
+<p>指定编译的<code> target triple</code> 。</p>
+<h3 id="设置-lint"><a class="header" href="#设置-lint">设置 lint</a></h3>
+<h4 id="-w"><a class="header" href="#-w"><code>-W</code></a></h4>
+<p>等价于 <code>--warn LINT</code> ，设置给定 lint 为 warning 级别。</p>
+<h4 id="-a"><a class="header" href="#-a"><code>-A</code></a></h4>
+<p>等价于 <code>--allow LINT</code> ，设置给定 lint 为 allow 级别。</p>
+<h4 id="-d"><a class="header" href="#-d"><code>-D</code></a></h4>
+<p>等价于 <code>--deny LINT</code> ，设置给定 lint 为 deny 级别。</p>
+<h4 id="-f"><a class="header" href="#-f"><code>-F</code></a></h4>
+<p>等价于 <code>--forbid LINT</code> ，设置给定 lint 为 forbid 级别。</p>
+<h3 id="-c"><a class="header" href="#-c"><code>-C</code></a></h3>
+<p>用于设置 <a href="https://doc.rust-lang.org/rustc/codegen-options/index.html">代码生成</a> 选项。可以通过 <code>rustc -C help</code> 进一步查看其选项。</p>
+<h4 id="已弃用参数"><a class="header" href="#已弃用参数">已弃用参数</a></h4>
+<ul>
+<li><code>ar=val</code>，废弃。</li>
+<li><code>no-stack-check=val</code>，废弃。</li>
+</ul>
+<h4 id="code-model-优化相关"><a class="header" href="#code-model-优化相关"><code>code-model</code> （优化相关）</a></h4>
+<p><code>code-model=val</code>，支持的值为：</p>
+<ul>
+<li><code>tiny</code> - 微小的代码模型。</li>
+<li><code>small</code>- 小代码模型。这是大多数受支持目标的默认模型。</li>
+<li><code>kernel</code> - 内核代码模型。</li>
+<li><code>medium</code> - 中等代码模型。</li>
+<li><code>large</code> - 大型代码模型。比如 x86 平台上，告诉编译器不要进行任何假设，使用64位绝对取址模型访问代码及数据。</li>
+</ul>
+<p>可以通过命令 <code>rustc --print code-models</code> 查看。</p>
+<p>代码模型对程序及其符号可能使用的地址范围施加了限制。对于较小的地址范围，机器指令可能能够使用更紧凑的寻址模式。具体范围取决于目标架构和可用的寻址模式。</p>
+<p>代码模型是程序员与编译器间的一个正式的协议，其中程序员表达其对最终程序将进入的当前正在编译的目标文件大小的意愿。比如，“不要担心，这个对象只会进入不那么大的程序，因此你可以使用快速的RIP相对取址模式”，相反，“这个对象期望链接进巨大的程序，因此请使用慢但安全的，带有完整64位偏移的绝对取址模式”。</p>
+<h4 id="codegen-units-优化-性能-vs-编译速度"><a class="header" href="#codegen-units-优化-性能-vs-编译速度"><code>codegen-units</code> （优化： 性能 vs 编译速度）</a></h4>
+<p><code>codegen-units=val</code>，这个值表示控制 crate 分成多少个代码生成单元（codegen units），它需要一个大于 0 的整数。</p>
+<p>当一个 crate 被拆分为多个代码生成单元时，LLVM 能够并行处理它们。增加并行度可能会<strong>加快编译时间</strong>，但也可能会<strong>产生更慢的代码</strong>，因为可能会影响内联（inline）优化。</p>
+<p>将此设置为 <code>1</code> 可能会提高生成代码的性能，但编译速度可能会变慢。</p>
+<p>如果未指定，则默认值为 16，用于非增量构建。对于增量构建，默认值为 256，这允许缓存更细粒度。</p>
+<h4 id="control-flow-guard-安全"><a class="header" href="#control-flow-guard-安全"><code>control-flow-guard</code> （安全）</a></h4>
+<p>此Flag 控制 LLVM 是否启用 Windows <a href="https://docs.microsoft.com/en-us/windows/win32/secbp/control-flow-guard">控制流保护（Control Flow Guard）</a> 平台安全功能。对于非 Windows 目标，此标志当前被忽略。它采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, <code>checks</code>, 或无值：表示启用控制流防护。</li>
+<li><code>nochecks</code>：在没有运行时强制检查的情况下发出控制流保护元数据（这应该只用于测试目的，因为它不提供安全强制）。</li>
+<li><code>n</code>, <code>no</code>, <code>off</code>: 不启用控制流保护（默认）。</li>
+</ul>
+<p>关于 Rust 和 CFG 的更详细说明参考：</p>
+<ul>
+<li><a href="https://msrc-blog.microsoft.com/2020/08/17/control-flow-guard-for-clang-llvm-and-rust/">Control Flow Guard for Clang/LLVM and Rust</a> </li>
+<li><a href="https://doc.rust-lang.org/beta/unstable-book/compiler-flags/control-flow-guard.html">UnStable book: control-flow-guard</a></li>
+</ul>
+<h4 id="debug-assertions"><a class="header" href="#debug-assertions"><code>debug-assertions</code></a></h4>
+<p><code>debug-assertions=val</code>，用于打开或关闭 <code>cfg(debug_assertions)</code> 条件编译。采用以下的值：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：启用调试断言。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 禁用调试断言。</li>
+</ul>
+<p>如果无指定，调试断言会在 <a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#opt-level">opt-level</a> 为 0 的优化级别下默认开启。所以这里需要注意优化级别，debug_assertions 在 release 编译时最好不要开启。这个和 <code>debug_assert!</code> 宏相关。</p>
+<h4 id="default-linker-libraries"><a class="header" href="#default-linker-libraries"><code>default-linker-libraries</code></a></h4>
+<p><code>default-linker-libraries=val</code>，用于设置链接器是否可以链接它的默认库，可以设置的值为：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：包括默认库（默认）。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 排除默认库。</li>
+</ul>
+<h4 id="embed-bitcode-优化编译大小--编译时间"><a class="header" href="#embed-bitcode-优化编译大小--编译时间"><code>embed-bitcode</code> （优化：编译大小 &amp;&amp; 编译时间）</a></h4>
+<p><code>embed-bitcode=val</code>，控制编译器是否将 LLVM 位码嵌入到目标文件中。它采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：将位码放入 rlibs（默认）。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 从 rlibs 中省略位码。</li>
+</ul>
+<p><code>rustc</code> 执行链接时优化 (LTO) 时需要 LLVM 位码（bitcode）。嵌入的位码将出现在 rustc 生成的目标文件中，该文件的名称由目标平台定义。大多数时候是这样 <code>.llvmbc</code>。</p>
+<p>如果你的编译实际不需要位码，使用<code>-C embed-bitcode=no</code> 可以显著提高编译时间并减少生成的文件大小（例如，如果你不为iOS编译或者你不执行LTO）。由于这些原因，Cargo尽可能地使用<code>-C embed-bitcode=no</code>。同样地，如果你直接用 rustc 构建，我们建议在不使用 LTO 时使用 <code>-C embed-bitcode=no</code>。</p>
+<p>如果与<code>-C lto</code>结合，<code>-C embed-bitcode=no</code>将导致<code>rustc</code>在启动时中止，因为这种结合是无效的。</p>
+<blockquote>
+<p>bitcode是由LLVM引入的一种中间代码(Intermediate Representation，简称IR)，它是源代码被编译为二进制机器码过程中的中间表示形态，它既不是源代码，也不是机器码。从代码组织结构上看它比较接近机器码，但是在函数和指令层面使用了很多高级语言的特性。LLVM 优化器负责对bitcode进行各种类型的优化，将bitcode代码进行一些逻辑等价的转换，使得代码的执行效率更高，体积更小，比如DeadStrip/SimplifyCFG，LLVM 后端负责把优化后的bitcode编译为指定目标架构的机器码。</p>
+<p>来源：<a href="https://xelz.info/blog/2018/11/24/all-you-need-to-know-about-bitcode/">https://xelz.info/blog/2018/11/24/all-you-need-to-know-about-bitcode/</a></p>
+</blockquote>
+<h4 id="force-frame-pointers-优化性能"><a class="header" href="#force-frame-pointers-优化性能"><code>force-frame-pointers</code> （优化：性能）</a></h4>
+<p><code>force-frame-pointers=val</code>，用于设置是否强制启用 帧指针（frame-pointers）。相当于 Clang 的<code>-fno-omit-frame-pointer</code>，</p>
+<p>它采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：强制启用帧指针。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 不要强制启用帧指针。这并不一定意味着将删除帧指针。</li>
+</ul>
+<p>如果未强制启用帧指针，则默认行为取决于 target。</p>
+<p>一般情况下，如果设置 <code>force-frame-pointers=no</code> 是一种帧指针省略优化。它造成的弊大于利，默认情况下不应启用。</p>
+<h4 id="force-unwind-tables-优化编译大小"><a class="header" href="#force-unwind-tables-优化编译大小"><code>force-unwind-tables</code> （优化：编译大小）</a></h4>
+<p><code>force-unwind-tables=val</code>，强制生成 unwind 表。它采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：强制生成 unwind 表。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 不强制生成 unwind 表。如果目标需要 unwind 表，则会发出错误。</li>
+</ul>
+<p>如果未指定，则默认值取决于 target 。</p>
+<p>打开 <code>force-unwind-tables=on</code> 可能会导致二进制编译大小膨胀，对于移动和嵌入式这种二进制大小很重要的场景下，建议启用该选项。</p>
+<h4 id="incremental优化编译时间"><a class="header" href="#incremental优化编译时间"><code>incremental</code>（优化：编译时间）</a></h4>
+<p><code>incremental=val</code> ，用于启用增量编译。</p>
+<h4 id="inline-threshold-优化性能"><a class="header" href="#inline-threshold-优化性能"><code>inline-threshold</code> （优化：性能）</a></h4>
+<p><code>inline-threshold=val</code>， 允许您设置内联函数的默认阈值。它接受一个无符号整数作为值。内联基于成本模型（cost model），其中较高的阈值将允许更多内联。</p>
+<p>默认值取决于<a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#opt-level">opt-level</a>：</p>
+<table><thead><tr><th>选择级别</th><th>临界点</th></tr></thead><tbody>
+<tr><td>0</td><td>不适用，仅内联始终内联函数</td></tr>
+<tr><td>1</td><td>不适用，仅内联始终内联函数和 LLVM 生命周期内在函数</td></tr>
+<tr><td>2</td><td>225</td></tr>
+<tr><td>3</td><td>275</td></tr>
+<tr><td>s</td><td>75</td></tr>
+<tr><td>z</td><td>25</td></tr>
+</tbody></table>
+<h4 id="链接相关参数"><a class="header" href="#链接相关参数">链接相关参数</a></h4>
+<ul>
+<li><code>link-arg=val</code>，将单个额外参数附加到链接器调用。</li>
+<li><code>link-args=val</code>，将多个额外参数附加到链接器调用。选项应该用空格分隔。</li>
+<li><code>link-dead-code=val</code>，控制链接器是否保留死代码，尝试构建代码覆盖率指标时，此标志可能有用。它采用以下值之一：
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：保留死代码。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 删除死代码（默认）。</li>
+</ul>
+</li>
+<li><code> link-self-contained=val</code>，控制链接器是使用 Rust 附带的库和对象还是系统中的库和对象。</li>
+<li><code>linker=val </code>，控制链接器<code>rustc</code>调用哪个链接器来链接您的代码。它采用链接器可执行文件的路径。如果未指定此标志，则将根据目标推断链接器。选择特定的链接器，有助于<strong>优化编译时间</strong>。</li>
+<li><code>linker-flavor=val</code>，链接器带有<a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#linker"><code>-C linker</code>标志</a>，则链接器风格是从提供的值中推断出来的。如果没有给出链接器，则使用链接器风格来确定要使用的链接器。每个<code>rustc</code>目标都默认为某种链接器风格。选项参考:<a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#linker-flavor">linker-flavor</a> 。</li>
+<li><code>linker-plugin-lto=val</code>，允许将 LTO 优化推迟到实际的链接步骤，如果所有被链接的目标文件都是由基于 LLVM 的工具链创建的，那么这反过来又允许跨编程语言边界执行过程间<strong>优化</strong>。详细介绍参见<a href="https://doc.rust-lang.org/rustc/linker-plugin-lto.html">Linker-plugin-LTO</a>。它采用以下值之一：
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：启用链接器插件 LTO。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 禁用链接器插件 LTO（默认）。</li>
+<li>链接器插件的路径。</li>
+</ul>
+</li>
+</ul>
+<h4 id="lto-优化性能"><a class="header" href="#lto-优化性能"><code>lto</code> （优化：性能）</a></h4>
+<p><code>lto=val</code>，这个标志控制LLVM是否使用链接时优化（link-time optimizations），以产生更好的优化代码，使用整个程序分析，代价是延长链接时间，所以，会减慢编译时间。它取以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>,<code> on</code>,<code> fat</code>, or <code>no</code>值：执行 &quot;fat &quot;LTO，试图在依赖图中的所有crate中进行优化。</li>
+<li><code>n</code>,<code> no</code>,<code> of</code>f: 禁用LTO。</li>
+<li><code>thin</code>：执行 &quot;Thin &quot;LTO。这与 &quot;fat &quot;类似，但运行时间大大减少，同时仍能实现与 &quot;fat &quot;类似的性能提升。</li>
+</ul>
+<p>如果没有指定<code>-C lto</code>，那么编译器将尝试执行 &quot;thin local LTO&quot;，它只在本地的crate上对其代码单元执行 &quot;thin &quot;LTO。当没有指定<code>-C lto</code>时，如果代码单元是<code>1</code>或者优化被禁用（<code>-C opt-level=0</code>），LTO将被禁用。</p>
+<p>即：</p>
+<ul>
+<li>当没有指定<code>-C lto</code>时:
+<ul>
+<li><code>codegen-units=1</code>: 禁用LTO</li>
+<li><code>opt-level=0</code>: 禁用LTO。</li>
+</ul>
+</li>
+<li>当<code>-C lto</code>被指定时：
+<ul>
+<li><code>lto</code>：16个代码生成单元，在整个crate 中执行 fat LTO。</li>
+<li><code>codegen-units=1</code> +<code> lto</code>:  <code>1</code>个编码生成单元，跨 crate 进行fat LTO。</li>
+</ul>
+</li>
+</ul>
+<p>跨语言的LTO 参见<a href="https://doc.rust-lang.org/rustc/linker-plugin-lto.html">Linker-plugin-LTO</a> 。</p>
+<h4 id="passes-优化性能"><a class="header" href="#passes-优化性能"><code>passes</code> （优化：性能）</a></h4>
+<p><code>passes=val</code>，设置额外的 LLVM passes 列表，使用空格分隔。</p>
+<blockquote>
+<p>LLVM Pass 是LLVM代码优化（optimization）中的一个重要组成部分。为便于理解，可以将Pass看作一个又一个的模块，各个Pass可以通过IR获取信息为下一个Pass做好准备，又或者直接对中间代码进行优化。</p>
+<p>总的来说，所有的pass大致可以分为两类：</p>
+<ul>
+<li>分析(<code>analysis</code>)和转换分析类的pass以提供信息为主</li>
+<li>转换类(<code>transform</code>)的pass优化中间代码</li>
+</ul>
+<p>详细参考：<a href="https://kiprey.github.io/2020/06/LLVM-IR-pass/">代码优化与LLVM IR pass</a></p>
+</blockquote>
+<p>相关选项：<code>no-prepopulate-passes=val</code>，使用空的 Pass 列表。</p>
+<h4 id="no-redzone"><a class="header" href="#no-redzone"><code>no-redzone</code></a></h4>
+<p><code>no-redzone=val</code>，允许禁用<a href="https://en.wikipedia.org/wiki/Red_zone_(computing)">红区</a>。它采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：禁用红色区域。</li>
+<li><code>n</code>, <code>no</code>, 或<code>off</code>: 启用红色区域。</li>
+</ul>
+<blockquote>
+<p><strong>红区</strong>（redzone）是System V ABI提供的一种优化的产物，它允许函数无需调整<strong>栈指针</strong>（stack pointer），便能临时使用其<strong>栈帧</strong>（stack frame）下方的128个字节。红区被定义为调整过的栈指针下方128个字节的区域——函数将会使用这个区域，来存放一些无需跨越函数调用的临时数据。因此，在一些情况下，比如在小的<strong>叶函数</strong>（leaf function）[1]中，我们可以优化掉调整栈指针所需的两条指令。(</p>
+<p><strong>叶函数</strong>（leaf function）指的是不调用其它函数的函数；可以理解为，是函数调用图的叶子节点。特别地，<strong>尾递归函数</strong>（tail recursive function）的尾部可以看作是叶函数。</p>
+<p>然而，当<strong>异常</strong>（exception）或<strong>硬件中断</strong>（hardware interrupt）发生时，这种优化却可能产生严重的问题。</p>
+<p>参考：<a href="https://github.com/rustcc/writing-an-os-in-rust/blob/master/appendix-b-red-zone.md">使用Rust编写操作系统（附录二）：禁用红区</a></p>
+</blockquote>
+<h4 id="no-vectorize-loops-优化性能"><a class="header" href="#no-vectorize-loops-优化性能"><code>no-vectorize-loops</code> （优化：性能）</a></h4>
+<p><code>no-vectorize-loops=val</code>，禁用循环矢量化（loop vectorization optimization passes）。等价于 Clang 的 <code>-fno-vectorize</code>。</p>
+<p>LLVM Loop Vectorizer 具有许多功能，可以对复杂的循环进行矢量化（向量化即“批量操作”，数据并行）。循环矢量化器使用成本模型来决定最佳矢量化因子和展开因子。但是，矢量化器的用户可以强制矢量化器使用特定值。许多循环无法向量化，包括具有复杂控制流、不可向量化类型和不可向量化调用的循环。对于更复杂的情况，我们则需要手动进行SIMD编程。</p>
+<p>是否禁用，取决于你的使用场景。</p>
+<p>相关：<code>no-vectorize-slp=val</code>，禁用 SLP 向量化。</p>
+<h4 id="overflow-checks-安全"><a class="header" href="#overflow-checks-安全"><code> overflow-checks</code> （安全）</a></h4>
+<p><code>overflow-checks=val</code>，控制<a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#overflow">运行时整数溢出检查</a>，启用溢出检查时，溢出时会发生恐慌。取值为：</p>
+<p>采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：启用溢出检查。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 禁用溢出检查。</li>
+</ul>
+<p>如果未指定，则在启用 <a href="https://doc.rust-lang.org/rustc/codegen-options/index.html#debug-assertions">调试断言</a>时启用溢出检查，否则禁用。</p>
+<h4 id="panic"><a class="header" href="#panic"><code>panic</code></a></h4>
+<p>控制代码恐慌时发生的情况:</p>
+<ul>
+<li><code>abort</code>: 恐慌时终止进程，不能执行析构函数。</li>
+<li><code>unwind</code>: 恐慌时展开堆栈，可以执行析构函数，以及 catch_unwind 。</li>
+</ul>
+<p>如果未指定，则默认值取决于目标。</p>
+<h4 id="prefer-dynamic"><a class="header" href="#prefer-dynamic"><code> prefer-dynamic</code></a></h4>
+<p><code> prefer-dynamic=val</code>，默认情况下，<code>rustc</code>更喜欢静态链接依赖项。如果库的静态和动态版本都可用，此选项将指示应尽可能使用动态链接。有一个内部算法用于确定是否可以静态或动态地与依赖项链接。例如，<code>cdylib</code> crate类型可能只使用静态链接。此标志采用以下值之一：</p>
+<ul>
+<li><code>y</code>, <code>yes</code>, <code>on</code>, 或无值：使用动态链接。</li>
+<li><code>n</code>, <code>no</code>, or <code>off</code>: 使用静态链接（默认）。</li>
+</ul>
+<h4 id="profile-generate-优化"><a class="header" href="#profile-generate-优化"><code>profile-generate</code> （优化）</a></h4>
+<p><code>profile-generate=val</code>，允许创建检测二进制文件，这些二进制文件将收集分析数据以用于 Profile Guided Optimization (PGO)。该Flag 采用一个可选参数，该参数是已检测二进制文件将向其中发出收集的数据的目录的路径。有关详细信息，请参阅 <a href="https://doc.rust-lang.org/rustc/profile-guided-optimization.html">profile-guided optimization</a> 。</p>
+<p>相关：<code>profile-use=val</code>。</p>
+<h4 id="split-debuginfo-调试"><a class="header" href="#split-debuginfo-调试"><code>split-debuginfo</code> （调试）</a></h4>
+<p><code>split-debuginfo=val </code>，控制<code>rustc</code>生成的调试信息的“split debuginfo”的发射。此选项的默认行为是特定于平台的，并非此选项的所有可能值都适用于所有平台。可能的值为：</p>
+<ul>
+<li><code>off</code>- 这是具有 ELF 二进制文件和 windows-gnu（不是 Windows MSVC 和 macOS）的平台的默认设置。这通常意味着可以在可执行文件部分的最终工件中找到 DWARF 调试信息。Windows MSVC 不支持此选项。在 macOS 上，此选项可防止最终执行<code>dsymutil</code>生成调试信息。</li>
+<li><code>packed</code>- 这是 Windows MSVC 和 macOS 的默认设置。这里的“packed”一词意味着所有调试信息都打包到与主可执行文件不同的文件中。在 Windows MSVC 上这是一个<code>*.pdb</code>文件，在 macOS 上这是一个<code>*.dSYM</code>文件夹，而在其他平台上这是一个<code>*.dwp</code> 文件。</li>
+<li><code>unpacked</code>- 这意味着调试信息将在每个编译单元（目标文件）的单独文件中找到。Windows MSVC 不支持此功能。在 macOS 上，这意味着原始目标文件将包含调试信息。在其他 Unix 平台上，这意味着<code>*.dwo</code>文件将包含调试信息。</li>
+</ul>
+<p>请注意，此时<code>packed</code>和<code>unpacked</code>在<code>-Z unstable-options</code>非 macOS 平台上被关闭。</p>
+<h4 id="strip-优化编译大小"><a class="header" href="#strip-优化编译大小"><code>strip</code> （优化：编译大小）</a></h4>
+<p><code>strip=val</code>，控制在链接期间从二进制文件中剥离调试信息和类似的辅助数据。可用于减少编译文件大小。</p>
+<p>此选项支持的值为：</p>
+<ul>
+<li><code>none</code>- 根据目标将调试信息和符号（如果存在）复制到生成的二进制文件或单独的文件中（例如<code>.pdb</code>，MSVC 中的文件）。</li>
+<li><code>debuginfo</code> - debuginfo 部分和符号表部分中的 debuginfo 符号在链接时被剥离，并且不会复制到生成的二进制文件或单独的文件中。</li>
+<li><code>symbols</code>- 与 相同<code>debuginfo</code>，但如果链接器支持，符号表部分的其余部分也会被剥离。</li>
+</ul>
+<h3 id="-z"><a class="header" href="#-z"><code>-Z</code></a></h3>
+<p><code>-Z</code> Flag 只允许在 Nightly Rust 下使用，因为它包含了 未稳定的编译器选项。</p>
+<p>在该 Flag 下面有许多未稳定的子参数，这里就不一一列举。只挑选几个和安全相关的展示一下：</p>
+<ul>
+<li><code>stack-protector=val</code> ，用于控制栈粉碎保护策略，用于缓冲溢出保护。通过命令 <code>rustc --print stack-protector-strategies</code>可以看到详细设置值。</li>
+<li><code>sanitizer=val</code>，sanitizers（CFI 除外）的实现几乎完全依赖于 LLVM，将来增加 GCC 后端应该可以多一些支持。用于支持 内存错误检测器（<a href="https://clang.llvm.org/docs/AddressSanitizer.html">AddressSanitizer</a>）、LLVM 控制流完整性 (CFI) 提供前沿控制流保护（<a href="https://clang.llvm.org/docs/ControlFlowIntegrity.html">ControlFlowIntegrity</a> ）、运行时内存泄漏检测器（<a href="https://clang.llvm.org/docs/LeakSanitizer.html">LeakSanitizer</a>）、未初始化读取的检测器（<a href="https://clang.llvm.org/docs/MemorySanitizer.html">MemorySanitizer</a>）、数据竞争检测器（<a href="https://clang.llvm.org/docs/ThreadSanitizer.html">ThreadSanitizer</a>）等。</li>
+</ul>
+<h2 id="参考"><a class="header" href="#参考">参考</a></h2>
+<p>https://doc.rust-lang.org/rustc/command-line-arguments.html</p>
+<p>https://doc.rust-lang.org/rustc/codegen-options/index.html</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../safe-guides/Appendix/optimizing/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../safe-guides/Appendix/best-practice/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../safe-guides/Appendix/optimizing/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../safe-guides/Appendix/best-practice/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+    </body>
+</html>
