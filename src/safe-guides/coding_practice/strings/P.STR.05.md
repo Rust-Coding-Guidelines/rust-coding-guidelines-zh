@@ -1,11 +1,68 @@
-## P.STR.05     只有在合适的场景下，才使用第三方库正则表达式`regex`
+## P.STR.05 在拼接字符串时，建议使用`format!`
 
 **【描述】**
 
-合适的场景包括：
+在Rust中有很多方法可以连接字符串，不同的连接方法适用于不同的场景，性能也会有所差别。
 
-1. 不在乎编译文件大小。`regex` 正则引擎是第三方库，引入它的时候意味着还会引入其他依赖，对编译文件大小有要求可以考虑，是否使用 `Cow` 和 内建函数方法来替代。
-2. 对字符串查找性能有极致需求。`regex` 的  `find` 实现性能很好，但是 `replace` 替换就不一定了。对于替换需求，在适合 `Cow<str>` 的场景下，使用 `Cow` 和 内建函数方法来替代 regex 可能更好。
+**【示例】**
 
+```rust
+ // 组合字符串是最简单和直观的方法，尤其是在字符串和非字符串混合的情况下。
+ fn main() {
+	let name = "world!";
+	let hw = format!("Hello {}!", name);
+	println!("{:#?}", hw);
+ }
+ 
+ // 在追加字符串的时候，可以使用`push_str`方法,`push_str`性能比`format!`更好
+ fn main() {
+    let mut hw = String::new();
+    hw.push_str("hello");
+    hw.push_str(" world!");
+    println!("{:#?}", hw);
+}
+
+ // 通过`concat()`方法将字符串数组拼接成一个字符串
+ fn main() {
+    let hw = ["hello", " ", "world!"].concat();
+    println!("{:#?}", hw);
+ }
+ 
+ // 通过`join()`方法将字符串数组拼接成一个字符串
+ fn main() {
+    let hw_1 = ["hello", "world!"].join("");
+    println!("{:#?}", hw_1);
+	// 输出：
+	// helloworld!
+	
+    // 使用`join()`方法在拼接字符串时添加或指定字符
+    let hw_2 = ["hello", "world!"].join("+");
+    println!("{:#?}", hw_2);
+	// 输出：
+	// hello+world!
+ }
+ 
+ // 使用`collect()`方式对数组中的字符串进行拼接
+ fn main() {
+    let hw = ["hello", " ", "world!"];
+    let res: String = hw.iter().map(|x| *x).collect();
+    println!("{:#?}", res);
+ }
+ 
+ // 使用符号`+`进行字符串拼接
+ fn main() {
+    let hw_1 = &(String::from("hello") + &String::from(" ") + &String::from("world!"));
+    println!("{:#?}", hw_1);
+    
+    let hw_2 = &(String::from("hello") + " " + "world!");
+    println!("{:#?}", hw_2);
+    
+    let hw_3 = &("hello".to_owned() + " " + "world!");
+    println!("{:#?}", hw_3);
+
+    let hw_4 = &("hello".to_string() + " " + "world!");
+    println!("{:#?}", hw_4);
+ }
+```
 
 

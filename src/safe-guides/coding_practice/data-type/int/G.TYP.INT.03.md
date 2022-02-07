@@ -1,35 +1,38 @@
-## G.TYP.INT.03  避免有符号整数和无符号整数之间的强制转换
+## G.TYP.INT.03  对负数取模计算的时候不应使用`%`
 
 **【级别】** 建议
 
 **【描述】**
 
-当有符号整数被强制转换为无符号整数时，负值会发生回绕，变成更大的正值，这在实际应用时有可能助长缓冲区溢出风险。
+Rust 当前的这个 `%`形式是余数运算符，它的行为与`C`或`Java`等语言中相同符号的运算符相同。它也类似于`Python`或`Haskell`等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。
 
 **【反例】**
 
 ```rust
-let y: i8 = -1;
-y as u128; // will return 18446744073709551615
+fn main() {
+    let a: i32 = -1;
+    let b: i32 = 6;
+    // 余数运算符只是返回第一个操作数除以第二个操作数的余数。所以 -1/6 给出 0，余数为 -1
+    assert_eq!(a % b, -1);
+}
 ```
 
 **【正例】**
 
 ```rust
-let y : i8 = -1;
-// Error: 
-// the trait `From<i8>` is not implemented for `u128`
-// the trait bound `u128: From<i8>` is not satisfied
-let z = u128::from(y);
+fn main() {
+    let a: i32 = -1;
+    let b: i32 = 6;
+	//  取模是严格低于第二个操作数的自然数（所以是非负数），与第二个操作数的最大倍数相加，也低于或等于第一个操作数，则为第一个操作数。
+    //  6的最大倍数低于或等于-1 是 -6（6*-1），模数是5，因为-6+5=-1。
+    assert_eq!(a.rem_euclid(b), 5);
+}
 ```
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cast_sign_loss](https://rust-lang.github.io/rust-clippy/master/#cast_sign_loss) | yes           | no           | pedantic   | allow |
-
-注意：默认情况下该 lint 是` allow`，如果需要检查这种转换，则需要设置为 `warn`或 `deny`。
-
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
+| [modulo_arithmetic](https://rust-lang.github.io/rust-clippy/master/#modulo_arithmetic) | yes           | no           | restriction | allow |
 
 

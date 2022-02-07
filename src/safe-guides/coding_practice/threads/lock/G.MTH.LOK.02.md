@@ -1,17 +1,37 @@
-## G.MTH.LOK.02 多线程环境下宜使用 `Arc` 代替 `Rc`
+## G.MTH.LOK.02 建议使用 `Arc<str> / Arc<[T]>` 来代替  `Arc<String> / Arc<Vec<T>>`
 
 **【级别】** 建议
 
 **【描述】**
 
-`Rc` 是专门用于单线程的，多线程下应该用 `Arc` 。
+`Arc<str> / Arc<[T]>` 的性能比  `Arc<String> / Arc<Vec<T>>` 更好。
+
+因为 ：
+
+- `Arc<String> / Arc<Vec<T>>` 有一层中间层： `arc -> String len/Vec<T> len -> text/data`，它是一个薄指针（thin pointer）。
+- `Arc<str>/ Arc<[T]>` 则没有中间层： `arc & string len / [T] len -> text/data`，它是一个胖指针（fat pointer）。
 
 **【反例】**
 
 ```rust
 use std::rc::Rc;
-use std::sync::Mutex;
-fn foo(interned: Rc<Mutex<i32>>) { ... }
+use std::sync::Arc;
+
+fn main() {
+    let a = "hello world".to_string();
+    let b: Rc<String> = Rc::from(a);
+    println!("{}", b);
+
+    // or equivalently:
+    let a = "hello world".to_string();
+    let b: Rc<String> = a.into();
+    println!("{}", b);
+
+    // we can also do this for Arc,
+    let a = "hello world".to_string();
+    let b: Arc<String> = Arc::from(a);
+    println!("{}", b);
+}
 ```
 
 **【正例】**
@@ -19,15 +39,25 @@ fn foo(interned: Rc<Mutex<i32>>) { ... }
 ```rust
 use std::rc::Rc;
 use std::sync::Arc;
-use std::cell::RefCell
-fn foo(interned: Rc<RefCell<i32>>) { ... }
-// or
-fn foo(interned: Arc<Mutex<i32>>) { ... }
+
+fn main() {
+    let a: &str = "hello world";
+    let b: Rc<str> = Rc::from(a);
+    println!("{}", b);
+
+    // or equivalently:
+    let b: Rc<str> = a.into();
+    println!("{}", b);
+
+    // we can also do this for Arc,
+    let a: &str = "hello world";
+    let b: Arc<str> = Arc::from(a);
+    println!("{}", b);
+}
 ```
 
 **【Lint 检测】**
 
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [rc_mutex](https://rust-lang.github.io/rust-clippy/master/#rc_mutex) | yes           | no           | restriction | allow |
-
+| [rc_buffer](https://rust-lang.github.io/rust-clippy/master/#rc_buffer) | yes           | no           | restriction | allow |

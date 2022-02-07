@@ -22,4 +22,5 @@
     - [初学者常见问题Q&A](./best-practice/qa.md)
     - [Rust 编程技巧](./best-practice/tips.md)
 - [J.贡献说明](./contribution.md)
+- [K.淘汰的规则](./old_guidelines.md)
 

@@ -1,42 +1,53 @@
-## P.CLT.01  根据集合各自的特点选择合适的集合类型
+## P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配
 
 **【描述】**
 
-Rust 标准库内置的集合类型，在安全和性能方面还是比较靠谱的。需要仔细阅读标准库中各类集合类型的优缺点来选择合适的类型。
+预分配足够的容量，避免后续内存分配，可以提升代码性能。
 
-**下列场景考虑 `Vec`**
+**【反例】**
 
--  你想要一个可动态增长大小（堆分配）的数组
-- 你想要一个栈结构
-- 你想要集合元素按特定顺序排序，并且仅需要在结尾追加新元素
-- 你可能只是想临时收集一些元素，并且不关心它们的实际存储
+```rust
+use std::collections::HashMap;
+use std::collections::VecDeque;
 
-**下列场景考虑 `VecDeque`**
+fn main() {
 
-- 你想要一个可以在头尾两端插入元素的 `Vec`
-- 你想要一个队列，或双端队列
+    // HashMap
+    let mut map = HashMap::new();
+    map.insert("a", 1);
+    map.insert("b", 2);
+    map.insert("c", 3);
+    println!("{:#?}", map);
+    
+    // VecDeque
+    let mut deque = VecDeque::new();
+    deque.push_back(1);
+    deque.push_back(2);
+    deque.push_back(3);
+    println!("{:#?}", deque);
+}
+```
 
-**下列场景考虑`LinkedList`**
+**【正例】**
 
-- 你非常确定你真的需要一个双向链表
+```rust
+use std::collections::HashMap;
+use std::collections::VecDeque;
 
-**下列场景考虑 `Hashmap`**
+fn main() {
 
-- 你需要一个 KV  集合
-- 你想要一个缓存
-
-**下列场景考虑 `BTreeMap`**
-
-- 你需要一个可以排序的 `HashMap`
-- 你希望可以按需获取一系列元素
-- 你对最小或最大的 KV 感兴趣
-- 你想要寻找比某个值更大或更小的键
-
-**下列场景考虑使用 `Set` 系列**
-
-- 你只是需要一个 Set 集合，而不需要键值对。
-
-**下列场景考虑使用 `BinaryHeap`**
-
-- 你想存储一堆元素，但只想在任何给定时间内处理 最大 或 最重要的元素
-- 你想要一个优先队列
+    // HashMap
+    let mut map = HashMap::with_capacity(3);
+    map.insert("a", 1);
+    map.insert("b", 2);
+    map.insert("c", 3);
+    println!("{:#?}", map);
+    
+    // VecDeque
+    let mut deque = VecDeque::with_capacity(3);
+    deque.push_back(1);
+    deque.push_back(2);
+    deque.push_back(3);
+    println!("{:#?}", deque);
+}
+```

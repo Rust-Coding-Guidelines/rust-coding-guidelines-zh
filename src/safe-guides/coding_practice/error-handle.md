@@ -15,10 +15,6 @@ Rust 语言针对这三类非正常情况分别提供了专门的处理方式，
 ## 列表
 
 - [P.ERR.01 当传入函数的参数值因为超出某种限制可能会导致函数调用失败，应该使用断言](./error-handle/P.ERR.01.md)
-- [P.ERR.02 当函数的返回值或者结构体字段的值可能为空时，请使用`Option<T>`](./error-handle/P.ERR.02.md)
-- [P.ERR.03 当程序中有不可恢复的错误时，应该让其 Panic](./error-handle/P.ERR.03.md)
-- [P.ERR.04 当程序中需要处理错误时，应该使用 `Result<T, E>` 和 `?` 操作符](./error-handle/P.ERR.04.md)
-- [P.ERR.05 在确定 `Option<T>` 和 `Result<T, E>`类型的值不可能是 `None` 或 `Err `时，请用 `expect` 代替 `unwrap()`](./error-handle/P.ERR.05.md)
-- [P.ERR.06 根据应用还是库来选择不同的错误处理方式](./error-handle/P.ERR.06.md)
+- [P.ERR.02 在确定 `Option<T>` 和 `Result<T, E>`类型的值不可能是 `None` 或 `Err `时，请用 `expect` 代替 `unwrap()`](./error-handle/P.ERR.03.md)
 - [G.ERR.01 在处理 `Option<T>` 和 `Result<T, E>` 类型时，不要随便使用 `unwrap`](./error-handle/G.ERR.01.md)
 - [G.ERR.02 不要滥用 `expect`，请考虑用 `unwrap_or_` 系列方法代替](./error-handle/G.ERR.02.md)

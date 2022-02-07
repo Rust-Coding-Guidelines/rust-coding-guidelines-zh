@@ -4,5 +4,4 @@
 
 ## 列表
 
-- [P.TYP.TUP.01 宜使用元组解构来同时定义多个变量](./tuple/P.TYP.TUP.01.md)
 - [G.TYP.TUP.01 使用元组时，其元素最多不宜超过3个](./tuple/G.TYP.TUP.01.md)

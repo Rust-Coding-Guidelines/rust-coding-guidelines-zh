@@ -1,63 +1,74 @@
-## G.MTH.LOK.03 建议使用 `Arc<str> / Arc<[T]>` 来代替  `Arc<String> / Arc<Vec<T>>`
+## G.MTH.LOK.03 尽量避免直接使用标准库 `std::sync` 模块中的同步原语，替换为 [`parking_lot`](https://crates.io/crates/parking_lot)
 
 **【级别】** 建议
 
 **【描述】**
 
-`Arc<str> / Arc<[T]>` 的性能比  `Arc<String> / Arc<Vec<T>>` 更好。
-
-因为 ：
-
-- `Arc<String> / Arc<Vec<T>>` 有一层中间层： `arc -> String len/Vec<T> len -> text/data`，它是一个薄指针（thin pointer）。
-- `Arc<str>/ Arc<[T]>` 则没有中间层： `arc & string len / [T] len -> text/data`，它是一个胖指针（fat pointer）。
+尽量避免对标准库 `std::sync` 模块中锁同步原语的使用，建议使用 [`parking_lot`](https://crates.io/crates/parking_lot) 的实现。
 
 **【反例】**
 
+来源于 [std标准库文档](https://doc.rust-lang.org/std/sync/struct.Mutex.html)
+
 ```rust
-use std::rc::Rc;
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::sync::mpsc::channel;
 
-fn main() {
-    let a = "hello world".to_string();
-    let b: Rc<String> = Rc::from(a);
-    println!("{}", b);
+const N: usize = 10;
 
-    // or equivalently:
-    let a = "hello world".to_string();
-    let b: Rc<String> = a.into();
-    println!("{}", b);
+let data = Arc::new(Mutex::new(0));
 
-    // we can also do this for Arc,
-    let a = "hello world".to_string();
-    let b: Arc<String> = Arc::from(a);
-    println!("{}", b);
+let (tx, rx) = channel();
+for _ in 0..N {
+    let (data, tx) = (Arc::clone(&data), tx.clone());
+    thread::spawn(move || {      
+        let mut data = data.lock().unwrap();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
 }
+
+rx.recv().unwrap();
 ```
 
 **【正例】**
 
+例子来源于 [parking_lot 文档](https://docs.rs/parking_lot/0.11.2/parking_lot/type.Mutex.html)
+
+相比`std::sync::Mutex`，使用 `parking_lot::Mutex` 能实现'无中毒'，锁在 panic 时正常释放，更少的空间占用等优势。
+
 ```rust
-use std::rc::Rc;
-use std::sync::Arc;
+use parking_lot::Mutex;
+use std::sync::{Arc, mpsc::channel};
+use std::thread;
 
-fn main() {
-    let a: &str = "hello world";
-    let b: Rc<str> = Rc::from(a);
-    println!("{}", b);
+const N: usize = 10;
 
-    // or equivalently:
-    let b: Rc<str> = a.into();
-    println!("{}", b);
+let data = Arc::new(Mutex::new(0));
 
-    // we can also do this for Arc,
-    let a: &str = "hello world";
-    let b: Arc<str> = Arc::from(a);
-    println!("{}", b);
+let (tx, rx) = channel();
+for _ in 0..10 {
+    let (data, tx) = (Arc::clone(&data), tx.clone());
+    thread::spawn(move || {
+        let mut data = data.lock();
+        *data += 1;
+        if *data == N {
+            tx.send(()).unwrap();
+        }
+    });
 }
+
+rx.recv().unwrap();
 ```
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 是否可定制 |
 | ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [rc_buffer](https://rust-lang.github.io/rust-clippy/master/#rc_buffer) | yes           | no           | restriction | allow |
+| _ | no           | no           | _ | yes |
+
+**【定制化参考】**
+这条规则如果需要定制 Lint，则可以扫描 `std::sync` 锁同步原语的使用，推荐优先选择 crate `parking_lot` 中对应的同步原语。

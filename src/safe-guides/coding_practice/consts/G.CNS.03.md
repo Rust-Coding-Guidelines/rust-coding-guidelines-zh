@@ -1,41 +1,45 @@
-## G.CNS.03 不宜将量大的数据结构定义为常量
+## G.CNS.03 不应将内部可变性容器声明为常量
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
-因为[常量会到处内联](https://doc.rust-lang.org/reference/items/constant-items.html#constant-items)，即复制到各个使用到它的地方。而静态变量不会内联，它是全局的且有一个引用地址。
-所以当要创建一个很大的常量数组时，应该考虑将其换成静态变量以提高程序运行效率。（详情可见：[const-vs-static](https://rust-lang.github.io/rfcs/0246-const-vs-static.html#motivation)）
-
-相关：[G.TYP.Array.01 ](./data-type/array.md)
+由于常量会到处内联的特性。
+若将一个内容可变容器声明为常量，那么在引用它的时候同样会新建一个实例，这样会破坏内容可变容器的使用目的，
+所以需要将它的值存储为静态（static）或者直接将其定义为静态。
 
 **【反例】**
 
 ```rust
-fn main() {
-    const MONTHS: [&str; 12] = ["January", "Feburary", "March", "April",
-                                "May", "June", "July", "August",
-                                "September", "October", "November", "December"];
-}
+use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
+
+// Bad.
+CONST_ATOM.store(6, SeqCst); // 此处相当于新建了一个atomic实例，所以原容器内容并未改变
+assert_eq!(CONST_ATOM.load(SeqCst), 12); // 仍为12，因为这两行的CONST_ATOM为不同实例
+
 ```
 
 **【正例】**
 
 ```rust
-fn main() {
-    static MONTHS: [&str; 12] = ["January", "Feburary", "March", "April",
-                                "May", "June", "July", "August",
-                                "September", "October", "November", "December"];
-}
+use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
+
+// Good.
+static STATIC_ATOM: AtomicUsize = CONST_ATOM;
+STATIC_ATOM.store(9, SeqCst);
+assert_eq!(STATIC_ATOM.load(SeqCst), 9); // 使用`static`, 故上下文的STATIC_ATOM皆指向同一个实例
+
+// 或直接声明为static
+static ANOTHER_STATIC_ATOM: AtomicUsize = AtomicUsize::new(15);
+ANOTHER_STATIC_ATOM.store(9, SeqCst);
+assert_eq!(ANOTHER_STATIC_ATOM.load(SeqCst), 9);
 ```
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| _ | no           | no           | _   | yes |
-
-**【定制化参考】**
-
-这条规则如果需要定制Lint，则需要找出每个定义的常量再判断其空间占用，或可直接排除基础类型以外的数据类型。
-
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [borrow_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#borrow_interior_mutable_const) | yes| no | Style | warn |
+| [declare_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#declare_interior_mutable_const) | yes| no | Style | warn |

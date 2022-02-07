@@ -1,67 +1,52 @@
-## G.MTH.LOK.04 尽量避免直接使用标准库 `std::sync` 模块中的同步原语，替换为 [`parking_lot`](https://crates.io/crates/parking_lot)
+## G.MTH.LOK.04 尽量避免直接使用标准库 `std::sync::mpsc` 模块中的 `channel`，替换为 [`crossbeam`](https://github.com/crossbeam-rs/crossbeam)
 
 **【级别】** 建议
 
 **【描述】**
 
-尽量避免对标准库 `std::sync` 模块中锁同步原语的使用，建议使用 [`parking_lot`](https://crates.io/crates/parking_lot) 的实现。
+尽量避免使用 `std::sync::mpsc::channel`，建议使用 [`crossbeam`](https://github.com/crossbeam-rs/crossbeam)
 
 **【反例】**
 
-来源于 [std标准库文档](https://doc.rust-lang.org/std/sync/struct.Mutex.html)
+例子来源于 [`std::sync::mpsc` 文档](https://doc.rust-lang.org/std/sync/mpsc/)
 
 ```rust
-use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc::channel;
 
-const N: usize = 10;
-
-let data = Arc::new(Mutex::new(0));
-
 let (tx, rx) = channel();
-for _ in 0..N {
-    let (data, tx) = (Arc::clone(&data), tx.clone());
-    thread::spawn(move || {      
-        let mut data = data.lock().unwrap();
-        *data += 1;
-        if *data == N {
-            tx.send(()).unwrap();
-        }
+
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
     });
 }
 
-rx.recv().unwrap();
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 <= j && j < 10);
+}
 ```
 
 **【正例】**
 
-例子来源于 [parking_lot 文档](https://docs.rs/parking_lot/0.11.2/parking_lot/type.Mutex.html)
-
-相比`std::sync::Mutex`，使用 `parking_lot::Mutex` 能实现'无中毒'，锁在 panic 时正常释放，更少的空间占用等优势。
-
 ```rust
-use parking_lot::Mutex;
-use std::sync::{Arc, mpsc::channel};
-use std::thread;
+use crossbeam_channel::unbounded;
 
-const N: usize = 10;
+let (tx, rx) = unbounded();
 
-let data = Arc::new(Mutex::new(0));
-
-let (tx, rx) = channel();
-for _ in 0..10 {
-    let (data, tx) = (Arc::clone(&data), tx.clone());
-    thread::spawn(move || {
-        let mut data = data.lock();
-        *data += 1;
-        if *data == N {
-            tx.send(()).unwrap();
-        }
+for i in 0..10 {
+    let tx = tx.clone();
+    thread::spawn(move|| {
+        tx.send(i).unwrap();
     });
 }
 
-rx.recv().unwrap();
+for _ in 0..10 {
+    let j = rx.recv().unwrap();
+    assert!(0 <= j && j < 10);
+}
 ```
 
 **【Lint 检测】**
@@ -71,4 +56,4 @@ rx.recv().unwrap();
 | _ | no           | no           | _ | yes |
 
 **【定制化参考】**
-这条规则如果需要定制 Lint，则可以扫描 `std::sync` 锁同步原语的使用，推荐优先选择 crate `parking_lot` 中对应的同步原语。
+这条规则如果需要定制 Lint，则可以扫描对 `std::sync::mpsc::channel` 的使用，推荐优先选择 crate `crossbeam`。

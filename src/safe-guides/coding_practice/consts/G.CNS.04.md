@@ -1,45 +1,30 @@
-## G.CNS.04 不应将内部可变性容器声明为常量
+## G.CNS.04 不应在常量定义中增加显式的 `'static` 生命周期
 
 **【级别】** 要求
 
 **【描述】**
 
-由于常量会到处内联的特性。
-若将一个内容可变容器声明为常量，那么在引用它的时候同样会新建一个实例，这样会破坏内容可变容器的使用目的，
-所以需要将它的值存储为静态（static）或者直接将其定义为静态。
+在常量和静态变量声明时已经默认含有隐式的`'static`生命周期，所以不需要额外增加显式`'static`声明周期。
 
 **【反例】**
 
 ```rust
-use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
-const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
-
-// Bad.
-CONST_ATOM.store(6, SeqCst); // 此处相当于新建了一个atomic实例，所以原容器内容并未改变
-assert_eq!(CONST_ATOM.load(SeqCst), 12); // 仍为12，因为这两行的CONST_ATOM为不同实例
-
+const FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
+&[...]
+static FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
+&[...]
 ```
 
 **【正例】**
 
 ```rust
-use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
-const CONST_ATOM: AtomicUsize = AtomicUsize::new(12);
-
-// Good.
-static STATIC_ATOM: AtomicUsize = CONST_ATOM;
-STATIC_ATOM.store(9, SeqCst);
-assert_eq!(STATIC_ATOM.load(SeqCst), 9); // 使用`static`, 故上下文的STATIC_ATOM皆指向同一个实例
-
-// 或直接声明为static
-static ANOTHER_STATIC_ATOM: AtomicUsize = AtomicUsize::new(15);
-ANOTHER_STATIC_ATOM.store(9, SeqCst);
-assert_eq!(ANOTHER_STATIC_ATOM.load(SeqCst), 9);
+const FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
+ static FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
 ```
 
 **【Lint 检测】**
 
 | lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
 | ------ | ---- | --------- | ------ | ------ | 
-| [borrow_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#borrow_interior_mutable_const) | yes| no | Style | warn |
-| [declare_interior_mutable_const](https://rust-lang.github.io/rust-clippy/master/#declare_interior_mutable_const) | yes| no | Style | warn |
+| [redundant_static_lifetimes](https://rust-lang.github.io/rust-clippy/master/#redundant_static_lifetimes) | yes| no | Style | warn |
+

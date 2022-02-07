@@ -4,7 +4,6 @@ Rust 的枚举是一种带 Tag 的联合体。 一般分为三类：空枚举、
 
 ## 列表
 
-- [P.TYP.ENM.01 需要取出 Enum 值的时候宜使用 `std::mem::take/swap/replace`](./enum/P.TYP.ENM.01.md)
 - [G.TYP.ENM.01 合理选择`map`和`and_then`](./enum/G.TYP.ENM.01.md)
 - [G.TYP.ENM.02 非必要时不应自行创建空枚举](./enum/G.TYP.ENM.02.md)
 - [G.TYP.ENM.03 在使用类似 C 语言的枚举写法且使用`repr(isize/usize)` 布局时注意 32位架构上截断的问题](./enum/G.TYP.ENM.03.md)
