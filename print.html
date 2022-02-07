@@ -10310,13 +10310,25 @@ async fn read_file() -&gt; std::io::Result&lt;()&gt; {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="puns01--不要为了逃避-编译器安全检查而滥用-unsafe-rust"><a class="header" href="#puns01--不要为了逃避-编译器安全检查而滥用-unsafe-rust">P.UNS.01  不要为了逃避 编译器安全检查而滥用 Unsafe Rust</a></h2>
 <p><strong>【描述】</strong></p>
-<p>Unsafe Rust 有其应用范围和目标，不要为了逃避 编译器安全检查而随便滥用 Unsafe Rust。</p>
+<p>Unsafe Rust 有其应用范围和目标，不要为了逃避 编译器安全检查而随便滥用 Unsafe Rust，否则很可能引起未定义行为（UB）。</p>
+<p>【反例】</p>
+<pre><pre class="playground"><code class="language-rust">// 该函数为滥用 unsafe 来跳过 Rust 借用检查 
+// 强行返回本地变量的引用，最终引起 UB 未定义行为
+fn abuse_unsafe_return_local_ref&lt;'a&gt;() -&gt; &amp;'a String {
+    let s = &quot;hello&quot;.to_string();
+    let ptr_s_addr = &amp;s as *const String as usize;
+    unsafe{ &amp;*(ptr_s_addr as *const String) }
+}
+
+fn main() {
+    let s = abuse_unsafe_return_local_ref(); // error: Undefined Behavior: encountered a dangling reference (use-after-free)
+}
+</code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="puns02--不要为了提升性能而盲目使用-unsafe-rust"><a class="header" href="#puns02--不要为了提升性能而盲目使用-unsafe-rust">P.UNS.02  不要为了提升性能而盲目使用 Unsafe Rust</a></h2>
 <p><strong>【描述】</strong></p>
 <p>对比 Safe 代码的性能看是否够用，就可以减少不必要的 Unsafe。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="guns01--不要随便为-带有-unsafe命名的-类型或方法创建别名"><a class="header" href="#guns01--不要随便为-带有-unsafe命名的-类型或方法创建别名">G.UNS.01  不要随便为 带有 <code>unsafe</code>命名的 类型或方法创建别名</a></h2>
-<p><strong>【级别：建议】</strong></p>
-<p>建议按此规范执行。</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="guns01--不宜为带有-unsafe-命名的类型或方法创建别名"><a class="header" href="#guns01--不宜为带有-unsafe-命名的类型或方法创建别名">G.UNS.01  不宜为带有 <code>unsafe</code> 命名的类型或方法创建别名</a></h2>
+<p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 里  <code>unsafe</code> 字样用于提醒开发者在编写代码的时候注意保证安全。如果修改别名，隐藏了这种提醒，不利于展示这种信息。</p>
 <p>不利于开发者去保证安全。</p>
@@ -10334,10 +10346,10 @@ use crossbeam::{spawn_unsafe as spawn};
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::cell::{UnsafeCell  };
+</span>use std::cell::{UnsafeCell};
 
 extern crate crossbeam;
-use crossbeam::{spawn_unsafe  };
+use crossbeam::{spawn_unsafe};
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【Lint 检测】</strong></p>
