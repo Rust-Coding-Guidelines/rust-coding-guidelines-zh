@@ -1,9 +1,6 @@
+## G.UNS.01  不宜为带有 `unsafe` 命名的类型或方法创建别名
 
-## G.UNS.01  不要随便为 带有 `unsafe`命名的 类型或方法创建别名
-
-**【级别：建议】**
-
-建议按此规范执行。
+**【级别】** 建议
 
 **【描述】**
 
@@ -23,10 +20,10 @@ use crossbeam::{spawn_unsafe as spawn};
 **【正例】**
 
 ```rust
-use std::cell::{UnsafeCell  };
+use std::cell::{UnsafeCell};
 
 extern crate crossbeam;
-use crossbeam::{spawn_unsafe  };
+use crossbeam::{spawn_unsafe};
 ```
 
 **【Lint 检测】**
