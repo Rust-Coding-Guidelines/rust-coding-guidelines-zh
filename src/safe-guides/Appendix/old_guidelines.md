@@ -482,7 +482,7 @@ fn builder_test() {
 ```
 
 
-## P.TYP.ENM.01 需要取出 Enum 值的时候宜使用 `std::mem::take/swap/replace`
+### P.TYP.ENM.01 需要取出 Enum 值的时候宜使用 `std::mem::take/swap/replace`
 
 **淘汰原因**
 
