@@ -141,8 +141,8 @@
                         <h1 id="1-概述"><a class="header" href="#1-概述">1. 概述</a></h1>
 <h2 id="状态"><a class="header" href="#状态">状态</a></h2>
 <ul>
-<li>《Rust 安全编码规范》初稿发布 2021-10-31 (V 0.1)</li>
-<li>《Rust 安全编码规范》经社区和公司内第一次评审版本发布 2022-02 (V 0.2) </li>
+<li>《Rust 编码规范》初稿发布 2021-10-31 (V 0.1)</li>
+<li>《Rust 编码规范》经社区和公司内第一次评审版本发布 2022-02 (V 0.2) </li>
 </ul>
 <h2 id="详细"><a class="header" href="#详细">详细</a></h2>
 <ul>
@@ -202,7 +202,7 @@
 <li>给开发者一个明确的且全局的视野，在其开发代码的过程中就能遵循好的代码规范，而非等写完代码以后再通过rustfmt和clippy这类的工具，一条一条去修改warning。</li>
 <li>规范不等于教程，但是开发人员水平参差不齐，对于一些因为知识盲点而可能导致程序错误的地方，规范也将覆盖到。</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="22-编码规范基本约定"><a class="header" href="#22-编码规范基本约定">2.2 编码规范基本约定</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="12-编码规范基本约定"><a class="header" href="#12-编码规范基本约定">1.2 编码规范基本约定</a></h1>
 <h2 id="编码规范的内容组织说明"><a class="header" href="#编码规范的内容组织说明">编码规范的内容组织说明</a></h2>
 <p><strong>编程规范绝不是为了增加开发者的负担而编写的，目的是为了帮助开发者写出高质量的 Rust 代码。</strong></p>
 <p>为了达成这个目的，规范条款分为原则和规则两个类别：<strong>原则</strong> 与 <strong>规则</strong>。</p>
@@ -270,17 +270,8 @@
 <p>本规范中引用外部代码，均满足 <code>MIT/Apache/Mozilla public licenses</code> 开源许可证！</p>
 <h2 id="特别鸣谢"><a class="header" href="#特别鸣谢">特别鸣谢</a></h2>
 <p>本指南参考《华为 C 语言编程指南 V 1.0》，感谢华为 开源能力中心 提供编程指南规范协助！</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="代码风格"><a class="header" href="#代码风格">代码风格</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="2-代码风格"><a class="header" href="#2-代码风格">2. 代码风格</a></h1>
 <p>代码风格包含标识符的命名风格、排版与格式风格、注释风格等。一致的编码习惯与风格，可以提高代码可读性和可维护性。</p>
-<ul>
-<li><a href="safe-guides/./code_style/naming.html">命名</a>
-<ul>
-<li><a href="safe-guides/./code_style/naming.html">P.NAM.01 类型名称应该使用统一的词序</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./code_style/fmt.html">格式</a></li>
-<li><a href="safe-guides/./code_style/comments.html">注释与文档</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="21-命名"><a class="header" href="#21-命名">2.1 命名</a></h1>
 <p>好的命名风格能让我们快速地了解某个名字代表的含义（类型、变量、函数、常量、宏等），甚至能凸显其在整个代码上下文中的语义。命名管理对提升代码的可读性和维护性相当重要。</p>
 <h2 id="列表"><a class="header" href="#列表">列表</a></h2>
@@ -806,7 +797,7 @@ const MAGIC_NUM: i32 = 65 ;
 </tbody></table>
 <p>【定制化参考】
 检测<code>static</code> 全局静态变量的命名是否包含<code>G_</code>前缀。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="格式"><a class="header" href="#格式">格式</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="22-格式"><a class="header" href="#22-格式">2.2 格式</a></h1>
 <p>Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调整代码格式的工作，提升生产力。但是，rustfmt 遵循什么样的风格规范，作为开发者应该需要了解，在编写代码的时候可以主动按这样的风格编写。</p>
 <p>说明：以下 <code>rustfmt</code> 配置中对应配置项如果 <code>Stable</code>为<code>No</code>，则表示该配置项不能用于 Stable Rust 下在 <code>rustfmt.toml</code> 中自定义，但其默认值会在<code>cargo fmt</code>时生效。在 Nightly Rust 下则都可以自定义。</p>
 <p>在 Stable Rust 下使用未稳定配置项的方法、了解配置示例及其他全局配置项说明请参阅：<a href="safe-guides/code_style/./../Appendix/tools/rustfmt.html">Rustfmt 配置相关说明</a> 。</p>
@@ -2199,7 +2190,7 @@ pub enum Foo {}
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#merge_derives"><code>merge_derives</code></a></td><td>true（默认） false（推荐）</td><td>Yes</td><td>是否将多个 Derive 宏合并为同一行</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="注释与文档"><a class="header" href="#注释与文档">注释与文档</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="23-注释与文档"><a class="header" href="#23-注释与文档">2.3 注释与文档</a></h1>
 <p>在 Rust 中，注释分为两类：普通注释和文档注释。普通注释使用 <code>//</code> 或 <code>/* ... */</code>，文档注释使用 <code>///</code>、<code>//!</code> 或 <code>/** ... **/</code>。</p>
 <p>在原则和规则中提到「注释」时，包括普通注释和文档注释。当提到「文档」时，特指文档注释。</p>
 <h2 id="列表-2"><a class="header" href="#列表-2">列表</a></h2>
@@ -2564,74 +2555,9 @@ pub struct DoubleString {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments">tabs_in_doc_comments </a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
 <hr />
-<div style="break-before: page; page-break-before: always;"></div><h1 id="编程实践"><a class="header" href="#编程实践">编程实践</a></h1>
-<ul>
-<li><a href="safe-guides/./coding_practice/consts.html">常量</a></li>
-<li><a href="safe-guides/./coding_practice/statics.html">静态变量</a></li>
-<li><a href="safe-guides/./coding_practice/variables.html">本地变量</a></li>
-<li><a href="safe-guides/./coding_practice/data-type.html">数据类型</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/data-type/unit.html">单元类型</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/bool.html">布尔</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/char.html">字符</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/int.html">整数</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/float.html">浮点数</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/slice-and-str.html">切片</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/tuple.html">元组</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/array.html">数组</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/struct.html">结构体</a></li>
-<li><a href="safe-guides/./coding_practice/data-type/enum.html">枚举体</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/expr.html">表达式</a></li>
-<li><a href="safe-guides/./coding_practice/control-flow.html">流程控制</a></li>
-<li><a href="safe-guides/./coding_practice/strings.html">字符串</a></li>
-<li><a href="safe-guides/./coding_practice/collections.html">集合容器</a></li>
-<li><a href="safe-guides/./coding_practice/fn-and-closure.html">函数与闭包</a></li>
-<li><a href="safe-guides/./coding_practice/generic.html">泛型</a></li>
-<li><a href="safe-guides/./coding_practice/traits.html">特质</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/traits/std-buildin.html">标准库内置 trait</a></li>
-<li><a href="safe-guides/./coding_practice/traits/trait-object.html">trait 对象</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/error-handle.html">错误处理</a></li>
-<li><a href="safe-guides/./coding_practice/memory.html">内存管理</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/memory/lifetime.html">生存期</a></li>
-<li><a href="safe-guides/./coding_practice/memory/box.html"><code>Box&lt;T&gt;</code></a></li>
-<li><a href="safe-guides/./coding_practice/memory/drop.html">Drop 析构</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/module.html">模块</a></li>
-<li><a href="safe-guides/./coding_practice/cargo.html">包管理</a></li>
-<li><a href="safe-guides/./coding_practice/macros.html">宏</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/macros/declarative.html">声明宏</a></li>
-<li><a href="safe-guides/./coding_practice/macros/Procedural.html">过程宏</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/threads.html">多线程</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/threads/lock.html">有锁</a></li>
-<li><a href="safe-guides/./coding_practice/threads/lock-free.html">无锁</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/async-await.html">异步编程</a></li>
-<li><a href="safe-guides/./coding_practice/unsafe_rust.html">Unsafe Rust</a>
-<ul>
-<li><a href="safe-guides/./coding_practice/unsafe_rust/safe_abstract.html">安全抽象</a></li>
-<li><a href="safe-guides/./coding_practice/unsafe_rust/raw_ptr.html">裸指针操作</a></li>
-<li><a href="safe-guides/./coding_practice/unsafe_rust/union.html">联合体</a></li>
-<li><a href="safe-guides/./coding_practice/unsafe_rust/layout.html">内存布局</a></li>
-<li><a href="safe-guides/./coding_practice/unsafe_rust/ffi.html">FFi 规范</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/./coding_practice/no-std.html">no-std</a></li>
-<li><a href="safe-guides/./coding_practice/security.html">信息安全</a></li>
-<li><a href="safe-guides/./coding_practice/others.html">其他</a></li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="常量"><a class="header" href="#常量">常量</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="3-编程实践"><a class="header" href="#3-编程实践">3. 编程实践</a></h1>
+<p>编码实践相关原则和规则，有助于编写更地道更安全的 Rust 代码。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="31-常量"><a class="header" href="#31-常量">3.1 常量</a></h1>
 <p>在 Rust 中，常量有两种用途：</p>
 <ul>
 <li>编译时常量（Compile-time constants）</li>
@@ -2820,7 +2746,7 @@ const BAZ: usize = foo(); // OK
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#missing_const_for_fn">missing_const_for_fn</a></td><td>yes</td><td>no</td><td>Perf</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="静态变量"><a class="header" href="#静态变量">静态变量</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="32-静态变量"><a class="header" href="#32-静态变量">3.2 静态变量</a></h1>
 <p>静态变量是用 <code>static</code> 关键字定义的全局静态变量。</p>
 <h2 id="列表-4"><a class="header" href="#列表-4">列表</a></h2>
 <ul>
@@ -2953,7 +2879,7 @@ fn main() {
 <li>代码中定义为 static mut 的变量是否仅被用于 FFI</li>
 <li>代码中定义为 static mut 的变量是否经过 call_once 初始化</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="变量"><a class="header" href="#变量">变量</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="33-变量"><a class="header" href="#33-变量">3.3 变量</a></h1>
 <p>这里所说变量是指局部变量。默认情况下，Rust 会强制初始化所有值，以防止使用未初始化的内存。</p>
 <p>变量命名风格指南请看 <a href="safe-guides/coding_practice/../code_style/naming.html">编码风格-命名</a></p>
 <h2 id="列表-5"><a class="header" href="#列表-5">列表</a></h2>
@@ -3245,7 +3171,7 @@ let data = data; //  由编译器确保后面不再改动
 <p><strong>【定制化参考】</strong></p>
 <p>这条规则如果需要定制Lint，则可以分别检测每个局部变量占用的栈空间，并统计总体占用情况，进行告警。
 局部变量占用栈空间的告警阈值默认是 2MB，但是用户可以按需配置该值。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="数据类型"><a class="header" href="#数据类型">数据类型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="34-数据类型"><a class="header" href="#34-数据类型">3.4 数据类型</a></h1>
 <p>数据类型记录 Rust 标准库提供的 原生类型，以及结构体和枚举体等编码实践。</p>
 <h2 id="列表-6"><a class="header" href="#列表-6">列表</a></h2>
 <ul>
@@ -4749,7 +4675,7 @@ enum E {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#large_enum_variant">large_enum_variant</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
 </tbody></table>
 <p>该 lint 可以通过 clippy 配置项 <code>enum-variant-size-threshold = 200</code> 来配置，默认是 <code>200</code> 字节。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="表达式"><a class="header" href="#表达式">表达式</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="35-表达式"><a class="header" href="#35-表达式">3.5 表达式</a></h1>
 <p>Rust 中几乎一切皆表达式。</p>
 <h2 id="列表-17"><a class="header" href="#列表-17">列表</a></h2>
 <ul>
@@ -4921,7 +4847,7 @@ x -= 1; // x == 2
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#ineffective_bit_mask">ineffective_bit_mask</a></td><td>yes</td><td>no</td><td>correctness</td><td><strong>deny</strong></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="控制流程"><a class="header" href="#控制流程">控制流程</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="36-控制流程"><a class="header" href="#36-控制流程">3.6 控制流程</a></h1>
 <p>Rust中流程控制也是属于表达式，但在本规范中将其独立出来。</p>
 <h2 id="列表-18"><a class="header" href="#列表-18">列表</a></h2>
 <ul>
@@ -5210,7 +5136,7 @@ fn main() {
 </tbody></table>
 <p><strong>【定制化参考】</strong></p>
 <p>可以检测 match分支中 Guard 的 if 表达式是否使用 <code>{}</code> ，如果是的话，发出警告，不要带有副作用。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="字符串"><a class="header" href="#字符串">字符串</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="37-字符串"><a class="header" href="#37-字符串">3.7 字符串</a></h1>
 <p>Rust 中字符串是有效的 UTF-8 编码的字节数组。</p>
 <p>Rust 字符串类型众多，但本节内容主要围绕 ：<code>String</code> / <code>&amp;str</code></p>
 <h2 id="列表-19"><a class="header" href="#列表-19">列表</a></h2>
@@ -5510,7 +5436,7 @@ assert_eq!(&quot;lkanne&quot;, sub_s);
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_slice">string_slice</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="集合类型"><a class="header" href="#集合类型">集合类型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="38-集合类型"><a class="header" href="#38-集合类型">3.8 集合类型</a></h1>
 <p>Rust 中的集合类型包括四大类：</p>
 <ul>
 <li>线性序列： <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a>, <a href="https://doc.rust-lang.org/stable/std/collections/struct.VecDeque.html"><code>VecDeque</code></a>, <a href="https://doc.rust-lang.org/stable/std/collections/struct.LinkedList.html"><code>LinkedList</code></a></li>
@@ -5581,7 +5507,7 @@ fn main() {
 <pre><code class="language-toml"># 如果函数是被导出的 API，则该 lint 不会被触发，是防止 lint 建议对 API 有破坏性的改变。默认为 true
 avoid-breaking-exported-api=true 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="函数设计"><a class="header" href="#函数设计">函数设计</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="39-函数设计"><a class="header" href="#39-函数设计">3.9 函数设计</a></h1>
 <p>创建函数或使用闭包时需要注意的地方。</p>
 <h2 id="列表-21"><a class="header" href="#列表-21">列表</a></h2>
 <ul>
@@ -5918,7 +5844,7 @@ fn main() {
     }
 }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="泛型"><a class="header" href="#泛型">泛型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="310-泛型"><a class="header" href="#310-泛型">3.10 泛型</a></h1>
 <p>Rust 中的泛型允许开发人员编写更加简洁、更少重复的代码。但泛型可能会引起编译文件大小膨胀，酌情使用。</p>
 <h2 id="列表-22"><a class="header" href="#列表-22">列表</a></h2>
 <ul>
@@ -6326,7 +6252,7 @@ fn main() {
 [&quot;foo&quot;, &quot;bar&quot;].iter().map(|&amp;s| s.to_string() );
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="特质"><a class="header" href="#特质">特质</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="311-特质"><a class="header" href="#311-特质">3.11 特质</a></h1>
 <p>特质就是指 trait。在 Rust 中， trait 不是具体类型，而是一种抽象接口。但是通过 <code>impl Trait</code> 和 <code>dyn Trait</code> 也可以将 trait 作为类型使用。</p>
 <h2 id="列表-23"><a class="header" href="#列表-23">列表</a></h2>
 <ul>
@@ -7049,7 +6975,7 @@ pub(crate) struct Vtable {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="错误处理"><a class="header" href="#错误处理">错误处理</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="312-错误处理"><a class="header" href="#312-错误处理">3.12 错误处理</a></h1>
 <p>Rust 为了保证系统健壮性，将系统中出现的非正常情况划分为三大类：</p>
 <ol>
 <li>失败</li>
@@ -7229,7 +7155,7 @@ fn main() {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#expect_fun_call">expect_fun_call</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#expect_used">expect_used</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="内存"><a class="header" href="#内存">内存</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="313-内存管理"><a class="header" href="#313-内存管理">3.13 内存管理</a></h1>
 <h2 id="列表-27"><a class="header" href="#列表-27">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/./memory/lifetime.html">生命周期</a>
@@ -7581,7 +7507,7 @@ where
 <li>析构函数内部发生了 panic</li>
 <li>程序中止（abort on panic）</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="模块"><a class="header" href="#模块">模块</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="314-模块"><a class="header" href="#314-模块">3.14 模块</a></h1>
 <p>Rust 中一个文件 即一个模块，也可以通过  <code>mod</code> 来创建模块。多个文件放到同一个目录下，也可以成为一个模块。</p>
 <p>模块相关有三个概念：</p>
 <ol>
@@ -7795,7 +7721,7 @@ src/
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#redundant_pub_crate">redundant_pub_crate</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 </tbody></table>
 <p>注意：此 lint 为 nursery，意味着有 Bug。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="包管理"><a class="header" href="#包管理">包管理</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="315-包管理"><a class="header" href="#315-包管理">3.15 包管理</a></h1>
 <p>Cargo 不仅仅是包管理，它还是一个 Workflow 工具。这一节包含 Cargo 和 Crate 相关内容。</p>
 <h2 id="列表-33"><a class="header" href="#列表-33">列表</a></h2>
 <ul>
@@ -7920,7 +7846,7 @@ regex = &quot;1.5&quot;
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#wildcard_dependencies">wildcard_dependencies</a></td><td>yes</td><td>no</td><td>cargo</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="宏"><a class="header" href="#宏">宏</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="316-宏"><a class="header" href="#316-宏">3.16 宏</a></h1>
 <p>Rust 通过宏来支持元编程。其中宏有很多种，按实现方式可以分为两大类：声明宏（Declarative）和 过程宏（Procedural）。</p>
 <p>按功能效果，过程宏又可以分为三类：</p>
 <ol>
@@ -8696,7 +8622,7 @@ let mut client = WorldClient::new(client::Config::default(), client_transport).s
     use tonic::codegen::*;
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="多线程"><a class="header" href="#多线程">多线程</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="317-多线程"><a class="header" href="#317-多线程">3.17 多线程</a></h1>
 <p>Rust 天生可以有效消除数据竞争。</p>
 <h2 id="列表-37"><a class="header" href="#列表-37">列表</a></h2>
 <ul>
@@ -9081,7 +9007,7 @@ fn main() {
     lock.store(false, Ordering::Release);
 }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="异步编程"><a class="header" href="#异步编程">异步编程</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="318-异步编程"><a class="header" href="#318-异步编程">3.18 异步编程</a></h1>
 <p><code>async / await</code> 是 Rust 语言用于编写像同步代码一样的异步函数的内置工具。<code>async</code> 将一个代码块转化为一个实现了名为 <code>Future</code> 的特质 (trait)
 的状态机。虽然在同步方法中调用阻塞函数会阻塞整个线程，但阻塞的 <code>Future</code> 将让出线程控制权，允许其他 <code>Future</code> 运行。</p>
 <p>Rust 异步编程需要依赖于异步运行时，生产环境中比较推荐的开源异步运行时是 <a href="https://github.com/tokio-rs/tokio">Tokio</a>。</p>
@@ -9355,7 +9281,7 @@ async fn read_file() -&gt; std::io::Result&lt;()&gt; {
 </tbody></table>
 <p><strong>【定制化参考】</strong>
 这条规则如果需要定制Lint，则可以扫描异步过程，找到黑名单定义的阻塞操作调用，进行告警。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-rust"><a class="header" href="#unsafe-rust">Unsafe Rust</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="319-unsafe-rust"><a class="header" href="#319-unsafe-rust">3.19 Unsafe Rust</a></h1>
 <p>Unsafe Rust 是 Safe Rust 的超集，意味着在 Unsafe Rust 中也会有 Safe Rust的安全检查。但是 Unsafe Rust 中下面五件事是Safe Rust 的检查鞭长莫及的地方：</p>
 <ol>
 <li>解引用裸指针</li>
@@ -10352,7 +10278,7 @@ fn test() {
 </tbody></table>
 <p>【定制化参考】</p>
 <p>检测函数内同一个联合体实例的不同变体被用于不同的生命周期内。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="内存-1"><a class="header" href="#内存-1">内存</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="内存"><a class="header" href="#内存">内存</a></h1>
 <p>这里指 Unsafe Rust 下的数据布局、内存管理和使用相关规范。</p>
 <h2 id="列表-45"><a class="header" href="#列表-45">列表</a></h2>
 <ul>
@@ -10863,7 +10789,7 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <p>值是对值表达式的求值结果，或是被存储在某个地方的东西。 在其他语言中，一般将其称为右值。</p>
 <h2 id="表征representation"><a class="header" href="#表征representation">表征（Representation）</a></h2>
 <p>表征，用于描述一个类型的值和内存中存储这个值的字节序列之间的关系。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="no-std"><a class="header" href="#no-std">no-std</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="320-no-std"><a class="header" href="#320-no-std">3.20 no-std</a></h1>
 <p><code>no-std</code> 是指 被标示为 <code>#![no_std]</code> 的 crate，意味着该 crate 将链接到 <code>core</code> crate 而非 <code>std</code> crate。</p>
 <p><code>no-std</code>  代表 裸机编程，嵌入式 Rust。</p>
 <p>Rust 也有 <code>#![no_core]</code> 属性，但是还未稳定，不建议使用。</p>
@@ -10942,7 +10868,7 @@ fn main() {
 <li><code>#[link_section = &quot;.bar&quot;]</code>将符号放置在名为 的部分中<code>.bar</code>。</li>
 </ul>
 <p>通过这些属性，我们可以公开程序的稳定 ABI 并在链接描述文件中使用它。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="io"><a class="header" href="#io">I/O</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="321-io"><a class="header" href="#321-io">3.21 I/O</a></h1>
 <p>在标准库中也提供了标准 I/O 类型，在 Safe Rust 下，I/O 操作是足够安全的，但是对于 原生句柄 (Raw Fd) 的操作，则属于不安全。</p>
 <p>在 Unsafe Rust 下也有相关 I/O  的规范，请参加 <a href="safe-guides/coding_practice/./unsafe_rust/io.html">Unsafe Rust - I/O</a>   部分。</p>
 <p>本部分只关注 Safe Rust 下 I/O 相关规范。</p>
@@ -11003,7 +10929,7 @@ pub fn scan() -&gt; Result&lt;(), io::Error&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="security"><a class="header" href="#security">Security</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="322-security"><a class="header" href="#322-security">3.22 Security</a></h1>
 <p>Security 用于规范可能引起信息安全（Security）缺陷的代码实现，而非功能安全（ Safety）类问题。</p>
 <h2 id="列表-50"><a class="header" href="#列表-50">列表</a></h2>
 <ul>
@@ -11083,7 +11009,7 @@ pub fn get_embed_languages() -&gt; FileContent {
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#confusable-idents"><code>confusable_idents</code></a></td><td>no</td><td>yes</td><td>-</td><td>warn</td></tr>
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#mixed-script-confusables"><code>mixed_script_confusables</code></a></td><td>no</td><td>yes</td><td>-</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="其他"><a class="header" href="#其他">其他</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="323-其他"><a class="header" href="#323-其他">3.23 其他</a></h1>
 <h2 id="列表-51"><a class="header" href="#列表-51">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/./others/G.OTH.01.html">G.OTH.01 对于某些场景下不建议使用的方法可以通过配置 clippy.toml 来拒绝</a></li>
@@ -12630,7 +12556,7 @@ ignore = [&quot;/&quot;]
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#unstable_features"><code>unstable_features</code></a></td><td>false（默认）</td><td>No</td><td>开启未稳定特性</td></tr>
 </tbody></table>
-<h2 id="其他-1"><a class="header" href="#其他-1">其他</a></h2>
+<h2 id="其他"><a class="header" href="#其他">其他</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="在-rust-生态中被拒绝的一些默认开启的lint"><a class="header" href="#在-rust-生态中被拒绝的一些默认开启的lint">在 Rust 生态中被拒绝的一些默认开启的lint</a></h1>
 <p>来源：<a href="https://github.com/dtolnay/noisy-clippy">https://github.com/dtolnay/noisy-clippy</a></p>
 <p>以下按字母顺序排列。</p>
@@ -13569,8 +13495,6 @@ $ rustc --help
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust-编程技巧"><a class="header" href="#rust-编程技巧">Rust 编程技巧</a></h1>
 <h3 id="设计模式之构建者模式"><a class="header" href="#设计模式之构建者模式">设计模式之构建者模式</a></h3>
 <p>当需要很多构造函数，或构造含有很多可选配置项时，宜使用构建者模式</p>
-<p><strong>淘汰原因</strong></p>
-<p>这条属于编程最佳实践，放到规范中有点臃肿，独立到最佳实践中。</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 中没有默认的构造函数，都是自定义构造函数。</p>
 <p>如果需要多个构造函数，或者构造时需要很多可选配置的复杂场景，那么构建者模式是适合你的选择。</p>
@@ -13761,7 +13685,7 @@ impl&lt;T&gt; fmt::Display for SendError&lt;T&gt; {
 <p>欢迎直接提交 Issues 或 PR 直接参与评审和完善（包括精简、增补新的规则）编码规范。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="k淘汰的规则"><a class="header" href="#k淘汰的规则">K.淘汰的规则</a></h1>
 <hr />
-<h2 id="常量-1"><a class="header" href="#常量-1">常量</a></h2>
+<h2 id="常量"><a class="header" href="#常量">常量</a></h2>
 <h3 id="gcns03-不宜将量大的数据结构定义为常量"><a class="header" href="#gcns03-不宜将量大的数据结构定义为常量">G.CNS.03 不宜将量大的数据结构定义为常量</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>虽然常量本质上是会内联，但Rust 支持类似于复制消除（Copy Elision）的优化（非强制），而且在不断改进中，对于这种大的数据应该会有相关优化。这里建议用静态变量来代替常量，也许会引入使用的复杂性，所以这条规则被淘汰。只保留对固定长度数组相关的规则。</p>
@@ -13791,7 +13715,7 @@ impl&lt;T&gt; fmt::Display for SendError&lt;T&gt; {
 </tbody></table>
 <p><strong>【定制化参考】</strong></p>
 <p>这条规则如果需要定制Lint，则需要找出每个定义的常量再判断其空间占用，或可直接排除基础类型以外的数据类型。</p>
-<h2 id="变量-1"><a class="header" href="#变量-1">变量</a></h2>
+<h2 id="变量"><a class="header" href="#变量">变量</a></h2>
 <h3 id="pvar02--禁止将局部变量的引用返回函数外"><a class="header" href="#pvar02--禁止将局部变量的引用返回函数外">P.VAR.02  禁止将局部变量的引用返回函数外</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>Rust 编译器可以检测到这种情况，之前考虑到编译器错误比较晦涩，列出该规则，但是进一步考虑到这个应该是 Rust 开发者最基本的认知，顾淘汰此规则。</p>
@@ -13842,7 +13766,7 @@ std::mem::swap(&amp;mut a, &amp;mut b);
 </tbody></table>
 <p><strong>【定制化参考】</strong></p>
 <p>这条规则如果需要定制Lint，则可以检测变量赋值操作，识别交换语义，推荐用户使用 <code>swap</code> 函数。</p>
-<h2 id="数据类型-1"><a class="header" href="#数据类型-1">数据类型</a></h2>
+<h2 id="数据类型"><a class="header" href="#数据类型">数据类型</a></h2>
 <h3 id="ptyp01-类型转换要尽量使用安全的方式"><a class="header" href="#ptyp01-类型转换要尽量使用安全的方式">P.TYP.01 类型转换要尽量使用安全的方式</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>和 G.TYP.01 有点重复。</p>
@@ -14172,7 +14096,7 @@ fn swizzle(e: &amp;mut MultiVariateEnum) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="表达式-1"><a class="header" href="#表达式-1">表达式</a></h2>
+<h2 id="表达式"><a class="header" href="#表达式">表达式</a></h2>
 <h3 id="gexp04--不应使用无效表达式语句"><a class="header" href="#gexp04--不应使用无效表达式语句">G.EXP.04  不应使用无效表达式语句</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>属于代码逻辑问题，不应放到规范中。这类问题交给 Clippy 这类工具即可。</p>
@@ -14228,7 +14152,7 @@ impl TagNumber {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#no_effect">no_effect</a></td><td>yes</td><td>no</td><td><strong>complexity</strong></td><td>warn</td></tr>
 </tbody></table>
-<h2 id="控制流程-1"><a class="header" href="#控制流程-1">控制流程</a></h2>
+<h2 id="控制流程"><a class="header" href="#控制流程">控制流程</a></h2>
 <h3 id="gctf01-避免在流程控制分支中使用重复代码"><a class="header" href="#gctf01-避免在流程控制分支中使用重复代码">G.CTF.01 避免在流程控制分支中使用重复代码</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>属于代码逻辑问题，不应放到规范中。这类问题交给 Clippy 这类工具即可。</p>
@@ -14427,7 +14351,7 @@ let nums: Vec&lt;i32&gt; = [&quot;1&quot;, &quot;2&quot;, &quot;whee!&quot;].ite
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#flat_map_identity">flat_map_identity</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#flat_map_option">flat_map_option</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
-<h2 id="字符串-1"><a class="header" href="#字符串-1">字符串</a></h2>
+<h2 id="字符串"><a class="header" href="#字符串">字符串</a></h2>
 <h3 id="pstr03--可以使用cowstr来代替直接使用字符串它可以减少copy"><a class="header" href="#pstr03--可以使用cowstr来代替直接使用字符串它可以减少copy">P.STR.03  可以使用<code>Cow&lt;str&gt;</code>来代替直接使用字符串，它可以减少Copy</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>最佳实践编程技巧类。</p>
@@ -14506,7 +14430,7 @@ pub fn naive&lt;'a, S: Into&lt;Cow&lt;'a, str&gt;&gt;&gt;(input: S) -&gt; Cow&lt
 <li>你想存储一堆元素，但只想在任何给定时间内处理 最大 或 最重要的元素</li>
 <li>你想要一个优先队列</li>
 </ul>
-<h2 id="错误处理-1"><a class="header" href="#错误处理-1">错误处理</a></h2>
+<h2 id="错误处理"><a class="header" href="#错误处理">错误处理</a></h2>
 <h3 id="perr02--当函数的返回值或者结构体字段的值可能为空时请使用optiont"><a class="header" href="#perr02--当函数的返回值或者结构体字段的值可能为空时请使用optiont">P.ERR.02  当函数的返回值或者结构体字段的值可能为空时，请使用<code>Option&lt;T&gt;</code></a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>教程向，不该放到规范中。</p>
@@ -14598,7 +14522,7 @@ impl&lt;T&gt; fmt::Display for SendError&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="多线程-1"><a class="header" href="#多线程-1">多线程</a></h2>
+<h2 id="多线程"><a class="header" href="#多线程">多线程</a></h2>
 <h3 id="pmthlok01-根据场景选择使用互斥锁还是-channel"><a class="header" href="#pmthlok01-根据场景选择使用互斥锁还是-channel">P.MTH.LOK.01 根据场景选择使用互斥锁还是 Channel</a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>教程向，不该放到规范中。</p>
@@ -14639,7 +14563,7 @@ fn foo(interned: Arc&lt;Mutex&lt;i32&gt;&gt;) { ... }
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#rc_mutex">rc_mutex</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<h2 id="no-std-1"><a class="header" href="#no-std-1">no-std</a></h2>
+<h2 id="no-std"><a class="header" href="#no-std">no-std</a></h2>
 <h3 id="pemb03--将一些公用的类型函数宏等集中到一个自定义的-baremetal-std"><a class="header" href="#pemb03--将一些公用的类型函数宏等集中到一个自定义的-baremetal-std">P.EMB.03  将一些公用的类型、函数、宏等集中到一个自定义的 <code>baremetal-std</code></a></h3>
 <p><strong>淘汰原因</strong></p>
 <p>最佳实践向，不该放到规范中。</p>
