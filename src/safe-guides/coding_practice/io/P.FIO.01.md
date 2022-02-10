@@ -1,4 +1,4 @@
-## P.IO.01  使用 `read_to_end/read_to_string`方法时注意文件的大小能否一次性读入内存中
+## P.FIO.01  使用 `read_to_end/read_to_string`方法时注意文件的大小能否一次性读入内存中
 
 **【描述】**
 

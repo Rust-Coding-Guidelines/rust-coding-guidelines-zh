@@ -63,7 +63,7 @@ Number 从`01`开始递增。其中 `Element` 为领域知识中关键元素（�
 | SAS | 安全抽象 (Safety Abstract) | FFI | 外部函数调用接口 ( Foreign Function Interface ) |
 | LAY | 内存布局 (Layout) | ERR | 错误处理 (Error Handle) |
 | CLT | 集合  (Collection)  | MTH | 多线程 (Multi Threads) |
-| EMB | 嵌入式Rust (Embedded Rust) | IO      | 输入输出 (In/Out)     |
+| EMB | 嵌入式Rust (Embedded Rust) | FIO      | 输入输出 (In/Out)     |
 | SEC | 信息安全 (Security) | SPT | 智能指针 (Smart Pointer) |
 | UNT | 单元类型 (Unit) | BOL | 布尔 (Bool) |  
 | CHR | 字符类型 (Char) |  FLT | 浮点数 (Float) |  
@@ -74,7 +74,7 @@ Number 从`01`开始递增。其中 `Element` 为领域知识中关键元素（�
 | OBJ | Trait 对象 (Trait Object)| LFT| 生命周期 (Lifetime) |  
 | BOX | `Box<T>` 类型 | DRP  |  析构函数 (Drop) |  
 | DCL | 声明宏 (Declarative)  | PRO  |  过程宏 (Procedural) |  
-| LOK | 锁同步 (Lock)  | LKF |  无锁 (Lock Free) |  
+| LCK | 锁同步 (Lock)  | LKF |  无锁 (Lock Free) |  
 |  |  | OTH | 其他 (Ohters) |  
 
 

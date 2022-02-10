@@ -63,5 +63,5 @@ Unsafe Rust 是 Safe Rust 的超集，意味着在 Unsafe Rust 中也会有 Safe
     - [G.UNS.FFI.02 在 FFi 中使用的类型应该拥有稳定布局](./unsafe_rust/ffi/G.UNS.FFI.02.md)
     - [G.UNS.FFI.03 从外部传入的不健壮类型的外部值要进行检查](./unsafe_rust/ffi/G.UNS.FFI.03.md)
 - [I/O](./unsafe_rust/io.md)
-    - [G.UNS.IO.01 在使用原始句柄的时候，要注意 I/O 安全性](./unsafe_rust/io/G.UNS.IO.01.md)
+    - [G.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性](./unsafe_rust/io/G.UNS.FIO.01.md)
 - [Unsafe 代码术语指南](./unsafe_rust/glossary.md)
