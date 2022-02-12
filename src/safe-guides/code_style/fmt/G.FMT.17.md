@@ -16,7 +16,7 @@
 
 ```rust
 struct Foo {
-    x: u32,
+    a: u32, // 注意这里是 a
     y: u32,
     z: u32,
 }
@@ -25,6 +25,8 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
+    // 这里省略了字段名，用了变量x
+    // rustfmt 无法检查这个错误，但是编译时能检查出来，所以要遵循rustfmt使用注意事项就不会出问题
     let a = Foo { x, y, z };
 }
 ```
@@ -34,7 +36,7 @@ fn main() {
 ```rust
 
 struct Foo {
-    x: u32,
+    a: u32,
     y: u32,
     z: u32,
 }
@@ -43,7 +45,7 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
-    let a = Foo { x: x, y: y, z: z };
+    let a = Foo { a: x, y: y, z: z };
 }
 ```
 
