@@ -1,10 +1,10 @@
-## G.NAM.05 用于访问或获取数据的 `getter/setter` 类方法通常不要使用 `get_` 或 `set_` 等前缀
+## G.NAM.05 用于访问或获取数据的 `getter/setter` 类方法通常不要使用 `get_` 前缀
 
 **【级别】** 建议
 
 **【描述】**
 
-因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 `&self` 和 独占引用 `&mut self`，分别代表了 getter 和 setter 的语义。
+因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 `&self` 和 独占引用 `&mut self`，分别代表了 getter 的语义。
 
 **【反例】**
 
@@ -28,6 +28,11 @@ impl S {
     // 同样不建议 `get_mut_first`, or `mut_first`.
     pub fn get_first_mut(&mut self) -> &mut First {
         &mut self.first
+    }
+
+    // set_前缀是可以的
+    pub fn set_first(&mut self, f: First) -> &mut First {
+        self.first = f;
     }
 }
 ```
@@ -54,6 +59,11 @@ impl S {
     pub fn first_mut(&mut self) -> &mut First {
         &mut self.first
     }
+
+    // set_前缀是可以的
+    pub fn set_first(&mut self, f: First) -> &mut First {
+        self.first = f;
+    }
 }
 ```
 
@@ -74,7 +84,7 @@ unsafe fn get_unchecked(&self, index: K) -> &V;
 unsafe fn get_unchecked_mut(&mut self, index: K) -> &mut V;
 ```
 
-getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那么清晰可辨。比如 [`TempDir::path`] 可以被理解为临时目录的文件系统路径的 getter ，而 [`TempDir::into_path`] 负责把删除临时目录时转换的数据传给调用者。
+getter 和类型转换 ([G.NAM.02](./G.NAM.02.md)) 之间的区别很小，大部分时候不那么清晰可辨。比如 [`TempDir::path`](https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path) 可以被理解为临时目录的文件系统路径的 getter ，而 [`TempDir::into_path`](https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path) 负责把删除临时目录时转换的数据传给调用者。
 
 因为 `path` 方法是一个 getter ，如果用 `get_path` 或者 `as_path` 就不对了。
 
