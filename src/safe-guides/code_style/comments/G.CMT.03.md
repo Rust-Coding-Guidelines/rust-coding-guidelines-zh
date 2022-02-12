@@ -7,12 +7,12 @@
 每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。
 
 可以通过 `rustfmt` 的 `license_template_path` 配置项 和 `license.template`来自动化此操作。
-另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。但这两项无法通过rustfmt自动插入
-对于文件修改时间，部分VSCode的一些插件也可以帮忙做到。
+另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。不过这两项就无法通过rustfmt自动插入
+对于文件修改时间，其实VSCode的一些插件也可以帮忙做到。
 
 **【正例】**
 
-可以命名为`.rustfmt.license-template`许可证模版。
+可以命名为`.rustfmt.license-template`许可证模版。 比如
 
 ```rust
 // Copyright {\d+} YOURCOMPANY Project Authors. Licensed under Apache-2.0.

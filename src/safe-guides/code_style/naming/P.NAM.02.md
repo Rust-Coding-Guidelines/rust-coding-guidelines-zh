@@ -26,6 +26,8 @@ std = []
 
 feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。
 
+假如`x` crate 对 Serde 和 标准库 具有可选依赖关系
+
 ```toml
 [package]
 name = "x"

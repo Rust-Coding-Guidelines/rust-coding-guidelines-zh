@@ -1,10 +1,10 @@
-## G.NAM.8  避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
+## G.NAM.08  避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
 
 **【级别】** 建议
 
 **【描述】**
 
-命名必须要避免使用语言内置的保留字、关键字、内置类型和`trait`等特殊名称。 具体可以参考[The Rust Reference-Keywords](https://doc.rust-lang.org/reference/keywords.html)
+命名必须要避免使用语言内置的保留字、关键字、内置类型和`trait`等特殊名称。 具体可以参考[The Rust Reference-Keywords](https://doc.rust-lang.org/stable/reference/keywords.html)
 
 **【反例】**
 
