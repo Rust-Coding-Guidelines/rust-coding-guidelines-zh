@@ -289,19 +289,11 @@
 <li><a href="safe-guides/code_style/./naming/G.NAM.09.html">G.NAM.09 避免在变量的命名中添加类型标识</a></li>
 <li><a href="safe-guides/code_style/./naming/G.NAM.10.html">G.NAM.10 定义全局静态变量时需加前缀<code>G_</code>和常量有所区分</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pnam01--类型名称应该使用统一的词序"><a class="header" href="#pnam01--类型名称应该使用统一的词序">P.NAM.01  类型名称应该使用统一的词序</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pnam01--同一个crate中标识符的命名规则应该使用统一的词序"><a class="header" href="#pnam01--同一个crate中标识符的命名规则应该使用统一的词序">P.NAM.01  同一个crate中标识符的命名规则应该使用统一的词序</a></h2>
 <p><strong>【描述】</strong></p>
 <p>当crate中类型名称都按照 <strong>动词-宾语-error</strong> 这样的顺序来命名错误类型时，如果要增加新的错误类型，则也需要按同样的词序来增加。
 具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性。
-若提供与标准库中详细功能的东西时，也要与标准库名称的词性顺序一致.</p>
-<p><strong>【反例】</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 应该为 ParseAddrError
-struct AddrParseError {}
-<span class="boring">}
-</span></code></pre></pre>
+若提供与标准库中相似功能的东西时，也要与标准库名称的词性顺序一致.</p>
 <p><strong>【正例】</strong></p>
 <p>以下是来自标准库的处理错误的一些类型：</p>
 <ul>
@@ -317,7 +309,15 @@ struct AddrParseError {}
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct ParseAddrError
+</span>struct ParseAddrError{}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 与标准库错误类型次序不一致，应该为 ParseAddrError
+struct AddrParseError {}
 <span class="boring">}
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pnam02--cargo-feature-名中不应该含有无意义的占位词"><a class="header" href="#pnam02--cargo-feature-名中不应该含有无意义的占位词">P.NAM.02  cargo feature 名中不应该含有无意义的占位词</a></h2>
@@ -337,6 +337,7 @@ std = []
 #![cfg_attr(not(feature = &quot;use-std&quot;), no_std)]
 </code></pre>
 <p>feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。</p>
+<p>假如<code>x</code> crate 对 Serde 和 标准库 具有可选依赖关系</p>
 <pre><code class="language-toml">[package]
 name = &quot;x&quot;
 version = &quot;0.1.0&quot;
@@ -382,10 +383,10 @@ Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <
 <ul>
 <li>使用正确的英文单词并符合英文语法，不要使用拼音</li>
 <li>仅使用常见或领域内通用的单词缩写</li>
-<li>布尔型变量或函数避免使用否定形式</li>
-<li>尽量不要使用 Unicode 标识符。</li>
+<li>布尔型变量或函数避免使用否定形式，双重否定不利于理解</li>
+<li>不要使用 Unicode 标识符。</li>
 </ul>
-<p>【反例】</p>
+<p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -393,9 +394,11 @@ Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <
 let xing: &amp;str = &quot;Smith&quot;;
 const ERROR_NO_1: u32 = 336;
 const ERROR_NO_2: u32 = 594;
+
+fn not_number(s:&amp;str) -&gt; bool {/* ... */}
 <span class="boring">}
 </span></code></pre></pre>
-<p>【正例】</p>
+<p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -403,21 +406,23 @@ const ERROR_NO_2: u32 = 594;
 let last_name: &amp;str = &quot;Smith&quot;;
 const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
 const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+
+fn is_number(s:&amp;str) -&gt; bool {/* ... */} //用来判断是否为整数
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="lint-检测"><a class="header" href="#lint-检测">【Lint 检测】</a></h3>
+<p>** 【Lint 检测】 **</p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
 <p>【定制化参考】</p>
 <p>检测错误的英文拼写，检测出后提示；检测拼音，检测出来提示。拼写错误可参考 <a href="https://github.com/client9/misspell">client9/misspell</a> 。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gnam02-使用统一的命名风格"><a class="header" href="#gnam02-使用统一的命名风格">G.NAM.02 使用统一的命名风格</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
 <p>下面是具体汇总。</p>
 <table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
-<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">最好使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
+<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">通常使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
 <tr><td>模块（Modules）</td><td><code>snake_case</code></td></tr>
 <tr><td>类型（Types）</td><td><code>UpperCamelCase</code></td></tr>
 <tr><td>特质（Traits）</td><td><code>UpperCamelCase</code></td></tr>
@@ -432,7 +437,7 @@ const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
 <tr><td>常量（Constants）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
 <tr><td>类型参数（Type parameters）</td><td>简明的 <code>UpperCamelCase</code> ，通常使用单个大写字母： <code>T</code></td></tr>
 <tr><td>生存期（Lifetimes）</td><td>简短的 <code>lowercase</code>，通常使用单个小写字母 <code>'a</code>, <code>'de</code>, <code>'src</code>，尽量保持语义</td></tr>
-<tr><td>特性（Features）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/101">有争议</a> ，但是一般遵照 [C-FEATURE]</td></tr>
+<tr><td>特性（Features）</td><td><code>snake_case</code></td></tr>
 </tbody></table>
 <p>说明 :</p>
 <ol>
@@ -442,11 +447,11 @@ const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
 </ol>
 <p>关于包命名：</p>
 <ul>
-<li><sup class="footnote-reference"><a href="#crate-name">1</a></sup>: 由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。</li>
+<li>由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。所以建议使用<code>snake_case</code>。</li>
 <li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
 </ul>
 <p><strong>【参考】</strong></p>
-<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有描述。</p>
+<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有也描述。</p>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types"><code>Rustc: non_camel_case_types</code></a></td><td>no</td><td>yes</td><td>Style</td></tr>
@@ -492,7 +497,7 @@ pub struct HeaderMap {
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 全局静态变量
-static GET_MAX_THREAD_COUNT: i32 = 42;  // 符合
+static MAX_THREAD_COUNT: i32 = 42;  // 符合
 
 // 枚举类型
 // 符合： 上下文信息已经知道它是 Event
@@ -534,13 +539,14 @@ pub struct HeaderMap {
 相对来说，以 <code>to_</code> 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。</p>
 <p>当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 <code>into_inner()</code> 方法名来取出被封装的值。</p>
 <p>这适用于以下封装器：</p>
-<p>读取缓存 ([<code>BufReader</code>]) 、编码或解码 ([<code>GzDecoder</code>]) 、取出原子 ([<code>AtomicBool</code>]) 、
-或者任何相似的语义 ([<code>BufWriter</code>])。</p>
+<p>读取缓存 (<a href="https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner"><code>BufReader</code></a>) 、编码或解码 (<a href="https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner"><code>GzDecoder</code></a>) 、取出原子 (<a href="https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner"><code>AtomicBool</code></a> 、
+或者任何相似的语义 (<a href="https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner"><code>BufWriter</code></a>)。</p>
 <p><strong>【正例】</strong></p>
+<p>标准库 API 命名有如下示例：</p>
 <ul>
 <li><code>as_</code>
 <ul>
-<li>[<code>str::as_bytes()</code>] 
+<li><a href="https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes"><code>str::as_bytes()</code></a> 
 用于查看 UTF-8 字节的 <code>str</code> 切片，
 这是无内存代价的（不会产生内存分配）。
 传入值是 <code>&amp;str</code> 类型，输出值是 <code>&amp;[u8]</code> 类型。</li>
@@ -548,15 +554,15 @@ pub struct HeaderMap {
 </li>
 <li><code>to_</code>
 <ul>
-<li>[<code>Path::to_str</code>] 
+<li>[<code>Path::to_str</code>] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
 对操作系统路径进行 UTF-8 字节检查，开销昂贵。
 虽然输入和输出都是借用，但是这个方法对运行时产生不容忽视的代价，
 所以不应使用 <code>as_str</code> 名称。</li>
-<li>[<code>str::to_lowercase()</code>] 
+<li>[<code>str::to_lowercase()</code>] (https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
 生成正确的 Unicode 小写字符，
 涉及遍历字符串的字符，可能需要分配内存。
 输入值是 <code>&amp;str</code> 类型，输出值是 <code>String</code> 类型。</li>
-<li>[<code>f64::to_radians()</code>] 
+<li>[<code>f64::to_radians()</code>] (https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
 把浮点数的角度制转换成弧度制。
 输入和输出都是 <code>f64</code> 。没必要传入 <code>&amp;f64</code> ，因为复制 <code>f64</code> 花销很小。
 但是使用 <code>into_radians</code> 名称就会具有误导性，因为输入数据没有被消耗。</li>
@@ -564,22 +570,26 @@ pub struct HeaderMap {
 </li>
 <li><code>into_</code>
 <ul>
-<li>[<code>String::into_bytes()</code>]
+<li><a href="https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes"><code>String::into_bytes()</code></a>
 从 <code>String</code> 提取出背后的 <code>Vec&lt;u8&gt;</code> 数据，这是无代价的。
 它转移了 <code>String</code> 的所有权，然后返回具有所有权的 <code>Vec&lt;u8&gt;</code> 。</li>
-<li>[<code>BufReader::into_inner()</code>] 
+<li>[<code>BufReader::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
 转移了 buffered reader 的所有权，取出其背后的 reader ，这是无代价的。
 存于缓冲区的数据被丢弃了。</li>
-<li>[<code>BufWriter::into_inner()</code>] 
+<li>[<code>BufWriter::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
 转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。</li>
 </ul>
 </li>
 </ul>
 <p>如果类型转换方法返回的类型具有 <code>mut</code> 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 <code>mut</code> 名。
-比如 [<code>Vec::as_mut_slice</code>] 返回 <code>mut slice</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
-<pre><code class="language-rust.ignored">// Return type is a mut slice.
+比如 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice"><code>Vec::as_mut_slice</code></a> 返回 <code>mut slice</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Return type is a mut slice.
 fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref"><code>Result::as_ref</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr"><code>RefCell::as_ptr</code></a></li>
@@ -590,10 +600,10 @@ fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>Lint Level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention">wrong_self_convention</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀"><a class="header" href="#gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-或-set_-等前缀">G.NAM.05 用于访问或获取数据的 <code>getter/setter</code> 类方法通常不要使用 <code>get_</code> 或 <code>set_</code> 等前缀</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-前缀"><a class="header" href="#gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-前缀">G.NAM.05 用于访问或获取数据的 <code>getter/setter</code> 类方法通常不要使用 <code>get_</code> 前缀</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 和 setter 的语义。</p>
+<p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 的语义。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -616,6 +626,11 @@ impl S {
     // 同样不建议 `get_mut_first`, or `mut_first`.
     pub fn get_first_mut(&amp;mut self) -&gt; &amp;mut First {
         &amp;mut self.first
+    }
+
+    // set_前缀是可以的
+    pub fn set_first(&amp;mut self, f: First) -&gt; &amp;mut First {
+        self.first = f;
     }
 }
 <span class="boring">}
@@ -642,6 +657,11 @@ impl S {
     pub fn first_mut(&amp;mut self) -&gt; &amp;mut First {
         &amp;mut self.first
     }
+
+    // set_前缀是可以的
+    pub fn set_first(&amp;mut self, f: First) -&gt; &amp;mut First {
+        self.first = f;
+    }
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -659,7 +679,7 @@ unsafe fn get_unchecked(&amp;self, index: K) -&gt; &amp;V;
 unsafe fn get_unchecked_mut(&amp;mut self, index: K) -&gt; &amp;mut V;
 <span class="boring">}
 </span></code></pre></pre>
-<p>getter 和类型转换 (G.NAM.02) 之间的区别很小，大部分时候不那么清晰可辨。比如 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path"><code>TempDir::path</code></a> 可以被理解为临时目录的文件系统路径的 getter ，而 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path"><code>TempDir::into_path</code></a> 负责把删除临时目录时转换的数据传给调用者。</p>
+<p>getter 和类型转换 (<a href="safe-guides/code_style/naming/./G.NAM.02.html">G.NAM.02</a>) 之间的区别很小，大部分时候不那么清晰可辨。比如 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path"><code>TempDir::path</code></a> 可以被理解为临时目录的文件系统路径的 getter ，而 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path"><code>TempDir::into_path</code></a> 负责把删除临时目录时转换的数据传给调用者。</p>
 <p>因为 <code>path</code> 方法是一个 getter ，如果用 <code>get_path</code> 或者 <code>as_path</code> 就不对了。</p>
 <p>来自标准库的例子：</p>
 <ul>
@@ -686,7 +706,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 </code></pre>
 <p>此规则适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个 URL 编码的字符串片段的迭代器。使用<code>iter/iter_mut/into_iter</code>约定的话，函数名就不会有任何明确的语义了。</p>
 <p><strong>【反例】</strong></p>
-<p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、<a href="https://doc.rust-lang.org/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
+<p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
 <p><strong>【正例】</strong></p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a></li>
@@ -696,7 +716,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter_mut"><code>BTreeMap::iter_mut</code></a></li>
 </ul>
 <p><strong>【参考】</strong></p>
-<p>参考 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md">RFC 199</a> 。</p>
+<p>参考 [RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md</p>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
@@ -711,11 +731,11 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <p><strong>【正例】</strong></p>
 <p>来自标准库的例子：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a> 返回 <a href="https://doc.rust-lang.org/std/slice/struct.Iter.html"><code>Iter</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut"><code>Vec::iter_mut</code></a> 返回 <a href="https://doc.rust-lang.org/std/slice/struct.IterMut.html"><code>IterMut</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter"><code>Vec::into_iter</code></a> 返回 <a href="https://doc.rust-lang.org/std/vec/struct.IntoIter.html"><code>IntoIter</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html"><code>Keys</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html"><code>Values</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a> 返回 [<code>Iter</code>]<a href="https://doc.rust-lang.org/std/slice/struct.Iter.html">slice::Iter</a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut"><code>Vec::iter_mut</code></a> 返回 [<code>IterMut</code>]<a href="https://doc.rust-lang.org/std/slice/struct.IterMut.html">slice::IterMut</a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter"><code>Vec::into_iter</code></a> 返回 [<code>IntoIter</code>]<a href="https://doc.rust-lang.org/std/vec/struct.IntoIter.html">vec::IntoIter</a></li>
+<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a>  返回 [<code>Keys</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html">btree_map::Keys</a></li>
+<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 [<code>Values</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html">btree_map::Values</a></li>
 </ul>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
@@ -723,10 +743,10 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 </tbody></table>
 <p>【定制化参考】</p>
 <p>检测返回迭代器的方法，其返回类型应该与方法名相匹配，否则给予警告。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam8--避免使用语言内置保留字关键字内置类型和trait等特殊名称"><a class="header" href="#gnam8--避免使用语言内置保留字关键字内置类型和trait等特殊名称">G.NAM.8  避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam08--避免使用语言内置保留字关键字内置类型和trait等特殊名称"><a class="header" href="#gnam08--避免使用语言内置保留字关键字内置类型和trait等特殊名称">G.NAM.08  避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>命名必须要避免使用语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。 具体可以参考<a href="https://doc.rust-lang.org/reference/keywords.html">The Rust Reference-Keywords</a></p>
+<p>命名必须要避免使用语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。 具体可以参考<a href="https://doc.rust-lang.org/stable/reference/keywords.html">The Rust Reference-Keywords</a></p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">// Sized ： Rust 内置了同名 trait 
 type Sized = u16; 
@@ -764,8 +784,7 @@ let account = String::from_utf8(account)?;  // account 的类型很清楚
 let account: Account = account.parse()?;   // account 的类型很清楚
 <span class="boring">}
 </span></code></pre></pre>
-<hr />
-<h3 id="lint-检测-1"><a class="header" href="#lint-检测-1">【Lint 检测】</a></h3>
+<p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>
@@ -830,7 +849,7 @@ const MAGIC_NUM: i32 = 65 ;
 <p><strong>【描述】</strong></p>
 <p>制定统一的编码风格，是为了提升代码的可读性，让日常代码维护和团队之间审查代码更加方便。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gfmt01--始终使用-rustfmt-进行自动格式化代码"><a class="header" href="#gfmt01--始终使用-rustfmt-进行自动格式化代码">G.FMT.01  始终使用 rustfmt 进行自动格式化代码</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件，即使它是空文件。这是向潜在的合作者表明你希望代码是自动格式化的。</p>
 <p><strong>【例外】</strong></p>
@@ -1063,7 +1082,7 @@ fn bar() {
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>花括号的位置风格默认使用 <code>SameLineWhere</code>，但是也根据不同的语言项略有区别。</p>
-<h4 id="反例"><a class="header" href="#反例">【反例】</a></h4>
+<p><strong>【反例】</strong></p>
 <p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -1105,7 +1124,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>结构体与枚举</p>
+<p>结构体与枚举：</p>
 <p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -1138,7 +1157,31 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="正例"><a class="header" href="#正例">【正例】</a></h4>
+<p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
+<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    if lorem
+    {
+        println!(&quot;ipsum!&quot;);
+    }
+    else
+    {
+        println!(&quot;dolor!&quot;);
+    }
+}
+</code></pre></pre>
+<p>如果设置 <code>brace_style = &quot;ClosingNextLine&quot;</code>，则：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    if lorem {
+        println!(&quot;ipsum!&quot;);
+    } // 注意这里 if 分支结尾处，else 换行
+    else { 
+        println!(&quot;dolor!&quot;);
+    }
+}
+</code></pre></pre>
+<p><strong>【正例】</strong></p>
+<p>函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1189,32 +1232,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="流程控制"><a class="header" href="#流程控制">流程控制</a></h4>
 <p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
-<p><strong>【反例】</strong></p>
-<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    if lorem
-    {
-        println!(&quot;ipsum!&quot;);
-    }
-    else
-    {
-        println!(&quot;dolor!&quot;);
-    }
-}
-</code></pre></pre>
-<p>如果设置 <code>brace_style = &quot;ClosingNextLine&quot;</code>，则：</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    if lorem {
-        println!(&quot;ipsum!&quot;);
-    } // 注意这里 if 分支结尾处，else 换行
-    else { 
-        println!(&quot;dolor!&quot;);
-    }
-}
-</code></pre></pre>
-<p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">// &quot;AlwaysSameLine&quot; (default)
 fn main() {
     if lorem {
@@ -1280,8 +1298,7 @@ fn main() {
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>当在表达式或语言项定义中出现多个标识符，则应该让其保持块状风格缩进。</p>
-<h4 id="反例-1"><a class="header" href="#反例-1">【反例】</a></h4>
-<p>数组</p>
+<p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let lorem = vec![&quot;ipsum&quot;,
                      &quot;dolor&quot;,
@@ -1366,8 +1383,8 @@ fn lorem(ipsum: usize,
                         sit: amet };
 }
 </code></pre></pre>
-<h4 id="正例-1"><a class="header" href="#正例-1">【正例】</a></h4>
-<p>数组</p>
+<p><strong>【正例】</strong></p>
+<p>数组：</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let lorem = vec![
         &quot;ipsum&quot;,
@@ -2061,7 +2078,7 @@ macro_rules! foo {
 <p>以此规则标题主要目的是来规范rustfmt的默认配置不会被人设置为<code>true</code>，而把代码修改错误。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">struct Foo {
-    x: u32,
+    a: u32, // 注意这里是 a
     y: u32,
     z: u32,
 }
@@ -2070,13 +2087,15 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
+    // 这里省略了字段名，用了变量x
+    // rustfmt 无法检查这个错误，但是编译时能检查出来，所以要遵循rustfmt使用注意事项就不会出问题
     let a = Foo { x, y, z };
 }
 </code></pre></pre>
 <p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 struct Foo {
-    x: u32,
+    a: u32,
     y: u32,
     z: u32,
 }
@@ -2085,7 +2104,7 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
-    let a = Foo { x: x, y: y, z: z };
+    let a = Foo { a: x, y: y, z: z };
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
@@ -2095,10 +2114,9 @@ fn main() {
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#use_field_init_shorthand"><code>use_field_init_shorthand</code></a></td><td>false（默认）</td><td>Yes</td><td>具名结构体字段初始化不能省略字段名</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gfmt18--extern-外部函数需要显式指定-abi"><a class="header" href="#gfmt18--extern-外部函数需要显式指定-abi">G.FMT.18  extern 外部函数需要显式指定 ABI</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
-<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。
-如果是 <code>Rust-ABI</code>则不会省略。</p>
+<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -2145,12 +2163,14 @@ extern &quot;Rust&quot; {
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let (lorem, ipsum, _, _) = (1, 2, 3, 4);
     let (lorem, ipsum, ..) = (1, 2, 3, 4);
+    let (lorem, _,ipsum, _, _) = (1, 2, 3, 4, 5);
 }
 </code></pre></pre>
 <p><strong>【正例】</strong></p>
-<p>设置 <code>condense_wildcard_suffixes = true</code> :</p>
+<p>设置 <code>condense_wildcard_suffixes = true</code> 时，会强行更改代码为下面形式。</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let (lorem, ipsum, ..) = (1, 2, 3, 4);
+    let (lorem, _,ipsum, ..) = (1, 2, 3, 4, 5);
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
@@ -2162,7 +2182,7 @@ extern &quot;Rust&quot; {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gfmt20--不要将多个不相关的-派生derive-宏合并为同一行"><a class="header" href="#gfmt20--不要将多个不相关的-派生derive-宏合并为同一行">G.FMT.20  不要将多个不相关的 派生(Derive) 宏合并为同一行</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>不要将多个 Derive 宏合并为同一行，可以增加代码可读性，明确语义。
+<p>不要将多个不相关的 Derive 宏合并为同一行，可以增加代码可读性，明确语义。
 rustfmt 不会识别Derive 宏是否相关，这是开发者自己编写的。</p>
 <p><strong>【反例】</strong></p>
 <p>用默认设置  <code>merge_derives = true</code></p>
@@ -2227,7 +2247,7 @@ pub enum Foo {}
 <p><strong>【描述】</strong> </p>
 <p>文档应该始终围绕两个方向来构建：</p>
 <ol>
-<li>What : 用于阐述代码为什么而构建。</li>
+<li>What : 用于阐述代码为了什么而实现。</li>
 <li>how : 用于阐述代码如何去使用。</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pcmt04--注释和文档应该保持简短精干"><a class="header" href="#pcmt04--注释和文档应该保持简短精干">P.CMT.04  注释和文档应该保持简短精干</a></h2>
@@ -2376,10 +2396,10 @@ pub enum Foo {}
 <p><strong>【描述】</strong></p>
 <p>每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
 <p>可以通过 <code>rustfmt</code> 的 <code>license_template_path</code> 配置项 和 <code>license.template</code>来自动化此操作。
-另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。但这两项无法通过rustfmt自动插入
-对于文件修改时间，部分VSCode的一些插件也可以帮忙做到。</p>
+另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。不过这两项就无法通过rustfmt自动插入
+对于文件修改时间，其实VSCode的一些插件也可以帮忙做到。</p>
 <p><strong>【正例】</strong></p>
-<p>可以命名为<code>.rustfmt.license-template</code>许可证模版。</p>
+<p>可以命名为<code>.rustfmt.license-template</code>许可证模版。 比如</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2437,7 +2457,7 @@ fn annotation_type_for_level(level: Level) -&gt; AnnotationType {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gcmt05--在-公开的返回result类型返回的函数文档中增加-error-注释"><a class="header" href="#gcmt05--在-公开的返回result类型返回的函数文档中增加-error-注释">G.CMT.05  在 公开的返回<code>Result</code>类型返回的函数文档中增加 Error 注释</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>在公开（pub）的返回<code>Result</code>类型函数文档中，建议增加 <code># Error</code> 注释来解释该函数返回的错误类型，方便用户处理错误。</p>
+<p>在公开（pub）的返回<code>Result</code>类型函数文档中，建议增加 <code># Error</code> 注释来解释什么场景下该函数会返回什么样的错误类型，方便用户处理错误。</p>
 <p>说明： 该规则通过 cargo clippy 来检测。默认不会警告。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -2468,7 +2488,7 @@ pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc">missing_errors_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gcmt06--如果公开的api在某些情况下会发生panic则相应文档中需增加-panic-注释"><a class="header" href="#gcmt06--如果公开的api在某些情况下会发生panic则相应文档中需增加-panic-注释">G.CMT.06  如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>在公开（pub）函数文档中，建议增加 <code># Panic</code> 注释来解释该函数在什么条件下会 Panic，便于使用者进行预处理。</p>
 <p>说明： 该规则通过 cargo clippy 来检测。默认不会警告。</p>
@@ -2508,7 +2528,7 @@ pub fn divide_by(x: i32, y: i32) -&gt; i32 {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gcmt07--在文档注释中要使用空格代替-tab"><a class="header" href="#gcmt07--在文档注释中要使用空格代替-tab">G.CMT.07  在文档注释中要使用空格代替 tab</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>Rust 代码风格中提倡使用四个空格代替tab，在文档注释中也应该统一使用四个空格。</p>
+<p>Rust 代码风格中提倡使用<strong>四个空格</strong>代替tab，在文档注释中也应该统一使用<strong>四个空格</strong>。</p>
 <p><strong>【反例】</strong></p>
 <p>下面文档注释中使用了 tab。</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -5618,7 +5638,7 @@ fn main(){
     foo((1.0f32, 2.0f32), &quot;hello&quot;, Color, arr);
 }
 </code></pre></pre>
-<h3 id="lint-检测-2"><a class="header" href="#lint-检测-2">【Lint 检测】</a></h3>
+<h3 id="lint-检测"><a class="header" href="#lint-检测">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#too_many_arguments">too_many_arguments</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
@@ -7103,7 +7123,7 @@ fn select(opt: Result&lt;String, ()&gt;) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="lint-检测-3"><a class="header" href="#lint-检测-3">【Lint 检测】</a></h3>
+<h3 id="lint-检测-1"><a class="header" href="#lint-检测-1">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#unwrap_used">unwrap_used</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
@@ -7150,7 +7170,7 @@ fn main() {
     let _home: IpAddr = &quot;127.0.0.1&quot;.parse().expect(&quot;Provide the correct Ip addr&quot;);
 }
 </code></pre></pre>
-<h3 id="lint-检测-4"><a class="header" href="#lint-检测-4">【Lint 检测】</a></h3>
+<h3 id="lint-检测-2"><a class="header" href="#lint-检测-2">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#expect_fun_call">expect_fun_call</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#expect_used">expect_used</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
@@ -10179,7 +10199,7 @@ unsafe fn mut_self(&amp;self) -&gt; &amp;mut Self {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="lint-检测-5"><a class="header" href="#lint-检测-5">【Lint 检测】</a></h3>
+<h3 id="lint-检测-3"><a class="header" href="#lint-检测-3">【Lint 检测】</a></h3>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut">cast_ref_to_mut</a></td><td>yes</td><td>no</td><td><strong>correctness</strong></td><td>deny</td></tr>
 </tbody></table>

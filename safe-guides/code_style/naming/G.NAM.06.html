@@ -147,7 +147,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 </code></pre>
 <p>此规则适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个 URL 编码的字符串片段的迭代器。使用<code>iter/iter_mut/into_iter</code>约定的话，函数名就不会有任何明确的语义了。</p>
 <p><strong>【反例】</strong></p>
-<p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、<a href="https://doc.rust-lang.org/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
+<p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
 <p><strong>【正例】</strong></p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a></li>
@@ -157,7 +157,7 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.iter_mut"><code>BTreeMap::iter_mut</code></a></li>
 </ul>
 <p><strong>【参考】</strong></p>
-<p>参考 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md">RFC 199</a> 。</p>
+<p>参考 [RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md</p>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>

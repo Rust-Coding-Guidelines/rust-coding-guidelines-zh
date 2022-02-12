@@ -148,7 +148,7 @@
 <p>以此规则标题主要目的是来规范rustfmt的默认配置不会被人设置为<code>true</code>，而把代码修改错误。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">struct Foo {
-    x: u32,
+    a: u32, // 注意这里是 a
     y: u32,
     z: u32,
 }
@@ -157,13 +157,15 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
+    // 这里省略了字段名，用了变量x
+    // rustfmt 无法检查这个错误，但是编译时能检查出来，所以要遵循rustfmt使用注意事项就不会出问题
     let a = Foo { x, y, z };
 }
 </code></pre></pre>
 <p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 struct Foo {
-    x: u32,
+    a: u32,
     y: u32,
     z: u32,
 }
@@ -172,7 +174,7 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
-    let a = Foo { x: x, y: y, z: z };
+    let a = Foo { a: x, y: y, z: z };
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>

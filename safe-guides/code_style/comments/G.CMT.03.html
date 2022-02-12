@@ -142,10 +142,10 @@
 <p><strong>【描述】</strong></p>
 <p>每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。</p>
 <p>可以通过 <code>rustfmt</code> 的 <code>license_template_path</code> 配置项 和 <code>license.template</code>来自动化此操作。
-另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。但这两项无法通过rustfmt自动插入
-对于文件修改时间，部分VSCode的一些插件也可以帮忙做到。</p>
+另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。不过这两项就无法通过rustfmt自动插入
+对于文件修改时间，其实VSCode的一些插件也可以帮忙做到。</p>
 <p><strong>【正例】</strong></p>
-<p>可以命名为<code>.rustfmt.license-template</code>许可证模版。</p>
+<p>可以命名为<code>.rustfmt.license-template</code>许可证模版。 比如</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

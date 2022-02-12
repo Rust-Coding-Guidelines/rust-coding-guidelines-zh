@@ -140,7 +140,7 @@
                         <h2 id="gcmt05--在-公开的返回result类型返回的函数文档中增加-error-注释"><a class="header" href="#gcmt05--在-公开的返回result类型返回的函数文档中增加-error-注释">G.CMT.05  在 公开的返回<code>Result</code>类型返回的函数文档中增加 Error 注释</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>在公开（pub）的返回<code>Result</code>类型函数文档中，建议增加 <code># Error</code> 注释来解释该函数返回的错误类型，方便用户处理错误。</p>
+<p>在公开（pub）的返回<code>Result</code>类型函数文档中，建议增加 <code># Error</code> 注释来解释什么场景下该函数会返回什么样的错误类型，方便用户处理错误。</p>
 <p>说明： 该规则通过 cargo clippy 来检测。默认不会警告。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">

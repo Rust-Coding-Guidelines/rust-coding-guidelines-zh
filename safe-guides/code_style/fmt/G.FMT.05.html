@@ -141,7 +141,7 @@
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>花括号的位置风格默认使用 <code>SameLineWhere</code>，但是也根据不同的语言项略有区别。</p>
-<h4 id="反例"><a class="header" href="#反例">【反例】</a></h4>
+<p><strong>【反例】</strong></p>
 <p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -183,7 +183,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>结构体与枚举</p>
+<p>结构体与枚举：</p>
 <p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -216,7 +216,31 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="正例"><a class="header" href="#正例">【正例】</a></h4>
+<p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
+<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    if lorem
+    {
+        println!(&quot;ipsum!&quot;);
+    }
+    else
+    {
+        println!(&quot;dolor!&quot;);
+    }
+}
+</code></pre></pre>
+<p>如果设置 <code>brace_style = &quot;ClosingNextLine&quot;</code>，则：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    if lorem {
+        println!(&quot;ipsum!&quot;);
+    } // 注意这里 if 分支结尾处，else 换行
+    else { 
+        println!(&quot;dolor!&quot;);
+    }
+}
+</code></pre></pre>
+<p><strong>【正例】</strong></p>
+<p>函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -267,32 +291,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h4 id="流程控制"><a class="header" href="#流程控制">流程控制</a></h4>
 <p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
-<p><strong>【反例】</strong></p>
-<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    if lorem
-    {
-        println!(&quot;ipsum!&quot;);
-    }
-    else
-    {
-        println!(&quot;dolor!&quot;);
-    }
-}
-</code></pre></pre>
-<p>如果设置 <code>brace_style = &quot;ClosingNextLine&quot;</code>，则：</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    if lorem {
-        println!(&quot;ipsum!&quot;);
-    } // 注意这里 if 分支结尾处，else 换行
-    else { 
-        println!(&quot;dolor!&quot;);
-    }
-}
-</code></pre></pre>
-<p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">// &quot;AlwaysSameLine&quot; (default)
 fn main() {
     if lorem {

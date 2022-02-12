@@ -150,13 +150,14 @@
 相对来说，以 <code>to_</code> 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。</p>
 <p>当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 <code>into_inner()</code> 方法名来取出被封装的值。</p>
 <p>这适用于以下封装器：</p>
-<p>读取缓存 ([<code>BufReader</code>]) 、编码或解码 ([<code>GzDecoder</code>]) 、取出原子 ([<code>AtomicBool</code>]) 、
-或者任何相似的语义 ([<code>BufWriter</code>])。</p>
+<p>读取缓存 (<a href="https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner"><code>BufReader</code></a>) 、编码或解码 (<a href="https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner"><code>GzDecoder</code></a>) 、取出原子 (<a href="https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner"><code>AtomicBool</code></a> 、
+或者任何相似的语义 (<a href="https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner"><code>BufWriter</code></a>)。</p>
 <p><strong>【正例】</strong></p>
+<p>标准库 API 命名有如下示例：</p>
 <ul>
 <li><code>as_</code>
 <ul>
-<li>[<code>str::as_bytes()</code>] 
+<li><a href="https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes"><code>str::as_bytes()</code></a> 
 用于查看 UTF-8 字节的 <code>str</code> 切片，
 这是无内存代价的（不会产生内存分配）。
 传入值是 <code>&amp;str</code> 类型，输出值是 <code>&amp;[u8]</code> 类型。</li>
@@ -164,15 +165,15 @@
 </li>
 <li><code>to_</code>
 <ul>
-<li>[<code>Path::to_str</code>] 
+<li>[<code>Path::to_str</code>] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
 对操作系统路径进行 UTF-8 字节检查，开销昂贵。
 虽然输入和输出都是借用，但是这个方法对运行时产生不容忽视的代价，
 所以不应使用 <code>as_str</code> 名称。</li>
-<li>[<code>str::to_lowercase()</code>] 
+<li>[<code>str::to_lowercase()</code>] (https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
 生成正确的 Unicode 小写字符，
 涉及遍历字符串的字符，可能需要分配内存。
 输入值是 <code>&amp;str</code> 类型，输出值是 <code>String</code> 类型。</li>
-<li>[<code>f64::to_radians()</code>] 
+<li>[<code>f64::to_radians()</code>] (https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
 把浮点数的角度制转换成弧度制。
 输入和输出都是 <code>f64</code> 。没必要传入 <code>&amp;f64</code> ，因为复制 <code>f64</code> 花销很小。
 但是使用 <code>into_radians</code> 名称就会具有误导性，因为输入数据没有被消耗。</li>
@@ -180,22 +181,26 @@
 </li>
 <li><code>into_</code>
 <ul>
-<li>[<code>String::into_bytes()</code>]
+<li><a href="https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes"><code>String::into_bytes()</code></a>
 从 <code>String</code> 提取出背后的 <code>Vec&lt;u8&gt;</code> 数据，这是无代价的。
 它转移了 <code>String</code> 的所有权，然后返回具有所有权的 <code>Vec&lt;u8&gt;</code> 。</li>
-<li>[<code>BufReader::into_inner()</code>] 
+<li>[<code>BufReader::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
 转移了 buffered reader 的所有权，取出其背后的 reader ，这是无代价的。
 存于缓冲区的数据被丢弃了。</li>
-<li>[<code>BufWriter::into_inner()</code>] 
+<li>[<code>BufWriter::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
 转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。</li>
 </ul>
 </li>
 </ul>
 <p>如果类型转换方法返回的类型具有 <code>mut</code> 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 <code>mut</code> 名。
-比如 [<code>Vec::as_mut_slice</code>] 返回 <code>mut slice</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
-<pre><code class="language-rust.ignored">// Return type is a mut slice.
+比如 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice"><code>Vec::as_mut_slice</code></a> 返回 <code>mut slice</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Return type is a mut slice.
 fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref"><code>Result::as_ref</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr"><code>RefCell::as_ptr</code></a></li>

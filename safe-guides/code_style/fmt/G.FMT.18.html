@@ -138,10 +138,9 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="gfmt18--extern-外部函数需要显式指定-abi"><a class="header" href="#gfmt18--extern-外部函数需要显式指定-abi">G.FMT.18  extern 外部函数需要显式指定 ABI</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
-<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。
-如果是 <code>Rust-ABI</code>则不会省略。</p>
+<p>当使用 <code>extern</code> 指定外部函数时，建议显式指定 <code>C-ABI</code>。<code>extern</code> 不指定的话默认就是 <code>C-ABI</code>，但是 Rust 语言显式指定是一种约定俗成。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

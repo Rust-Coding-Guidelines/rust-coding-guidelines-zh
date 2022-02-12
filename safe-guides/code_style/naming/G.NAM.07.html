@@ -145,11 +145,11 @@
 <p><strong>【正例】</strong></p>
 <p>来自标准库的例子：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a> 返回 <a href="https://doc.rust-lang.org/std/slice/struct.Iter.html"><code>Iter</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut"><code>Vec::iter_mut</code></a> 返回 <a href="https://doc.rust-lang.org/std/slice/struct.IterMut.html"><code>IterMut</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter"><code>Vec::into_iter</code></a> 返回 <a href="https://doc.rust-lang.org/std/vec/struct.IntoIter.html"><code>IntoIter</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html"><code>Keys</code></a></li>
-<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 <a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html"><code>Values</code></a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a> 返回 [<code>Iter</code>]<a href="https://doc.rust-lang.org/std/slice/struct.Iter.html">slice::Iter</a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut"><code>Vec::iter_mut</code></a> 返回 [<code>IterMut</code>]<a href="https://doc.rust-lang.org/std/slice/struct.IterMut.html">slice::IterMut</a></li>
+<li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter"><code>Vec::into_iter</code></a> 返回 [<code>IntoIter</code>]<a href="https://doc.rust-lang.org/std/vec/struct.IntoIter.html">vec::IntoIter</a></li>
+<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a>  返回 [<code>Keys</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html">btree_map::Keys</a></li>
+<li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 [<code>Values</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html">btree_map::Values</a></li>
 </ul>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>

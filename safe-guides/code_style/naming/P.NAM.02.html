@@ -154,6 +154,7 @@ std = []
 #![cfg_attr(not(feature = &quot;use-std&quot;), no_std)]
 </code></pre>
 <p>feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。</p>
+<p>假如<code>x</code> crate 对 Serde 和 标准库 具有可选依赖关系</p>
 <pre><code class="language-toml">[package]
 name = &quot;x&quot;
 version = &quot;0.1.0&quot;

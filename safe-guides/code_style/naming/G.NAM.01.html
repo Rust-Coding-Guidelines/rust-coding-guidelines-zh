@@ -145,10 +145,10 @@
 <ul>
 <li>使用正确的英文单词并符合英文语法，不要使用拼音</li>
 <li>仅使用常见或领域内通用的单词缩写</li>
-<li>布尔型变量或函数避免使用否定形式</li>
-<li>尽量不要使用 Unicode 标识符。</li>
+<li>布尔型变量或函数避免使用否定形式，双重否定不利于理解</li>
+<li>不要使用 Unicode 标识符。</li>
 </ul>
-<p>【反例】</p>
+<p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -156,9 +156,11 @@
 let xing: &amp;str = &quot;Smith&quot;;
 const ERROR_NO_1: u32 = 336;
 const ERROR_NO_2: u32 = 594;
+
+fn not_number(s:&amp;str) -&gt; bool {/* ... */}
 <span class="boring">}
 </span></code></pre></pre>
-<p>【正例】</p>
+<p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -166,9 +168,11 @@ const ERROR_NO_2: u32 = 594;
 let last_name: &amp;str = &quot;Smith&quot;;
 const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
 const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+
+fn is_number(s:&amp;str) -&gt; bool {/* ... */} //用来判断是否为整数
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="lint-检测"><a class="header" href="#lint-检测">【Lint 检测】</a></h3>
+<p>** 【Lint 检测】 **</p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
 <tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
 </tbody></table>

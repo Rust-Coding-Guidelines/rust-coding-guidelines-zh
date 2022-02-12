@@ -138,12 +138,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="gnam02-使用统一的命名风格"><a class="header" href="#gnam02-使用统一的命名风格">G.NAM.02 使用统一的命名风格</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+<p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
 <p>下面是具体汇总。</p>
 <table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
-<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">最好使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
+<tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">通常使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
 <tr><td>模块（Modules）</td><td><code>snake_case</code></td></tr>
 <tr><td>类型（Types）</td><td><code>UpperCamelCase</code></td></tr>
 <tr><td>特质（Traits）</td><td><code>UpperCamelCase</code></td></tr>
@@ -158,7 +158,7 @@
 <tr><td>常量（Constants）</td><td><code>SCREAMING_SNAKE_CASE</code></td></tr>
 <tr><td>类型参数（Type parameters）</td><td>简明的 <code>UpperCamelCase</code> ，通常使用单个大写字母： <code>T</code></td></tr>
 <tr><td>生存期（Lifetimes）</td><td>简短的 <code>lowercase</code>，通常使用单个小写字母 <code>'a</code>, <code>'de</code>, <code>'src</code>，尽量保持语义</td></tr>
-<tr><td>特性（Features）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/101">有争议</a> ，但是一般遵照 [C-FEATURE]</td></tr>
+<tr><td>特性（Features）</td><td><code>snake_case</code></td></tr>
 </tbody></table>
 <p>说明 :</p>
 <ol>
@@ -168,11 +168,11 @@
 </ol>
 <p>关于包命名：</p>
 <ul>
-<li><sup class="footnote-reference"><a href="#crate-name">1</a></sup>: 由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。</li>
+<li>由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。所以建议使用<code>snake_case</code>。</li>
 <li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
 </ul>
 <p><strong>【参考】</strong></p>
-<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有描述。</p>
+<p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有也描述。</p>
 <p><strong>【Lint 检测】</strong></p>
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th></tr></thead><tbody>
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types"><code>Rustc: non_camel_case_types</code></a></td><td>no</td><td>yes</td><td>Style</td></tr>
