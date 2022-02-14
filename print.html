@@ -291,9 +291,12 @@
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pnam01--同一个crate中标识符的命名规则应该使用统一的词序"><a class="header" href="#pnam01--同一个crate中标识符的命名规则应该使用统一的词序">P.NAM.01  同一个crate中标识符的命名规则应该使用统一的词序</a></h2>
 <p><strong>【描述】</strong></p>
-<p>当crate中类型名称都按照 <strong>动词-宾语-error</strong> 这样的顺序来命名错误类型时，如果要增加新的错误类型，则也需要按同样的词序来增加。
-具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性。
+<p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性。
 若提供与标准库中相似功能的东西时，也要与标准库名称的词性顺序一致.</p>
+<blockquote>
+<p>拿错误类型来举个例子：</p>
+<p>当crate中类型名称都按照 <strong>动词-宾语-error</strong> 这样的顺序来命名错误类型时，如果要增加新的错误类型，则也需要按同样的词序来增加。</p>
+</blockquote>
 <p><strong>【正例】</strong></p>
 <p>以下是来自标准库的处理错误的一些类型：</p>
 <ul>
@@ -600,7 +603,7 @@ fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>Lint Level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention">wrong_self_convention</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-前缀"><a class="header" href="#gnam05-用于访问或获取数据的-gettersetter-类方法通常不要使用-get_-前缀">G.NAM.05 用于访问或获取数据的 <code>getter/setter</code> 类方法通常不要使用 <code>get_</code> 前缀</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gnam05-用于访问或获取数据的-getter-类方法通常不要使用-get_-前缀"><a class="header" href="#gnam05-用于访问或获取数据的-getter-类方法通常不要使用-get_-前缀">G.NAM.05 用于访问或获取数据的 <code>getter</code> 类方法通常不要使用 <code>get_</code> 前缀</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 的语义。</p>
@@ -6403,14 +6406,19 @@ impl Hash for CaseInsensitiveString {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtrabln02----不要为迭代器实现copy-特质"><a class="header" href="#gtrabln02----不要为迭代器实现copy-特质">G.TRA.BLN.02    不要为迭代器实现<code>Copy</code> 特质</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
-<p>在 Rust 中，迭代器是不能实现 Copy 的。因为在需要迭代修改的场景，因为 Copy 的存在，而失去效果。</p>
+<p>不要为迭代器实现 <code>Copy</code> 特质，因为迭代器一般都是有状态的对象，如果实现 <code>Copy</code>，则可能会被意外复制，导致意外行为。</p>
 <p><strong>【反例】</strong></p>
 <p>比如，对于标准库里的 <code>Range&lt;T&gt;</code> 就不能实现 Copy，因为它也是一个迭代器。</p>
+<p>不让实现 Copy 是为了避免下面的情况：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut iter = 0..n;
+</span>// 假如迭代器实现 Copy
+let mut iter = 0..n;
+// 在执行 for 循环的时候会有隐式复制
+// 这里可能会针对迭代器副本做一些操作
 for i in iter { if i &gt; 2 { break; } }
+// 但是这里是对原迭代器进行处理，可能产生不一致的行为
 iter.collect();
 <span class="boring">}
 </span></code></pre></pre>

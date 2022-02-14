@@ -140,14 +140,19 @@
                         <h2 id="gtrabln02----不要为迭代器实现copy-特质"><a class="header" href="#gtrabln02----不要为迭代器实现copy-特质">G.TRA.BLN.02    不要为迭代器实现<code>Copy</code> 特质</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
-<p>在 Rust 中，迭代器是不能实现 Copy 的。因为在需要迭代修改的场景，因为 Copy 的存在，而失去效果。</p>
+<p>不要为迭代器实现 <code>Copy</code> 特质，因为迭代器一般都是有状态的对象，如果实现 <code>Copy</code>，则可能会被意外复制，导致意外行为。</p>
 <p><strong>【反例】</strong></p>
 <p>比如，对于标准库里的 <code>Range&lt;T&gt;</code> 就不能实现 Copy，因为它也是一个迭代器。</p>
+<p>不让实现 Copy 是为了避免下面的情况：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut iter = 0..n;
+</span>// 假如迭代器实现 Copy
+let mut iter = 0..n;
+// 在执行 for 循环的时候会有隐式复制
+// 这里可能会针对迭代器副本做一些操作
 for i in iter { if i &gt; 2 { break; } }
+// 但是这里是对原迭代器进行处理，可能产生不一致的行为
 iter.collect();
 <span class="boring">}
 </span></code></pre></pre>
