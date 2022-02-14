@@ -8,6 +8,7 @@
 
 所以，通常可以只为迭代器实现 `Clone`，需要复制的时候显式拷贝，如果出现问题也容易排查。
 
+
 **【反例】**
 
 ```rust
@@ -82,7 +83,10 @@ fn main(){
 
 **【正例】**
 
+不让实现 Copy 是为了避免下面的情况：
+
 ```rust
+
 use std::marker::PhantomData;
 
 #[derive(Debug)]
