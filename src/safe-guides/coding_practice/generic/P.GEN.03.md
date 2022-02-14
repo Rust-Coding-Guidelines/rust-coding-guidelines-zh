@@ -6,7 +6,7 @@
 
 **【反例】**
 
-此写法比下面的写法编译时间要多十倍。
+此写法比正例的写法编译时间要多十倍。
 
 ```rust
     // From: https://github.com/tokio-rs/axum/pull/198
