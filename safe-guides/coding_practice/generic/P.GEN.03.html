@@ -139,9 +139,9 @@
                     <main>
                         <h2 id="pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间"><a class="header" href="#pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间">P.GEN.03   不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></h2>
 <p><strong>【描述】</strong></p>
-<p>为泛型函数添加详细的trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
+<p>为泛型函数添加详细的 trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
 <p><strong>【反例】</strong></p>
-<p>以下写法比上面的写法编译时间要多十倍。</p>
+<p>此写法比正例的写法编译时间要多十倍。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

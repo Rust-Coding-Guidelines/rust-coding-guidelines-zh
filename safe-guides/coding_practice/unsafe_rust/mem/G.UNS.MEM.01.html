@@ -138,7 +138,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="gunsmem01---使用-maybeuninitt-来处理未初始化的内存"><a class="header" href="#gunsmem01---使用-maybeuninitt-来处理未初始化的内存">G.UNS.MEM.01   使用 <code>MaybeUninit&lt;T&gt;</code> 来处理未初始化的内存</a></h2>
-<p><strong>【级别：建议】</strong></p>
+<p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 编译器要求变量要根据其类型正确初始化。</p>
 <p>比如引用类型的变量必须对齐且非空。这是一个必须始终坚持的不变量，即使在 Unsafe 代码中也是如此。因此，零初始化引用类型的变量会导致立即未定义行为，无论该引用是否访问过内存。</p>

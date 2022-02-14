@@ -2913,7 +2913,7 @@ fn main() {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pvar01--非必要请避免像-c-语言那样先声明可变变量再赋值"><a class="header" href="#pvar01--非必要请避免像-c-语言那样先声明可变变量再赋值">P.VAR.01  非必要请避免像 C 语言那样先声明可变变量再赋值</a></h2>
 <p><strong>【描述】</strong></p>
-<p>一般情况下，不要先声明一个可变的变量，然后再后续过程中去改变它的值，这可能来自于 C 语言的习惯，但 Rust 中不推荐这样使用。</p>
+<p>一般情况下，不要先声明一个可变的变量，然后在后续过程中再去改变它的值，这可能来自于 C 语言的习惯，但 Rust 中不推荐这样使用。</p>
 <p>一般情况下，声明一个变量的时候，要对其进行初始化。如果后续可能会改变其值，要考虑优先使用变量遮蔽（继承式可变）功能。如果需要在一个子作用域内改变其值，再使用可变绑定或可变引用。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -6042,9 +6042,9 @@ fn f(a: bool) -&gt; impl Bar {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间"><a class="header" href="#pgen03---不要使用太多泛型参数和-trait-限定否则会增长编译时间">P.GEN.03   不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></h2>
 <p><strong>【描述】</strong></p>
-<p>为泛型函数添加详细的trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
+<p>为泛型函数添加详细的 trait 限定，可以在一定程度上增强用户使用体验，但使用过多的泛型参数和 trait 限定会显著地增长编译时间。</p>
 <p><strong>【反例】</strong></p>
-<p>以下写法比上面的写法编译时间要多十倍。</p>
+<p>此写法比正例的写法编译时间要多十倍。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10585,7 +10585,7 @@ fn main() {
 
 </code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gunsmem01---使用-maybeuninitt-来处理未初始化的内存"><a class="header" href="#gunsmem01---使用-maybeuninitt-来处理未初始化的内存">G.UNS.MEM.01   使用 <code>MaybeUninit&lt;T&gt;</code> 来处理未初始化的内存</a></h2>
-<p><strong>【级别：建议】</strong></p>
+<p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 编译器要求变量要根据其类型正确初始化。</p>
 <p>比如引用类型的变量必须对齐且非空。这是一个必须始终坚持的不变量，即使在 Unsafe 代码中也是如此。因此，零初始化引用类型的变量会导致立即未定义行为，无论该引用是否访问过内存。</p>
@@ -10823,7 +10823,7 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <p>有效但不安全的一个示例是 <code>&amp;str</code> 或 <code>String</code> 类型。在 Unsafe Rust 下，可能会出现违反 UTF-8 编码的字符串，而 <code>&amp;str</code> 或 <code>String</code>  假设字符串都是合法的 UTF-8 编码，所以可能会出现 UB。</p>
 <p>数据必须是有效的，但它只在安全的代码中才能保证安全。</p>
 <h2 id="未定义行为-undefined-behavior"><a class="header" href="#未定义行为-undefined-behavior">未定义行为 （Undefined Behavior）</a></h2>
-<p>程序员承诺，代码不会出现未定义行为。作为回报，编译器承诺以这样的方式编译代码：最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现相同。如果发现程序确实有未定义的行为，那么程序员和编译器之间的契约就无效了，编译器产生的程序基本上是垃圾（特别是，它不受任何规范的约束；程序甚至不一定是格式良好的可执行代码）。</p>
+<p>程序员承诺，代码不会出现未定义行为。作为回报，编译器承诺以这样的方式编译代码：最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现相同。如果发现程序确实有未定义的行为，那么程序员和编译器之间的契约就无效了，编译器将无法生成正确的程序（特别是，它不受任何规范的约束；程序甚至不一定是格式良好的可执行代码）。</p>
 <p>未定义行为列表：</p>
 <ul>
 <li>数据竞争。</li>
@@ -10840,7 +10840,7 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <li>悬垂引用或 Box</li>
 <li>宽引用、Box 或 裸指针有无效的元数据
 <ul>
-<li><code>dyn Trait</code> 如果元数据不是指向， Trait 与指针或引用指向的实际动态 trait 匹配的 vtable，的指针，则元数据无效</li>
+<li><code>dyn Trait</code> 元数据是指向一个 Trait 的 vtable 的指针，且该Trait需要与指针或引用实际指向的动态trait相匹配，否则元数据无效</li>
 <li>如果长度无效，则切片数据无效</li>
 </ul>
 </li>

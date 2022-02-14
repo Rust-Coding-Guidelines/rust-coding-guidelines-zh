@@ -210,7 +210,7 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <p>有效但不安全的一个示例是 <code>&amp;str</code> 或 <code>String</code> 类型。在 Unsafe Rust 下，可能会出现违反 UTF-8 编码的字符串，而 <code>&amp;str</code> 或 <code>String</code>  假设字符串都是合法的 UTF-8 编码，所以可能会出现 UB。</p>
 <p>数据必须是有效的，但它只在安全的代码中才能保证安全。</p>
 <h2 id="未定义行为-undefined-behavior"><a class="header" href="#未定义行为-undefined-behavior">未定义行为 （Undefined Behavior）</a></h2>
-<p>程序员承诺，代码不会出现未定义行为。作为回报，编译器承诺以这样的方式编译代码：最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现相同。如果发现程序确实有未定义的行为，那么程序员和编译器之间的契约就无效了，编译器产生的程序基本上是垃圾（特别是，它不受任何规范的约束；程序甚至不一定是格式良好的可执行代码）。</p>
+<p>程序员承诺，代码不会出现未定义行为。作为回报，编译器承诺以这样的方式编译代码：最终程序在实际硬件上的表现与源程序根据Rust抽象机的表现相同。如果发现程序确实有未定义的行为，那么程序员和编译器之间的契约就无效了，编译器将无法生成正确的程序（特别是，它不受任何规范的约束；程序甚至不一定是格式良好的可执行代码）。</p>
 <p>未定义行为列表：</p>
 <ul>
 <li>数据竞争。</li>
@@ -227,7 +227,7 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <li>悬垂引用或 Box</li>
 <li>宽引用、Box 或 裸指针有无效的元数据
 <ul>
-<li><code>dyn Trait</code> 如果元数据不是指向， Trait 与指针或引用指向的实际动态 trait 匹配的 vtable，的指针，则元数据无效</li>
+<li><code>dyn Trait</code> 元数据是指向一个 Trait 的 vtable 的指针，且该Trait需要与指针或引用实际指向的动态trait相匹配，否则元数据无效</li>
 <li>如果长度无效，则切片数据无效</li>
 </ul>
 </li>
