@@ -6,7 +6,7 @@
 
 花括号的位置风格默认使用 `SameLineWhere`，但是也根据不同的语言项略有区别。
 
-#### 【反例】
+**【反例】**
 
 如果设置 `brace_style = "AlwaysNextLine"`，则：
 
@@ -47,7 +47,7 @@ where
 }
 ```
 
-结构体与枚举
+结构体与枚举：
 
 
 如果设置 `brace_style = "AlwaysNextLine"`，则：
@@ -81,7 +81,40 @@ where
 }
 ```
 
-#### 【正例】
+流程控制倾向于默认使用 `AlwaysSameLine`，即，总在同一行。因为流程控制没有`where`子句。
+
+如果设置 `brace_style = "AlwaysNextLine"`，则：
+
+```rust
+fn main() {
+    if lorem
+    {
+        println!("ipsum!");
+    }
+    else
+    {
+        println!("dolor!");
+    }
+}
+```
+
+如果设置 `brace_style = "ClosingNextLine"`，则：
+
+```rust
+fn main() {
+    if lorem {
+        println!("ipsum!");
+    } // 注意这里 if 分支结尾处，else 换行
+    else { 
+        println!("dolor!");
+    }
+}
+```
+
+
+**【正例】**
+
+函数：
 
 ```rust
 fn lorem() { // 花括号和fn定义在同一行
@@ -129,41 +162,7 @@ where
 }
 ```
 
-#### 流程控制
-
 流程控制倾向于默认使用 `AlwaysSameLine`，即，总在同一行。因为流程控制没有`where`子句。
-
-**【反例】**
-
-如果设置 `brace_style = "AlwaysNextLine"`，则：
-
-```rust
-fn main() {
-    if lorem
-    {
-        println!("ipsum!");
-    }
-    else
-    {
-        println!("dolor!");
-    }
-}
-```
-
-如果设置 `brace_style = "ClosingNextLine"`，则：
-
-```rust
-fn main() {
-    if lorem {
-        println!("ipsum!");
-    } // 注意这里 if 分支结尾处，else 换行
-    else { 
-        println!("dolor!");
-    }
-}
-```
-
-**【正例】**
 
 ```rust
 // "AlwaysSameLine" (default)

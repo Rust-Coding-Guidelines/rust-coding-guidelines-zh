@@ -1,7 +1,7 @@
 
 ## G.NAM.02 使用统一的命名风格
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -11,7 +11,7 @@ Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风
 
 | Item | 规范 |
 | ---- | ---------- |
-| 包（Crates） | [最好使用 snake_case](https://github.com/rust-lang/api-guidelines/issues/29) [^crate-name] |
+| 包（Crates） | [通常使用 snake_case](https://github.com/rust-lang/api-guidelines/issues/29) [^crate-name] |
 | 模块（Modules） | `snake_case` |
 | 类型（Types） | `UpperCamelCase` |
 | 特质（Traits） | `UpperCamelCase` |
@@ -26,7 +26,7 @@ Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风
 | 常量（Constants） | `SCREAMING_SNAKE_CASE` |
 | 类型参数（Type parameters） | 简明的 `UpperCamelCase` ，通常使用单个大写字母： `T` |
 | 生存期（Lifetimes） | 简短的 `lowercase`，通常使用单个小写字母 `'a`, `'de`, `'src`，尽量保持语义 |
-| 特性（Features） | [有争议](https://github.com/rust-lang/api-guidelines/issues/101) ，但是一般遵照 [C-FEATURE] |
+| 特性（Features） | `snake_case` |
 
 说明 :
 
@@ -37,12 +37,12 @@ Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风
 
 关于包命名：
 
-- [^crate-name]: 由于历史问题，包名有两种形式 `snake_case` 或 `kebab-case` ，但实际在代码中需要引入包名的时候，Rust 只能识别 `snake_case`，也会自动将 `kebab-case` 识别为  `kebab_case`。
+- 由于历史问题，包名有两种形式 `snake_case` 或 `kebab-case` ，但实际在代码中需要引入包名的时候，Rust 只能识别 `snake_case`，也会自动将 `kebab-case` 识别为  `kebab_case`。所以建议使用`snake_case`。
 - Crate 的名称通常不应该使用 `-rs` 或者 `-rust` 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 `-rs` 后缀来表明这是 Rust 实现的版本。
 
 **【参考】**
 
-Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有描述。
+Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有也描述。
 
 **【Lint 检测】**
 

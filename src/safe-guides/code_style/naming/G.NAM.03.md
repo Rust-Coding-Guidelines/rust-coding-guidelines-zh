@@ -38,7 +38,7 @@ pub struct HeaderMap {
 
 ```rust
 // 全局静态变量
-static GET_MAX_THREAD_COUNT: i32 = 42;  // 符合
+static MAX_THREAD_COUNT: i32 = 42;  // 符合
 
 // 枚举类型
 // 符合： 上下文信息已经知道它是 Event
