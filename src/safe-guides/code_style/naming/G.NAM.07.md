@@ -12,22 +12,11 @@
 
 来自标准库的例子：
 
-* [`Vec::iter`] 返回 [`Iter`][slice::Iter]
-* [`Vec::iter_mut`] 返回 [`IterMut`][slice::IterMut]
-* [`Vec::into_iter`] 返回 [`IntoIter`][vec::IntoIter]
-* [`BTreeMap::keys`] 返回 [`Keys`][btree_map::Keys]
-* [`BTreeMap::values`] 返回 [`Values`][btree_map::Values]
-
-[`Vec::iter`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter
-[slice::Iter]: https://doc.rust-lang.org/std/slice/struct.Iter.html
-[`Vec::iter_mut`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut
-[slice::IterMut]: https://doc.rust-lang.org/std/slice/struct.IterMut.html
-[`Vec::into_iter`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter
-[vec::IntoIter]: https://doc.rust-lang.org/std/vec/struct.IntoIter.html
-[`BTreeMap::keys`]: https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys
-[btree_map::Keys]: https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html
-[`BTreeMap::values`]: https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values
-[btree_map::Values]: https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html
+* [`Vec::iter`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter) 返回 [`Iter`][slice::Iter](https://doc.rust-lang.org/std/slice/struct.Iter.html)
+* [`Vec::iter_mut`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut) 返回 [`IterMut`][slice::IterMut](https://doc.rust-lang.org/std/slice/struct.IterMut.html)
+* [`Vec::into_iter`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.into_iter) 返回 [`IntoIter`][vec::IntoIter](https://doc.rust-lang.org/std/vec/struct.IntoIter.html)
+* [`BTreeMap::keys`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys)  返回 [`Keys`][btree_map::Keys](https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html)
+* [`BTreeMap::values`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values) 返回 [`Values`][btree_map::Values](https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html)
 
 
 **【Lint 检测】**

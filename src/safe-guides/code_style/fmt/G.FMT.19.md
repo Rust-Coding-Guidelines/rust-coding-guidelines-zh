@@ -14,16 +14,18 @@
 fn main() {
     let (lorem, ipsum, _, _) = (1, 2, 3, 4);
     let (lorem, ipsum, ..) = (1, 2, 3, 4);
+    let (lorem, _,ipsum, _, _) = (1, 2, 3, 4, 5);
 }
 ```
 
 **【正例】**
 
-设置 `condense_wildcard_suffixes = true` :
+设置 `condense_wildcard_suffixes = true` 时，会强行更改代码为下面形式。
 
 ```rust
 fn main() {
     let (lorem, ipsum, ..) = (1, 2, 3, 4);
+    let (lorem, _,ipsum, ..) = (1, 2, 3, 4, 5);
 }
 ```
 
