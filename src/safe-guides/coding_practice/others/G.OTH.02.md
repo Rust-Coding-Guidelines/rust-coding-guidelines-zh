@@ -13,7 +13,7 @@
 let dur = Duration::new(5, 0);
 
 // Bad
-let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒计算微妙
+let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒计算微秒
 let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒计算毫秒
 ```
 
