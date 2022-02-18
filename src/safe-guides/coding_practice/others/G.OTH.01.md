@@ -19,7 +19,7 @@ disallowed-methods = [
 ]
 
 # 允许 Lint 支持配置值对应的本地语言
-# 配置时候从该列表取别名 https://www.unicode.org/iso15924/iso15924-codes.html
+# 配置时候从该列表获取别名 https://www.unicode.org/iso15924/iso15924-codes.html
 allowed-locales = ["Latin", "Cyrillic"] 
 ```
 
@@ -53,4 +53,4 @@ let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 | [disallowed_script_idents](https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents) | yes           | no           | **restriction** | allow |
 | [disallowed_type](https://rust-lang.github.io/rust-clippy/master/#disallowed_type) | yes           | no           | **nursery**     | allow |
 
-这些lint 作用相似，但注意 `nursery` 的lint 还未稳定。 
+这些 lint 作用相似，但注意 `nursery` 的lint 还未稳定。 
