@@ -1,29 +1,35 @@
-## G.NAM.08  避免使用语言内置保留字、关键字、内置类型和`trait`等特殊名称
+## G.NAM.08  避免在变量的命名中添加类型标识
 
 **【级别】** 建议
 
 **【描述】**
 
-命名必须要避免使用语言内置的保留字、关键字、内置类型和`trait`等特殊名称。 具体可以参考[The Rust Reference-Keywords](https://doc.rust-lang.org/stable/reference/keywords.html)
+因为 Rust 语言类型系统崇尚显式的哲学，所以不需要在变量命名中也添加关于类型的标识。
+
+
 
 **【反例】**
 
 ```rust
-// Sized ： Rust 内置了同名 trait 
-type Sized = u16; 
-
-fn main() {
-    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
-    let r#try = 1;
-}
+let account_bytes: Vec<u8> = read_some_input();   // account 的类型很清楚，没必要在命名中加 `_bytes`
+let account_str = String::from_utf8(account_bytes)?; // account 的类型很清楚，没必要在命名中加 `_str`
+let account: Account = account_str.parse()?;   // account 的类型很清楚，没必要在命名中加 `_str`
 ```
+
+**【正例】**
+
+```rust
+let account: Vec<u8> = read_some_input();   // account 的类型很清楚
+let account = String::from_utf8(account)?;  // account 的类型很清楚
+let account: Account = account.parse()?;   // account 的类型很清楚
+```
+
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
+| lint name  | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| ---------- | ------------- | ------------ | ---------- | ----- |
+| _ | no           | no           | _   | yes |
 
 【定制化参考】
-
-可以检测 标识符 是否通过`r#`使用了 语言内置的保留字、关键字、内置类型和`trait`等特殊名称，如果使用，则给予警告。
+这条规则如果需要定制Lint，则可以获取变量命名的结尾部分和变量类型，进行匹配，判断是否重复。

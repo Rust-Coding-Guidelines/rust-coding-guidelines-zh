@@ -1,72 +1,52 @@
-## G.FMT.12  空格使用规则
+## G.FMT.12  声明宏分支格式
 
 **【级别】** 建议
 
 **【描述】**
 
-总结：
+1. 在声明宏中，模式匹配分支（`=>` 左侧）应该使用紧凑格式（`format_macro_matchers=true`）。
+2. 而分支代码体（`=>` 右侧） 使用宽松格式。详细请看示例。
 
-1. 在冒号之后添加空格，在冒号之前不要加空格。
-2. 在范围（range）操作符（`..`和`..=`）前后不要使用空格。
-3. 在`+`或`=`操作符前后要加空格。
+一切都是为了提升可读性。
+
+说明：因为这里需要修改`format_macro_matchers`的默认值，且该配置项并未 Stable ，所以需要 Nightly 下格式化。
 
 **【反例】**
 
 ```rust
-// 当 `space_after_colon=false`
-fn lorem<T:Eq>(t:T) {
-    let lorem:Dolor = Lorem {
-        ipsum:dolor,
-        sit:amet,
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=true`
+macro_rules! foo {
+    ($a: ident : $b: ty) => {
+        $a(42): $b;
+    };
+    ($a: ident $b: ident $c: ident) => {
+        $a = $b + $c;
     };
 }
 
-// 当 `space_before_colon=true`
-fn lorem<T : Eq>(t : T) {
-    let lorem : Dolor = Lorem {
-        ipsum : dolor,
-        sit : amet,
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=false`
+macro_rules! foo {
+    ($a: ident : $b: ty) => {
+        $a(42):$b;
     };
-}
-
-// 当 `spaces_around_ranges=true`
-let lorem = 0 .. 10;
-let ipsum = 0 ..= 10;
-
-// 当 `type_punctuation_density="Compressed"`
-fn lorem<Ipsum: Dolor+Sit=Amet>() {
-    // body
-    let answer = 1 + 2;
+    ($a: ident $b: ident $c: ident) => {
+        $a=$b+$c;
+    };
 }
 ```
 
 **【正例】**
 
 ```rust
-// 当 `space_after_colon=true`
-fn lorem<T: Eq>(t: T) {
-    let lorem: Dolor = Lorem {
-        ipsum: dolor,
-        sit: amet,
+// 当 `format_macro_matchers=true` 且 `format_macro_bodies=true`
+macro_rules! foo {
+    // 匹配分支紧凑格式， `$a:ident` 和 `$b:ty` 各自配对
+    ($a:ident : $b:ty) => {
+        $a(42): $b; // 在代码体内，则宽松一点
     };
-}
-
-// 当 `space_before_colon=false`
-fn lorem<T: Eq>(t: T) {
-    let lorem: Dolor = Lorem {
-        ipsum: dolor,
-        sit: amet,
+    ($a:ident $b:ident $c:ident) => {
+        $a = $b + $c;
     };
-}
-
-// 当 `spaces_around_ranges=false`
-let lorem = 0..10;
-let ipsum = 0..=10;
-
-// 当 `type_punctuation_density="Wide"`
-fn lorem<Ipsum: Dolor + Sit = Amet>() {
-    // body
-    let answer = 1 + 2;
 }
 ```
 
@@ -78,7 +58,5 @@ rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`space_after_colon`](https://rust-lang.github.io/rustfmt/?#space_after_colon) | true（默认） | No |  在冒号后面要加空格|
-| [`space_before_colon`](https://rust-lang.github.io/rustfmt/?#space_before_colon) | false（默认） | No| 在冒号前面不要加空格 |
-| [`spaces_around_ranges`](https://rust-lang.github.io/rustfmt/?#spaces_around_ranges) | false（默认） | No| 在`..`和`..=`范围操作符前后不要加空格 |
-| [`type_punctuation_density`](https://rust-lang.github.io/rustfmt/?#type_punctuation_density) | "Wide"（默认） | No| 在 `+`或`=`操作符前后要加空格（此处特指类型签名） |
+| [`format_macro_matchers`](https://rust-lang.github.io/rustfmt/?#format_macro_matchers) | （false（默认），true(建议)） | No |声明宏 模式匹配分支（`=>` 左侧）中要使用紧凑格式|
+| [`format_macro_bodies`](https://rust-lang.github.io/rustfmt/?#format_macro_bodies) | true（默认） | No| 声明宏分支代码体（`=>` 右侧） 使用宽松格式|

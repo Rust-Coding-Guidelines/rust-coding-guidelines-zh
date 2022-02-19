@@ -1,72 +1,38 @@
-## G.FMT.14  `match` 分支格式
+## G.FMT.14  extern 外部函数需要显式指定 ABI
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
-1. 当match分支右侧代码体太长无法和`=>`置于同一行需要使用块(block)来包裹。
-2. 在match分支左侧匹配表达式前不要增加管道符(`|`)
+当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。`extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。
+
 
 **【反例】**
 
 ```rust
-// 当 `match_arm_blocks=false`
-fn main() {
-    match lorem {
-        ipsum => 
-            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x),
-        dolor => println!("{}", sit),
-        sit => foo(
-            "foooooooooooooooooooooooo",
-            "baaaaaaaaaaaaaaaaaaaaaaaarr",
-            "baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz",
-            "qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx",
-        ),
-    }
+// 省略 ABI 指定，则默认是 C-ABI
+extern {
+    pub static lorem: c_int;
 }
 
-// 当 `match_arm_leading_pipes="Alaways"`
-fn foo() {
-    match foo {
-        | "foo" | "bar" => {}
-        | "baz"
-        | "something relatively long"
-        | "something really really really realllllllllllllly long" => println!("x"),
-        | "qux" => println!("y"),
-        | _ => {}
-    }
+// 非 C-ABI 是无法省略的
+extern "Rust" {
+    type MyType;
+    fn f(&self) -> usize;
 }
 ```
 
 **【正例】**
 
 ```rust
-// 当 `match_arm_blocks=true`
-fn main() {
-    match lorem {
-        ipsum => { 
-            foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x)
-        }
-        dolor => println!("{}", sit),
-        sit => foo(
-            "foooooooooooooooooooooooo",
-            "baaaaaaaaaaaaaaaaaaaaaaaarr",
-            "baaaaaaaaaaaaaaaaaaaazzzzzzzzzzzzz",
-            "qqqqqqqqquuuuuuuuuuuuuuuuuuuuuuuuuuxxx",
-        ),
-    }
+// 默认就是 `C-ABI`
+extern "C" {
+    pub static lorem: c_int;
 }
 
-// 当 `match_arm_leading_pipes="Never"`
-fn foo() {
-    match foo {
-        "foo" | "bar" => {}
-        "baz"
-        | "something relatively long"
-        | "something really really really realllllllllllllly long" => println!("x"),
-        "qux" => println!("y"),
-        _ => {}
-    }
+extern "Rust" {
+    type MyType;
+    fn f(&self) -> usize;
 }
 ```
 
@@ -78,5 +44,4 @@ rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`match_arm_blocks`](https://rust-lang.github.io/rustfmt/?#match_arm_blocks) | true（默认） | No | 当match分支右侧代码体太长无法和`=>`置于同一行需要使用块(block)来包裹|
-| [`match_arm_leading_pipes`](https://rust-lang.github.io/rustfmt/?#match_arm_leading_pipes) | Never（默认） | No| 在match分支左侧匹配表达式前不要增加管道符(`|`) |
+| [`force_explicit_abi`](https://rust-lang.github.io/rustfmt/?#force_explicit_abi) | true（默认） | Yes|  extern 外部函数总是要指定 ABI |
