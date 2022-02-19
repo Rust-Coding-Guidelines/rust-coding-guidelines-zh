@@ -2,4 +2,4 @@
 
 **【描述】**
 
-考虑将条件编译 `--cfg` 使用 `cargo features` 代替，使用 Rust 原生的条件编译兼容性更好些。
+`cargo features` 为 Rust 原生的条件编译，可用于代替 `--cfg` 参数且兼容性更好。

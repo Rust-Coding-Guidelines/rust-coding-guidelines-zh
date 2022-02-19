@@ -2,7 +2,7 @@
 
 **【描述】**
 
-`macro_rules!` 定义声明宏时，非终止的元变量匹配必须紧随一个已被决定可以在这种匹配之后安全使用的标记。
+`macro_rules!` 定义声明宏时，非终止的元变量匹配必须紧随一个已被决定能在这种匹配之后安全使用的标记。
 
 具体的规则参见：[Follow-set Ambiguity Restrictions](https://doc.rust-lang.org/reference/macros-by-example.html#follow-set-ambiguity-restrictions)
 
