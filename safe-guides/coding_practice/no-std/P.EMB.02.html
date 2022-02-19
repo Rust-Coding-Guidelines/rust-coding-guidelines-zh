@@ -142,9 +142,9 @@
 <p>链接器决定 no-std 程序的最终内存布局，但我们可以使用<a href="https://sourceware.org/binutils/docs/ld/Scripts.html">链接器脚本</a>对其进行一些控制。链接器脚本给我们的布局控制粒度是在 段（ Section） 级别。段是在连续内存中布置的 符号 集合。反过来，符号可以是数据（静态变量）或指令（Rust 函数）。</p>
 <p>这些编译器生成的符号和段名称不能保证在 Rust 编译器的不同版本中保持不变。但是，Rust 允许我们通过以下属性控制符号名称和部分位置：</p>
 <ul>
-<li><code>#[export_name = &quot;foo&quot;]</code>将符号名称设置为<code>foo</code>.</li>
+<li><code>#[export_name = &quot;foo&quot;]</code>将符号名称设置为 <code>foo</code>.</li>
 <li><code>#[no_mangle]</code>意思是：使用函数或变量名（不是它的完整路径）作为它的符号名。 <code>#[no_mangle] fn bar()</code>将产生一个名为 <code>bar</code> 的符号。</li>
-<li><code>#[link_section = &quot;.bar&quot;]</code>将符号放置在名为 的部分中<code>.bar</code>。</li>
+<li><code>#[link_section = &quot;.bar&quot;]</code>将符号放置在名为 <code>.bar</code> 的部分中。</li>
 </ul>
 <p>通过这些属性，我们可以公开程序的稳定 ABI 并在链接描述文件中使用它。</p>
 

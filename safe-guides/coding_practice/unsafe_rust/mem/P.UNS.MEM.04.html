@@ -143,9 +143,9 @@
 <p>很多 API 会既提供不可重入版本和**可重入(reentrant)**版本，例如 ctime 和 ctime_r 这对系统调用。</p>
 <p>可重入版本的函数命名一般带 <strong>_r</strong> 的后缀，<em>_r</em> 也就是单词可重入 reentrant 的缩写。</p>
 <p>libc 中不可重入函数的执行过程一般是将函数的输出写到动态库的某个 static 命令内，然后再返回指向该 static 变量的指针返回给调用方，因此是一种「有状态」的函数，多线程环境下可能有<strong>线程安全问题</strong>。</p>
-<p>例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了导致线程 A 得到的数据有误。</p>
+<p>例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了，导致线程 A 得到的数据有误。</p>
 <p>而无重入版本例如 libc::localtime_r 会比 libc::localtime 多一个入参叫 result，</p>
-<p>允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可知指针指向的数据。</p>
+<p>允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可变指针指向的数据。</p>
 <p>应当通过工具搜索动态库的函数符号查找可重入版本的函数，或者通过 man 文档查询自己所用函数有没有可重入的版本。</p>
 <pre><code>[w@ww repos]$ nm -D /usr/lib/libc.so.6 | grep &quot;_r@&quot;
 00000000000bb030 W asctime_r@@GLIBC_2.2.5
@@ -156,7 +156,7 @@
 <p><strong>【反例】</strong></p>
 <p><code>ctime</code>, <code>gmtime</code>,<code> localtime</code>, <code>gethostbyname</code></p>
 <p><strong>【正例】</strong></p>
-<p><code>chrono</code> 库中用<code> libc::localtime_r</code> 获取本地时间而不用<code> libc::localtime</code></p>
+<p><code>chrono</code> 库中用 <code>libc::localtime_r</code> 获取本地时间而不用 <code>libc::localtime</code></p>
 <p><code>ctime_r</code>, <code>gmtime_r</code>,<code> localtime_r</code>, <code>gethostbyname_r</code></p>
 
                     </main>

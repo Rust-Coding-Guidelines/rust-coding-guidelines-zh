@@ -139,8 +139,8 @@
                     <main>
                         <h2 id="punsmem01--要注意选择合适的结构体元组枚举的数据布局"><a class="header" href="#punsmem01--要注意选择合适的结构体元组枚举的数据布局">P.UNS.MEM.01  要注意选择合适的结构体、元组、枚举的数据布局</a></h2>
 <p><strong>【描述】</strong></p>
-<p>Rust 中结构体和元组 ，编译器会随意重排其字段来优化布局。请根据具体的场景来选择合适的数据布局。</p>
-<p>可以通过 以下<code>#[repr]</code> 属性来控制结构体和元组的数据布局：</p>
+<p>对于 Rust 中结构体和元组，编译器会随意重排其字段来优化布局。请根据具体的场景来选择合适的数据布局。</p>
+<p>可以通过以下 <code>#[repr]</code> 属性来控制结构体和元组的数据布局：</p>
 <ul>
 <li><code>#[repr(Rust)]</code> ，默认 Rust 数据布局</li>
 <li><code>#[repr(C)]</code> ，与 C 兼容的布局</li>
@@ -148,7 +148,7 @@
 <li><code>#[repr(packed)]</code> ，指定字段将不在内部对齐</li>
 <li><code>#[repr(transparent)]</code> ，让包含单个字段的结构体布局和其字段相同</li>
 </ul>
-<p>可以通过 以下<code>#[repr]</code> 属性来控制枚举体的数据布局：</p>
+<p>可以通过以下 <code>#[repr]</code> 属性来控制枚举体的数据布局：</p>
 <ul>
 <li>特定整数类型
 <ul>
@@ -177,10 +177,10 @@
 </ul>
 <p>枚举需要注意的地方：</p>
 <ul>
-<li>枚举不允许通过<code>#[repr(align)] </code> 手动指定对齐方式。</li>
+<li>枚举不允许通过 <code>#[repr(align)]</code> 手动指定对齐方式。</li>
 <li>空枚举不能使用 <code>repr</code> 属性</li>
 <li>无字段枚举不允许指定判别式大小的 C 兼容布局，比如 <code>[repr(C, Int)]</code></li>
-<li>数据承载（有字段）枚举则允许所有类型的 <code>repr</code>属性</li>
+<li>数据承载（有字段）枚举则允许所有类型的 <code>repr</code> 属性</li>
 </ul>
 
                     </main>

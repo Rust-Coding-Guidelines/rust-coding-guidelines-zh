@@ -10119,7 +10119,7 @@ unsafe impl Sync for MyBox {}
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gunsptr01--当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用"><a class="header" href="#gunsptr01--当指针类型被强转为和当前内存对齐不一致的指针类型时禁止对其解引用">G.UNS.PTR.01  当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>该 Lint 会检查是否出现指针类型被强转为和当前内存对齐不一致的指针类型的情况，要注意不要对这类强转后的指针进行解引用操作，否则会有未定义行为。</p>
+<p>对于指针类型被强转为和当前内存对齐不一致的指针类型的情况，要注意不要对这类强转后的指针进行解引用操作，否则会有未定义行为。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = (&amp;1u8 as *const u8) as *const u16;
@@ -10392,8 +10392,8 @@ fn test() {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem01--要注意选择合适的结构体元组枚举的数据布局"><a class="header" href="#punsmem01--要注意选择合适的结构体元组枚举的数据布局">P.UNS.MEM.01  要注意选择合适的结构体、元组、枚举的数据布局</a></h2>
 <p><strong>【描述】</strong></p>
-<p>Rust 中结构体和元组 ，编译器会随意重排其字段来优化布局。请根据具体的场景来选择合适的数据布局。</p>
-<p>可以通过 以下<code>#[repr]</code> 属性来控制结构体和元组的数据布局：</p>
+<p>对于 Rust 中结构体和元组，编译器会随意重排其字段来优化布局。请根据具体的场景来选择合适的数据布局。</p>
+<p>可以通过以下 <code>#[repr]</code> 属性来控制结构体和元组的数据布局：</p>
 <ul>
 <li><code>#[repr(Rust)]</code> ，默认 Rust 数据布局</li>
 <li><code>#[repr(C)]</code> ，与 C 兼容的布局</li>
@@ -10401,7 +10401,7 @@ fn test() {
 <li><code>#[repr(packed)]</code> ，指定字段将不在内部对齐</li>
 <li><code>#[repr(transparent)]</code> ，让包含单个字段的结构体布局和其字段相同</li>
 </ul>
-<p>可以通过 以下<code>#[repr]</code> 属性来控制枚举体的数据布局：</p>
+<p>可以通过以下 <code>#[repr]</code> 属性来控制枚举体的数据布局：</p>
 <ul>
 <li>特定整数类型
 <ul>
@@ -10430,10 +10430,10 @@ fn test() {
 </ul>
 <p>枚举需要注意的地方：</p>
 <ul>
-<li>枚举不允许通过<code>#[repr(align)] </code> 手动指定对齐方式。</li>
+<li>枚举不允许通过 <code>#[repr(align)]</code> 手动指定对齐方式。</li>
 <li>空枚举不能使用 <code>repr</code> 属性</li>
 <li>无字段枚举不允许指定判别式大小的 C 兼容布局，比如 <code>[repr(C, Int)]</code></li>
-<li>数据承载（有字段）枚举则允许所有类型的 <code>repr</code>属性</li>
+<li>数据承载（有字段）枚举则允许所有类型的 <code>repr</code> 属性</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem02--不能修改其它进程动态库的内存变量"><a class="header" href="#punsmem02--不能修改其它进程动态库的内存变量">P.UNS.MEM.02  不能修改其它进程/动态库的内存变量</a></h2>
 <p><strong>【描述】</strong></p>
@@ -10507,9 +10507,9 @@ fn print_sqlite_version() {
 <p>很多 API 会既提供不可重入版本和**可重入(reentrant)**版本，例如 ctime 和 ctime_r 这对系统调用。</p>
 <p>可重入版本的函数命名一般带 <strong>_r</strong> 的后缀，<em>_r</em> 也就是单词可重入 reentrant 的缩写。</p>
 <p>libc 中不可重入函数的执行过程一般是将函数的输出写到动态库的某个 static 命令内，然后再返回指向该 static 变量的指针返回给调用方，因此是一种「有状态」的函数，多线程环境下可能有<strong>线程安全问题</strong>。</p>
-<p>例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了导致线程 A 得到的数据有误。</p>
+<p>例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了，导致线程 A 得到的数据有误。</p>
 <p>而无重入版本例如 libc::localtime_r 会比 libc::localtime 多一个入参叫 result，</p>
-<p>允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可知指针指向的数据。</p>
+<p>允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可变指针指向的数据。</p>
 <p>应当通过工具搜索动态库的函数符号查找可重入版本的函数，或者通过 man 文档查询自己所用函数有没有可重入的版本。</p>
 <pre><code>[w@ww repos]$ nm -D /usr/lib/libc.so.6 | grep &quot;_r@&quot;
 00000000000bb030 W asctime_r@@GLIBC_2.2.5
@@ -10520,11 +10520,11 @@ fn print_sqlite_version() {
 <p><strong>【反例】</strong></p>
 <p><code>ctime</code>, <code>gmtime</code>,<code> localtime</code>, <code>gethostbyname</code></p>
 <p><strong>【正例】</strong></p>
-<p><code>chrono</code> 库中用<code> libc::localtime_r</code> 获取本地时间而不用<code> libc::localtime</code></p>
+<p><code>chrono</code> 库中用 <code>libc::localtime_r</code> 获取本地时间而不用 <code>libc::localtime</code></p>
 <p><code>ctime_r</code>, <code>gmtime_r</code>,<code> localtime_r</code>, <code>gethostbyname_r</code></p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem05--如果需要使用位域推荐使用第三方库"><a class="header" href="#punsmem05--如果需要使用位域推荐使用第三方库">P.UNS.MEM.05  如果需要使用位域，推荐使用第三方库</a></h2>
 <p><strong>【描述】</strong></p>
-<p>位域（或称“位段”， Bit field）为一种数据结构，可以把数据以为的形式紧凑的存储，并允许程序员对此结构的位进行寻址和操作。</p>
+<p>位域（或称“位段”， Bit field）为一种数据结构，可以把数据以位的形式紧凑的存储，并允许程序员对此结构的位进行寻址和操作。</p>
 <p>这种数据结构的好处：</p>
 <ul>
 <li>可以使数据单元节省存储空间，当程序需要成千上万个数据单元时，这种方法就显得尤为重要。</li>
@@ -10964,9 +10964,9 @@ fn main() {
 <p>链接器决定 no-std 程序的最终内存布局，但我们可以使用<a href="https://sourceware.org/binutils/docs/ld/Scripts.html">链接器脚本</a>对其进行一些控制。链接器脚本给我们的布局控制粒度是在 段（ Section） 级别。段是在连续内存中布置的 符号 集合。反过来，符号可以是数据（静态变量）或指令（Rust 函数）。</p>
 <p>这些编译器生成的符号和段名称不能保证在 Rust 编译器的不同版本中保持不变。但是，Rust 允许我们通过以下属性控制符号名称和部分位置：</p>
 <ul>
-<li><code>#[export_name = &quot;foo&quot;]</code>将符号名称设置为<code>foo</code>.</li>
+<li><code>#[export_name = &quot;foo&quot;]</code>将符号名称设置为 <code>foo</code>.</li>
 <li><code>#[no_mangle]</code>意思是：使用函数或变量名（不是它的完整路径）作为它的符号名。 <code>#[no_mangle] fn bar()</code>将产生一个名为 <code>bar</code> 的符号。</li>
-<li><code>#[link_section = &quot;.bar&quot;]</code>将符号放置在名为 的部分中<code>.bar</code>。</li>
+<li><code>#[link_section = &quot;.bar&quot;]</code>将符号放置在名为 <code>.bar</code> 的部分中。</li>
 </ul>
 <p>通过这些属性，我们可以公开程序的稳定 ABI 并在链接描述文件中使用它。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="321-io"><a class="header" href="#321-io">3.21 I/O</a></h1>
@@ -11132,7 +11132,7 @@ disallowed-methods = [
 ]
 
 # 允许 Lint 支持配置值对应的本地语言
-# 配置时候从该列表取别名 https://www.unicode.org/iso15924/iso15924-codes.html
+# 配置时候从该列表获取别名 https://www.unicode.org/iso15924/iso15924-codes.html
 allowed-locales = [&quot;Latin&quot;, &quot;Cyrillic&quot;] 
 </code></pre>
 <p><strong>【反例】</strong></p>
@@ -11164,7 +11164,7 @@ let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#disallowed_script_idents">disallowed_script_idents</a></td><td>yes</td><td>no</td><td><strong>restriction</strong></td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#disallowed_type">disallowed_type</a></td><td>yes</td><td>no</td><td><strong>nursery</strong></td><td>allow</td></tr>
 </tbody></table>
-<p>这些lint 作用相似，但注意 <code>nursery</code> 的lint 还未稳定。 </p>
+<p>这些 lint 作用相似，但注意 <code>nursery</code> 的lint 还未稳定。 </p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="goth02--使用标准库中对应的方法计算秒级毫秒级微秒级的时间"><a class="header" href="#goth02--使用标准库中对应的方法计算秒级毫秒级微秒级的时间">G.OTH.02  使用标准库中对应的方法计算秒级、毫秒级、微秒级的时间</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -11177,8 +11177,8 @@ let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 </span>let dur = Duration::new(5, 0);
 
 // Bad
-let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒 计算
-let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
+let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒计算微秒
+let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒计算毫秒
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
@@ -11189,8 +11189,8 @@ let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒 计算
 </span>let dur = Duration::new(5, 0);
 
 // Good
-let _micros = dur.subsec_micros(); // 得到微秒
-let _millis = dur.subsec_millis(); // 得到毫秒
+let _micros = dur.subsec_micros(); // 通过标准库函数得到微秒
+let _millis = dur.subsec_millis(); // 通过标准库函数得到毫秒
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【Lint 检测】</strong></p>
