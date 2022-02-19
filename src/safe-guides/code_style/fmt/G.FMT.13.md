@@ -1,76 +1,51 @@
-## G.FMT.13  结尾逗号规则
+## G.FMT.13  具名结构体字段初始化时字段名最好不要省略
 
 **【级别】** 建议
 
 **【描述】**
 
-1. 当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号。
-2. 在match分支中，如果包含了块，则不需要加逗号，否则需要加。
+因为本规则严重依赖于rustfmt，而rustfmt会根据相应配置项对代码进行自动更改，为了确保不会因为rustfmt配置项的更改而导致代码错误，请在遵循rustfmt使用注意事项的基础上，遵循本规则：
+
+1. 省略字段名的时候需要注意变量名和字段名保持一致。
+2. 变量名和字段名不一致的情况下，最好不要省略字段名。
+
+以此规则标题主要目的是来规范rustfmt的默认配置不会被人设置为`true`，而把代码修改错误。
+
 
 **【反例】**
 
 ```rust
-// 当 `trailing_comma="Always"`
-fn main() {
-    let Lorem { ipsum, dolor, sit, } = amet;
-    let Lorem {
-        ipsum,
-        dolor,
-        sit,
-        amet,
-        consectetur,
-        adipiscing,
-    } = elit;
+struct Foo {
+    a: u32, // 注意这里是 a
+    y: u32,
+    z: u32,
 }
 
-// 当 `trailing_comma="Never"`
 fn main() {
-    let Lorem { ipsum, dolor, sit } = amet;
-    let Lorem {
-        ipsum,
-        dolor,
-        sit,
-        amet,
-        consectetur,
-        adipiscing
-    } = elit;
-}
-
-// 当 `match_block_trailing_comma=true`
-fn main() {
-    match lorem {
-        Lorem::Ipsum => {
-            println!("ipsum");
-        },
-        Lorem::Dolor => println!("dolor"),
-    }
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    // 这里省略了字段名，用了变量x
+    // rustfmt 无法检查这个错误，但是编译时能检查出来，所以要遵循rustfmt使用注意事项就不会出问题
+    let a = Foo { x, y, z };
 }
 ```
 
 **【正例】**
 
 ```rust
-// 当 `trailing_comma="Vertical"`
-fn main() {
-    let Lorem { ipsum, dolor, sit } = amet;
-    let Lorem {
-        ipsum,
-        dolor,
-        sit,
-        amet,
-        consectetur,
-        adipiscing,
-    } = elit;
+
+struct Foo {
+    a: u32,
+    y: u32,
+    z: u32,
 }
 
-// 当 `match_block_trailing_comma=false`
 fn main() {
-    match lorem {
-        Lorem::Ipsum => {
-            println!("ipsum");
-        }
-        Lorem::Dolor => println!("dolor"),
-    }
+    let x = 1;
+    let y = 2;
+    let z = 3;
+    let a = Foo { a: x, y: y, z: z };
 }
 ```
 
@@ -82,5 +57,4 @@ rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`trailing_comma`](https://rust-lang.github.io/rustfmt/?#trailing_comma) | "Vertical"（默认） | No |  当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号|
-| [`match_block_trailing_comma`](https://rust-lang.github.io/rustfmt/?#match_block_trailing_comma) | false（默认） | No| 在match分支中，如果包含了块，则不需要加逗号，否则需要加 |
+| [`use_field_init_shorthand`](https://rust-lang.github.io/rustfmt/?#use_field_init_shorthand) | false（默认） | Yes |具名结构体字段初始化不能省略字段名|

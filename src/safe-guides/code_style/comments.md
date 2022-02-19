@@ -7,12 +7,7 @@
 
 ## 列表
 
-- [P.CMT.01 代码能够做到自注释](./comments/P.CMT.01.md)
-- [P.CMT.02 文档应该始终基于 `rustdoc` 工具来构建](./comments/P.CMT.02.md)
-- [P.CMT.03 文档应该围绕 What 和 How 为核心来构建](./comments/P.CMT.03.md)
-- [P.CMT.04 注释和文档应该保持简短精干](./comments/P.CMT.04.md)
-- [P.CMT.05 注释和文档使用的自然语言要保持一致](./comments/P.CMT.05.md)
-- [P.CMT.06 在文档中应该使用 Markdown 格式](./comments/P.CMT.06.md)
+- [P.CMT.01 代码能做到自注释，文档要干练简洁](./comments/P.CMT.01.md)
 - [G.CMT.01 注释应该有一定宽度限制](./comments/G.CMT.01.md)
 - [G.CMT.02 使用行注释而避免使用块注释](./comments/G.CMT.02.md)
 - [G.CMT.03 在每一个文件开头加入版权公告、创建和修改年份和功能描述](./comments/G.CMT.03.md)

@@ -1,35 +1,33 @@
-## G.NAM.09  避免在变量的命名中添加类型标识
+## G.NAM.09 定义全局静态变量时需加前缀`G_`和常量有所区分
 
 **【级别】** 建议
 
 **【描述】**
 
-因为 Rust 语言类型系统崇尚显式的哲学，所以不需要在变量命名中也添加关于类型的标识。
+为了提升代码可读性和可维护性，有必要将常量的命名和全局静态变量有所区分。所以在定义全局静态变量时，需要以前缀`G_`命名。
 
 
 
 **【反例】**
 
 ```rust
-let account_bytes: Vec<u8> = read_some_input();   // account 的类型很清楚，没必要在命名中加 `_bytes`
-let account_str = String::from_utf8(account_bytes)?; // account 的类型很清楚，没必要在命名中加 `_str`
-let account: Account = account_str.parse()?;   // account 的类型很清楚，没必要在命名中加 `_str`
+static EVENT: [i32;5]=[1,2,3,4,5];
+const MAGIC_NUM: i32 = 65 ;
 ```
 
 **【正例】**
 
 ```rust
-let account: Vec<u8> = read_some_input();   // account 的类型很清楚
-let account = String::from_utf8(account)?;  // account 的类型很清楚
-let account: Account = account.parse()?;   // account 的类型很清楚
+static G_EVENT: [i32;5]=[1,2,3,4,5];
+const MAGIC_NUM: i32 = 65 ;
 ```
 
 
 **【Lint 检测】**
 
-| lint name  | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| ---------- | ------------- | ------------ | ---------- | ----- |
+| lint name    | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| ------------ | ------------- | ------------ | ---------- | ----- |
 | _ | no           | no           | _   | yes |
 
 【定制化参考】
-这条规则如果需要定制Lint，则可以获取变量命名的结尾部分和变量类型，进行匹配，判断是否重复。
+检测`static` 全局静态变量的命名是否包含`G_`前缀。

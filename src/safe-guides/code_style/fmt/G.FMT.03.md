@@ -1,103 +1,52 @@
-## G.FMT.03  每行最大宽度为 100 个字符
+## G.FMT.03  行间距最大宽度空一行
 
 **【级别】** 建议
 
 **【描述】**
 
-代码行宽不宜过长，否则不利于阅读。
-建议每行字符数不要超过 100 个字符。
-
-`rustfmt` 还提供很多其他宽度设置：
-
-- fn_call_width, 函数调用最大宽度设置，其默认值是 `max_width`的 `60%`。
-- attr_fn_like_width, 像函数那样使用的属性宏最大宽度，其默认值是 `max_width`的 `70%`。
-- struct_lit_width,  结构体字面量最大宽度，其默认值是 `max_width`的 `18%`。
-- struct_variant_width, 结构体变量最大宽度，其默认值是 `max_width`的 `35%`。
-- array_width, 数组最大宽度，其默认值是 `max_width`的 `60%`。
-- chain_width, 链式结构最大宽度，其默认值是 `max_width`的 `60%`。
-- single_line_if_else_max_width，单行 `if-else` 最大宽度，其默认值是 `max_width`的 `50%`。
-
-这么多宽度设置管理起来比较麻烦，所以使用 `use_small_heuristics` 来管理更好。
+代码行之间，最小间隔 `0` 行，最大间隔`1`行。
 
 **【反例】**
 
-当`use_small_heuristics` 配置为 `Off` :
-
 ```rust
-enum Lorem {
-    Ipsum,
-    Dolor(bool),
-    Sit {
-        amet: Consectetur,
-        adipiscing: Elit,
-    },
+fn foo() {
+    println!("a");
 }
-
-fn main() {
-    lorem("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing");
-
-    let lorem = Lorem {
-        ipsum: dolor,
-        sit: amet,
-    };
-
-    let lorem = if ipsum {
-        dolor
-    } else {
-        sit
-    };
-}
-```
-
-当`use_small_heuristics` 配置为 `Max` :
-
-```rust
-enum Lorem {
-    Ipsum,
-    Dolor(bool),
-    Sit { amet: Consectetur, adipiscing: Elit },
-}
-
-fn main() {
-    lorem("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing");
-
-    let lorem = Lorem { ipsum: dolor, sit: amet };
-
-    let lorem = if ipsum { dolor } else { sit };
+// 1
+// 2
+fn bar() {
+    println!("b");
+// 1
+// 2
+    println!("c");
 }
 ```
 
 **【正例】**
 
-`use_small_heuristics` 默认配置示例。
+```rust
+fn foo() {
+    println!("a");
+}
+// 1
+fn bar() {
+    println!("b");
+    println!("c");
+}
+```
 
+或者
 
 ```rust
-enum Lorem {
-    Ipsum,
-    Dolor(bool),
-    Sit { amet: Consectetur, adipiscing: Elit },
+fn foo() {
+    println!("a");
+}
+fn bar() {
+    println!("b");
+	// 1
+    println!("c");
 }
 
-fn main() {
-    lorem(
-        "lorem",
-        "ipsum",
-        "dolor",
-        "sit",
-        "amet",
-        "consectetur",
-        "adipiscing",
-    );
-
-    let lorem = Lorem {
-        ipsum: dolor,
-        sit: amet,
-    };
-    let lorem = Lorem { ipsum: dolor };
-
-    let lorem = if ipsum { dolor } else { sit };
-}
 ```
 
 **【rustfmt 配置】**
@@ -107,7 +56,6 @@ fn main() {
 rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- |
-| [`max_width`](https://rust-lang.github.io/rustfmt/?#max_width) | 100 | yes（默认）| 行最大宽度默认值|
-|[`error_on_line_overflow`](https://rust-lang.github.io/rustfmt/?#error_on_line_overflow)| false（默认）| No (tracking issue: #3391)| 如果超过最大行宽设置则报错|
-|[`use_small_heuristics`](https://rust-lang.github.io/rustfmt/?#use_small_heuristics)| Default（默认）Max（推荐） | Yes| 统一管理宽度设置|
+| ------ | ---- | ---- | ---- | 
+| [`blank_lines_lower_bound`](https://rust-lang.github.io/rustfmt/?#blank_lines_lower_bound) | 0（默认） | No| 不空行|
+|[`blank_lines_upper_bound`](https://rust-lang.github.io/rustfmt/?#blank_lines_upper_bound)| 1（默认）| No | 最大空一行|

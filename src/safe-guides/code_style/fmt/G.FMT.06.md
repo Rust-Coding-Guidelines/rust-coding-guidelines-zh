@@ -1,43 +1,44 @@
-## G.FMT.06  单行规则
+## G.FMT.06  当有多行表达式操作时，操作符应该置于行首
 
 **【级别】** 建议
 
 **【描述】**
 
-当语言项内容为空时，即空函数，空结构体，空实现等，要保持单独一行。但是，当函数中只有一个表达式时，请不要保持单行。
+当有多行表达式操作时，操作符应该置于行首。
 
 **【反例】**
 
+操作符置于行尾
+
 ```rust
-fn lorem() {
-}
-
-impl Lorem {
-}
-
-fn lorem() -> usize { 42 }
-
 fn main() {
-    let lorem = Lorem {
-        foo: bar,
-        baz: ofo,
-    };
+    let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo ||
+        barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
+
+    let sum = 123456789012345678901234567890 +
+        123456789012345678901234567890 +
+        123456789012345678901234567890;
+
+    let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa..
+        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
 ```
 
 **【正例】**
 
+操作符置于行首
+
 ```rust
-fn lorem() {}
-
-impl Lorem {}
-
-fn lorem() -> usize {
-    42
-}
-
 fn main() {
-    let lorem = Lorem { foo: bar, baz: ofo };
+    let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo
+        || barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
+
+    let sum = 123456789012345678901234567890
+        + 123456789012345678901234567890
+        + 123456789012345678901234567890;
+
+    let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        ..bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
 ```
 
@@ -47,8 +48,6 @@ fn main() {
 
 rustfmt 配置：
 
-| 对应选项 | 默认值 | 是否 stable | 说明 |
+| 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`empty_item_single_line`](https://rust-lang.github.io/rustfmt/?#empty_item_single_line) | true（默认） | No| 当语言项内容为空时，要保持单行 |
-| [`fn_single_line`](https://rust-lang.github.io/rustfmt/?#fn_single_line) | false（默认） | No| 当函数中只有一个表达式时，不要保持单行 |
-| [`struct_lit_single_line`](https://rust-lang.github.io/rustfmt/?#struct_lit_single_line) | true（默认） | No| 当结构体字面量中只有少量表达式时，要保持单行 |
+| [`binop_separator`](https://rust-lang.github.io/rustfmt/?#binop_separator) | Front（默认） | No| 换行后，操作符置于行首 |

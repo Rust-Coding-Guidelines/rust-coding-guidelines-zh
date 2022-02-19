@@ -1,177 +1,214 @@
-## G.FMT.05  语言项（Item) 定义时花括号（brace）位置应该与语言项保持同一行
+## G.FMT.05  存在多个标识符时应该保持块状（Block）缩进
 
 **【级别】** 建议
 
 **【描述】**
 
-花括号的位置风格默认使用 `SameLineWhere`，但是也根据不同的语言项略有区别。
+当在表达式或语言项定义中出现多个标识符，则应该让其保持块状风格缩进。
 
 **【反例】**
 
-如果设置 `brace_style = "AlwaysNextLine"`，则：
-
 ```rust
-fn lorem()
-{
-    // body
-}
-
-fn lorem(ipsum: usize)
-{
-    // body
-}
-
-fn lorem<T>(ipsum: T)
-where
-    T: Add + Sub + Mul + Div,
-{
-    // body
+fn main() {
+    let lorem = vec!["ipsum",
+                     "dolor",
+                     "sit",
+                     "amet",
+                     "consectetur",
+                     "adipiscing",
+                     "elit"];
 }
 ```
 
-如果设置 `brace_style = "PreferSameLine"`，则：
-
-```rust
-fn lorem() {
-    // body
-}
-
-fn lorem(ipsum: usize) {
-    // body
-}
-
-fn lorem<T>(ipsum: T)
-where
-    T: Add + Sub + Mul + Div, { // 注意这里和 `SameLineWhere`的区别
-    // body
-}
-```
-
-结构体与枚举：
-
-
-如果设置 `brace_style = "AlwaysNextLine"`，则：
-
-
-```rust
-struct Lorem
-{
-    ipsum: bool,
-}
-
-struct Dolor<T>
-where
-    T: Eq,
-{
-    sit: T,
-}
-```
-
-如果设置 `brace_style = "PreferSameLine"`，则：
-
-```rust
-struct Lorem {
-    ipsum: bool,
-}
-
-struct Dolor<T>
-where
-    T: Eq, {
-    sit: T,
-}
-```
-
-流程控制倾向于默认使用 `AlwaysSameLine`，即，总在同一行。因为流程控制没有`where`子句。
-
-如果设置 `brace_style = "AlwaysNextLine"`，则：
+流程控制
 
 ```rust
 fn main() {
-    if lorem
+    if lorem_ipsum
+       && dolor_sit // 注意：这里缩进只是三个空格，仅仅是和前一行 `lorem_ipsum`对齐
+       && amet_consectetur
+       && lorem_sit
+       && dolor_consectetur
+       && amet_ipsum
+       && lorem_consectetur
     {
-        println!("ipsum!");
-    }
-    else
-    {
-        println!("dolor!");
+        // ...
     }
 }
 ```
 
-如果设置 `brace_style = "ClosingNextLine"`，则：
+函数参数
+
+
+```rust
+fn lorem() {}
+
+fn lorem(ipsum: usize) {}
+
+fn lorem(ipsum: usize,
+         dolor: usize,
+         sit: usize,
+         amet: usize,
+         consectetur: usize,
+         adipiscing: usize,
+         elit: usize) {
+    // body
+}
+```
+
+函数调用
 
 ```rust
 fn main() {
-    if lorem {
-        println!("ipsum!");
-    } // 注意这里 if 分支结尾处，else 换行
-    else { 
-        println!("dolor!");
-    }
+    lorem("lorem",
+          "ipsum",
+          "dolor",
+          "sit",
+          "amet",
+          "consectetur",
+          "adipiscing",
+          "elit");
+}
+```
+
+泛型
+
+
+```rust
+fn lorem<Ipsum: Eq = usize,
+         Dolor: Eq = usize,
+         Sit: Eq = usize,
+         Amet: Eq = usize,
+         Adipiscing: Eq = usize,
+         Consectetur: Eq = usize,
+         Elit: Eq = usize>(
+    ipsum: Ipsum,
+    dolor: Dolor,
+    sit: Sit,
+    amet: Amet,
+    adipiscing: Adipiscing,
+    consectetur: Consectetur,
+    elit: Elit)
+    -> T {
+    // body
+}
+```
+
+结构体
+
+```rust
+fn main() {
+    let lorem = Lorem { ipsum: dolor,
+                        sit: amet };
 }
 ```
 
 
 **【正例】**
 
-函数：
+数组：
 
 ```rust
-fn lorem() { // 花括号和fn定义在同一行
-    // body
-}
-
-fn lorem(ipsum: usize) { // 花括号和fn定义在同一行
-    // body
-}
-
-// 当有 `where` 子句的时候，花括号换行
-// 并且，`where` 子句和 `where` 关键字不在同一行
-fn lorem<T>(ipsum: T)
-where
-    T: Add + Sub + Mul + Div,
-{
-    // body
-}
-```
-
-通过配置 `where_single_line` 为 true，方可设置 `where`子句在同一行，如下：
-
-```rust
-// 当有 `where` 子句的时候，花括号换行
-// 设置了 `where_single_line=true` ，则`where` 子句和 `where` 关键字在同一行
-fn lorem<T>(ipsum: T)
-where T: Add + Sub + Mul + Div,
-{
-    // body
-}
-```
-
- 结构体与枚举
-
-```rust
-struct Lorem {
-    ipsum: bool,
-}
-
-struct Dolor<T>
-where
-    T: Eq,
-{
-    sit: T,
-}
-```
-
-流程控制倾向于默认使用 `AlwaysSameLine`，即，总在同一行。因为流程控制没有`where`子句。
-
-```rust
-// "AlwaysSameLine" (default)
 fn main() {
-    if lorem {
-        println!("ipsum!");
-    } else {
-        println!("dolor!");
+    let lorem = vec![
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet",
+        "consectetur",
+        "adipiscing",
+        "elit",
+    ];
+}
+```
+
+流程控制
+
+```rust
+fn main() {
+    if lorem_ipsum
+        && dolor_sit
+        && amet_consectetur
+        && lorem_sit
+        && dolor_consectetur
+        && amet_ipsum
+        && lorem_consectetur
+    {
+        // ...
     }
+}
+```
+
+函数参数
+
+```rust
+fn lorem() {}
+
+fn lorem(ipsum: usize) {}
+
+fn lorem(
+    ipsum: usize,
+    dolor: usize,
+    sit: usize,
+    amet: usize,
+    consectetur: usize,
+    adipiscing: usize,
+    elit: usize,
+) {
+    // body
+}
+
+```
+
+函数调用
+
+```rust
+fn main() {
+    lorem(
+        "lorem",
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet",
+        "consectetur",
+        "adipiscing",
+        "elit",
+    );
+}
+```
+
+泛型
+
+```rust
+fn lorem<
+    Ipsum: Eq = usize,
+    Dolor: Eq = usize,
+    Sit: Eq = usize,
+    Amet: Eq = usize,
+    Adipiscing: Eq = usize,
+    Consectetur: Eq = usize,
+    Elit: Eq = usize,
+>(
+    ipsum: Ipsum,
+    dolor: Dolor,
+    sit: Sit,
+    amet: Amet,
+    adipiscing: Adipiscing,
+    consectetur: Consectetur,
+    elit: Elit,
+) -> T {
+    // body
+}
+```
+
+结构体
+
+```rust
+fn main() {
+    let lorem = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
 }
 ```
 
@@ -183,9 +220,5 @@ rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`brace_style`](https://rust-lang.github.io/rustfmt/?#brace_style) | SameLineWhere （默认）| No| 应该与语言项保持同一行，但是 where 语句例外 |
-|[`brace_style`](https://rust-lang.github.io/rustfmt/?#brace_style)| AlwaysNextLine | No | 应该在语言项的下一行 |
-|[`brace_style`](https://rust-lang.github.io/rustfmt/?#brace_style)| PreferSameLine | No | 总是优先与语言项保持同一行，where 语句也不例外 |
-|[`where_single_line`](https://rust-lang.github.io/rustfmt/?#where_single_line)| false（默认）| No |  强制将 `where` 子句放在同一行上 |
-|[`brace_style` in control-flow](https://rust-lang.github.io/rustfmt/?#AlwaysSameLine)| AlwaysSameLine （默认） | No |  总在同一行上，用于控制流程中默认值 |
-|[`brace_style` in control-flow](https://rust-lang.github.io/rustfmt/?#ClosingNextLine)| ClosingNextLine| No |  用于控制流程中 else 分支在 if 分支结尾处换行|
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Block（默认） | No| 多个标识符定义保持块状风格，但看上去可能不太工整 |
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Visual | No| 多个标识符定义保持对齐风格，为了看上去工整 |

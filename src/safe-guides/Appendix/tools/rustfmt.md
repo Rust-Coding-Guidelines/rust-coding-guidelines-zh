@@ -197,4 +197,283 @@ edition = "2018"
 
 
 
-## 其他
+## 每行最大宽度为 100 个字符
+
+**【级别】** 建议
+
+**【描述】**
+
+代码行宽不宜过长，否则不利于阅读。
+建议每行字符数不要超过 100 个字符。
+
+`rustfmt` 还提供很多其他宽度设置：
+
+- fn_call_width, 函数调用最大宽度设置，其默认值是 `max_width`的 `60%`。
+- attr_fn_like_width, 像函数那样使用的属性宏最大宽度，其默认值是 `max_width`的 `70%`。
+- struct_lit_width,  结构体字面量最大宽度，其默认值是 `max_width`的 `18%`。
+- struct_variant_width, 结构体变量最大宽度，其默认值是 `max_width`的 `35%`。
+- array_width, 数组最大宽度，其默认值是 `max_width`的 `60%`。
+- chain_width, 链式结构最大宽度，其默认值是 `max_width`的 `60%`。
+- single_line_if_else_max_width，单行 `if-else` 最大宽度，其默认值是 `max_width`的 `50%`。
+
+这么多宽度设置管理起来比较麻烦，所以使用 `use_small_heuristics` 来管理更好。
+
+**【反例】**
+
+当`use_small_heuristics` 配置为 `Off` :
+
+```rust
+enum Lorem {
+    Ipsum,
+    Dolor(bool),
+    Sit {
+        amet: Consectetur,
+        adipiscing: Elit,
+    },
+}
+
+fn main() {
+    lorem("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing");
+
+    let lorem = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+
+    let lorem = if ipsum {
+        dolor
+    } else {
+        sit
+    };
+}
+```
+
+当`use_small_heuristics` 配置为 `Max` :
+
+```rust
+enum Lorem {
+    Ipsum,
+    Dolor(bool),
+    Sit { amet: Consectetur, adipiscing: Elit },
+}
+
+fn main() {
+    lorem("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing");
+
+    let lorem = Lorem { ipsum: dolor, sit: amet };
+
+    let lorem = if ipsum { dolor } else { sit };
+}
+```
+
+**【正例】**
+
+`use_small_heuristics` 默认配置示例。
+
+
+```rust
+enum Lorem {
+    Ipsum,
+    Dolor(bool),
+    Sit { amet: Consectetur, adipiscing: Elit },
+}
+
+fn main() {
+    lorem(
+        "lorem",
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet",
+        "consectetur",
+        "adipiscing",
+    );
+
+    let lorem = Lorem {
+        ipsum: dolor,
+        sit: amet,
+    };
+    let lorem = Lorem { ipsum: dolor };
+
+    let lorem = if ipsum { dolor } else { sit };
+}
+```
+
+**【rustfmt 配置】**
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- |
+| [`max_width`](https://rust-lang.github.io/rustfmt/?#max_width) | 100 | yes（默认）| 行最大宽度默认值|
+|[`error_on_line_overflow`](https://rust-lang.github.io/rustfmt/?#error_on_line_overflow)| false（默认）| No (tracking issue: #3391)| 如果超过最大行宽设置则报错|
+|[`use_small_heuristics`](https://rust-lang.github.io/rustfmt/?#use_small_heuristics)| Default（默认）Max（推荐） | Yes| 统一管理宽度设置|
+
+
+## 单行规则
+
+**【级别】** 建议
+
+**【描述】**
+
+当语言项内容为空时，即空函数，空结构体，空实现等，要保持单独一行。但是，当函数中只有一个表达式时，请不要保持单行。
+
+**【反例】**
+
+```rust
+fn lorem() {
+}
+
+impl Lorem {
+}
+
+fn lorem() -> usize { 42 }
+
+fn main() {
+    let lorem = Lorem {
+        foo: bar,
+        baz: ofo,
+    };
+}
+```
+
+**【正例】**
+
+```rust
+fn lorem() {}
+
+impl Lorem {}
+
+fn lorem() -> usize {
+    42
+}
+
+fn main() {
+    let lorem = Lorem { foo: bar, baz: ofo };
+}
+```
+
+**【rustfmt 配置】**
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 默认值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`empty_item_single_line`](https://rust-lang.github.io/rustfmt/?#empty_item_single_line) | true（默认） | No| 当语言项内容为空时，要保持单行 |
+| [`fn_single_line`](https://rust-lang.github.io/rustfmt/?#fn_single_line) | false（默认） | No| 当函数中只有一个表达式时，不要保持单行 |
+| [`struct_lit_single_line`](https://rust-lang.github.io/rustfmt/?#struct_lit_single_line) | true（默认） | No| 当结构体字面量中只有少量表达式时，要保持单行 |
+
+## 换行样式以文件自动检测为主
+
+**【级别】** 建议
+
+**【描述】**
+
+换行样式是基于每个文件自动检测的。 具有混合行尾的文件将转换为第一个检测到的行尾样式。
+
+不同平台换行符不同：
+
+- `Windows` 以 `\r\n`结尾。
+- `Unix` 以 `\n` 结尾。
+
+**【rustfmt 配置】**
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`newline_style`](https://rust-lang.github.io/rustfmt/?#newline_style) | Auto（默认） | Yes| 换行样式以文件自动检测为主 |
+
+
+## 结尾逗号规则
+
+**【级别】** 建议
+
+**【描述】**
+
+1. 当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号。
+2. 在match分支中，如果包含了块，则不需要加逗号，否则需要加。
+
+**【反例】**
+
+```rust
+// 当 `trailing_comma="Always"`
+fn main() {
+    let Lorem { ipsum, dolor, sit, } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `trailing_comma="Never"`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=true`
+fn main() {
+    match lorem {
+        Lorem::Ipsum => {
+            println!("ipsum");
+        },
+        Lorem::Dolor => println!("dolor"),
+    }
+}
+```
+
+**【正例】**
+
+```rust
+// 当 `trailing_comma="Vertical"`
+fn main() {
+    let Lorem { ipsum, dolor, sit } = amet;
+    let Lorem {
+        ipsum,
+        dolor,
+        sit,
+        amet,
+        consectetur,
+        adipiscing,
+    } = elit;
+}
+
+// 当 `match_block_trailing_comma=false`
+fn main() {
+    match lorem {
+        Lorem::Ipsum => {
+            println!("ipsum");
+        }
+        Lorem::Dolor => println!("dolor"),
+    }
+}
+```
+
+**【rustfmt 配置】**
+
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- | 
+| [`trailing_comma`](https://rust-lang.github.io/rustfmt/?#trailing_comma) | "Vertical"（默认） | No |  当多个字段在不同行时，在最后一个字段结尾添加逗号，如果在同一行，则不加逗号|
+| [`match_block_trailing_comma`](https://rust-lang.github.io/rustfmt/?#match_block_trailing_comma) | false（默认） | No| 在match分支中，如果包含了块，则不需要加逗号，否则需要加 |
