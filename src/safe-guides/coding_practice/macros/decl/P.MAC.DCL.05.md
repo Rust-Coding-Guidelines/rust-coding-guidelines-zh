@@ -2,7 +2,7 @@
 
 **【描述】**
 
-使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意，此时传入的 token，已经被看作是宏解析器解析后的 AST 节点了。
+使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意此时传入的 token 已经被看作是宏解析器解析后的 AST 节点了。
 
 片段分类符介绍（[fragment-specifier](https://doc.rust-lang.org/nightly/reference/macros-by-example.html#metavariables)）
 

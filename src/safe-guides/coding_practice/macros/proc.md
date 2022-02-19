@@ -6,7 +6,7 @@
 
 syn/quote 不仅能用于过程宏，还广泛用于代码生成(*codegen*)、静态分析等用途，例如 tonic-build/prost 源码中也用到了 syn/quote 。
 
-因此本过程宏规范不仅适用于过程宏，部分规范(例如 [P.MAC.Proc.06](./macros/proc/P.MAC.Proc.06.md))还适用于 prost 这种代码生成库
+因此本过程宏规范不仅适用于过程宏，部分规范(例如 [P.MAC.PRO.06](./proc/P.MAC.PRO.06.md)) 还适用于 prost 这种代码生成库
 
 过程宏必须被单独定义在一个类型为`proc-macro` 的 crate 中。
 
@@ -18,9 +18,9 @@ syn/quote 不仅能用于过程宏，还广泛用于代码生成(*codegen*)、�
 
 ## 列表
 
-- [P.MAC.PRO.01 不要使用过程宏来规避静态分析检查](.proc/P.MAC.PRO.01.md)
-- [P.MAC.PRO.02 实现过程宏时要对关键特性增加测试](.proc/P.MAC.PRO.02.md)
-- [P.MAC.PRO.03 保证过程宏的卫生性](.proc/P.MAC.PRO.03.md)
-- [P.MAC.PRO.04 给出正确的错误位置](.proc/P.MAC.PRO.04.md)
-- [P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs](.proc/P.MAC.PRO.05.md)
-- [P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告](.proc/P.MAC.PRO.06.md)
+- [P.MAC.PRO.01 不要使用过程宏来规避静态分析检查](./proc/P.MAC.PRO.01.md)
+- [P.MAC.PRO.02 实现过程宏时要对关键特性增加测试](./proc/P.MAC.PRO.02.md)
+- [P.MAC.PRO.03 保证过程宏的卫生性](./proc/P.MAC.PRO.03.md)
+- [P.MAC.PRO.04 给出正确的错误位置](./proc/P.MAC.PRO.04.md)
+- [P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs](./proc/P.MAC.PRO.05.md)
+- [P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告](./proc/P.MAC.PRO.06.md)

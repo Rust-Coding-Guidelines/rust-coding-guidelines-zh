@@ -10,11 +10,11 @@
 
 libc 中不可重入函数的执行过程一般是将函数的输出写到动态库的某个 static 命令内，然后再返回指向该 static 变量的指针返回给调用方，因此是一种「有状态」的函数，多线程环境下可能有**线程安全问题**。
 
-例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了导致线程 A 得到的数据有误。
+例如线程 A 正在将 glibc 动态库的 gmtime 数据逐个复制回来，结果复制到一半线程 B 调用 gmtime 把后半部分的 gmtime 输出数据给更新掉了，导致线程 A 得到的数据有误。
 
 而无重入版本例如 libc::localtime_r 会比 libc::localtime 多一个入参叫 result，
 
-允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可知指针指向的数据。
+允许调用方进程的内存空间内分配内存，再将调用方进程的可变指针传入到 glibc 中让 glibc 修改可变指针指向的数据。
 
 应当通过工具搜索动态库的函数符号查找可重入版本的函数，或者通过 man 文档查询自己所用函数有没有可重入的版本。
 
@@ -33,6 +33,6 @@ libc 中不可重入函数的执行过程一般是将函数的输出写到动态
 
 **【正例】**
 
-`chrono` 库中用` libc::localtime_r` 获取本地时间而不用` libc::localtime`
+`chrono` 库中用 `libc::localtime_r` 获取本地时间而不用 `libc::localtime`
 
 `ctime_r`, `gmtime_r`,` localtime_r`, `gethostbyname_r`

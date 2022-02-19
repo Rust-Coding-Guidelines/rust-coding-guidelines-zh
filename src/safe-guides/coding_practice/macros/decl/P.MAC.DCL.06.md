@@ -15,7 +15,7 @@ struct Dummy(i32);
 
 impl Dummy {
     fn double(self) -> Dummy {
-        make_mutable!(self);  // 这里传入的 self 和宏内部 let 定义的 self 不是一码事
+        make_mutable!(self);  // 这里传入的 self 和宏内部 let 定义的 self 不同
         self.0 *= 2;
         self
     }
