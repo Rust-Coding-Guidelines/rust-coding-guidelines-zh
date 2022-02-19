@@ -138,7 +138,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="gasy03-在跨-await-调用中需要对其持有-refcell-的引用进行处理"><a class="header" href="#gasy03-在跨-await-调用中需要对其持有-refcell-的引用进行处理">G.ASY.03 在跨 <code>await</code> 调用中，需要对其持有 <code>RefCell</code> 的引用进行处理</a></h2>
-<p><strong>【级别：建议】</strong></p>
+<p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>与<a href="./G.ASY.02.html">上条规则</a>类似，使用 <code>RefCell</code> 的独占（可变）借用会导致 Panic。因为 <code>RefCell</code> 是运行时检查独占的可变访问，如果跨 <code>await</code> 持有一个可变引用则可能会因为共享的可变引用而引起 Panic。</p>
 <p>这种共享可变在编译期是无法被检查出来的。</p>

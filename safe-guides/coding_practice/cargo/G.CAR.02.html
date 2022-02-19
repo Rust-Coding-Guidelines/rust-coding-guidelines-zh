@@ -143,7 +143,7 @@
 <p>在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。
 此外，若要将 <code>crate</code> 发布到 crates.io 上的话，这些信息也是必须的。可参考 The Cargo Book 中的<a href="https://doc.rust-lang.org/cargo/reference/manifest.html">相关介绍</a>。</p>
 <p><strong>【反例】</strong></p>
-<pre><code class="language-toml"># This `Cargo.toml` is missing a description field:
+<pre><code class="language-toml"># 此 `Cargo.toml` 缺失介绍(description)项。无法发布到 crates.io。
 [package]
 name = &quot;clippy&quot;
 version = &quot;0.0.212&quot;
@@ -154,7 +154,7 @@ keywords = [&quot;clippy&quot;, &quot;lint&quot;, &quot;plugin&quot;]
 categories = [&quot;development-tools&quot;, &quot;development-tools::cargo-plugins&quot;]
 </code></pre>
 <p><strong>【正例】</strong></p>
-<pre><code class="language-toml"># This `Cargo.toml` includes all common metadata
+<pre><code class="language-toml"># 此 `Cargo.toml` 包含必要元信息。
 [package]
 name = &quot;clippy&quot;
 version = &quot;0.0.212&quot;

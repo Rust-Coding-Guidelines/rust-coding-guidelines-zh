@@ -139,7 +139,7 @@
                     <main>
                         <h2 id="pmacdcl05-使用宏替换substitution元变量的时候要注意选择合适的片段分类符"><a class="header" href="#pmacdcl05-使用宏替换substitution元变量的时候要注意选择合适的片段分类符">P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符</a></h2>
 <p><strong>【描述】</strong></p>
-<p>使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意，此时传入的 token，已经被看作是宏解析器解析后的 AST 节点了。</p>
+<p>使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意此时传入的 token 已经被看作是宏解析器解析后的 AST 节点了。</p>
 <p>片段分类符介绍（<a href="https://doc.rust-lang.org/nightly/reference/macros-by-example.html#metavariables">fragment-specifier</a>）</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">macro_rules! capture_then_what_is {

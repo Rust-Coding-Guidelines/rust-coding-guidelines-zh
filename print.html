@@ -7258,7 +7258,7 @@ struct ConstraintGeneration&lt;'cg, 'cx, 'tcx&gt; {
 <li>Early bound。一般情况下，<code>'a: 'b</code> 以及 <code>impl&lt;'a&gt;</code> 这种方式是 early bound，意味着这些生命周期参数会在当前作用域单态化生命周期实例。</li>
 <li>Late bound。默认的 <code>'a</code> 或 <code>for&lt;'a&gt;</code> 是在实际调用它们的地方才单态化生命周期实例。</li>
 </ul>
-<p>在不同的场景下，需要指定合适的单态化方式，才能让编译器明白开发者的意图。</p>
+<p>在不同的场景下需要指定合适的单态化方式，才能让编译器明白开发者的意图。</p>
 <p>在使用匿名生命周期 <code>'_</code> 的时候需要注意，如果有多个匿名生命周期，比如 <code>('_，'_)</code> ，每个匿名生命周期都会有自己的单独实例。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -7766,7 +7766,7 @@ src/
 <p><strong>【描述】</strong></p>
 <p>将整个项目按一定逻辑划分为合理的 crate，在工程方面有利于组件化。并且 crate 是 Rust 的编译单元，也有助于提升编译速度。</p>
 <p>但需要注意，crate 之间的依赖关系应该是单向的，避免相互依赖的情况。</p>
-<p>但 Rust 中 编译时间、性能、编译大小之间，在考虑优化的时候也是需要权衡的。 </p>
+<p>但 Rust 中编译时间、性能、编译大小之间，在考虑优化的时候也是需要权衡的。 </p>
 <p>内联是优化的关键，当编译单元越大，内联优化效果就越好。所以需要权衡 crate 划分的粒度。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pcar02-不要滥用-features"><a class="header" href="#pcar02-不要滥用-features">P.CAR.02 不要滥用 Features</a></h2>
 <p><strong>【描述】</strong></p>
@@ -7775,7 +7775,7 @@ src/
 <p>滥用 features 会带来额外的测试和静态检查的难度，需要保证不同 features 下的测试覆盖和静态检查情况。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pcar03-使用-cargo-features-来代替---cfg-条件编译参数"><a class="header" href="#pcar03-使用-cargo-features-来代替---cfg-条件编译参数">P.CAR.03 使用 <code>cargo features</code> 来代替 <code>--cfg</code> 条件编译参数</a></h2>
 <p><strong>【描述】</strong></p>
-<p>考虑将条件编译 <code>--cfg</code> 使用 <code>cargo features</code> 代替，使用 Rust 原生的条件编译兼容性更好些。</p>
+<p><code>cargo features</code> 为 Rust 原生的条件编译，可用于代替 <code>--cfg</code> 参数且兼容性更好。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pcar04-如果可能的话使用-cfg-来代替-cfg"><a class="header" href="#pcar04-如果可能的话使用-cfg-来代替-cfg">P.CAR.04 如果可能的话，使用 <code>cfg!</code> 来代替 <code>#[cfg]</code></a></h2>
 <p><strong>【描述】</strong></p>
 <p><code>cfg!</code> 就像正常代码一样，会检查全部函数逻辑，而 <code>#[cfg]</code> 是条件编译，会跳过一些 Dead Code。</p>
@@ -7796,7 +7796,7 @@ bin/
 <p>这样的好处有：</p>
 <ol>
 <li>便于单元测试。</li>
-<li>这样拆分有利于面向接口思考，让代码架构和逻辑更加清晰。</li>
+<li>有利于面向接口思考，让代码架构和逻辑更加清晰。</li>
 </ol>
 <p>若编写的可执行程序比较复杂，在 <code>main.rs</code> 里需要依赖太多东西时，那就需要创建 Workspace 把 <code>main.rs</code> 独立为一个 crate，而在这个 crate 内也没有必要再拆分为 <code>main</code> 和 <code>lib</code> 了。</p>
 <p><strong>【Lint 检测】</strong></p>
@@ -7809,7 +7809,7 @@ bin/
 <p>在 Cargo.toml 中应该包含必要的元信息，以便使用者知道它的作用。
 此外，若要将 <code>crate</code> 发布到 crates.io 上的话，这些信息也是必须的。可参考 The Cargo Book 中的<a href="https://doc.rust-lang.org/cargo/reference/manifest.html">相关介绍</a>。</p>
 <p><strong>【反例】</strong></p>
-<pre><code class="language-toml"># This `Cargo.toml` is missing a description field:
+<pre><code class="language-toml"># 此 `Cargo.toml` 缺失介绍(description)项。无法发布到 crates.io。
 [package]
 name = &quot;clippy&quot;
 version = &quot;0.0.212&quot;
@@ -7820,7 +7820,7 @@ keywords = [&quot;clippy&quot;, &quot;lint&quot;, &quot;plugin&quot;]
 categories = [&quot;development-tools&quot;, &quot;development-tools::cargo-plugins&quot;]
 </code></pre>
 <p><strong>【正例】</strong></p>
-<pre><code class="language-toml"># This `Cargo.toml` includes all common metadata
+<pre><code class="language-toml"># 此 `Cargo.toml` 包含必要元信息。
 [package]
 name = &quot;clippy&quot;
 version = &quot;0.0.212&quot;
@@ -7942,7 +7942,7 @@ cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmac01--不要轻易使用宏"><a class="header" href="#pmac01--不要轻易使用宏">P.MAC.01  不要轻易使用宏</a></h2>
 <p><strong>【描述】</strong></p>
-<p>能使用宏写出强大和用户友好的宏API的人，重点不仅是因为他们对宏如何实现掌握的好，而是因为他们同时也掌握了宏之外关于 Rust 的一切。</p>
+<p>当一个开发者想要能写出强大且用户友好的宏API时，不仅需要掌握如何用宏去实现，更需要掌握宏之外关于 Rust 的一切。</p>
 <p>宏设计的重点在于宏生成什么样的代码，而不是宏如何生成代码。</p>
 <p>宏只是将 Rust 语言特性以一种有趣的方式组合在一起能自动生成代码的创造力。</p>
 <p>尤其是过程宏，它有一定复杂性，且很难调试，不卫生，也容易出错，不适用于新手。</p>
@@ -7953,7 +7953,7 @@ cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 <p><a href="https://github.com/dtolnay/case-studies">Rust 社区顶级专家 David Tolnay 写的宏学习案例</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmac02-实现宏语法的时候应该尽量贴近-rust-语法"><a class="header" href="#pmac02-实现宏语法的时候应该尽量贴近-rust-语法">P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法</a></h2>
 <p><strong>【描述】</strong></p>
-<p>Rust 宏可以让开发者定义自己的DSL，但是在使用宏的时候，要尽可能贴近Rust的语法。这样可以增强可读性，让其他开发者在使用宏的时候，可以猜测出它的生成的代码。</p>
+<p>Rust 宏可以让开发者定义自己的 DSL，但是在使用宏的时候，要尽可能贴近 Rust 的语法。这样可以增强可读性，让其他开发者在使用宏的时候，可以猜测出它生成的代码。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -8214,7 +8214,7 @@ macro_rules! foo {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmacdcl03-不要在片段分类符跟随它不匹配的符号"><a class="header" href="#pmacdcl03-不要在片段分类符跟随它不匹配的符号">P.MAC.DCL.03 不要在片段分类符跟随它不匹配的符号</a></h2>
 <p><strong>【描述】</strong></p>
-<p><code>macro_rules!</code> 定义声明宏时，非终止的元变量匹配必须紧随一个已被决定可以在这种匹配之后安全使用的标记。</p>
+<p><code>macro_rules!</code> 定义声明宏时，非终止的元变量匹配必须紧随一个已被决定能在这种匹配之后安全使用的标记。</p>
 <p>具体的规则参见：<a href="https://doc.rust-lang.org/reference/macros-by-example.html#follow-set-ambiguity-restrictions">Follow-set Ambiguity Restrictions</a></p>
 <p>片段分类符（<a href="https://doc.rust-lang.org/nightly/reference/macros-by-example.html#metavariables">fragment-specifier</a>）的说明参见<a href="safe-guides/coding_practice/macros/decl/./../../../Appendix/terms.html">附录B：术语解释</a></p>
 <p><strong>【反例】</strong></p>
@@ -8263,7 +8263,7 @@ fn main() { ambiguity!(an_identifier  an_identifier2); }
 </code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmacdcl05-使用宏替换substitution元变量的时候要注意选择合适的片段分类符"><a class="header" href="#pmacdcl05-使用宏替换substitution元变量的时候要注意选择合适的片段分类符">P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符</a></h2>
 <p><strong>【描述】</strong></p>
-<p>使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意，此时传入的 token，已经被看作是宏解析器解析后的 AST 节点了。</p>
+<p>使用宏替换（substitution）元变量，就是指把已经进行过宏解析的 token 再次传给宏，需要注意此时传入的 token 已经被看作是宏解析器解析后的 AST 节点了。</p>
 <p>片段分类符介绍（<a href="https://doc.rust-lang.org/nightly/reference/macros-by-example.html#metavariables">fragment-specifier</a>）</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">macro_rules! capture_then_what_is {
@@ -8330,7 +8330,7 @@ struct Dummy(i32);
 
 impl Dummy {
     fn double(self) -&gt; Dummy {
-        make_mutable!(self);  // 这里传入的 self 和宏内部 let 定义的 self 不是一码事
+        make_mutable!(self);  // 这里传入的 self 和宏内部 let 定义的 self 不同
         self.0 *= 2;
         self
     }
@@ -8473,19 +8473,19 @@ fn unit() {
 <p><a href="https://doc.rust-lang.org/reference/procedural-macros.html">过程宏（<em>Procedural macros</em>）</a> 允许开发者来创建语法扩展。你可以通过过程宏创建类似函数的宏、派生宏以及属性宏。</p>
 <p>广义上的&quot;过程宏&quot;指的是通过 syn/quote(毕竟几乎全部过程宏库都用 syn) 及 syn 生态(例如 darling) 进行代码生成等元编程操作。</p>
 <p>syn/quote 不仅能用于过程宏，还广泛用于代码生成(<em>codegen</em>)、静态分析等用途，例如 tonic-build/prost 源码中也用到了 syn/quote 。</p>
-<p>因此本过程宏规范不仅适用于过程宏，部分规范(例如 <a href="safe-guides/coding_practice/macros/./macros/proc/P.MAC.Proc.06.html">P.MAC.Proc.06</a>)还适用于 prost 这种代码生成库</p>
+<p>因此本过程宏规范不仅适用于过程宏，部分规范(例如 <a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.06.html">P.MAC.PRO.06</a>) 还适用于 prost 这种代码生成库</p>
 <p>过程宏必须被单独定义在一个类型为<code>proc-macro</code> 的 crate 中。</p>
 <p>过程宏有两类报告错误的方式：<code>panic</code> 或 通过 <code>compile_error</code>  宏调用发出错误。</p>
 <p>过程宏不具有卫生性（hygiene），这意味着它会受到外部语法项（item）的影响，也会影响到外部导入。</p>
 <p>过程宏可以在编译期执行任意代码。</p>
 <h2 id="列表-36"><a class="header" href="#列表-36">列表</a></h2>
 <ul>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.01.html">P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></li>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.02.html">P.MAC.PRO.02 实现过程宏时要对关键特性增加测试</a></li>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.03.html">P.MAC.PRO.03 保证过程宏的卫生性</a></li>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.04.html">P.MAC.PRO.04 给出正确的错误位置</a></li>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.05.html">P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs</a></li>
-<li><a href="safe-guides/coding_practice/macros/.proc/P.MAC.PRO.06.html">P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.01.html">P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.02.html">P.MAC.PRO.02 实现过程宏时要对关键特性增加测试</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.03.html">P.MAC.PRO.03 保证过程宏的卫生性</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.04.html">P.MAC.PRO.04 给出正确的错误位置</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.05.html">P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs</a></li>
+<li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.06.html">P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmacpro01-不要使用过程宏来规避静态分析检查"><a class="header" href="#pmacpro01-不要使用过程宏来规避静态分析检查">P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></h2>
 <p><strong>【描述】</strong></p>
@@ -9064,8 +9064,9 @@ for _ in 0..10 {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmthlkf01-除非必要否则建议使用同步锁"><a class="header" href="#pmthlkf01-除非必要否则建议使用同步锁">P.MTH.LKF.01 除非必要，否则建议使用同步锁</a></h2>
 <p><strong>【描述】</strong></p>
-<p>不要认为无锁编程性能就一定高，使用时需要注意的地方比使用同步锁都多，比如指令重排、ABA 问题、内存顺序是否指定正确等。</p>
-<p>正确实现无锁编程比使用同步锁要困难很多。所以，除非有必要，否则直接使用同步锁就可以。</p>
+<p>无锁编程性能不一定比同步锁高。</p>
+<p>使用无锁编程时需要注意的地方比使用同步锁多，比如指令重排、ABA 问题、内存顺序是否指定正确等。
+正确实现无锁编程比使用同步锁要困难很多。所以，除非必要，否则直接使用同步锁就可以。</p>
 <p>也有一些 <a href="https://github.com/magiclen/rust-performance-measurement/blob/master/benches/atomic_mutex.rs">性能测试</a> 作为参考，原子类型的性能比互斥锁的性能大概要好四倍左右。所以，当在同一个临界区内要有超过四次原子操作，也许使用互斥锁更加简单一些。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmthlkf02-使用无锁编程时需要合理选择内存顺序"><a class="header" href="#pmthlkf02-使用无锁编程时需要合理选择内存顺序">P.MTH.LKF.02 使用无锁编程时，需要合理选择内存顺序</a></h2>
 <p><strong>【描述】</strong></p>
@@ -9073,8 +9074,8 @@ for _ in 0..10 {
 <p>目前 Rust 引入五种内存顺序：<code>Relaxed / Release / Acquire / AcqRel / SeqCst</code>。</p>
 <p>在无锁编程中，指定正确的内存顺序是很重要很复杂的一件事，这里有一些建议：</p>
 <ol>
-<li>如果你对程序中的原子类型同步方式的判断没有太多信息，建议你使用 <code>SeqCst</code>，它表示顺序一致性，会强制所有线程都同意程序指令以单一全局线性的方式来执行。这样可以保证安全性，但性能有一定损失。</li>
-<li>如果你对无锁实现中线程间发生的数据竞争带来的后果不是特别关心，则可以放心使用 <code>Relaxed</code>，因为它性能最好。</li>
+<li>如果对程序中的原子类型同步方式的判断没有太多信息，建议使用 <code>SeqCst</code>，它表示顺序一致性，会强制所有线程都同意程序指令以单一全局线性的方式来执行。这样可以保证安全性，但性能有一定损失。</li>
+<li>如果对无锁实现中线程间发生的数据竞争带来的后果不是特别关心，则可以放心使用 <code>Relaxed</code>，因为它性能最好。</li>
 <li>当多个线程之间操作内存中同一个位置有因果关系时，适合使用 <code>Acquire / Release / AcqRel</code> 来配对。比如，线程 A 写 (<code>Release</code>) 内存中的一个位置，然后线程 B 随后读 (<code>Acquire</code>) 内存中一个相同的位置，就会产生一个因果关系，所以为了保证 A 的每次写入都能在 B 读取之前被观察到。如果 A 和 B 访问不同内存位置，则没有因果关系。</li>
 </ol>
 <p><strong>【正例】</strong></p>
@@ -9126,7 +9127,7 @@ fn main() {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gasy01-在-async-块函数中调用-async-函数闭包请不要忘记添加await"><a class="header" href="#gasy01-在-async-块函数中调用-async-函数闭包请不要忘记添加await">G.ASY.01 在 <code>async</code> 块/函数中调用 <code>async</code> 函数/闭包请不要忘记添加<code>.await</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>略。</p>
+<p>在此条件下 <code>.await</code> 语句通常为必须的。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9264,7 +9265,7 @@ std::thread::spawn(|| {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#await_holding_lock">await_holding_lock</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gasy03-在跨-await-调用中需要对其持有-refcell-的引用进行处理"><a class="header" href="#gasy03-在跨-await-调用中需要对其持有-refcell-的引用进行处理">G.ASY.03 在跨 <code>await</code> 调用中，需要对其持有 <code>RefCell</code> 的引用进行处理</a></h2>
-<p><strong>【级别：建议】</strong></p>
+<p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>与<a href="safe-guides/coding_practice/async-await/./G.ASY.02.html">上条规则</a>类似，使用 <code>RefCell</code> 的独占（可变）借用会导致 Panic。因为 <code>RefCell</code> 是运行时检查独占的可变访问，如果跨 <code>await</code> 持有一个可变引用则可能会因为共享的可变引用而引起 Panic。</p>
 <p>这种共享可变在编译期是无法被检查出来的。</p>

@@ -144,7 +144,7 @@
 <li>Early bound。一般情况下，<code>'a: 'b</code> 以及 <code>impl&lt;'a&gt;</code> 这种方式是 early bound，意味着这些生命周期参数会在当前作用域单态化生命周期实例。</li>
 <li>Late bound。默认的 <code>'a</code> 或 <code>for&lt;'a&gt;</code> 是在实际调用它们的地方才单态化生命周期实例。</li>
 </ul>
-<p>在不同的场景下，需要指定合适的单态化方式，才能让编译器明白开发者的意图。</p>
+<p>在不同的场景下需要指定合适的单态化方式，才能让编译器明白开发者的意图。</p>
 <p>在使用匿名生命周期 <code>'_</code> 的时候需要注意，如果有多个匿名生命周期，比如 <code>('_，'_)</code> ，每个匿名生命周期都会有自己的单独实例。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {

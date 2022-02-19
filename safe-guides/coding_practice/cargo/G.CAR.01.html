@@ -154,7 +154,7 @@ bin/
 <p>这样的好处有：</p>
 <ol>
 <li>便于单元测试。</li>
-<li>这样拆分有利于面向接口思考，让代码架构和逻辑更加清晰。</li>
+<li>有利于面向接口思考，让代码架构和逻辑更加清晰。</li>
 </ol>
 <p>若编写的可执行程序比较复杂，在 <code>main.rs</code> 里需要依赖太多东西时，那就需要创建 Workspace 把 <code>main.rs</code> 独立为一个 crate，而在这个 crate 内也没有必要再拆分为 <code>main</code> 和 <code>lib</code> 了。</p>
 <p><strong>【Lint 检测】</strong></p>
