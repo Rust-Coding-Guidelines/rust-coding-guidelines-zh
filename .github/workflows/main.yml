@@ -20,6 +20,10 @@ jobs:
           mkdir bin
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.14/mdbook-v0.4.14-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           echo "$(pwd)/bin" >> $GITHUB_PATH
+      - name: Install mdbook-tock
+        run: cargo install mdbook-toc
+      - name: Install mdbook-mermaid
+        run: cargo install mdbook-mermaid
       - run: mdbook build  # In case of custom book path: mdbook build path/to/mybook && mdbook test path/to/mybook
       - uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
