@@ -138,8 +138,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="数组"><a class="header" href="#数组">数组</a></h1>
-<p>这里指固定长度数组。注意，不同长度的数组，类型是不一样的。比如 <code>[T;1]</code>和 <code>[T;3]</code> 就是不同类型。</p>
-<p>从  Rust 1.51 版本开始，稳定了 常量泛型（const generics）功能，形如  <code>[T;1]</code>和 <code>[T;3]</code> 这种不同的类型可以统一为 <code>[T; N]</code>。</p>
+<p>这里指固定长度数组。注意，不同长度的数组，被视为不同的类型。比如 <code>[T;1]</code>和 <code>[T;3]</code> 是两种不同的类型。</p>
+<p>从 Rust 1.51 版本开始，稳定了常量泛型（const generics）功能，形如 <code>[T;1]</code>和 <code>[T;3]</code> 这种不同的类型可以统一为 <code>[T; N]</code>。</p>
 <h2 id="列表"><a class="header" href="#列表">列表</a></h2>
 <ul>
 <li><a href="./array/G.TYP.ARR.01.html">G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></li>

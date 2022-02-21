@@ -140,7 +140,7 @@
                         <h2 id="gtypint03--对负数取模计算的时候不应使用"><a class="header" href="#gtypint03--对负数取模计算的时候不应使用">G.TYP.INT.03  对负数取模计算的时候不应使用<code>%</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>Rust 当前的这个 <code>%</code>形式是余数运算符，它的行为与<code>C</code>或<code>Java</code>等语言中相同符号的运算符相同。它也类似于<code>Python</code>或<code>Haskell</code>等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。</p>
+<p>Rust 中的 <code>%</code> 符号为余数运算符，它的行为与<code>C</code>或<code>Java</code>等语言中相同符号的运算符相同。它也类似于<code>Python</code>或<code>Haskell</code>等语言中的模（modulo）运算符，只是它对负数的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a: i32 = -1;

@@ -141,7 +141,7 @@
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>要注意 Enum 内变体的大小差异不要过大，因为 Enum 内存布局是以最大的变体进行对齐。根据场景，如果该Enum 实例中小尺寸变体的实例使用很多的话，内存就会有所浪费。如果小尺寸变体的实例使用很少，则影响不大。</p>
-<p>解决办法就是把大尺寸变体包到 <code>Box&lt;T&gt;</code>中。</p>
+<p>解决办法之一为把大尺寸变体包含到 <code>Box&lt;T&gt;</code>中。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

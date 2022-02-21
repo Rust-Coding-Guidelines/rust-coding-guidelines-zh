@@ -137,11 +137,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="gvar02--通常不应使用非-ascii-字符作为标识符"><a class="header" href="#gvar02--通常不应使用非-ascii-字符作为标识符">G.VAR.02  通常不应使用非 ASCII 字符作为标识符</a></h2>
+                        <h2 id="gvar02--不应使用非-ascii-字符作为标识符"><a class="header" href="#gvar02--不应使用非-ascii-字符作为标识符">G.VAR.02  不应使用非 ASCII 字符作为标识符</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 语言默认支持 Non ASCII 字符作为合法标识符。但是，为了统一团队代码风格，建议使用最常用的 ASCII 字符作为合法标识符。</p>
-<p>另外，只有使用英文的命名才能让<strong>命名相关</strong>的 Lint 生效。</p>
+<p>此外，通常<strong>命名相关</strong>的 Lint 检查只支持英文命名。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct 人 {

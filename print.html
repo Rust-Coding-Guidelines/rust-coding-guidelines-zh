@@ -2651,7 +2651,7 @@ fn main() {
 <li>代码中定义为 static mut 的变量是否经过 call_once 初始化</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="33-变量"><a class="header" href="#33-变量">3.3 变量</a></h1>
-<p>这里所说变量是指局部变量。默认情况下，Rust 会强制初始化所有值，以防止使用未初始化的内存。</p>
+<p>这里所说的变量单指局部变量而不包括全局变量。 默认情况下，Rust 会强制初始化所有变量的值，以防止使用未初始化的内存。</p>
 <p>变量命名风格指南请看 <a href="safe-guides/coding_practice/../code_style/naming.html">编码风格-命名</a></p>
 <h2 id="列表-5"><a class="header" href="#列表-5">列表</a></h2>
 <ul>
@@ -2662,7 +2662,7 @@ fn main() {
 <li><a href="safe-guides/coding_practice/./variables/G.VAR.03.html">G.VAR.03 在某些场合下不宜使用变量遮蔽功能</a></li>
 <li><a href="safe-guides/coding_practice/./variables/G.VAR.04.html">G.VAR.04 避免局部变量导致的大量栈分配</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pvar01--非必要请避免像-c-语言那样先声明可变变量再赋值"><a class="header" href="#pvar01--非必要请避免像-c-语言那样先声明可变变量再赋值">P.VAR.01  非必要请避免像 C 语言那样先声明可变变量再赋值</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pvar01--一般情况下避免先声明可变变量再赋值"><a class="header" href="#pvar01--一般情况下避免先声明可变变量再赋值">P.VAR.01  一般情况下避免先声明可变变量再赋值</a></h2>
 <p><strong>【描述】</strong></p>
 <p>一般情况下，不要先声明一个可变的变量，然后在后续过程中再去改变它的值，这可能来自于 C 语言的习惯，但 Rust 中不推荐这样使用。</p>
 <p>一般情况下，声明一个变量的时候，要对其进行初始化。如果后续可能会改变其值，要考虑优先使用变量遮蔽（继承式可变）功能。如果需要在一个子作用域内改变其值，再使用可变绑定或可变引用。</p>
@@ -2719,10 +2719,10 @@ let data = data; // 后面就不需要改动了，由编译器可以确保
 <span class="boring">}
 </span></code></pre></pre>
 <hr />
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar01--使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量"><a class="header" href="#gvar01--使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量">G.VAR.01  使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar01--以解构元组方式定义多个变量时不应使用太多无意义变量名"><a class="header" href="#gvar01--以解构元组方式定义多个变量时不应使用太多无意义变量名">G.VAR.01  以解构元组方式定义多个变量时不应使用太多无意义变量名</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>在解构元组的方式定义多个变量时，有时候变量命名可能是无特别语义的，比如临时值，可以用简单的单个字符来定义变量名，但是不宜太多。</p>
+<p>在以解构元组的方式定义多个变量时，变量命可能是无特别语义的，如用单个字符表示的临时变量。但是不宜使用过多无意义变量名。</p>
 <p>该 lint 对应 <code>clippy.toml</code> 配置项：</p>
 <pre><code class="language-toml"># 修改可以绑定的单个字符变量名最大数量。默认为 4
 single-char-binding-names-threshold=4
@@ -2735,7 +2735,7 @@ single-char-binding-names-threshold=4
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
-<p>超过三个的，就需要起带语义的命名。</p>
+<p>元组元素超过三个的，建议使用包含语义的变量命。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2746,11 +2746,11 @@ single-char-binding-names-threshold=4
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#many_single_char_names">many_single_char_names</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar02--通常不应使用非-ascii-字符作为标识符"><a class="header" href="#gvar02--通常不应使用非-ascii-字符作为标识符">G.VAR.02  通常不应使用非 ASCII 字符作为标识符</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar02--不应使用非-ascii-字符作为标识符"><a class="header" href="#gvar02--不应使用非-ascii-字符作为标识符">G.VAR.02  不应使用非 ASCII 字符作为标识符</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 语言默认支持 Non ASCII 字符作为合法标识符。但是，为了统一团队代码风格，建议使用最常用的 ASCII 字符作为合法标识符。</p>
-<p>另外，只有使用英文的命名才能让<strong>命名相关</strong>的 Lint 生效。</p>
+<p>此外，通常<strong>命名相关</strong>的 Lint 检查只支持英文命名。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct 人 {
@@ -2827,10 +2827,9 @@ fn main () {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#non-ascii-idents">rustc-lint: non-ascii-idents</a></td><td>no</td><td>yes</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar03--在某些场合下不宜使用变量遮蔽功能"><a class="header" href="#gvar03--在某些场合下不宜使用变量遮蔽功能">G.VAR.03  在某些场合下不宜使用变量遮蔽功能</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar03--变量遮蔽功能应当合理使用"><a class="header" href="#gvar03--变量遮蔽功能应当合理使用">G.VAR.03  变量遮蔽功能应当合理使用</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>应该合理使用变量遮蔽功能</p>
 <p>变量遮蔽功能在功能上属于一种继承式可变。他会覆盖之前的变量绑定，而创建一个新的同名的变量绑定。</p>
 <ol>
 <li>在同一个作用域中，非必要时不宜通过新变量声明遮蔽旧变量声明的方式来修改变量。</li>
@@ -2910,7 +2909,7 @@ let data = data; //  由编译器确保后面不再改动
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#shadow_same">shadow_same</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#shadow_unrelated">shadow_unrelated</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar05--避免局部变量导致的大量栈分配"><a class="header" href="#gvar05--避免局部变量导致的大量栈分配">G.VAR.05  避免局部变量导致的大量栈分配</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gvar05--避免因局部变量导致的大量栈分配"><a class="header" href="#gvar05--避免因局部变量导致的大量栈分配">G.VAR.05  避免因局部变量导致的大量栈分配</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 局部变量默认分配在栈上。当局部变量占用栈空间过大时，会栈溢出，可以采用<code>Box&lt;T&gt;</code>使变量在堆上分配。</p>
@@ -3029,9 +3028,9 @@ let data = data; //  由编译器确保后面不再改动
 </ul>
 </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="ptyp01---必要时应该使得类型可以表达更明确的语义而不是只是直接使用原生类型"><a class="header" href="#ptyp01---必要时应该使得类型可以表达更明确的语义而不是只是直接使用原生类型">P.TYP.01   必要时，应该使得类型可以表达更明确的语义，而不是只是直接使用原生类型</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="ptyp01---必要时应使类型可以表达更明确的语义而不是只是直接使用原生类型"><a class="header" href="#ptyp01---必要时应使类型可以表达更明确的语义而不是只是直接使用原生类型">P.TYP.01   必要时，应使类型可以表达更明确的语义，而不是只是直接使用原生类型</a></h2>
 <p><strong>【描述】</strong></p>
-<p>这样可以增加代码的可读性。</p>
+<p>在类型中表达语义，可以增加代码的可读性。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let years = 1942;
@@ -3100,7 +3099,7 @@ let _ = mut_ptr.cast::&lt;i32&gt;();
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut">cast_ref_to_mut</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr">ptr_as_ptr</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyp02--数字字面量在使用的时候应该明确标注好类型"><a class="header" href="#gtyp02--数字字面量在使用的时候应该明确标注好类型">G.TYP.02  数字字面量在使用的时候应该明确标注好类型</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyp02--数字字面量在使用的时候应该明确标注类型"><a class="header" href="#gtyp02--数字字面量在使用的时候应该明确标注类型">G.TYP.02  数字字面量在使用的时候应该明确标注类型</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>如果数字字面量没有被指定具体类型，那么单靠类型推导，整数类型会被默认绑定为 <code>i32</code> 类型，而浮点数则默认绑定为 <code>f64</code>类型。这可能导致某些运行时的意外。</p>
@@ -3124,7 +3123,7 @@ let f = 1.23f32;
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#default_numeric_fallback">default_numeric_fallback</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyp03---不要用数字类型边界值去判断能否安全转换而应该使用-try_from-相关方法"><a class="header" href="#gtyp03---不要用数字类型边界值去判断能否安全转换而应该使用-try_from-相关方法">G.TYP.03   不要用数字类型边界值去判断能否安全转换，而应该使用 <code>try_from</code> 相关方法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyp03---不应用数字类型边界值判断能否安全转换而应使用-try_from-方法"><a class="header" href="#gtyp03---不应用数字类型边界值判断能否安全转换而应使用-try_from-方法">G.TYP.03   不应用数字类型边界值判断能否安全转换，而应使用 <code>try_from</code> 方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>在 Rust 中 <code>From</code> 代表不能失败的转换，而 <code>TryFrom</code> 则允许返回错误。</p>
@@ -3150,7 +3149,7 @@ let f = i16::try_from(foo).is_ok(); // 返回 false
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#checked_conversions">checked_conversions</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="布尔"><a class="header" href="#布尔">布尔</a></h1>
-<p>Rust 中布尔类型只是 <code>true</code>和<code>false</code>两种。</p>
+<p>Rust 中的布尔类型有 <code>true</code>和<code>false</code>两种值。</p>
 <h2 id="列表-7"><a class="header" href="#列表-7">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.01.html">G.TYP.BOL.01 返回为布尔值的表达式或函数值不应和布尔字面量进行比较</a></li>
@@ -3160,7 +3159,7 @@ let f = i16::try_from(foo).is_ok(); // 返回 false
 <li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.05.html">G.TYP.BOL.05 非必要时，布尔运算应使用逻辑运算符(<code>&amp;&amp;/||</code>)而非位运算符(<code>&amp;/|</code>)</a></li>
 <li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.06.html">G.TYP.BOL.06 不应使用数字来代替布尔值</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol01-返回为布尔值的表达式或函数值不应和布尔字面量进行比较"><a class="header" href="#gtypbol01-返回为布尔值的表达式或函数值不应和布尔字面量进行比较">G.TYP.BOL.01 返回为布尔值的表达式或函数值不应和布尔字面量进行比较</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol01-不应将布尔值和布尔字面量进行比较"><a class="header" href="#gtypbol01-不应将布尔值和布尔字面量进行比较">G.TYP.BOL.01 不应将布尔值和布尔字面量进行比较</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>在 Rust 中，返回为布尔值的表达式或函数值可以直接当作布尔值使用。</p>
@@ -3195,7 +3194,7 @@ assert!(!&quot;a&quot;.is_empty());
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">needless_bitwise_bool  </a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">assertions_on_constants  </a></td><td>yes</td><td>no</td><td>pedantic</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol02-如果-match-匹配表达式为布尔类型应使用-if-表达式来代替"><a class="header" href="#gtypbol02-如果-match-匹配表达式为布尔类型应使用-if-表达式来代替">G.TYP.BOL.02 如果 match 匹配表达式为布尔类型，应使用 <code>if</code> 表达式来代替</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol02-如果-match-匹配表达式为布尔类型宜使用-if-表达式来代替"><a class="header" href="#gtypbol02-如果-match-匹配表达式为布尔类型宜使用-if-表达式来代替">G.TYP.BOL.02 如果 match 匹配表达式为布尔类型，宜使用 <code>if</code> 表达式来代替</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>对于布尔表达式更倾向于使用 <code>if ... else ...</code>，相比较 <code>match</code> 模式匹配更有利于代码可读性。</p>
@@ -3303,7 +3302,7 @@ if x &amp;&amp; !y {} //  逻辑运算符，支持短路
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool">needless_bitwise_bool</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol06--不应使用数字来代替布尔值"><a class="header" href="#gtypbol06--不应使用数字来代替布尔值">G.TYP.BOL.06  不应使用数字来代替布尔值</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol06--不应使用数字代替布尔值"><a class="header" href="#gtypbol06--不应使用数字代替布尔值">G.TYP.BOL.06  不应使用数字代替布尔值</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>Rust 中布尔值就是 <code>true</code>  和 <code>false</code>。 不要试图使用数字 <code>1</code> 和 <code>0</code> 来代替布尔值。</p>
@@ -3340,10 +3339,10 @@ assert_eq!(0, b as u32);
 <li><a href="safe-guides/coding_practice/data-type/./char/G.TYP.CHR.02.html">G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串</a></li>
 <li><a href="safe-guides/coding_practice/data-type/./char/G.TYP.CHR.03.html">G.TYP.CHR.03 当需要将整数转换为字符时，应使用安全转换函数，而非 transmute</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr01--不宜将字符字面量强制转换为-u8"><a class="header" href="#gtypchr01--不宜将字符字面量强制转换为-u8">G.TYP.CHR.01  不宜将字符字面量强制转换为 <code>u8</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr01--不应将字符字面量强制转换为-u8"><a class="header" href="#gtypchr01--不应将字符字面量强制转换为-u8">G.TYP.CHR.01  不应将字符字面量强制转换为 <code>u8</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>应该使用 字节字面量 去代替 将 字符字面量强转为 <code>u8</code>。</p>
+<p>应该使用字节字面量去代替将字符字面量强转为 <code>u8</code>。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -3365,7 +3364,7 @@ assert_eq!(0, b as u32);
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr02-字符串方法中如果需要单个字符的值作为参数宜使用字符而非字符串"><a class="header" href="#gtypchr02-字符串方法中如果需要单个字符的值作为参数宜使用字符而非字符串">G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>使用 字符 比 用字符串性能更好一些。</p>
+<p>大部分情况下，使用字符比用字符串性能更好。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -3386,7 +3385,7 @@ s.split('x');
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#single_char_pattern">single_char_pattern</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr03-当需要将整数转换为字符时应使用安全转换函数而非-transmute"><a class="header" href="#gtypchr03-当需要将整数转换为字符时应使用安全转换函数而非-transmute">G.TYP.CHR.03 当需要将整数转换为字符时，应使用安全转换函数，而非 <code>transmute</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr03-需要将整数转换为字符时应使用安全转换函数而非-transmute"><a class="header" href="#gtypchr03-需要将整数转换为字符时应使用安全转换函数而非-transmute">G.TYP.CHR.03 需要将整数转换为字符时，应使用安全转换函数，而非 <code>transmute</code></a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p>并非每个整数都对应一个合法的 Unicode 标量值，使用 <code>transmute</code> 转换会有未定义行为。</p>
@@ -3418,7 +3417,7 @@ unsafe {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#transmute_int_to_char">transmute_int_to_char</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="整数"><a class="header" href="#整数">整数</a></h1>
-<p>Rust 中有目前有 十二种整数类型：<code>i8/u8</code>, <code>i16/u16</code>, <code>i32/u32</code>, <code>i64/u64</code>, <code>i128/u128</code>, <code>isize/usize</code> 。</p>
+<p>Rust 中有目前有十二种整数类型：<code>i8/u8</code>, <code>i16/u16</code>, <code>i32/u32</code>, <code>i64/u64</code>, <code>i128/u128</code>, <code>isize/usize</code> 。</p>
 <h2 id="列表-9"><a class="header" href="#列表-9">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/data-type/./int/G.TYP.INT.01.html">G.TYP.INT.01 在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></li>
@@ -3428,7 +3427,7 @@ unsafe {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypint01--在用整数计算的时候需要考虑整数溢出回绕和截断的风险"><a class="header" href="#gtypint01--在用整数计算的时候需要考虑整数溢出回绕和截断的风险">G.TYP.INT.01  在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>需要结合场景和业务来考虑如果发生溢出、回绕或截断的时候，是否会引起严重的问题。</p>
+<p>使用整数计算时需要结合场景和业务来考虑如果发生溢出、回绕或截断的时候，是否会引起严重的问题。</p>
 <p>比如，对于时间要求精准的系统，如果在计算时间发生整数溢出，或者去计算某个数组的索引等，那可能会发生严重问题。但如果你只是一个简单的计算器，不会被用到具体的业务场合，那溢出也没有关系，因为你只需要在合理的数字范围内计算性能最好。</p>
 <p>在 Rust 标准库中，提供 <code>add</code>/ <code>checked_add</code> / <code> saturating_add</code>/<code>overflowing_add</code> / <code>wrapping_add</code> 不同系列方法，返回值不同，根据不同的场合选择适合的方法。</p>
 <ol>
@@ -3482,7 +3481,7 @@ fn test_integer_overflow() {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic">integer_arithmetic</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic">manual_saturating_arithmetic</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypint02--避免有符号整数和无符号整数之间的强制转换"><a class="header" href="#gtypint02--避免有符号整数和无符号整数之间的强制转换">G.TYP.INT.02  避免有符号整数和无符号整数之间的强制转换</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypint02--避免在有符号整数和无符号整数之间进行强制转换"><a class="header" href="#gtypint02--避免在有符号整数和无符号整数之间进行强制转换">G.TYP.INT.02  避免在有符号整数和无符号整数之间进行强制转换</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>当有符号整数被强制转换为无符号整数时，负值会发生回绕，变成更大的正值，这在实际应用时有可能助长缓冲区溢出风险。</p>
@@ -3513,7 +3512,7 @@ let z = u128::from(y);
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypint03--对负数取模计算的时候不应使用"><a class="header" href="#gtypint03--对负数取模计算的时候不应使用">G.TYP.INT.03  对负数取模计算的时候不应使用<code>%</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>Rust 当前的这个 <code>%</code>形式是余数运算符，它的行为与<code>C</code>或<code>Java</code>等语言中相同符号的运算符相同。它也类似于<code>Python</code>或<code>Haskell</code>等语言中的模（modulo）运算符，只是它对 负数 的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。</p>
+<p>Rust 中的 <code>%</code> 符号为余数运算符，它的行为与<code>C</code>或<code>Java</code>等语言中相同符号的运算符相同。它也类似于<code>Python</code>或<code>Haskell</code>等语言中的模（modulo）运算符，只是它对负数的行为不同：余数是基于截断除法，而模运算是基于向下取整（floor）除法。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a: i32 = -1;
@@ -3546,7 +3545,7 @@ let z = u128::from(y);
 <li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.05.html">G.TYP.FLT.05 使用字面量定义浮点数时，尽量使用<code>f64</code>类型而非<code>f32</code>类型</a></li>
 <li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.06.html">G.TYP.FLT.06 禁止在浮点数和整数相互转换时使用 transmute</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypflt01----使用f32字面量时避免被rust编译器截断"><a class="header" href="#gtypflt01----使用f32字面量时避免被rust编译器截断">G.TYP.FLT.01    使用<code>f32</code>字面量时，避免被Rust编译器截断</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypflt01-使用浮点数字面量时避免被rust编译器截断"><a class="header" href="#gtypflt01-使用浮点数字面量时避免被rust编译器截断">G.TYP.FLT.01 使用浮点数字面量时，避免被Rust编译器截断</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>当指定超过 <code>f32</code> 精度的字面量值时，Rust 会默认截断该值。</p>
@@ -3570,7 +3569,7 @@ println!(&quot;{}&quot;, v); //  0.123_456_789_9
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#excessive_precision">excessive_precision</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypflt02--从任何数字类型转换为f64类型时注意避免损失精度"><a class="header" href="#gtypflt02--从任何数字类型转换为f64类型时注意避免损失精度">G.TYP.FLT.02  从任何数字类型转换为<code>f64</code>类型时注意避免损失精度</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypflt02--从任何数字类型转换为浮点类型时注意避免损失精度"><a class="header" href="#gtypflt02--从任何数字类型转换为浮点类型时注意避免损失精度">G.TYP.FLT.02  从任何数字类型转换为浮点类型时注意避免损失精度</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>这种转换可能会有值的舍入错误发生。在某些对于精度要求比较高的场景需要注意。</p>
@@ -3838,12 +3837,12 @@ mod tests {
 <span class="boring">}
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="元组"><a class="header" href="#元组">元组</a></h1>
-<p>元组是异构复合类型，可以存储多个不同的值。</p>
+<p>元组是异构复合类型，可以存储多个不同类型的元素。</p>
 <h2 id="列表-12"><a class="header" href="#列表-12">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/data-type/./tuple/G.TYP.TUP.01.html">G.TYP.TUP.01 使用元组时，其元素最多不宜超过3个</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyptup01--使用元组时其元素最多不宜超过3个"><a class="header" href="#gtyptup01--使用元组时其元素最多不宜超过3个">G.TYP.TUP.01  使用元组时，其元素最多不宜超过3个</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyptup01--使用元组时其元素不宜超过3个"><a class="header" href="#gtyptup01--使用元组时其元素不宜超过3个">G.TYP.TUP.01  使用元组时，其元素不宜超过3个</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>元组是异构复合类型，元素过多，其表达力会下降，影响代码可读性和可维护性。</p>
@@ -3865,8 +3864,8 @@ fn main(){
 <p>【定制化参考】</p>
 <p>可以检测元组中元素个数，如果超过 3 个，发出警告或建议。并且可以支持配置允许个数。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="数组"><a class="header" href="#数组">数组</a></h1>
-<p>这里指固定长度数组。注意，不同长度的数组，类型是不一样的。比如 <code>[T;1]</code>和 <code>[T;3]</code> 就是不同类型。</p>
-<p>从  Rust 1.51 版本开始，稳定了 常量泛型（const generics）功能，形如  <code>[T;1]</code>和 <code>[T;3]</code> 这种不同的类型可以统一为 <code>[T; N]</code>。</p>
+<p>这里指固定长度数组。注意，不同长度的数组，被视为不同的类型。比如 <code>[T;1]</code>和 <code>[T;3]</code> 是两种不同的类型。</p>
+<p>从 Rust 1.51 版本开始，稳定了常量泛型（const generics）功能，形如 <code>[T;1]</code>和 <code>[T;3]</code> 这种不同的类型可以统一为 <code>[T; N]</code>。</p>
 <h2 id="列表-13"><a class="header" href="#列表-13">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/data-type/./array/G.TYP.ARR.01.html">G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></li>
@@ -3927,7 +3926,7 @@ x[3];
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#out_of_bounds_indexing">out_of_bounds_indexing</a></td><td>yes</td><td>no</td><td><strong>correctness</strong></td><td>deny</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyparr03--当数组元素为原生数据类型primitive排序时宜使用非稳定排序"><a class="header" href="#gtyparr03--当数组元素为原生数据类型primitive排序时宜使用非稳定排序">G.TYP.ARR.03  当数组元素为原生数据类型（Primitive），排序时宜使用非稳定排序</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtyparr03--当数组元素为原生数据类型primitive排序时优先选用非稳定排序"><a class="header" href="#gtyparr03--当数组元素为原生数据类型primitive排序时优先选用非稳定排序">G.TYP.ARR.03  当数组元素为原生数据类型（Primitive），排序时优先选用非稳定排序</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>稳定排序会消耗更多的内存和 CPU 周期，相对而言，非稳定排序性能更佳。</p>
@@ -4061,7 +4060,7 @@ fn main() {
 }
 </code></pre></pre>
 <hr />
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct01----对外导出的公开的-struct宜添加non_exhaustive属性"><a class="header" href="#gtypsct01----对外导出的公开的-struct宜添加non_exhaustive属性">G.TYP.SCT.01    对外导出的公开的 Struct，宜添加<code>#[non_exhaustive]</code>属性</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct01-对外导出的公开的-struct宜添加non_exhaustive属性"><a class="header" href="#gtypsct01-对外导出的公开的-struct宜添加non_exhaustive属性">G.TYP.SCT.01 对外导出的公开的 Struct，宜添加<code>#[non_exhaustive]</code>属性</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>作为对外公开的 结构体，为了保持稳定性，应该使用 <code>#[non_exhaustive]</code>属性，避免因为将来结构体字段发生变化而影响到下游的使用。主要涉及命名结构体和元组结构体。</p>
@@ -4134,7 +4133,7 @@ impl&lt;T, U&gt; FramedParts&lt;T, U&gt; {
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#exhaustive_structs">exhaustive_structs</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive">manual_non_exhaustive</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct02--当结构体中有超过三个布尔类型的字段宜将其独立为一个枚举"><a class="header" href="#gtypsct02--当结构体中有超过三个布尔类型的字段宜将其独立为一个枚举">G.TYP.SCT.02  当结构体中有超过三个布尔类型的字段，宜将其独立为一个枚举</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct02--当结构体中有超过三个布尔类型的字段宜将其独立为新的枚举类"><a class="header" href="#gtypsct02--当结构体中有超过三个布尔类型的字段宜将其独立为新的枚举类">G.TYP.SCT.02  当结构体中有超过三个布尔类型的字段，宜将其独立为新的枚举类</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>这样有助于提升 代码可读性和 API 。</p>
@@ -4168,7 +4167,7 @@ impl&lt;T, U&gt; FramedParts&lt;T, U&gt; {
 <pre><code class="language-toml"># 用于配置函数可以拥有的 bool 类型参数最大数量，默认为 3。
 max-struct-bools=3 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct03--宜使用结构体功能更新语法来提升代码可读性"><a class="header" href="#gtypsct03--宜使用结构体功能更新语法来提升代码可读性">G.TYP.SCT.03  宜使用结构体功能更新语法来提升代码可读性</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypsct03-宜使用结构体功能更新语法来提升代码可读性"><a class="header" href="#gtypsct03-宜使用结构体功能更新语法来提升代码可读性">G.TYP.SCT.03 宜使用结构体功能更新语法来提升代码可读性</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>更改结构体最好提供结构体方法进行更改，而不是直接构建结构体内容。</p>
@@ -4206,7 +4205,7 @@ a.i = 42;
 <li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.05.html">G.TYP.ENM.05 对外导出的公开Enum，宜添加<code>#[non_exhaustive]</code>属性</a></li>
 <li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.06.html">G.TYP.ENM.06 Enum内变体的大小差异不宜过大</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypenm01-合理选择map和and_then"><a class="header" href="#gtypenm01-合理选择map和and_then">G.TYP.ENM.01 合理选择<code>map</code>和<code>and_then</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypenm01-合理使用map和and_then方法"><a class="header" href="#gtypenm01-合理使用map和and_then方法">G.TYP.ENM.01 合理使用<code>map</code>和<code>and_then</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>在标准库中内置的一些 Enum 类型中提供了一些方便的组合算子，比如 <code>map</code> 和 <code>and_then</code>。</p>
@@ -4249,7 +4248,7 @@ let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#bind_instead_of_map">bind_instead_of_map </a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypenm02--非必要时不应自行创建空枚举"><a class="header" href="#gtypenm02--非必要时不应自行创建空枚举">G.TYP.ENM.02  非必要时不应自行创建空枚举</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypenm02-不应自行创建空枚举"><a class="header" href="#gtypenm02-不应自行创建空枚举">G.TYP.ENM.02 不应自行创建空枚举</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>在 Rust 中 只有 <code>never</code> 类型（<code>!</code>）才是唯一合法表达 无法被实例化类型 的类型。但目前 <code>never</code> 类型还未稳定，只能在 Nightly 下使用。</p>
@@ -4261,7 +4260,7 @@ let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
-<p>所以，如果想在 稳定版 Rust 中使用，建议使用<a href="https://doc.rust-lang.org/std/convert/enum.Infallible.html#"><code>std::convert::Infallible</code></a> 。 <code>Infallible</code> 枚举是一个合法的 空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  <code>never</code>   类型。</p>
+<p>所以，如果想在稳定版 Rust 中使用，建议使用<a href="https://doc.rust-lang.org/std/convert/enum.Infallible.html#"><code>std::convert::Infallible</code></a> 。 <code>Infallible</code> 枚举是一个合法的空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  <code>never</code>   类型。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4418,7 +4417,7 @@ enum E {
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>要注意 Enum 内变体的大小差异不要过大，因为 Enum 内存布局是以最大的变体进行对齐。根据场景，如果该Enum 实例中小尺寸变体的实例使用很多的话，内存就会有所浪费。如果小尺寸变体的实例使用很少，则影响不大。</p>
-<p>解决办法就是把大尺寸变体包到 <code>Box&lt;T&gt;</code>中。</p>
+<p>解决办法之一为把大尺寸变体包含到 <code>Box&lt;T&gt;</code>中。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -4457,7 +4456,7 @@ enum E {
 <li><a href="safe-guides/coding_practice/./expr/G.EXP.05.html">G.EXP.05 表达式操作最好使用括号来表达清楚优先级顺序</a></li>
 <li><a href="safe-guides/coding_practice/./expr/G.EXP.06.html">G.EXP.06 避免在比较中添加无用的掩码操作</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp01-当需要对表达式求值之后重新赋值时宜使用复合赋值模式"><a class="header" href="#gexp01-当需要对表达式求值之后重新赋值时宜使用复合赋值模式">G.EXP.01 当需要对表达式求值之后重新赋值时，宜使用复合赋值模式</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp01-当需要对表达式求值后重新赋值时宜使用复合赋值模式"><a class="header" href="#gexp01-当需要对表达式求值后重新赋值时宜使用复合赋值模式">G.EXP.01 当需要对表达式求值后重新赋值时，宜使用复合赋值模式</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>略</p>
@@ -4506,7 +4505,7 @@ a += b;
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#bad_bit_mask">bad_bit_mask</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp03---不要利用数组表达式的边界检查来-panic而应该用断言"><a class="header" href="#gexp03---不要利用数组表达式的边界检查来-panic而应该用断言">G.EXP.03   不要利用数组表达式的边界检查来 Panic，而应该用断言</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp03-不应利用数组表达式的边界检查来-panic而应使用断言"><a class="header" href="#gexp03-不应利用数组表达式的边界检查来-panic而应使用断言">G.EXP.03 不应利用数组表达式的边界检查来 Panic，而应使用断言</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>这样会影响代码可读性。使用断言可以更好的描述代码的意图。</p>
@@ -4567,7 +4566,7 @@ x -= 1; // x == 2
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#double_neg">double_neg</a></td><td>yes</td><td>no</td><td>style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp05----表达式操作最好使用括号来表达清楚优先级顺序"><a class="header" href="#gexp05----表达式操作最好使用括号来表达清楚优先级顺序">G.EXP.05    表达式操作最好使用括号来表达清楚优先级顺序</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp05-使用括号来清楚表示表达式的计算顺序"><a class="header" href="#gexp05-使用括号来清楚表示表达式的计算顺序">G.EXP.05 使用括号来清楚表示表达式的计算顺序</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>并不是每个人都能记得住优先级，所以最好使用括号把优先级顺序区分出来，增加可读性。</p>
@@ -4591,7 +4590,7 @@ x -= 1; // x == 2
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#precedence">precedence</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp06----避免在比较中添加无用的掩码操作"><a class="header" href="#gexp06----避免在比较中添加无用的掩码操作">G.EXP.06    避免在比较中添加无用的掩码操作</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp06-避免在比较中添加无用的掩码操作"><a class="header" href="#gexp06-避免在比较中添加无用的掩码操作">G.EXP.06 避免在比较中添加无用的掩码操作</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>检查比较中的无用位掩码操作，可以在不改变结果的情况下删除该位掩码操作。</p>
@@ -4629,7 +4628,7 @@ x -= 1; // x == 2
 <li><a href="safe-guides/coding_practice/./control-flow/G.CTF.03.html">G.CTF.03 如果要通过 if 条件表达式来判断是否panic，请优先使用断言</a></li>
 <li><a href="safe-guides/coding_practice/./control-flow/G.CTF.04.html">G.CTF.04 在Match分支的Guard语句中不要使用带有副作用的条件表达式</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pctf01-不要过度使用迭代器"><a class="header" href="#pctf01-不要过度使用迭代器">P.CTF.01 不要过度使用迭代器</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pctf01-避免滥用迭代器"><a class="header" href="#pctf01-避免滥用迭代器">P.CTF.01 避免滥用迭代器</a></h2>
 <p><strong>【描述】</strong></p>
 <p>迭代器虽然是 Rust 中比较推崇的方式，但也没必要过度使用它。总之，如果使用迭代器让代码太复杂，就考虑换个非迭代器的方式实现吧。</p>
 <p><strong>【反例】</strong></p>
@@ -4733,7 +4732,7 @@ pub fn imperative_blur(input: &amp;Matrix) -&gt; Matrix {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pctf02--优先使用模式匹配而不是判断后再取值"><a class="header" href="#pctf02--优先使用模式匹配而不是判断后再取值">P.CTF.02  优先使用模式匹配而不是判断后再取值</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pctf02-优先使用模式匹配而非判断后再取值"><a class="header" href="#pctf02-优先使用模式匹配而非判断后再取值">P.CTF.02 优先使用模式匹配而非判断后再取值</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Rust 中 模式匹配 是惯用法，而不是通过 <code>if</code> 判断值是否相等。</p>
 <p><strong>【反例】</strong></p>
@@ -4923,7 +4922,7 @@ fn main() {
 <li><a href="safe-guides/coding_practice/./strings/G.STR.04.html">G.STR.04 需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较</a></li>
 <li><a href="safe-guides/coding_practice/./strings/G.STR.05.html">G.STR.05 对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr01---处理字符串非必要不要按字符来处理应该按字节处理"><a class="header" href="#pstr01---处理字符串非必要不要按字符来处理应该按字节处理">P.STR.01   处理字符串非必要不要按字符来处理，应该按字节处理</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr01---处理字符串元素时优先按字节处理而非字符"><a class="header" href="#pstr01---处理字符串元素时优先按字节处理而非字符">P.STR.01   处理字符串元素时优先按字节处理而非字符</a></h2>
 <p><strong>【描述】</strong></p>
 <p>处理字符串有两种方式，一种是按字符处理，即把字符串转为字符数组<code>[char]</code>，另一种是直接按字节处理<code>[u8]</code>。</p>
 <p>两者之间的一些区别：</p>
@@ -4931,7 +4930,7 @@ fn main() {
 <li><code>[char]</code>  保证是有效的 Unicode，但不一定是有效的 UTF-8，一般将其看作是 UTF-32 。将字符数组转换为字符串需要注意。</li>
 <li><code>[u8]</code> 不一定是有效的字符串，它比 <code>[char]</code> 节省内存。将其转换为字符串需要检查 <code>UTF-8</code>编码。</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr02---创建字符串时可以预先分配大约足够的容量来避免后续操作中产生多次分配"><a class="header" href="#pstr02---创建字符串时可以预先分配大约足够的容量来避免后续操作中产生多次分配">P.STR.02   创建字符串时，可以预先分配大约足够的容量来避免后续操作中产生多次分配</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr02---创建字符串时宜预先分配大约足够的容量来避免后续操作中产生多次分配"><a class="header" href="#pstr02---创建字符串时宜预先分配大约足够的容量来避免后续操作中产生多次分配">P.STR.02   创建字符串时，宜预先分配大约足够的容量来避免后续操作中产生多次分配</a></h2>
 <p><strong>【描述】</strong></p>
 <p>预分配足够的容量，避免后续内存分配，可以提升代码性能。</p>
 <p><strong>【反例】</strong></p>
@@ -4948,7 +4947,7 @@ fn main() {
 </span>let mut output = String::with_capacity(input.len());
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr03-在使用内建字符串处理函数或方法的时候应该注意避免隐藏的嵌套迭代或多次迭代"><a class="header" href="#pstr03-在使用内建字符串处理函数或方法的时候应该注意避免隐藏的嵌套迭代或多次迭代">P.STR.03 在使用内建字符串处理函数或方法的时候，应该注意避免隐藏的嵌套迭代或多次迭代</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr03-在使用内建字符串处理函数或方法的时候应注意避免隐藏的嵌套迭代或多次迭代"><a class="header" href="#pstr03-在使用内建字符串处理函数或方法的时候应注意避免隐藏的嵌套迭代或多次迭代">P.STR.03 在使用内建字符串处理函数或方法的时候，应注意避免隐藏的嵌套迭代或多次迭代</a></h2>
 <p><strong>【描述】</strong></p>
 <p>比如 <code>contains</code> 函数的实现就是按字符遍历字符串，但是如果你将它用于一个字符串的迭代处理中，就会产生嵌套迭代，时间复杂度从你以为的 <code>O(n)</code> 变成了 <code>O(n^2)</code>。没有将其用于迭代中，也有可能产生多次迭代，<code>O(n)</code> 变为 <code>O(n+m)</code> 。 为了避免这个问题，我们可以用 <code>find</code>  来代替 <code>contains</code>。</p>
 <p>所以，在使用内建函数的时候要注意它的实现，选择合适的函数或方法，来避免这类问题。</p>
@@ -4988,14 +4987,14 @@ pub fn find&lt;'a, S: Into&lt;Cow&lt;'a, str&gt;&gt;&gt;(input: S) -&gt; Cow&lt;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr04-只有在合适的场景下才使用第三方库正则表达式regex"><a class="header" href="#pstr04-只有在合适的场景下才使用第三方库正则表达式regex">P.STR.04 只有在合适的场景下，才使用第三方库正则表达式<code>regex</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr04-只在合适的场景下使用正则表达式第三方库regex"><a class="header" href="#pstr04-只在合适的场景下使用正则表达式第三方库regex">P.STR.04 只在合适的场景下，使用正则表达式第三方库<code>regex</code></a></h2>
 <p><strong>【描述】</strong></p>
 <p>合适的场景包括：</p>
 <ol>
 <li>不在乎编译文件大小。<code>regex</code> 正则引擎是第三方库，引入它的时候意味着还会引入其他依赖，对编译文件大小有要求可以考虑，是否使用 <code>Cow</code> 和 内建函数方法来替代。</li>
 <li>对字符串查找性能有极致需求。<code>regex</code> 的  <code>find</code> 实现性能很好，但是 <code>replace</code> 替换就不一定了。对于替换需求，在适合 <code>Cow&lt;str&gt;</code> 的场景下，使用 <code>Cow</code> 和 内建函数方法来替代 regex 可能更好。</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr05-在拼接字符串时建议使用format"><a class="header" href="#pstr05-在拼接字符串时建议使用format">P.STR.05 在拼接字符串时，建议使用<code>format!</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pstr05---在拼接字符串时优先使用format"><a class="header" href="#pstr05---在拼接字符串时优先使用format">P.STR.05   在拼接字符串时，优先使用<code>format!</code></a></h2>
 <p><strong>【描述】</strong></p>
 <p>在Rust中有很多方法可以连接字符串，不同的连接方法适用于不同的场景，性能也会有所差别。</p>
 <p><strong>【示例】</strong></p>
@@ -5056,7 +5055,7 @@ pub fn find&lt;'a, S: Into&lt;Cow&lt;'a, str&gt;&gt;&gt;(input: S) -&gt; Cow&lt;
     println!(&quot;{:#?}&quot;, hw_4);
  }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr01---在实现display特质时不要调用to_string方法"><a class="header" href="#gstr01---在实现display特质时不要调用to_string方法">G.STR.01   在实现<code>Display</code>特质时不要调用<code>to_string()</code>方法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr01---在实现display特征时不应调用to_string方法"><a class="header" href="#gstr01---在实现display特征时不应调用to_string方法">G.STR.01   在实现<code>Display</code>特征时不应调用<code>to_string()</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>因为 <code>to_string</code> 是间接通过 <code>Display</code> 来实现的，如果实现 <code>Display</code> 的时候再使用 <code>to_tring</code> 的话，将会无限递归。</p>
@@ -5092,10 +5091,10 @@ impl fmt::Display for Structure {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#to_string_in_display">to_string_in_display</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr02---在追加字符串时使用push_str方法可读性更强"><a class="header" href="#gstr02---在追加字符串时使用push_str方法可读性更强">G.STR.02   在追加字符串时使用<code>push_str</code>方法可读性更强</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr02---在追加字符串时使用push_str方法"><a class="header" href="#gstr02---在追加字符串时使用push_str方法">G.STR.02   在追加字符串时使用<code>push_str</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>略</p>
+<p>增强代码的可读性</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -5120,7 +5119,7 @@ x.push_str(&quot;, World&quot;);
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_add_assign">string_add_assign</a></td><td>yes</td><td>no</td><td>pedantic</td><td>allow</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_add">string_add</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr03----将只包含-ascii字符的字符串字面量转为字节序列可以直接使用bstr-语法代替调用as_bytes方法"><a class="header" href="#gstr03----将只包含-ascii字符的字符串字面量转为字节序列可以直接使用bstr-语法代替调用as_bytes方法">G.STR.03    将只包含 <code>ASCII</code>字符的字符串字面量转为字节序列可以直接使用<code>b&quot;str&quot;</code> 语法代替调用<code>as_bytes</code>方法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr03---将只包含-ascii字符的字符串字面量转为字节序列可以直接使用bstr-语法代替调用as_bytes方法"><a class="header" href="#gstr03---将只包含-ascii字符的字符串字面量转为字节序列可以直接使用bstr-语法代替调用as_bytes方法">G.STR.03   将只包含 <code>ASCII</code>字符的字符串字面量转为字节序列可以直接使用<code>b&quot;str&quot;</code> 语法代替调用<code>as_bytes</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>这是为了增强可读性，让代码更简洁。</p>
@@ -5143,10 +5142,10 @@ x.push_str(&quot;, World&quot;);
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes">string_lit_as_bytes</a></td><td>yes</td><td>no</td><td>nursery</td><td>allow</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr04---需要判断字符串以哪个字符开头或结尾时不要按字符迭代比较"><a class="header" href="#gstr04---需要判断字符串以哪个字符开头或结尾时不要按字符迭代比较">G.STR.04   需要判断字符串以哪个字符开头或结尾时，不要按字符迭代比较</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gstr04---需要辨别字符串的字符开头或结尾字符时不应按字符迭代比较"><a class="header" href="#gstr04---需要辨别字符串的字符开头或结尾字符时不应按字符迭代比较">G.STR.04   需要辨别字符串的字符开头或结尾字符时，不应按字符迭代比较</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>Rust 语言 核心库 和 标准库都对字符串内置了一些方便的方法来处理这类需求。</p>
+<p>Rust 语言核心库和标准库都对字符串内置了一些方便的方法来处理这类需求。</p>
 <p>迭代字符的性能虽然也很快（对500多个字符迭代转义处理大概需要4.5微秒左右），但这种场景用迭代的话，代码可读性更差一些。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">

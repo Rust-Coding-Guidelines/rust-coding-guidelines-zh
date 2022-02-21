@@ -137,7 +137,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="gstr01---在实现display特质时不要调用to_string方法"><a class="header" href="#gstr01---在实现display特质时不要调用to_string方法">G.STR.01   在实现<code>Display</code>特质时不要调用<code>to_string()</code>方法</a></h2>
+                        <h2 id="gstr01---在实现display特征时不应调用to_string方法"><a class="header" href="#gstr01---在实现display特征时不应调用to_string方法">G.STR.01   在实现<code>Display</code>特征时不应调用<code>to_string()</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>因为 <code>to_string</code> 是间接通过 <code>Display</code> 来实现的，如果实现 <code>Display</code> 的时候再使用 <code>to_tring</code> 的话，将会无限递归。</p>

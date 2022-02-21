@@ -137,10 +137,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="gvar01--使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量"><a class="header" href="#gvar01--使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量">G.VAR.01  使用解构元组方式定义多个变量时不应使用太多单个字符来命名变量</a></h2>
+                        <h2 id="gvar01--以解构元组方式定义多个变量时不应使用太多无意义变量名"><a class="header" href="#gvar01--以解构元组方式定义多个变量时不应使用太多无意义变量名">G.VAR.01  以解构元组方式定义多个变量时不应使用太多无意义变量名</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>在解构元组的方式定义多个变量时，有时候变量命名可能是无特别语义的，比如临时值，可以用简单的单个字符来定义变量名，但是不宜太多。</p>
+<p>在以解构元组的方式定义多个变量时，变量命可能是无特别语义的，如用单个字符表示的临时变量。但是不宜使用过多无意义变量名。</p>
 <p>该 lint 对应 <code>clippy.toml</code> 配置项：</p>
 <pre><code class="language-toml"># 修改可以绑定的单个字符变量名最大数量。默认为 4
 single-char-binding-names-threshold=4
@@ -153,7 +153,7 @@ single-char-binding-names-threshold=4
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
-<p>超过三个的，就需要起带语义的命名。</p>
+<p>元组元素超过三个的，建议使用包含语义的变量命。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
