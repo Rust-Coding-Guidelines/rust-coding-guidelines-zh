@@ -1,4 +1,4 @@
-## P.UNS.FFi.01  避免从公开的 Rust API 直接传字符串到 C 中
+## P.UNS.FFi.01 避免从公开的 Rust API 直接传字符串到 C 中
 
 **【描述】**
 
