@@ -1,6 +1,6 @@
 # 布尔
 
-Rust 中布尔类型只是 `true`和`false`两种。
+Rust 中的布尔类型有 `true`和`false`两种值。
 
 ## 列表
 

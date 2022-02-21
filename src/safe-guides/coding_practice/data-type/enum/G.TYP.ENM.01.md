@@ -1,4 +1,4 @@
-## G.TYP.ENM.01 合理选择`map`和`and_then`
+## G.TYP.ENM.01 合理使用`map`和`and_then`方法
 
 **【级别】** 建议
 
