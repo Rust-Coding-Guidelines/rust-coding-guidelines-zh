@@ -20,8 +20,14 @@ Rust 可以通过C-ABI无缝与C语言打交道，也可以通过暴露 C-ABI �
 - [P.UNS.FFI.08 FFi 中要进行合理的错误处理](./ffi/P.UNS.FFI.08.md)
 - [P.UNS.FFI.09 当 Rust 调用外部 C 函数时，如果可以确认安全，可以通过引用来代替裸指针](./ffi/P.UNS.FFI.09.md)
 - [P.UNS.FFI.10 当 Rust 函数导出外部函数时，必须从设计上保证被跨线程调用的安全性](./ffi/P.UNS.FFI.10.md)
+<<<<<<< HEAD
 - [P.UNS.FFI.11 如需引用指定为 `#[repr(packed)]` 内存布局的结构体成员字段要注意合理规避未定义行为](./ffi/P.UNS.FFI.11.md)
 - [P.UNS.FFI.12 当依赖 C 端传入参数时，需要在文档注释中不变性声明，根据不同的调用场景选择合适的安全抽象方式](./ffi/P.UNS.FFI.12.md)
+=======
+- [P.UNS.FFI.11 如需引用指定为 `#[repr(packed)]` 内存布局的结构体成员字段要注意合理规避未定义行为](./unsafe_rust/ffi/P.UNS.FFI.11.md)
+- [P.UNS.FFI.12 当依赖 C 端传入参数时，需要在文档注释中不变性声明，根据不同的调用场景选择合适的安全抽象方式](./unsafe_rust/ffi/P.UNS.FFI.12.md)
+>>>>>>> d4dda52 (add unsafe_rust:ffi:P.UNS.FFI.12)
 - [G.UNS.FFI.01 自定义数据类型要保证一致的数据布局](./ffi/G.UNS.FFI.01.md)
 - [G.UNS.FFI.02 在 FFi 中使用的类型应该拥有稳定布局](./ffi/G.UNS.FFI.02.md)
 - [G.UNS.FFI.03 从外部传入的不健壮类型的外部值要进行检查](./ffi/G.UNS.FFI.03.md)
+

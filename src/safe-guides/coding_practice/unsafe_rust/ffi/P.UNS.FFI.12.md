@@ -13,12 +13,12 @@
 
 具体可以参考【正例】的代码注释。
 
+
 **【正例】**
 
 场景一：如果在调用场景上能确定所传入的参数都是有效时。
 
 ```rust
-
 /// # Invariants （不变性说明）
 ///
 /// 这个指针来自 C语言 端，这里默认 C 端来的是有效指针，信任 C 端
@@ -104,6 +104,3 @@ impl CPtr {
 }
 ```
 
-**【参考】**
-
-- [https://github.com/Rust-for-Linux/linux/pull/324](https://github.com/Rust-for-Linux/linux/pull/324)
