@@ -1,4 +1,4 @@
-## P.UNS.FFi.01 避免从公开的 Rust API 直接传字符串到 C 中
+## P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中
 
 **【描述】**
 
@@ -6,7 +6,7 @@
 
 **【正例】**
 
-这个示例中，从公开的 Rust API 传入非法字符串到 C，导致字符串格式化漏洞。
+这个示例中，从公开的 `Rust API` 传入非法字符串到 `C`，导致字符串格式化漏洞。 
 
 ```rust
 // From: https://github.com/RustSec/advisory-db/issues/106
