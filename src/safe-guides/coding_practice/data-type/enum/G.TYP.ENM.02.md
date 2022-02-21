@@ -1,4 +1,4 @@
-## G.TYP.ENM.02  非必要时不应自行创建空枚举
+## G.TYP.ENM.02 不应自行创建空枚举
 
 **【级别】** 建议
 
@@ -15,7 +15,7 @@ enum Test {}
 
 **【正例】**
 
-所以，如果想在 稳定版 Rust 中使用，建议使用[`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 。 `Infallible` 枚举是一个合法的 空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  `never`   类型。
+所以，如果想在稳定版 Rust 中使用，建议使用[`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 。 `Infallible` 枚举是一个合法的空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  `never`   类型。
 
 ```rust
 // 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
