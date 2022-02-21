@@ -290,6 +290,7 @@
             - [P.UNS.FFI.09](./safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.09.md)
             - [P.UNS.FFI.10](./safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.10.md)
             - [P.UNS.FFI.11](./safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.11.md)
+            - [P.UNS.FFI.12](./safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.12.md)
             - [G.UNS.FFI.01](./safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.01.md)
             - [G.UNS.FFI.02](./safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.02.md)
             - [G.UNS.FFI.03](./safe-guides/coding_practice/unsafe_rust/ffi/G.UNS.FFI.03.md)
