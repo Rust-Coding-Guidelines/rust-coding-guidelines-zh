@@ -56,3 +56,10 @@ pub unsafe fn data_unchecked_mut(&self) -> &mut [u8] {
 	slice::from_raw_parts_mut(def.base, def.current_length.try_into().unwrap())
 }
 ```
+
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+

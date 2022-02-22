@@ -32,3 +32,9 @@ pub unsafe fn io_read_u32() -> Result<u32, MyError> {
 }   
 ```
 
+**【Lint 检测】**
+
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
+| --------- | ------------- | ------------ | ---------- | ---------- |
+| _         | no            | no           | _          | yes        |
+
