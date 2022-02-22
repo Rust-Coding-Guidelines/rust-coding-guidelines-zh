@@ -261,6 +261,7 @@
             - [G.UNS.SAS.04](./safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.04.md)
             - [G.UNS.SAS.05](./safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.05.md)
             - [G.UNS.SAS.06](./safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.06.md)
+            - [G.UNS.SAS.07](./safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.07.md)
         - [裸指针操作](./safe-guides/coding_practice/unsafe_rust/raw_ptr.md)
             - [P.UNS.PTR.01](./safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.01.md)
             - [G.UNS.PTR.01](./safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.01.md)

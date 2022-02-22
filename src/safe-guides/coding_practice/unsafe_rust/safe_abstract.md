@@ -21,3 +21,4 @@ Unsafe Rust 中 API 的安全性设计通常有两种方式：
 - [G.UNS.SAS.04 不要随便在公开的 API 中暴露裸指针](./safe_abstract/G.UNS.SAS.04.md)
 - [G.UNS.SAS.05 在抽象安全方法的同时，也建议为性能考虑而增加相应的 Unsafe 方法](./safe_abstract/G.UNS.SAS.05.md)
 - [G.UNS.SAS.06 函数参数是不可变借用的时候，返回值不应该是可变借用](./safe_abstract/G.UNS.SAS.06.md)
+- [G.UNS.SAS.07 在任何 Unsafe 块之前都应该加 `SAFETY` 注释](./safe_abstract/G.UNS.SAS.07.md)

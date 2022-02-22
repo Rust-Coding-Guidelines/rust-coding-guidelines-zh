@@ -30,6 +30,7 @@ Unsafe Rust 是 Safe Rust 的超集，意味着在 Unsafe Rust 中也会有 Safe
     - [G.UNS.SAS.04 不要随便在公开的 API 中暴露裸指针](./unsafe_rust/safe_abstract/G.UNS.SAS.04.md)
     - [G.UNS.SAS.05 在抽象安全方法的同时，也建议为性能考虑而增加相应的 Unsafe 方法](./unsafe_rust/safe_abstract/G.UNS.SAS.05.md)
     - [G.UNS.SAS.06 函数参数是不可变借用的时候，返回值不应该是可变借用](./unsafe_rust/safe_abstract/G.UNS.SAS.06.md)
+    - [G.UNS.SAS.07 在任何 Unsafe 块之前都应该加 `SAFETY` 注释](./unsafe_rust/safe_abstract/G.UNS.SAS.07.md)
 - [裸指针操作](./unsafe_rust/raw_ptr.md)
     - [P.UNS.PTR.01 不要将裸指针在多线程间共享](./unsafe_rust/raw_ptr/P.UNS.PTR.01.md)
     - [G.UNS.PTR.01 当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用](./unsafe_rust/raw_ptr/G.UNS.PTR.01.md)
