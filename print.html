@@ -2177,9 +2177,8 @@ pub enum Foo {}
 <p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
-</span>
-<span class="boring">fn main() {
-</span>// 版权所有（c）XXX 技术有限公司 2015- 2022。
+</span><span class="boring">fn main() {
+</span>// 版权所有（c）XXX 技术有限公司 2015-2022。
 
 // Or
 
@@ -10985,8 +10984,7 @@ fn main() {
 <p>场景一：如果在调用场景上能确定所传入的参数都是有效时。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
-</span>
-<span class="boring">fn main() {
+</span><span class="boring">fn main() {
 </span>/// # Invariants （不变性说明）
 ///
 /// 这个指针来自 C语言 端，这里默认 C 端来的是有效指针，信任 C 端
@@ -11073,10 +11071,6 @@ impl CPtr {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><strong>【参考】</strong></p>
-<ul>
-<li><a href="https://github.com/Rust-for-Linux/linux/pull/324">https://github.com/Rust-for-Linux/linux/pull/324</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gunsffi01-自定义数据类型要保证一致的数据布局"><a class="header" href="#gunsffi01-自定义数据类型要保证一致的数据布局">G.UNS.FFI.01 自定义数据类型要保证一致的数据布局</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
