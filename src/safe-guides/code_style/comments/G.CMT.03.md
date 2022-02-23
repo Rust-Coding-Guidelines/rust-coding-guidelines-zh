@@ -1,41 +1,47 @@
-## G.CMT.03  在每一个文件开头加入版权公告、创建和修改年份和功能描述
+## G.CMT.03  文件头注释包含版权说明
 
 **【级别】** 建议
 
 **【描述】**
 
-每个文件都应该包含许可证引用。为项目选择合适的许可证版本.(比如, Apache 2.0, BSD, LGPL, GPL)。
+文件头（即，模块级）注释应先包含版权说明。如果文件头注释需要增加其他内容，可以在版权说明下面补充。
 
-可以通过 `rustfmt` 的 `license_template_path` 配置项 和 `license.template`来自动化此操作。
-另外还需要增加该文件的首次创建年份、最后修改年份，以及功能描述。不过这两项就无法通过rustfmt自动插入
-对于文件修改时间，其实VSCode的一些插件也可以帮忙做到。
+可以包括：
+
+1. 文件功能说明。
+2. 作者。
+3. 创建日期 和 最后修改日期。
+4. 注意事项。
+5. 开源许可证(比如, Apache 2.0, BSD, LGPL, GPL)。
+6. 其他。
+
+版权说明格式如下：
+
+- 中文版：`版权所有（c）XXX 技术有限公司 2015-2022`。
+- 英文版： `Copyright (c) XXX Technologies Co.Ltd. 2015-2022. All rights reserved. Licensed under Apache-2.0.`
+
+其内容可以进行调整，参加下面详细说明：
+
+- `2015-2022` 根据实际需要可以修改。2015是文件首次创建年份，2022是文件最后修改年份。可以只写一个创建年份，后续如果经常修改则无需修改版权声明。
+- 如果是内部使用，则无需增加 `All rights reserved`。
+- `Licensed under Apache-2.0.`，如果是开源则可以增加许可证声明。
+
+编写版权注释时注意事项：
+
+- 版权注释应该从文件头顶部开始写。
+- 文件头注释首先包含“版权说明”，然后紧跟其他内容。
+- 可选内容应按需添加，避免空有格式没有内容的情况。
+- 保持统一格式，具体格式由项目或更大的范围统一制定。
+- 保持版面工整，换行注意对齐。
 
 **【正例】**
 
-可以命名为`.rustfmt.license-template`许可证模版。 比如
-
 ```rust
-// Copyright {\d+} YOURCOMPANY Project Authors. Licensed under Apache-2.0.
+
+// 版权所有（c）XXX 技术有限公司 2015- 2022。
+
+// Or
+
+// Copyright (c) XXX Technologies Co.Ltd. 2015-2022. 
+// All rights reserved. Licensed under Apache-2.0.
 ```
-
-在 `rustfmt.toml` 中配置：
-
-```toml
-license_template_path = ".rustfmt.license-template"
-```
-
-在代码文件中手工添加对应的注释 （自动插入功能还未支持）：
-
-```rust
-// Copyright 2021 YOURCOMPANY Project Authors. Licensed under Apache-2.0.
-```
-
-**【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
-
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`license_template_path`](https://rust-lang.github.io/rustfmt/?#license_template_path) | 格式化每一个Rust文件（默认） | No|  指定许可证模版路径 |
