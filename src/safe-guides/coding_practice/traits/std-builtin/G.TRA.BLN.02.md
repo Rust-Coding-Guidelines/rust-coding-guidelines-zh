@@ -76,19 +76,12 @@ fn main(){
 ```
 
 另外，对于标准库里的 `Range<T>` 就不能实现 Copy，因为它也是一个迭代器。
-<<<<<<< HEAD
 
 细节可以参考来自官方讨论： [https://github.com/rust-lang/rust/pull/27186#issuecomment-123390413](https://github.com/rust-lang/rust/pull/27186#issuecomment-123390413)
 
 
 **【正例】**
-=======
->>>>>>> acf937b (Simplify some rules in the code style section && Improve G.TRA.BLN.02)
 
-细节可以参考来自官方讨论： [https://github.com/rust-lang/rust/pull/27186#issuecomment-123390413](https://github.com/rust-lang/rust/pull/27186#issuecomment-123390413)
-
-
-**【正例】**
 
 ```rust
 use std::marker::PhantomData;
@@ -155,7 +148,6 @@ fn main(){
 }
 
 ```
-
 
 **【Lint 检测】**
 
