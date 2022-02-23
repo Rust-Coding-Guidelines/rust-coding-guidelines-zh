@@ -82,6 +82,7 @@ fn main(){
 
 **【正例】**
 
+
 ```rust
 use std::marker::PhantomData;
 
@@ -147,7 +148,6 @@ fn main(){
 }
 
 ```
-
 
 **【Lint 检测】**
 

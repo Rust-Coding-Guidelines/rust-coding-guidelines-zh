@@ -25,3 +25,4 @@ Rust 可以通过C-ABI无缝与C语言打交道，也可以通过暴露 C-ABI �
 - [G.UNS.FFI.01 自定义数据类型要保证一致的数据布局](./ffi/G.UNS.FFI.01.md)
 - [G.UNS.FFI.02 在 FFi 中使用的类型应该拥有稳定布局](./ffi/G.UNS.FFI.02.md)
 - [G.UNS.FFI.03 从外部传入的不健壮类型的外部值要进行检查](./ffi/G.UNS.FFI.03.md)
+
