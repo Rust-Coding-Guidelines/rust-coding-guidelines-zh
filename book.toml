@@ -3,7 +3,7 @@ authors = ["blackanger"]
 language = "zh"
 multilingual = false
 src = "src"
-title = "Rust 编码规范 V 0.2"
+title = "Rust 编码规范 V 0.3"
 
 [build]
 create-missing = true
