@@ -41,7 +41,7 @@ cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 
 - [P.MAC.01 不要轻易使用宏](./macros/P.MAC.01.md)
 - [P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法](./macros/P.MAC.02.md)
-- [G.MAC.01 dbg!() 宏只应该在 Debug 模式下使用](./macros/G.MAC.01.md)
+- [G.MAC.01 dbg!() 宏只应该用于调试代码](./macros/G.MAC.01.md)
 - [G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响](./macros/G.MAC.02.md)
 - [声明宏](./macros/decl.md)
     - [P.MAC.DCL.01 不要将声明宏内的变量作为外部变量使用](./macros/decl/P.MAC.DCL.01.md)

@@ -8,5 +8,5 @@ Union 是没有 tag 的 Enum，Enum 是有 tag 的Union 。
 
 ## 列表
 
-- [G.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union](./union/G.UNS.UNI.01.md)
-- [G.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内](./union/G.UNS.UNI.02.md)
+- [P.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union](./union/P.UNS.UNI.01.md)
+- [P.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内](./union/P.UNS.UNI.02.md)
