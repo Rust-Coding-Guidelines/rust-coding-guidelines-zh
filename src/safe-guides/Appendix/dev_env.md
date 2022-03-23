@@ -20,9 +20,9 @@ Clion
 
 Rust从2015开始，每三年发布一个 Edition 版次：
 
-> 1. Rust 2015 edition （Rust 1.0.0 + ）
-> 2. Rust 2018 edition （Rust 1.31.0 +）
-> 3. Rust 2021 edition (Rust 1.56.0 +)
+> 1. Rust 2015 edition （Rust 0.1.0 ~ Rust 1.0.0）
+> 2. Rust 2018 edition （Rust 1.0.0 ~ Rust 1.31.0）
+> 3. Rust 2021 edition (Rust 1.31.0 ~ Rust 1.56.0 )
 
 以此类推。Edition是向前兼容的。Edition 和语义化版本是正交的，不冲突。
 

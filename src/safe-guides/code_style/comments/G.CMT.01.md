@@ -1,37 +1,40 @@
-## G.CMT.01 在 公开的返回`Result`类型返回的函数文档中增加 Error 注释
+## G.CMT.01  注释应该有一定宽度限制
 
 **【级别】** 建议
 
 **【描述】**
 
-在公开（pub）的返回`Result`类型函数文档中，建议增加 `# Error` 注释来解释什么场景下该函数会返回什么样的错误类型，方便用户处理错误。
+每行注释的宽度不能过长，需要设置一定的宽度，有助于提升可读性。`comment_width`可配合 `wrap_comments` 将超过宽度限制的注释自动分割为多行。
 
-说明： 该规则通过 cargo clippy 来检测。默认不会警告。
+注意：`use_small_heuristics`配置项并不包括`comment_width`。
 
 **【反例】**
 
 ```rust
-# use std::io;
-pub fn read(filename: String) -> io::Result<String> {
-    unimplemented!();
-}
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
 
 **【正例】**
 
+当 `comment_width=80` 且 `wrap_comments=true`时。
+
+注意：这里 `wrap_comments`并未使用默认值，需要配置为 true。
+
 ```rust
-# use std::io;
-/// # Errors
-///
-/// Will return `Err` if `filename` does not exist or the user does not have
-/// permission to read it.
-pub fn read(filename: String) -> io::Result<String> {
-    unimplemented!();
-}
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+// sed do eiusmod tempor incididunt ut labore et dolore
+// magna aliqua. Ut enim ad minim veniam, quis nostrud
+// exercitation ullamco laboris nisi ut aliquip ex ea
+// commodo consequat.
 ```
 
-**【Lint 检测】**
+**【rustfmt 配置】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [missing_errors_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc ) | yes| no | Style | allow | 
+此规则 Clippy 不可检测，由 rustfmt 自动格式化。
+
+rustfmt 配置：
+
+| 对应选项 | 可选值 | 是否 stable | 说明 |
+| ------ | ---- | ---- | ---- |
+| [`comment_width`](https://rust-lang.github.io/rustfmt/?#comment_width) | 80（默认） | No|  指定一行注释允许的最大宽度 |
+| [`wrap_comments`](https://rust-lang.github.io/rustfmt/?#wrap_comments) | false（默认），true（建议） | No| 运行多行注释按最大宽度自动换成多行注释 |

@@ -1,55 +1,46 @@
-## G.CMT.03  在文档注释中要使用空格代替 tab
+## G.CMT.03  文件头注释包含版权说明
 
 **【级别】** 建议
 
 **【描述】**
 
-Rust 代码风格中提倡使用**四个空格**代替tab，在文档注释中也应该统一使用**四个空格**。
+文件头（即，模块级）注释应先包含版权说明。如果文件头注释需要增加其他内容，可以在版权说明下面补充。
 
-**【反例】**
+可以包括：
 
-下面文档注释中使用了 tab。
+1. 文件功能说明。
+2. 作者。
+3. 创建日期 和 最后修改日期。
+4. 注意事项。
+5. 开源许可证(比如, Apache 2.0, BSD, LGPL, GPL)。
+6. 其他。
 
-```rust
-///
-/// Struct to hold two strings:
-/// 	- first		one
-/// 	- second	one
-pub struct DoubleString {
-   ///
-   /// 	- First String:
-   /// 		- needs to be inside here
-   first_string: String,
-   ///
-   /// 	- Second String:
-   /// 		- needs to be inside here
-   second_string: String,
-}
-```
+版权说明格式如下：
+
+- 中文版：`版权所有（c）XXX 技术有限公司 2015-2022`。
+- 英文版： `Copyright (c) XXX Technologies Co.Ltd. 2015-2022. All rights reserved. Licensed under Apache-2.0.`
+
+其内容可以进行调整，参加下面详细说明：
+
+- `2015-2022` 根据实际需要可以修改。2015是文件首次创建年份，2022是文件最后修改年份。可以只写一个创建年份，后续如果经常修改则无需修改版权声明。
+- 如果是内部使用，则无需增加 `All rights reserved`。
+- `Licensed under Apache-2.0.`，如果是开源则可以增加许可证声明。
+
+编写版权注释时注意事项：
+
+- 版权注释应该从文件头顶部开始写。
+- 文件头注释首先包含“版权说明”，然后紧跟其他内容。
+- 可选内容应按需添加，避免空有格式没有内容的情况。
+- 保持统一格式，具体格式由项目或更大的范围统一制定。
+- 保持版面工整，换行注意对齐。
 
 **【正例】**
 
 ```rust
-///
-/// Struct to hold two strings:
-///     - first        one
-///     - second    one
-pub struct DoubleString {
-   ///
-   ///     - First String:
-   ///         - needs to be inside here
-   first_string: String,
-   ///
-   ///     - Second String:
-   ///         - needs to be inside here
-   second_string: String,
-}
+// 版权所有（c）XXX 技术有限公司 2015-2022。
+
+// Or
+
+// Copyright (c) XXX Technologies Co.Ltd. 2015-2022. 
+// All rights reserved. Licensed under Apache-2.0.
 ```
-
-**【Lint 检测】**
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
-| [tabs_in_doc_comments ](https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments ) | yes           | no           | Style      | warn       |
-
----
