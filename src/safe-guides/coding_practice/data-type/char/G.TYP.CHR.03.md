@@ -20,11 +20,11 @@ unsafe {
 
 ```rust
 let x = 37_u32;
-unsafe {
-    let x = std::char::from_u32(x).unwrap(); // 请按情况处理 None
-    // let x = std::char::from_u32_unchecked(x);  // 如果确定该整数对应合法的unicode，可以使用 uncheck 方法加速
-    assert_eq!('%', x);
-}
+
+let x = std::char::from_u32(x).unwrap(); // 请按情况处理 None
+// let x = std::char::from_u32_unchecked(x);  // 如果确定该整数对应合法的unicode，可以使用 uncheck 方法加速
+assert_eq!('%', x);
+
 ```
 
 **【Lint 检测】**

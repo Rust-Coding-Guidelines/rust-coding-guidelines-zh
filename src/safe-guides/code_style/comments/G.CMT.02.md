@@ -1,60 +1,42 @@
-## G.CMT.02  使用行注释而避免使用块注释
+## G.CMT.02  如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
-尽量使用行注释（`//` 或 `///`），而非块注释。这是Rust社区的约定俗成。
+在公开（pub）函数文档中，建议增加 `# Panic` 注释来解释该函数在什么条件下会 Panic，便于使用者进行预处理。
 
-对于文档注释，仅在编写模块级文档时使用 `//!`，在其他情况使用 `///`更好。
+说明： 该规则通过 cargo clippy 来检测。默认不会警告。
 
 **【反例】**
 
 ```rust
-/*
- * Wait for the main task to return, and set the process error code
- * appropriately.
- */
-
-mod tests {
-    //! This module contains tests
-
-    // ...
+pub fn divide_by(x: i32, y: i32) -> i32 {
+    if y == 0 {
+        panic!("Cannot divide by 0")
+    } else {
+        x / y
+    }
 }
-
-#![doc = "Example documentation"]
-
-#[doc = "Example item documentation"]
-pub enum Foo {}
 ```
 
 **【正例】**
 
-当 `normalize_comments = true`  时：
-
 ```rust
-// Wait for the main task to return, and set the process error code
-// appropriately.
-
-// 在使用 `mod` 关键字定义模块时，在 `mod`之上使用 `///` 更好。
-/// This module contains tests
-mod tests {
-    // ...
+/// # Panics
+///
+/// Will panic if y is 0
+pub fn divide_by(x: i32, y: i32) -> i32 {
+    if y == 0 {
+        panic!("Cannot divide by 0")
+    } else {
+        x / y
+    }
 }
-
-//! Example documentation
-
-/// Example item documentation
-pub enum Foo {}
 ```
 
-**【rustfmt 配置】**
+**【Lint 检测】**
 
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
-
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- |
-| [`normalize_comments`](https://rust-lang.github.io/rustfmt/?#normalize_comments) | false（默认） true（推荐） | No| 将 `/**/` 注释转为 `//`|
-| [`normalize_doc_attributes`](https://rust-lang.github.io/rustfmt/?#normalize_doc_attributes) | false（默认） | No| 将 `#![doc]` 和 `#[doc]` 注释转为 `//!` 和 `///` |
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------ | ---- | --------- | ------ | ------ | 
+| [missing_panics_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc ) | yes| no | Style | allow | 

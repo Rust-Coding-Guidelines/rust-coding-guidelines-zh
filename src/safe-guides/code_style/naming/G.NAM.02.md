@@ -1,52 +1,76 @@
+## G.NAM.02 类型转换函数命名需要遵循所有权语义
 
-## G.NAM.02 使用统一的命名风格
-
-**【级别】** 要求
+**【级别】** 建议
 
 **【描述】**
 
-Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风格，在 “值（实例）级别”的结构中使用 `snake_case`命名风格。
+应该使用带有以下前缀名称方法来进行特定类型转换：
 
-下面是具体汇总。
+| 名称前缀 | 内存代价 | 所有权 |
+| ------ | ---- | --------- |
+| `as_` | 无代价 | borrowed -\> borrowed |
+| `to_` | 代价昂贵 | borrowed -\> borrowed<br>borrowed -\> owned (非 Copy 类型)<br>owned -\> owned (Copy 类型) |
+| `into_` | 看情况 | owned -\> owned (非 Copy 类型) |
 
-| Item | 规范 |
-| ---- | ---------- |
-| 包（Crates） | [通常使用 snake_case](https://github.com/rust-lang/api-guidelines/issues/29) [^crate-name] |
-| 模块（Modules） | `snake_case` |
-| 类型（Types） | `UpperCamelCase` |
-| 特质（Traits） | `UpperCamelCase` |
-| 枚举体（Enum variants） | `UpperCamelCase` |
-| 函数（Functions） | `snake_case` |
-| 方法（Methods） | `snake_case` |
-| 通用构造函数（General constructors） | `new` 或者 `with_more_details` |
-| 转换构造函数（Conversion constructors） | `from_some_other_type` |
-| 宏（Macros） | `snake_case!` |
-| 本地变量（Local variables） | `snake_case` |
-| 静态变量（Statics） | `SCREAMING_SNAKE_CASE` |
-| 常量（Constants） | `SCREAMING_SNAKE_CASE` |
-| 类型参数（Type parameters） | 简明的 `UpperCamelCase` ，通常使用单个大写字母： `T` |
-| 生存期（Lifetimes） | 简短的 `lowercase`，通常使用单个小写字母 `'a`, `'de`, `'src`，尽量保持语义 |
-| 特性（Features） | `snake_case` |
+以 `as_` 和 `into_` 作为前缀的类型转换通常是 *降低抽象层次* ，要么是查看背后的数据 ( `as` ) ，要么是分解 (deconstructe) 背后的数据 ( `into` ) 。
+相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。
 
-说明 :
+当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 `into_inner()` 方法名来取出被封装的值。
 
-1. 在 `UpperCamelCase`情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作一个词。比如，应该使用 `Uuid` 而非 `UUID`，使用 `Usize` 而不是 `USize`，或者是 `Stdin` 而不是 `StdIn`。
-2. 在`snake_case`中，首字母缩写和缩略词是小写的：is_xid_start。
-3. 在 `snake_case` 或者 `SCREAMING_SNAKE_CASE` 情况下，每个词不应该由单个字母组成——除非这个字母是最后一个词。比如，使用 `btree_map` 而不使用 `b_tree_map`，使用 `PI_2` 而不使用 `PI2` 。
+这适用于以下封装器：
+
+读取缓存 ([`BufReader`](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)) 、编码或解码 ([`GzDecoder`](https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner)) 、取出原子 ([`AtomicBool`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner) 、
+或者任何相似的语义 ([`BufWriter`](https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner))。
 
 
-关于包命名：
+**【正例】**
 
-- 由于历史问题，包名有两种形式 `snake_case` 或 `kebab-case` ，但实际在代码中需要引入包名的时候，Rust 只能识别 `snake_case`，也会自动将 `kebab-case` 识别为  `kebab_case`。所以建议使用`snake_case`。
-- Crate 的名称通常不应该使用 `-rs` 或者 `-rust` 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 `-rs` 后缀来表明这是 Rust 实现的版本。
+标准库 API 命名有如下示例：
 
-**【参考】**
+- `as_`
+    - [`str::as_bytes()`](https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes) 
+      用于查看 UTF-8 字节的 `str` 切片，
+      这是无内存代价的（不会产生内存分配）。
+      传入值是 `&str` 类型，输出值是 `&[u8]` 类型。
+- `to_`
+    - [`Path::to_str`] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
+      对操作系统路径进行 UTF-8 字节检查，开销昂贵。
+      虽然输入和输出都是借用，但是这个方法对运行时产生不容忽视的代价，
+      所以不应使用 `as_str` 名称。
+    - [`str::to_lowercase()`] (https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
+      生成正确的 Unicode 小写字符，
+      涉及遍历字符串的字符，可能需要分配内存。
+      输入值是 `&str` 类型，输出值是 `String` 类型。
+    - [`f64::to_radians()`] (https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
+      把浮点数的角度制转换成弧度制。
+      输入和输出都是 `f64` 。没必要传入 `&f64` ，因为复制 `f64` 花销很小。
+      但是使用 `into_radians` 名称就会具有误导性，因为输入数据没有被消耗。
+- `into_`
+    - [`String::into_bytes()`](https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes)
+      从 `String` 提取出背后的 `Vec<u8>` 数据，这是无代价的。
+      它转移了 `String` 的所有权，然后返回具有所有权的 `Vec<u8>` 。
+    - [`BufReader::into_inner()`] (https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
+      转移了 buffered reader 的所有权，取出其背后的 reader ，这是无代价的。
+      存于缓冲区的数据被丢弃了。
+    - [`BufWriter::into_inner()`] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
+      转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。
 
-Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md) 中有也描述。
+如果类型转换方法返回的类型具有 `mut` 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 `mut` 名。
+比如 [`Vec::as_mut_slice`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice) 返回 `mut slice` 类型，这个方法的功能正如其名称所述，所以这个名称优于 `as_slice_mut` 。
+
+```rust
+// Return type is a mut slice.
+fn as_mut_slice(&mut self) -> &mut [T];
+```
+
+- [`Result::as_ref`](https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref)
+- [`RefCell::as_ptr`](https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr)
+- [`slice::to_vec`](https://doc.rust-lang.org/std/primitive.slice.html#method.to_vec)
+- [`Option::into_iter`](https://doc.rust-lang.org/std/option/enum.Option.html#method.into_iter)
+
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
-| ------ | ---- | --------- | ------ |
-| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no | yes | Style |
-| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case) | no | yes | Style |
+| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
+| ------ | ---- | --------- | ------ | ------ |
+| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes| no | Style | warn |

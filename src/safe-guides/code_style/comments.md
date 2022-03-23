@@ -8,13 +8,13 @@
 ## 列表
 
 - [P.CMT.01 代码能做到自注释，文档要干练简洁](./comments/P.CMT.01.md)
-- [G.CMT.01 注释应该有一定宽度限制](./comments/G.CMT.01.md)
-- [G.CMT.02 使用行注释而避免使用块注释](./comments/G.CMT.02.md)
-- [G.CMT.03 文件头注释包含版权说明](./comments/G.CMT.03.md)
-- [G.CMT.04 在注释中使用 FIXME 和 TODO 来帮助任务协作](./comments/G.CMT.04.md)
-- [G.CMT.05 在公开的返回Result类型返回的函数文档中增加 Error 注释](./comments/G.CMT.05.md)
-- [G.CMT.06 如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释](./comments/G.CMT.06.md)
-- [G.CMT.07 在文档注释中要使用空格代替 tab](./comments/G.CMT.07.md)
+- [P.CMT.02 注释应该有一定宽度限制](./comments/P.CMT.02.md)
+- [P.CMT.03 使用行注释而避免使用块注释](./comments/P.CMT.03.md)
+- [P.CMT.04 文件头注释包含版权说明](./comments/P.CMT.04.md)
+- [P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作](./comments/P.CMT.05.md)
+- [G.CMT.01 在公开的返回Result类型返回的函数文档中增加 Error 注释](./comments/G.CMT.01.md)
+- [G.CMT.02 如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释](./comments/G.CMT.02.md)
+- [G.CMT.03 在文档注释中要使用空格代替 tab](./comments/G.CMT.03.md)
 
 
 ## 参考
