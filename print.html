@@ -157,7 +157,6 @@
 <li><a href="https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md">官方 | Rust Style Guide</a></li>
 <li><a href="https://rust-lang.github.io/unsafe-code-guidelines/">Rust's Unsafe Code Guidelines Reference</a></li>
 <li><a href="https://anssi-fr.github.io/rust-guide">法国国家信息安全局 | Rust 安全（Security）规范</a></li>
-<li><a href="https://developers.diem.com/docs/core/coding-guidelines/">Facebook Diem 项目 Rust 编码规范</a></li>
 <li><a href="https://teaclave.apache.org/docs/rust-guildeline/">Apache Teaclave 安全计算平台 | Rust 开发规范</a></li>
 <li><a href="https://github.com/pingcap/style-guide">PingCAP | 编码风格指南（包括 Rust 和 Go 等）</a></li>
 <li><a href="https://fuchsia.dev/fuchsia-src/development/languages/rust">Google Fuchsia 操作系统 Rust 开发指南</a></li>
@@ -11261,7 +11260,8 @@ pub fn scan() -&gt; Result&lt;(), io::Error&gt; {
 </ul>
 </li>
 <li>使用 <a href="https://crates.io/crates/cargo-audit"><code>cargo-audit</code></a> 检测依赖的安全性。</li>
-<li>使用自己的构建工具来替代 <code>Cargo</code>，可以更加安全。比如 Android 团队使用其<code>Soong</code>构建系统支持 Rust ，就选择不支持 <code>build.rs</code> ，就是考虑到审查起来太麻烦。</li>
+<li>使用自己的构建工具来替代 <code>Cargo</code>，可以更加安全。比如 Android 团队使用其<code>Soong</code>构建系统支持 Rust ，就选择禁用 <code>build.rs</code> ，就是考虑到审查起来太麻烦。</li>
+<li>注意设置运行时进程权限，防止运行时代码投毒</li>
 </ul>
 <p><strong>【反例】</strong></p>
 <p>下面是模拟 <code>build.rs</code> 投毒的示例：</p>

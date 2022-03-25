@@ -152,7 +152,8 @@
 </ul>
 </li>
 <li>使用 <a href="https://crates.io/crates/cargo-audit"><code>cargo-audit</code></a> 检测依赖的安全性。</li>
-<li>使用自己的构建工具来替代 <code>Cargo</code>，可以更加安全。比如 Android 团队使用其<code>Soong</code>构建系统支持 Rust ，就选择不支持 <code>build.rs</code> ，就是考虑到审查起来太麻烦。</li>
+<li>使用自己的构建工具来替代 <code>Cargo</code>，可以更加安全。比如 Android 团队使用其<code>Soong</code>构建系统支持 Rust ，就选择禁用 <code>build.rs</code> ，就是考虑到审查起来太麻烦。</li>
+<li>注意设置运行时进程权限，防止运行时代码投毒</li>
 </ul>
 <p><strong>【反例】</strong></p>
 <p>下面是模拟 <code>build.rs</code> 投毒的示例：</p>
