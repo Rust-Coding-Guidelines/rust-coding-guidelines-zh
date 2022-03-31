@@ -4,7 +4,7 @@
 
 **【描述】**
 
-应该使用带有以下前缀名称方法来进行特定类型转换：
+进行特定类型转换的方法名应该包含以下前缀：
 
 | 名称前缀 | 内存代价 | 所有权 |
 | ------ | ---- | --------- |
@@ -13,14 +13,14 @@
 | `into_` | 看情况 | owned -\> owned (非 Copy 类型) |
 
 以 `as_` 和 `into_` 作为前缀的类型转换通常是 *降低抽象层次* ，要么是查看背后的数据 ( `as` ) ，要么是分解 (deconstructe) 背后的数据 ( `into` ) 。
-相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。
+相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是底层会做更多工作，比如多了内存拷贝等操作。
 
-当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 `into_inner()` 方法名来取出被封装的值。
+当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个内部类型时，应该使用 `into_inner()` 方法名来取出被封装类型的值。
 
 这适用于以下封装器：
 
 读取缓存 ([`BufReader`](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)) 、编码或解码 ([`GzDecoder`](https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner)) 、取出原子 ([`AtomicBool`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner) 、
-或者任何相似的语义 ([`BufWriter`](https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner))。
+或者任何相似的语义封装 ([`BufWriter`](https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner))。
 
 
 **【正例】**
@@ -29,9 +29,7 @@
 
 - `as_`
     - [`str::as_bytes()`](https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes) 
-      用于查看 UTF-8 字节的 `str` 切片，
-      这是无内存代价的（不会产生内存分配）。
-      传入值是 `&str` 类型，输出值是 `&[u8]` 类型。
+      用于查看 UTF-8 字节的 `str` 切片，这是无内存代价的（不会产生内存分配）。 传入值是 `&str` 类型，输出值是 `&[u8]` 类型。
 - `to_`
     - [`Path::to_str`] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
       对操作系统路径进行 UTF-8 字节检查，开销昂贵。
@@ -55,13 +53,10 @@
     - [`BufWriter::into_inner()`] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
       转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。
 
-如果类型转换方法返回的类型具有 `mut` 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 `mut` 名。
-比如 [`Vec::as_mut_slice`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice) 返回 `mut slice` 类型，这个方法的功能正如其名称所述，所以这个名称优于 `as_slice_mut` 。
+如果类型转换方法返回的类型具有 `mut` 修饰，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 `mut` 。
+比如 [`Vec::as_mut_slice`](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice) 返回 `&mut [T]` 类型，这个方法的功能正如其名称所述，所以这个名称优于 `as_slice_mut` 。
 
-```rust
-// Return type is a mut slice.
-fn as_mut_slice(&mut self) -> &mut [T];
-```
+其他参考示例：
 
 - [`Result::as_ref`](https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref)
 - [`RefCell::as_ptr`](https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr)

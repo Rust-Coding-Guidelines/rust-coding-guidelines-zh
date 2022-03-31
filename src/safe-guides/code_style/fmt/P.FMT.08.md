@@ -1,4 +1,4 @@
-## P.FMT.08  多个函数参数和导入模块的布局
+## P.FMT.08  函数参数超过五个或导入模块个数超过四个需换行
 
 **【描述】**
 
@@ -7,7 +7,7 @@
 
 **【反例】**
 
-当 `fn_args_layout` 和 `imports_layout` 被设置为其他值时：
+当 rustfmt 配置型 `fn_args_layout` 和 `imports_layout` 未使用默认值：
 
 ```rust
 trait Lorem {
@@ -17,6 +17,7 @@ trait Lorem {
         // body
     }
 
+    // 不符合： 超过五个参数未使用块状缩进
     fn lorem(
         ipsum: Ipsum, dolor: Dolor, sit: Sit, amet: Amet, consectetur: Consectetur,
         adipiscing: Adipiscing, elit: Elit,
@@ -32,6 +33,7 @@ trait Lorem {
 
 use foo::{xxxxxxxxxxxxxxxxxx, yyyyyyyyyyyyyyyyyy, zzzzzzzzzzzzzzzzzz};
 
+// 不符合： 模块换行即可，无需使用块状缩进
 use foo::{
     aaaaaaaaaaaaaaaaaa,
     bbbbbbbbbbbbbbbbbb,
@@ -40,10 +42,11 @@ use foo::{
     eeeeeeeeeeeeeeeeee,
     ffffffffffffffffff,
 };
-
 ```
 
 **【正例】**
+
+当 rustfmt 配置项 `fn_args_layout` 和 `imports_layout` 使用默认值时：
 
 ```rust
 
@@ -54,6 +57,7 @@ trait Lorem {
         // body
     }
 
+    // 符合
     fn lorem(
         ipsum: Ipsum,
         dolor: Dolor,
@@ -64,6 +68,7 @@ trait Lorem {
         elit: Elit,
     );
 
+    // 符合
     fn lorem(
         ipsum: Ipsum,
         dolor: Dolor,
@@ -79,6 +84,7 @@ trait Lorem {
 
 use foo::{xxxxxxxxxxxxxxxxxx, yyyyyyyyyyyyyyyyyy, zzzzzzzzzzzzzzzzzz};
 
+// 符合
 use foo::{
     aaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccc, dddddddddddddddddd,
     eeeeeeeeeeeeeeeeee,
@@ -86,10 +92,6 @@ use foo::{
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 

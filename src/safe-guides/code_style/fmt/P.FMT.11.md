@@ -1,28 +1,27 @@
-## P.FMT.11  导入模块分组规则
+## P.FMT.11 导入模块分组应该具有良好的可读性
 
 **【描述】**
 
 1. 导入同一模块的类型，应该置于同一个块内（`imports_granularity="Crate"`）。
 2. 模块导入应该按以下规则进行分组（`group_imports="StdExternalCrate"`）：
-    - 导入来自 `std`、`core` 和 `alloc`的模块需要置于前面一组。
-    - 导入来自 第三方库的模块 应该置于中间一组。
-    - 导入来自本地 `self`、`super`和`crate`前缀的模块，置于后面一组。
+    - 导入来自 `std`、`core` 和 `alloc`的模块需要置于前面。
+    - 导入来自 第三方库的模块 应该置于中间。
+    - 导入来自本地 `self`、`super`和`crate`前缀的模块，置于后面。
 3. 分组内使用字典序进行排序（`reorder_imports=true`）。
 
-说明： 默认 rustfmt 不会对导入的模块自动分组，而是保留开发者的导入顺序。所以，这里需要修改rustfmt 默认配置，但因为这几个配置项暂时未稳定，所以需要在 Nightly 下使用。
+> 说明： 默认 rustfmt 不会对导入的模块自动分组，而是保留开发者的导入顺序。所以，这里需要修改 rustfmt 默认配置，才能让rustfmt应用此规则，但因为这几个配置项暂时未稳定，所以需要在 Nightly 下使用。
 
 **【反例】**
 
 ```rust
-
+// 不符合： 同一模块类型应该置于同一个块内
 // 当 `imports_granularity="Preserve"`
 use foo::b;
 use foo::b::{f, g};
 use foo::{a, c, d::e};
 use qux::{h, i};
 
-
-// 当按默认值设置时，模块导入比较乱，影响可读性
+// 不符合：当按默认值设置时，模块导入比较乱，影响可读性
 use super::update::convert_publish_payload;
 use chrono::Utc;
 
@@ -42,6 +41,7 @@ use core::f32;
 **【正例】**
 
 ```rust
+// 符合
 // 当 `imports_granularity="Crate"`
 use foo::{
     a, b,
@@ -51,7 +51,7 @@ use foo::{
 };
 use qux::{h, i};
 
-
+// 符合
 // 当 `group_imports="StdExternalCrate` 且 `reorder_imports=true`
 use alloc::alloc::Layout;
 use core::f32;
@@ -68,10 +68,6 @@ use crate::models::Event;
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
