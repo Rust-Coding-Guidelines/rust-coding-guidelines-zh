@@ -140,6 +140,7 @@
                         <h2 id="pnam05-用于访问或获取数据的-getter-类方法通常不要使用-get_-前缀"><a class="header" href="#pnam05-用于访问或获取数据的-getter-类方法通常不要使用-get_-前缀">P.NAM.05 用于访问或获取数据的 <code>getter</code> 类方法通常不要使用 <code>get_</code> 前缀</a></h2>
 <p><strong>【描述】</strong></p>
 <p>因为 Rust 所有权语义的存在，此例子中两个方法的参数分别是共享引用 <code>&amp;self</code> 和 独占引用 <code>&amp;mut self</code>，分别代表了 getter 的语义。</p>
+<p>也存在一些例外情况可以用 <code>get_</code> 前缀。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -184,12 +185,12 @@ pub struct S {
 }
 
 impl S {
-    // 不建议 `get_first`。
+    // 符合
     pub fn first(&amp;self) -&gt; &amp;First {
         &amp;self.first
     }
 
-    // 不建议 `get_first_mut`, `get_mut_first`, or `mut_first`.
+    // 符合
     pub fn first_mut(&amp;mut self) -&gt; &amp;mut First {
         &amp;mut self.first
     }
@@ -202,7 +203,7 @@ impl S {
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【例外】</strong></p>
-<p>但也存在例外情况：只有当有一个明显的东西可以通过<code>getter</code>得到时，才会使用<code>get</code>命名。例如，<code>Cell::get</code>可以访问一个<code>Cell</code>的内容。</p>
+<p>但也存在例外情况：只有当需要显式的语义来通过<code>getter</code>获取某种数据，才会使用<code>get</code>命名。例如，<code>Cell::get</code>可以访问一个<code>Cell</code>的内容。</p>
 <p>对于进行运行时验证的getter，例如边界检查，可以考虑添加一个 Unsafe 的<code>_unchecked</code> 配套方法。一般来说，会有以下签名。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -216,7 +217,7 @@ unsafe fn get_unchecked_mut(&amp;mut self, index: K) -&gt; &amp;mut V;
 <span class="boring">}
 </span></code></pre></pre>
 <p>getter 和类型转换 (<a href="./G.NAM.02.html">G.NAM.02</a>) 之间的区别很小，大部分时候不那么清晰可辨。比如 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path"><code>TempDir::path</code></a> 可以被理解为临时目录的文件系统路径的 getter ，而 <a href="https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path"><code>TempDir::into_path</code></a> 负责把删除临时目录时转换的数据传给调用者。</p>
-<p>因为 <code>path</code> 方法是一个 getter ，如果用 <code>get_path</code> 或者 <code>as_path</code> 就不对了。</p>
+<p>因为 <code>path</code> 方法是一个 getter ，如果用 <code>get_path</code> 或者 <code>as_path</code> 会造成信息冗余。</p>
 <p>来自标准库的例子：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/io/struct.Cursor.html#method.get_mut"><code>std::io::Cursor::get_mut</code></a></li>

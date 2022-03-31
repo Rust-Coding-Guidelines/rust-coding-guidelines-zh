@@ -137,7 +137,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pnam04-作用域越大命名越精确反之应简短"><a class="header" href="#pnam04-作用域越大命名越精确反之应简短">P.NAM.04 作用域越大，命名越精确；反之应简短</a></h2>
+                        <h2 id="pnam04-作用域越大命名越精确反之应简短"><a class="header" href="#pnam04-作用域越大命名越精确反之应简短">P.NAM.04 作用域越大命名越精确，反之应简短</a></h2>
 <p><strong>【描述】</strong></p>
 <ol>
 <li>对于全局函数、全局变量、宏、类型名、枚举命名，应当精确描述并全局唯一。</li>
@@ -147,26 +147,21 @@
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 全局静态变量
-static GET_COUNT: i32 = 42;  // 不符合：描述不精确
+</span>// 不符合：描述不精确
+static GET_COUNT: i32 = 42;  
 
-// 枚举类型
+// 不符合：信息冗余
 enum WebEvent {
-    // An `enum` may either be `unit-like`,
     PageLoadEvent,
     PageUnloadEvent,
-    // like tuple structs,
     KeyPressEvent(char),
     PasteEvent(String),
-    // or c-like structures.
     ClickEvent { x: i64, y: i64 },
 }
 
-// 类型别名
+// 不符合：信息冗余
 type MaskSize = u16; 
-
 pub struct HeaderMap {
-    // 这样使用就显得有些冗余
     mask: MaskSize,
 }
 <span class="boring">}
@@ -175,30 +170,23 @@ pub struct HeaderMap {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 全局静态变量
-static MAX_THREAD_COUNT: i32 = 42;  // 符合
+</span>// 符合
+static MAX_THREAD_COUNT: i32 = 42;  
 
-// 枚举类型
 // 符合： 上下文信息已经知道它是 Event
 enum WebEvent {
-    // An `enum` may either be `unit-like`,
     PageLoad,
     PageUnload,
-    // like tuple structs,
     KeyPress(char),
     Paste(String),
-    // or c-like structures.
     Click { x: i64, y: i64 },
 }
 
-// 类型别名
+// 符合：在使用它的地方自然就知道是描述谁的大小
 type Size = u16; 
-
 pub struct HeaderMap {
-    // 在使用它的地方自然就知道是描述谁的大小
     mask: Size,
 }
-
 <span class="boring">}
 </span></code></pre></pre>
 

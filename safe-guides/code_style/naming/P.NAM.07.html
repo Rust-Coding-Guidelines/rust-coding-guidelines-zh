@@ -137,25 +137,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pnam07--避免使用语言内置保留字关键字内置类型和trait等特殊名称"><a class="header" href="#pnam07--避免使用语言内置保留字关键字内置类型和trait等特殊名称">P.NAM.07  避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
-<p><strong>【级别】</strong> 建议</p>
+                        <h2 id="pnam07-避免使用语言内置保留字关键字内置类型和trait等特殊名称"><a class="header" href="#pnam07-避免使用语言内置保留字关键字内置类型和trait等特殊名称">P.NAM.07 避免使用语言内置保留字、关键字、内置类型和<code>trait</code>等特殊名称</a></h2>
 <p><strong>【描述】</strong></p>
-<p>命名必须要避免使用语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。 具体可以参考<a href="https://doc.rust-lang.org/stable/reference/keywords.html">The Rust Reference-Keywords</a></p>
+<p>命名必须要避免使用语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称。 具体可以参考<a href="https://doc.rust-lang.org/stable/reference/keywords.html">The Rust Reference-Keywords</a>。</p>
 <p><strong>【反例】</strong></p>
-<pre><pre class="playground"><code class="language-rust">// Sized ： Rust 内置了同名 trait 
+<pre><pre class="playground"><code class="language-rust">// 不符合：Rust 内置了 Sized trait 
 type Sized = u16; 
 
 fn main() {
-    // try 为保留关键字，使用`r#`前缀可以使用它，但要尽力避免
+    // 不符合：try 为保留关键字
+    // 如果必须要用，使用`r#`前缀可以使用它，但要尽力避免
     let r#try = 1;
 }
 </code></pre></pre>
-<p><strong>【Lint 检测】</strong></p>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
-<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
-</tbody></table>
-<p>【定制化参考】</p>
-<p>可以检测 标识符 是否通过<code>r#</code>使用了 语言内置的保留字、关键字、内置类型和<code>trait</code>等特殊名称，如果使用，则给予警告。</p>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">// 符合
+type Size = u16; 
+
+fn main() {
+    // 符合
+    let tried = 1;
+}
+</code></pre></pre>
 
                     </main>
 

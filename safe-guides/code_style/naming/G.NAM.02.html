@@ -140,27 +140,25 @@
                         <h2 id="gnam02-类型转换函数命名需要遵循所有权语义"><a class="header" href="#gnam02-类型转换函数命名需要遵循所有权语义">G.NAM.02 类型转换函数命名需要遵循所有权语义</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
-<p>应该使用带有以下前缀名称方法来进行特定类型转换：</p>
+<p>进行特定类型转换的方法名应该包含以下前缀：</p>
 <table><thead><tr><th>名称前缀</th><th>内存代价</th><th>所有权</th></tr></thead><tbody>
 <tr><td><code>as_</code></td><td>无代价</td><td>borrowed -&gt; borrowed</td></tr>
 <tr><td><code>to_</code></td><td>代价昂贵</td><td>borrowed -&gt; borrowed<br>borrowed -&gt; owned (非 Copy 类型)<br>owned -&gt; owned (Copy 类型)</td></tr>
 <tr><td><code>into_</code></td><td>看情况</td><td>owned -&gt; owned (非 Copy 类型)</td></tr>
 </tbody></table>
 <p>以 <code>as_</code> 和 <code>into_</code> 作为前缀的类型转换通常是 <em>降低抽象层次</em> ，要么是查看背后的数据 ( <code>as</code> ) ，要么是分解 (deconstructe) 背后的数据 ( <code>into</code> ) 。
-相对来说，以 <code>to_</code> 作为前缀的类型转换处于同一个抽象层次，但是做了更多的工作。</p>
-<p>当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个与之有关的值时，应该使用 <code>into_inner()</code> 方法名来取出被封装的值。</p>
+相对来说，以 <code>to_</code> 作为前缀的类型转换处于同一个抽象层次，但是底层会做更多工作，比如多了内存拷贝等操作。</p>
+<p>当一个类型用更高级别的语义 (higher-level semantics) 封装 (wraps) 一个内部类型时，应该使用 <code>into_inner()</code> 方法名来取出被封装类型的值。</p>
 <p>这适用于以下封装器：</p>
 <p>读取缓存 (<a href="https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner"><code>BufReader</code></a>) 、编码或解码 (<a href="https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner"><code>GzDecoder</code></a>) 、取出原子 (<a href="https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner"><code>AtomicBool</code></a> 、
-或者任何相似的语义 (<a href="https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner"><code>BufWriter</code></a>)。</p>
+或者任何相似的语义封装 (<a href="https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner"><code>BufWriter</code></a>)。</p>
 <p><strong>【正例】</strong></p>
 <p>标准库 API 命名有如下示例：</p>
 <ul>
 <li><code>as_</code>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes"><code>str::as_bytes()</code></a> 
-用于查看 UTF-8 字节的 <code>str</code> 切片，
-这是无内存代价的（不会产生内存分配）。
-传入值是 <code>&amp;str</code> 类型，输出值是 <code>&amp;[u8]</code> 类型。</li>
+用于查看 UTF-8 字节的 <code>str</code> 切片，这是无内存代价的（不会产生内存分配）。 传入值是 <code>&amp;str</code> 类型，输出值是 <code>&amp;[u8]</code> 类型。</li>
 </ul>
 </li>
 <li><code>to_</code>
@@ -192,15 +190,9 @@
 </ul>
 </li>
 </ul>
-<p>如果类型转换方法返回的类型具有 <code>mut</code> 标识符，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 <code>mut</code> 名。
-比如 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice"><code>Vec::as_mut_slice</code></a> 返回 <code>mut slice</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Return type is a mut slice.
-fn as_mut_slice(&amp;mut self) -&gt; &amp;mut [T];
-<span class="boring">}
-</span></code></pre></pre>
+<p>如果类型转换方法返回的类型具有 <code>mut</code> 修饰，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 <code>mut</code> 。
+比如 <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.as_mut_slice"><code>Vec::as_mut_slice</code></a> 返回 <code>&amp;mut [T]</code> 类型，这个方法的功能正如其名称所述，所以这个名称优于 <code>as_slice_mut</code> 。</p>
+<p>其他参考示例：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.as_ref"><code>Result::as_ref</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.as_ptr"><code>RefCell::as_ptr</code></a></li>

@@ -137,11 +137,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt05--存在多个标识符时应该保持块状block缩进"><a class="header" href="#pfmt05--存在多个标识符时应该保持块状block缩进">P.FMT.05  存在多个标识符时应该保持块状（Block）缩进</a></h2>
+                        <h2 id="pfmt05-存在多个标识符时应该保持块状block缩进"><a class="header" href="#pfmt05-存在多个标识符时应该保持块状block缩进">P.FMT.05 存在多个标识符时应该保持块状（Block）缩进</a></h2>
 <p><strong>【描述】</strong></p>
 <p>当在表达式或语言项定义中出现多个标识符，则应该让其保持块状风格缩进。</p>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合：缩进不符合标准，只是为了对齐
     let lorem = vec![&quot;ipsum&quot;,
                      &quot;dolor&quot;,
                      &quot;sit&quot;,
@@ -153,6 +154,7 @@
 </code></pre></pre>
 <p>流程控制</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合：缩进不符合标准，只是为了对齐
     if lorem_ipsum
        &amp;&amp; dolor_sit // 注意：这里缩进只是三个空格，仅仅是和前一行 `lorem_ipsum`对齐
        &amp;&amp; amet_consectetur
@@ -172,7 +174,7 @@
 </span>fn lorem() {}
 
 fn lorem(ipsum: usize) {}
-
+// 不符合
 fn lorem(ipsum: usize,
          dolor: usize,
          sit: usize,
@@ -186,6 +188,7 @@ fn lorem(ipsum: usize,
 </span></code></pre></pre>
 <p>函数调用</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合
     lorem(&quot;lorem&quot;,
           &quot;ipsum&quot;,
           &quot;dolor&quot;,
@@ -200,7 +203,8 @@ fn lorem(ipsum: usize,
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn lorem&lt;Ipsum: Eq = usize,
+</span>// 不符合
+fn lorem&lt;Ipsum: Eq = usize,
          Dolor: Eq = usize,
          Sit: Eq = usize,
          Amet: Eq = usize,
@@ -228,6 +232,7 @@ fn lorem(ipsum: usize,
 <p><strong>【正例】</strong></p>
 <p>数组：</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合： 缩进四个空格
     let lorem = vec![
         &quot;ipsum&quot;,
         &quot;dolor&quot;,
@@ -241,6 +246,7 @@ fn lorem(ipsum: usize,
 </code></pre></pre>
 <p>流程控制</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合： 缩进四个空格
     if lorem_ipsum
         &amp;&amp; dolor_sit
         &amp;&amp; amet_consectetur
@@ -261,6 +267,7 @@ fn lorem(ipsum: usize,
 
 fn lorem(ipsum: usize) {}
 
+// 符合： 缩进四个空格
 fn lorem(
     ipsum: usize,
     dolor: usize,
@@ -277,6 +284,7 @@ fn lorem(
 </span></code></pre></pre>
 <p>函数调用</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合： 缩进四个空格
     lorem(
         &quot;lorem&quot;,
         &quot;ipsum&quot;,
@@ -293,7 +301,8 @@ fn lorem(
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn lorem&lt;
+</span>// 符合： 缩进四个空格
+fn lorem&lt;
     Ipsum: Eq = usize,
     Dolor: Eq = usize,
     Sit: Eq = usize,
@@ -323,11 +332,9 @@ fn lorem(
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#indent_style"><code>indent_style</code></a></td><td>Block（默认）</td><td>No</td><td>多个标识符定义保持块状风格，但看上去可能不太工整</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#indent_style"><code>indent_style</code></a></td><td>Visual</td><td>No</td><td>多个标识符定义保持对齐风格，为了看上去工整</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#indent_style"><code>indent_style</code></a></td><td>Block（默认）</td><td>No</td><td>多个标识符定义保持块状风格，缩进符合标准</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#indent_style"><code>indent_style</code></a></td><td>Visual</td><td>No</td><td>多个标识符定义保持对齐风格，但不符合缩进标准</td></tr>
 </tbody></table>
 
                     </main>

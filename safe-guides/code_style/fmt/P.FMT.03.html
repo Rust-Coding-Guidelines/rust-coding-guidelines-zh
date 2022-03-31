@@ -147,12 +147,12 @@
 </span>fn foo() {
     println!(&quot;a&quot;);
 }
-// 1
-// 2
+// 不符合：空两行 
+// 不符合：空两行
 fn bar() {
     println!(&quot;b&quot;);
-// 1
-// 2
+// 不符合：空两行 
+// 不符合：空两行
     println!(&quot;c&quot;);
 }
 <span class="boring">}
@@ -164,7 +164,7 @@ fn bar() {
 </span>fn foo() {
     println!(&quot;a&quot;);
 }
-// 1
+// 符合：空一行 
 fn bar() {
     println!(&quot;b&quot;);
     println!(&quot;c&quot;);
@@ -180,15 +180,13 @@ fn bar() {
 }
 fn bar() {
     println!(&quot;b&quot;);
-	// 1
+	// 符合：空一行 
     println!(&quot;c&quot;);
 }
 
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#blank_lines_lower_bound"><code>blank_lines_lower_bound</code></a></td><td>0（默认）</td><td>No</td><td>不空行</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#blank_lines_upper_bound"><code>blank_lines_upper_bound</code></a></td><td>1（默认）</td><td>No</td><td>最大空一行</td></tr>

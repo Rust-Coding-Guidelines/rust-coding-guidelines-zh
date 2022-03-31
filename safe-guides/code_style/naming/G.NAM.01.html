@@ -140,8 +140,8 @@
                         <h2 id="gnam01-使用统一的命名风格"><a class="header" href="#gnam01-使用统一的命名风格">G.NAM.01 使用统一的命名风格</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
-<p>Rust 倾向于在“类型级别”的结构中使用 <code>UpperCamelCase</code> 命名风格，在 “值（实例）级别”的结构中使用 <code>snake_case</code>命名风格。</p>
-<p>下面是具体汇总。</p>
+<p>Rust 倾向于在“类型”级的结构中使用驼峰（ <code>UpperCamelCase</code>） 命名风格，在 “变量、值（实例）、函数名”等结构中使用蛇形（ <code>snake_case</code>）命名风格。</p>
+<p>下面是汇总信息：</p>
 <table><thead><tr><th>Item</th><th>规范</th></tr></thead><tbody>
 <tr><td>包（Crates）</td><td><a href="https://github.com/rust-lang/api-guidelines/issues/29">通常使用 snake_case</a> <sup class="footnote-reference"><a href="#crate-name">1</a></sup></td></tr>
 <tr><td>模块（Modules）</td><td><code>snake_case</code></td></tr>
@@ -162,14 +162,14 @@
 </tbody></table>
 <p>说明 :</p>
 <ol>
-<li>在 <code>UpperCamelCase</code>情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作一个词。比如，应该使用 <code>Uuid</code> 而非 <code>UUID</code>，使用 <code>Usize</code> 而不是 <code>USize</code>，或者是 <code>Stdin</code> 而不是 <code>StdIn</code>。</li>
-<li>在<code>snake_case</code>中，首字母缩写和缩略词是小写的：is_xid_start。</li>
+<li>在 <code>UpperCamelCase</code>情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作单个词。比如，应该使用 <code>Uuid</code> 而非 <code>UUID</code>，使用 <code>Usize</code> 而不是 <code>USize</code>，或者是 <code>Stdin</code> 而不是 <code>StdIn</code>。</li>
+<li>在<code>snake_case</code>中，首字母缩写和缩略词是小写的 <code>is_xid_start</code>。</li>
 <li>在 <code>snake_case</code> 或者 <code>SCREAMING_SNAKE_CASE</code> 情况下，每个词不应该由单个字母组成——除非这个字母是最后一个词。比如，使用 <code>btree_map</code> 而不使用 <code>b_tree_map</code>，使用 <code>PI_2</code> 而不使用 <code>PI2</code> 。</li>
 </ol>
 <p>关于包命名：</p>
 <ul>
 <li>由于历史问题，包名有两种形式 <code>snake_case</code> 或 <code>kebab-case</code> ，但实际在代码中需要引入包名的时候，Rust 只能识别 <code>snake_case</code>，也会自动将 <code>kebab-case</code> 识别为  <code>kebab_case</code>。所以建议使用<code>snake_case</code>。</li>
-<li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
+<li>Crate 的名称通常不应该使用 <code>-rs</code> 或者 <code>-rust</code> 作为后缀或者前缀。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 <code>-rs</code> 后缀来表明这是 Rust 实现的版本。</li>
 </ul>
 <p><strong>【参考】</strong></p>
 <p>Rust 命名规范在 <a href="https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md">RFC 0430</a> 中有也描述。</p>

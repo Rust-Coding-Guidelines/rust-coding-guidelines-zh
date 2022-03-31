@@ -137,44 +137,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt04--语言项item-定义时花括号brace位置应该与语言项保持同一行"><a class="header" href="#pfmt04--语言项item-定义时花括号brace位置应该与语言项保持同一行">P.FMT.04  语言项（Item) 定义时花括号（brace）位置应该与语言项保持同一行</a></h2>
+                        <h2 id="pfmt04--语言项item-定义时左花括号brace位置应该与语言项保持同一行"><a class="header" href="#pfmt04--语言项item-定义时左花括号brace位置应该与语言项保持同一行">P.FMT.04  语言项（Item) 定义时左花括号（brace）位置应该与语言项保持同一行</a></h2>
 <p><strong>【描述】</strong></p>
-<p>花括号的位置风格默认使用 <code>SameLineWhere</code>，但是也根据不同的语言项略有区别。</p>
+<p>为了保持代码结构的良好可读性，Rust 中定义各种语言项，包括控制结构（<code>if / match</code> 等）、函数、结构体、枚举等，要求左花括号与其定义保持同一行。</p>
+<p>但是如果携带 <code>where</code>语句，则要求换行，并且<code>where</code> 子句和 <code>where</code> 关键字不在同一行。</p>
+<p><code>rustfmt</code> 提供三个配置项对不同的语言项进行格式化：</p>
+<ul>
+<li><code>brace_style</code> 配置项对应于大部分语言项，包括函数、结构体等，但是控制结构（<code>if / match</code>等）除外，默认值为<code>SameLineWhere</code>，代表左花括号与语言项定义保持同一行。</li>
+<li><code>where_single_line</code> 配置项对应于 <code>where</code> 语句，默认值是 <code>false</code>，表示 <code>where</code>语句的花括号是换行。</li>
+<li><code>control_brace_style</code> 配置项对应于控制结构（<code>if / match</code>等），默认值为<code>AlwaysSameLine</code>，表示左花括号与语言项定义保持同一行。</li>
+</ul>
+<p>所以，只需要使用 <code>rustfmt</code> 默认配置即可。</p>
 <p><strong>【反例】</strong></p>
-<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
+<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则不符合。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn lorem()
-{
-    // body
-}
-
-fn lorem(ipsum: usize)
-{
-    // body
-}
-
-fn lorem&lt;T&gt;(ipsum: T)
-where
-    T: Add + Sub + Mul + Div,
+</span>// 不符合： 左花括号与函数语言项定义未保持同一行
+fn lorem()
 {
     // body
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果设置 <code>brace_style = &quot;PreferSameLine&quot;</code>，则：</p>
+<p>如果设置 <code>brace_style = &quot;PreferSameLine&quot;</code>，则符合：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn lorem() {
-    // body
-}
-
-fn lorem(ipsum: usize) {
-    // body
-}
-
+</span>// 不符合： 左花括号与 where 语句 应该换行
 fn lorem&lt;T&gt;(ipsum: T)
 where
     T: Add + Sub + Mul + Div, { // 注意这里和 `SameLineWhere`的区别
@@ -183,31 +173,22 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>结构体与枚举：</p>
-<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
+<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则不符合：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Lorem
+</span>// 不符合： 左花括号与结构体语言项定义未保持同一行
+struct Lorem
 {
     ipsum: bool,
-}
-
-struct Dolor&lt;T&gt;
-where
-    T: Eq,
-{
-    sit: T,
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>如果设置 <code>brace_style = &quot;PreferSameLine&quot;</code>，则：</p>
+<p>如果设置 <code>brace_style = &quot;PreferSameLine&quot;</code>，则符合：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Lorem {
-    ipsum: bool,
-}
-
+</span>// 不符合： 左花括号与 where 语句应该换行
 struct Dolor&lt;T&gt;
 where
     T: Eq, {
@@ -216,8 +197,9 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
-<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则：</p>
+<p>如果设置 <code>brace_style = &quot;AlwaysNextLine&quot;</code>，则不符合：</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合： 左花括号与控制结构未保持同一行
     if lorem
     {
         println!(&quot;ipsum!&quot;);
@@ -228,48 +210,20 @@ where
     }
 }
 </code></pre></pre>
-<p>如果设置 <code>brace_style = &quot;ClosingNextLine&quot;</code>，则：</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
-    if lorem {
-        println!(&quot;ipsum!&quot;);
-    } // 注意这里 if 分支结尾处，else 换行
-    else { 
-        println!(&quot;dolor!&quot;);
-    }
-}
-</code></pre></pre>
 <p><strong>【正例】</strong></p>
 <p>函数：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn lorem() { // 花括号和fn定义在同一行
+</span>// 符合： 左花括号和 函数语言项定义在同一行
+fn lorem() { 
     // body
 }
 
-fn lorem(ipsum: usize) { // 花括号和fn定义在同一行
-    // body
-}
-
-// 当有 `where` 子句的时候，花括号换行
-// 并且，`where` 子句和 `where` 关键字不在同一行
 fn lorem&lt;T&gt;(ipsum: T)
-where
+where // 符合：`where` 子句和 `where` 关键字不在同一行
     T: Add + Sub + Mul + Div,
-{
-    // body
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>通过配置 <code>where_single_line</code> 为 true，方可设置 <code>where</code>子句在同一行，如下：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// 当有 `where` 子句的时候，花括号换行
-// 设置了 `where_single_line=true` ，则`where` 子句和 `where` 关键字在同一行
-fn lorem&lt;T&gt;(ipsum: T)
-where T: Add + Sub + Mul + Div,
-{
+{ // 符合：当有 `where` 子句的时候，花括号换行
     // body
 }
 <span class="boring">}
@@ -278,12 +232,14 @@ where T: Add + Sub + Mul + Div,
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Lorem {
+</span>// 符合
+struct Lorem {
     ipsum: bool,
 }
 
+// 符合
 struct Dolor&lt;T&gt;
-where
+where 
     T: Eq,
 {
     sit: T,
@@ -291,7 +247,8 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>流程控制倾向于默认使用 <code>AlwaysSameLine</code>，即，总在同一行。因为流程控制没有<code>where</code>子句。</p>
-<pre><pre class="playground"><code class="language-rust">// &quot;AlwaysSameLine&quot; (default)
+<pre><pre class="playground"><code class="language-rust">// 符合
+// &quot;AlwaysSameLine&quot; (default)
 fn main() {
     if lorem {
         println!(&quot;ipsum!&quot;);
@@ -301,15 +258,13 @@ fn main() {
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#brace_style"><code>brace_style</code></a></td><td>SameLineWhere （默认）</td><td>No</td><td>应该与语言项保持同一行，但是 where 语句例外</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#brace_style"><code>brace_style</code></a></td><td>AlwaysNextLine</td><td>No</td><td>应该在语言项的下一行</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#brace_style"><code>brace_style</code></a></td><td>PreferSameLine</td><td>No</td><td>总是优先与语言项保持同一行，where 语句也不例外</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#where_single_line"><code>where_single_line</code></a></td><td>false（默认）</td><td>No</td><td>强制将 <code>where</code> 子句放在同一行上</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#AlwaysSameLine"><code>brace_style</code> in control-flow</a></td><td>AlwaysSameLine （默认）</td><td>No</td><td>总在同一行上，用于控制流程中默认值</td></tr>
-<tr><td><a href="https://rust-lang.github.io/rustfmt/?#ClosingNextLine"><code>brace_style</code> in control-flow</a></td><td>ClosingNextLine</td><td>No</td><td>用于控制流程中 else 分支在 if 分支结尾处换行</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#control_brace_style"><code>control_brace_style</code> in control-flow</a></td><td>AlwaysSameLine （默认）</td><td>No</td><td>总在同一行上，用于控制流程中默认值</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#control_brace_style"><code>control_brace_style</code> in control-flow</a></td><td>ClosingNextLine</td><td>No</td><td>用于控制流程中 else 分支在 if 分支结尾处换行</td></tr>
 </tbody></table>
 
                     </main>

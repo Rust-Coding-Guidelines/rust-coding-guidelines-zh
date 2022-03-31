@@ -137,9 +137,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt09--空格使用规则"><a class="header" href="#pfmt09--空格使用规则">P.FMT.09  空格使用规则</a></h2>
+                        <h2 id="pfmt09--不同的场景使用不同的空格风格"><a class="header" href="#pfmt09--不同的场景使用不同的空格风格">P.FMT.09  不同的场景，使用不同的空格风格</a></h2>
 <p><strong>【描述】</strong></p>
-<p>总结：</p>
 <ol>
 <li>在冒号之后添加空格，在冒号之前不要加空格。</li>
 <li>在范围（range）操作符（<code>..</code>和<code>..=</code>）前后不要使用空格。</li>
@@ -149,7 +148,8 @@
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 当 `space_after_colon=false`
+</span>// 不符合： 冒号之后未加空格
+// 当 `space_after_colon=false`
 fn lorem&lt;T:Eq&gt;(t:T) {
     let lorem:Dolor = Lorem {
         ipsum:dolor,
@@ -157,6 +157,7 @@ fn lorem&lt;T:Eq&gt;(t:T) {
     };
 }
 
+// 不符合： 冒号之前加空格
 // 当 `space_before_colon=true`
 fn lorem&lt;T : Eq&gt;(t : T) {
     let lorem : Dolor = Lorem {
@@ -165,10 +166,12 @@ fn lorem&lt;T : Eq&gt;(t : T) {
     };
 }
 
+// 不符合： `..`前后加空格
 // 当 `spaces_around_ranges=true`
 let lorem = 0 .. 10;
 let ipsum = 0 ..= 10;
 
+// 不符合： `+`和`=`前后加空格
 // 当 `type_punctuation_density=&quot;Compressed&quot;`
 fn lorem&lt;Ipsum: Dolor+Sit=Amet&gt;() {
     // body
@@ -180,7 +183,8 @@ fn lorem&lt;Ipsum: Dolor+Sit=Amet&gt;() {
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 当 `space_after_colon=true`
+</span>// 符合
+// 当 `space_after_colon=true`
 fn lorem&lt;T: Eq&gt;(t: T) {
     let lorem: Dolor = Lorem {
         ipsum: dolor,
@@ -188,6 +192,7 @@ fn lorem&lt;T: Eq&gt;(t: T) {
     };
 }
 
+// 符合
 // 当 `space_before_colon=false`
 fn lorem&lt;T: Eq&gt;(t: T) {
     let lorem: Dolor = Lorem {
@@ -196,10 +201,12 @@ fn lorem&lt;T: Eq&gt;(t: T) {
     };
 }
 
+// 符合
 // 当 `spaces_around_ranges=false`
 let lorem = 0..10;
 let ipsum = 0..=10;
 
+// 符合
 // 当 `type_punctuation_density=&quot;Wide&quot;`
 fn lorem&lt;Ipsum: Dolor + Sit = Amet&gt;() {
     // body
@@ -208,8 +215,6 @@ fn lorem&lt;Ipsum: Dolor + Sit = Amet&gt;() {
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#space_after_colon"><code>space_after_colon</code></a></td><td>true（默认）</td><td>No</td><td>在冒号后面要加空格</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#space_before_colon"><code>space_before_colon</code></a></td><td>false（默认）</td><td>No</td><td>在冒号前面不要加空格</td></tr>

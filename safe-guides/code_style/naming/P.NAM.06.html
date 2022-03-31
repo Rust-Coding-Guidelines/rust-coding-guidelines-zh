@@ -142,21 +142,30 @@
 <p>此规则包含两条基本子规则：</p>
 <ol>
 <li>对于容纳 <code>U</code> 类型的容器 (container) ，其迭代器方法应该遵循<code>iter/ iter_mut/ into_iter</code> 这三种命名方式。</li>
-<li>并且返回的迭代器类型名称也应该和其方法名保持一致，如一个叫做<code>into_iter()</code>的方法应该返回一个叫做<code>IntoIter</code>的类型。</li>
+<li>返回的迭代器类型名称也应该和其方法名保持一致，如一个叫做<code>into_iter()</code>的方法应该返回一个叫做<code>IntoIter</code>的类型。</li>
 </ol>
 <p>说明：</p>
 <ul>
-<li>规则一适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个 URL 编码的字符串片段的迭代器。使用<code>iter/iter_mut/into_iter</code>约定的话，函数名就不会有任何明确的语义了。</li>
+<li>规则一适用于在概念上属于同质集合的数据结构的方法，而非函数。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个 URL 编码的字符串片段的迭代器，使用<code>iter/iter_mut/into_iter</code>约定的话，函数名就会失去明确的语义。</li>
 <li>规则二同样主要适用于方法，但通常对函数也有意义。例如，第三方库 <code>url</code>  中的 <a href="https://docs.rs/url/1.4.0/url/percent_encoding/fn.percent_encode.html">percent_encode</a> 返回一个<code>PercentEncode</code> 类型的迭代器。</li>
 </ul>
 <p><strong>【反例】</strong></p>
-<p>标准库中存在一个反例： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
+<pre><code class="language-rust ignored">// 不符合：没必要加 `to_` 前缀
+fn to_iter(&amp;self) -&gt; Iter             // Iter 实现 Iterator&lt;Item = &amp;U&gt;
+fn to_iter_mut(&amp;mut self) -&gt; IterMut  // IterMut 实现 Iterator&lt;Item = &amp;mut U&gt;
+fn to_into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt;
+</code></pre>
 <p><strong>【正例】</strong></p>
-<pre><code class="language-rust ignored">fn iter(&amp;self) -&gt; Iter             // Iter 实现 Iterator&lt;Item = &amp;U&gt;
+<pre><code class="language-rust ignored">// 符合
+fn iter(&amp;self) -&gt; Iter             // Iter 实现 Iterator&lt;Item = &amp;U&gt;
 fn iter_mut(&amp;mut self) -&gt; IterMut  // IterMut 实现 Iterator&lt;Item = &amp;mut U&gt;
 fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt;
 </code></pre>
-<p>另外还有来自标准库的例子：</p>
+<p><strong>【例外】</strong></p>
+<p>标准库中存在一个例外： <code>str</code> 类型是有效 UTF-8 字节的切片（slice），概念上与同质集合略有差别，所以 <code>str</code> 没有提供 <code>iter</code>/<code>iter_mut</code>/<code>into_iter</code> 命名的迭代器方法，而是提供 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.bytes"><code>str::bytes</code></a> 方法来输出字节迭代器、 <a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.chars"><code>str::chars</code></a> 方法来输出字符迭代器。</p>
+<p><strong>【参考】</strong></p>
+<p>参考 [RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md</p>
+<p>还有有一些来自标准库的例子可参考：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter"><code>Vec::iter</code></a></li>
 <li><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut"><code>Vec::iter_mut</code></a></li>
@@ -166,14 +175,6 @@ fn into_iter(self) -&gt; IntoIter     // IntoIter 实现 Iterator&lt;Item = U&gt
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.keys"><code>BTreeMap::keys</code></a>  返回 [<code>Keys</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Keys.html">btree_map::Keys</a></li>
 <li><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.values"><code>BTreeMap::values</code></a> 返回 [<code>Values</code>]<a href="https://doc.rust-lang.org/std/collections/btree_map/struct.Values.html">btree_map::Values</a></li>
 </ul>
-<p><strong>【参考】</strong></p>
-<p>参考 [RFC 199]: https://github.com/rust-lang/rfcs/blob/master/text/0199-ownership-variants.md</p>
-<p><strong>【Lint 检测】</strong></p>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
-<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
-</tbody></table>
-<p>【定制化参考】</p>
-<p>检测 <code>iter/iter_mut/into_iter</code> 方法的返回类型是否对应 <code>Iter/IterMut/IntoIter</code> ，且，其返回类型是否与方法名相匹配，如果不是，则给予警告。</p>
 
                     </main>
 

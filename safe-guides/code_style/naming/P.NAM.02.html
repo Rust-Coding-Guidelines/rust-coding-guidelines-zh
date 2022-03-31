@@ -137,41 +137,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pnam02--cargo-feature-名中不应该含有无意义的占位词"><a class="header" href="#pnam02--cargo-feature-名中不应该含有无意义的占位词">P.NAM.02  cargo feature 名中不应该含有无意义的占位词</a></h2>
+                        <h2 id="pnam02--为-cargo-feature-命名时不应含有无意义的占位词"><a class="header" href="#pnam02--为-cargo-feature-命名时不应含有无意义的占位词">P.NAM.02  为 cargo feature 命名时不应含有无意义的占位词</a></h2>
 <p><strong>【描述】</strong></p>
-<p>给 <a href="http://doc.crates.io/manifest.html#the-features-section">Cargo feature</a> 命名时，不要带有无实际含义的的词语，比如无需 <code>use-abc</code> 或 <code>with-abc</code> ，而是直接以 <code>abc</code> 命名。</p>
+<p>给 <a href="http://doc.crates.io/manifest.html#the-features-section">Cargo feature</a> 命名时，不应带有无实际含义的的词语，比如使用<code>abc</code>命名来替代 <code>use-abc</code> 或 <code>with-abc</code>。</p>
 <p>这条原则经常出现在对 Rust 标准库进行 <a href="https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies">可选依赖(optional-dependency)</a> 配置的 crate 上。</p>
+<p>并且 Cargo 要求 features 应该是相互叠加的，所以像 <code>no-abc</code> 这种负向的 feature 命名实际上并不正确。</p>
 <p><strong>【反例】</strong></p>
 <pre><code class="language-toml"># In Cargo.toml
 
-// 不要给 feature 取 `use-std` 或者 `with-std` 或者除 `std` 之外另取名字。
+
 [features]
+// 不符合
 default = [&quot;use-std&quot;]
 std = []
+// 不符合
+no-abc=[]
 </code></pre>
 <pre><code class="language-rust ignored">// In lib.rs
 
 #![cfg_attr(not(feature = &quot;use-std&quot;), no_std)]
-</code></pre>
-<p>feature 应与 Cargo 在推断可选依赖时隐含的 features 具有一致的名字。</p>
-<p>假如<code>x</code> crate 对 Serde 和 标准库 具有可选依赖关系</p>
-<pre><code class="language-toml">[package]
-name = &quot;x&quot;
-version = &quot;0.1.0&quot;
-
-[features]
-std = [&quot;serde/std&quot;]
-// Cargo 要求 features 应该是叠加的，所以像 `no-abc` 这种负向的 feature 命名实际上并不正确。
-no-abc=[]
-
-[dependencies]
-serde = { version = &quot;1.0&quot;, optional = true }
 </code></pre>
 <p><strong>【正例】</strong></p>
 <p>最简洁且正确的做法是：</p>
 <pre><code class="language-toml"># In Cargo.toml
 
 [features]
+// 符合
 default = [&quot;std&quot;]
 std = []
 </code></pre>
@@ -179,19 +170,6 @@ std = []
 
 #![cfg_attr(not(feature = &quot;std&quot;), no_std)]
 </code></pre>
-<p>假如 <code>x</code> crate 对 Serde 和 标准库具有可选依赖关系：</p>
-<pre><code class="language-toml">[package]
-name = &quot;x&quot;
-version = &quot;0.1.0&quot;
-
-[features]
-std = [&quot;serde/std&quot;]
-
-[dependencies]
-serde = { version = &quot;1.0&quot;, optional = true }
-</code></pre>
-<p>当我们使用 <code>x</code> crate 时，可以使用 <code>features = [&quot;serde&quot;]</code> 开启 Serde 依赖。类似地，也可以使用 <code>features = [&quot;std&quot;]</code> 开启标准库依赖。
-Cargo 推断的隐含的 features 应该叫做 <code>serde</code> ，而不是 <code>use-serde</code> 或者 <code>with-serde</code> 。</p>
 
                     </main>
 

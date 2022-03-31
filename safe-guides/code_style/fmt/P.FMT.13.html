@@ -137,14 +137,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt13--具名结构体字段初始化时字段名最好不要省略"><a class="header" href="#pfmt13--具名结构体字段初始化时字段名最好不要省略">P.FMT.13  具名结构体字段初始化时字段名最好不要省略</a></h2>
+                        <h2 id="pfmt13--具名结构体字段初始化时不要省略字段名"><a class="header" href="#pfmt13--具名结构体字段初始化时不要省略字段名">P.FMT.13  具名结构体字段初始化时不要省略字段名</a></h2>
 <p><strong>【描述】</strong></p>
-<p>因为本规则严重依赖于rustfmt，而rustfmt会根据相应配置项对代码进行自动更改，为了确保不会因为rustfmt配置项的更改而导致代码错误，请在遵循rustfmt使用注意事项的基础上，遵循本规则：</p>
+<p>因为本规则依赖于rustfmt，而rustfmt会根据相应配置项对代码进行自动更改，为了确保不会因为rustfmt配置项的更改而导致代码错误，请在遵循rustfmt使用注意事项的基础上遵循本规则：</p>
 <ol>
 <li>省略字段名的时候需要注意变量名和字段名保持一致。</li>
-<li>变量名和字段名不一致的情况下，最好不要省略字段名。</li>
+<li>变量名和字段名不一致的情况下，不要省略字段名。</li>
 </ol>
-<p>以此规则标题主要目的是来规范rustfmt的默认配置不会被人设置为<code>true</code>，而把代码修改错误。</p>
+<blockquote>
+<p>注意：如果将 rustfmt 默认配置 <code>use_field_init_shorthand</code>改为<code>true</code>时，有可能会发生代码被修改错误的情况。</p>
+</blockquote>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">struct Foo {
     a: u32, // 注意这里是 a
@@ -156,9 +158,10 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
-    // 这里省略了字段名，用了变量x
+    // 不符合： 如果允许省略字段名，并且rustfmt 配置 `use_field_init_shorthand`改为`true`时，
+    //        下面代码中字段`a`就会被rustfmt删除，变为 `Foo{x, y, z}`，从而造成错误
     // rustfmt 无法检查这个错误，但是编译时能检查出来，所以要遵循rustfmt使用注意事项就不会出问题
-    let a = Foo { x, y, z };
+    let a = Foo { a: x, y, z };
 }
 </code></pre></pre>
 <p><strong>【正例】</strong></p>
@@ -173,12 +176,11 @@ fn main() {
     let x = 1;
     let y = 2;
     let z = 3;
+    // 符合
     let a = Foo { a: x, y: y, z: z };
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#use_field_init_shorthand"><code>use_field_init_shorthand</code></a></td><td>false（默认）</td><td>Yes</td><td>具名结构体字段初始化不能省略字段名</td></tr>
 </tbody></table>

@@ -137,9 +137,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt01--始终使用-rustfmt-进行自动格式化代码"><a class="header" href="#pfmt01--始终使用-rustfmt-进行自动格式化代码">P.FMT.01  始终使用 rustfmt 进行自动格式化代码</a></h2>
+                        <h2 id="pfmt01--使用-rustfmt-进行自动格式化代码"><a class="header" href="#pfmt01--使用-rustfmt-进行自动格式化代码">P.FMT.01  使用 rustfmt 进行自动格式化代码</a></h2>
 <p><strong>【描述】</strong></p>
-<p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件，即使它是空文件。这是向潜在的合作者表明你希望代码是自动格式化的。</p>
+<p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件。即使它是空文件，这是向潜在的合作者表明你希望代码是自动格式化的。</p>
 <p><strong>【例外】</strong></p>
 <p>在特殊的情况下，可以通过条件编译属性 <code>#[cfg_attr(rustfmt, rustfmt_skip)]</code> 或 <code>#[rustfmt::skip]</code> 来关闭自动格式化。</p>
 <p>比如下面示例：</p>
@@ -196,12 +196,6 @@
     ];
 }
 </code></pre></pre>
-<p><strong>【Lint 检测】</strong></p>
-<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>是否可定制</th></tr></thead><tbody>
-<tr><td>_</td><td>no</td><td>no</td><td>_</td><td>yes</td></tr>
-</tbody></table>
-<p>【定制化建议】</p>
-<p>通过检测 项目 根目录下是否存在 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code> ，如果没有该文件，则发出警告，让开发者使用 rustfmt 来格式化代码。</p>
 
                     </main>
 

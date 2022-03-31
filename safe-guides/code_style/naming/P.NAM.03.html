@@ -145,17 +145,19 @@
 <li>使用正确的英文单词并符合英文语法，不要使用拼音</li>
 <li>仅使用常见或领域内通用的单词缩写</li>
 <li>布尔型变量或函数避免使用否定形式，双重否定不利于理解</li>
-<li>不要使用 Unicode 标识符。</li>
+<li>不要使用 Unicode 标识符</li>
 </ul>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let ming: &amp;str = &quot;John&quot;;
+</span>// 不符合： 使用拼音
+let ming: &amp;str = &quot;John&quot;;
 let xing: &amp;str = &quot;Smith&quot;;
+// 不符合： 含义不明确
 const ERROR_NO_1: u32 = 336;
 const ERROR_NO_2: u32 = 594;
-
+// 不符合：函数名字表示的函数作用不明了
 fn not_number(s:&amp;str) -&gt; bool {/* ... */}
 <span class="boring">}
 </span></code></pre></pre>
@@ -163,12 +165,13 @@ fn not_number(s:&amp;str) -&gt; bool {/* ... */}
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let first_name: &amp;str = &quot;John&quot;;
+</span>// 符合
+let first_name: &amp;str = &quot;John&quot;;
 let last_name: &amp;str = &quot;Smith&quot;;
 const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
 const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
-
-fn is_number(s:&amp;str) -&gt; bool {/* ... */} //用来判断是否为整数
+// 符合
+fn is_number(s:&amp;str) -&gt; bool {/* ... */} 
 <span class="boring">}
 </span></code></pre></pre>
 

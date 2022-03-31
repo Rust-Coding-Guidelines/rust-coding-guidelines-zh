@@ -139,17 +139,18 @@
                     <main>
                         <h2 id="pfmt06--当有多行表达式操作时操作符应该置于行首"><a class="header" href="#pfmt06--当有多行表达式操作时操作符应该置于行首">P.FMT.06  当有多行表达式操作时，操作符应该置于行首</a></h2>
 <p><strong>【描述】</strong></p>
-<p>当有多行表达式操作时，操作符应该置于行首。</p>
+<p>当有多行表达式操作时，操作符应该置于行首，这样有利于代码的可读性和可维护性。</p>
 <p><strong>【反例】</strong></p>
 <p>操作符置于行尾</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合
     let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo ||
         barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
-
+    // 不符合
     let sum = 123456789012345678901234567890 +
         123456789012345678901234567890 +
         123456789012345678901234567890;
-
+    // 不符合
     let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa..
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
@@ -157,20 +158,20 @@
 <p><strong>【正例】</strong></p>
 <p>操作符置于行首</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合
     let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo
         || barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
 
+    // 符合
     let sum = 123456789012345678901234567890
         + 123456789012345678901234567890
         + 123456789012345678901234567890;
-
+    // 符合
     let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         ..bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#binop_separator"><code>binop_separator</code></a></td><td>Front（默认）</td><td>No</td><td>换行后，操作符置于行首</td></tr>
 </tbody></table>

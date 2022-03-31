@@ -144,18 +144,18 @@
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let account_bytes: Vec&lt;u8&gt; = read_some_input();   // account 的类型很清楚，没必要在命名中加 `_bytes`
-let account_str = String::from_utf8(account_bytes)?; // account 的类型很清楚，没必要在命名中加 `_str`
-let account: Account = account_str.parse()?;   // account 的类型很清楚，没必要在命名中加 `_str`
+</span>let account_bytes: Vec&lt;u8&gt; = read_some_input();   // 不符合：account 的类型很清楚，没必要在命名中加 `_bytes`
+let account_str = String::from_utf8(account_bytes)?; // 不符合：account 的类型很清楚，没必要在命名中加 `_str`
+let account: Account = account_str.parse()?;   // 不符合：account 的类型很清楚，没必要在命名中加 `_str`
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let account: Vec&lt;u8&gt; = read_some_input();   // account 的类型很清楚
-let account = String::from_utf8(account)?;  // account 的类型很清楚
-let account: Account = account.parse()?;   // account 的类型很清楚
+</span>let account: Vec&lt;u8&gt; = read_some_input();   // 符合
+let account = String::from_utf8(account)?;  // 符合
+let account: Account = account.parse()?;   // 符合
 <span class="boring">}
 </span></code></pre></pre>
 

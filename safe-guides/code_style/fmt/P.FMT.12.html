@@ -137,19 +137,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt12--声明宏分支格式"><a class="header" href="#pfmt12--声明宏分支格式">P.FMT.12  声明宏分支格式</a></h2>
+                        <h2 id="pfmt12-声明宏分支应该具有良好的可读性"><a class="header" href="#pfmt12-声明宏分支应该具有良好的可读性">P.FMT.12 声明宏分支应该具有良好的可读性</a></h2>
 <p><strong>【描述】</strong></p>
 <ol>
 <li>在声明宏中，模式匹配分支（<code>=&gt;</code> 左侧）应该使用紧凑格式（<code>format_macro_matchers=true</code>）。</li>
-<li>而分支代码体（<code>=&gt;</code> 右侧） 使用宽松格式。详细请看示例。</li>
+<li>而分支代码体（<code>=&gt;</code> 右侧） 使用宽松格式。</li>
 </ol>
-<p>一切都是为了提升可读性。</p>
-<p>说明：因为这里需要修改<code>format_macro_matchers</code>的默认值，且该配置项并未 Stable ，所以需要 Nightly 下格式化。</p>
+<blockquote>
+<p>说明：因为这里需要修改<code>format_macro_matchers</code>的默认值，且该配置项并未 Stable ，所以需要在 Nightly 下修改配置项的值以便使用。</p>
+</blockquote>
 <p><strong>【反例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// 当 `format_macro_matchers=false`且 `format_macro_bodies=true`
+</span>// 不符合： 匹配分支使用了宽松格式
+// 当 `format_macro_matchers=false`且 `format_macro_bodies=true`
 macro_rules! foo {
     ($a: ident : $b: ty) =&gt; {
         $a(42): $b;
@@ -159,6 +161,7 @@ macro_rules! foo {
     };
 }
 
+// 不符合： 分支代码体使用了紧凑格式
 // 当 `format_macro_matchers=false`且 `format_macro_bodies=false`
 macro_rules! foo {
     ($a: ident : $b: ty) =&gt; {
@@ -176,10 +179,11 @@ macro_rules! foo {
 </span><span class="boring">fn main() {
 </span>// 当 `format_macro_matchers=true` 且 `format_macro_bodies=true`
 macro_rules! foo {
-    // 匹配分支紧凑格式， `$a:ident` 和 `$b:ty` 各自配对
+    // 符合：匹配分支紧凑格式， `$a:ident` 和 `$b:ty` 各自配对
     ($a:ident : $b:ty) =&gt; {
         $a(42): $b; // 在代码体内，则宽松一点
     };
+    // 符合
     ($a:ident $b:ident $c:ident) =&gt; {
         $a = $b + $c;
     };
@@ -187,8 +191,6 @@ macro_rules! foo {
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#format_macro_matchers"><code>format_macro_matchers</code></a></td><td>（false（默认），true(建议)）</td><td>No</td><td>声明宏 模式匹配分支（<code>=&gt;</code> 左侧）中要使用紧凑格式</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#format_macro_bodies"><code>format_macro_bodies</code></a></td><td>true（默认）</td><td>No</td><td>声明宏分支代码体（<code>=&gt;</code> 右侧） 使用宽松格式</td></tr>

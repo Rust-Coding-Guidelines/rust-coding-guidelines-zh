@@ -137,14 +137,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt10--match-分支格式"><a class="header" href="#pfmt10--match-分支格式">P.FMT.10  <code>match</code> 分支格式</a></h2>
+                        <h2 id="pfmt10--match-分支应该具有良好的可读性"><a class="header" href="#pfmt10--match-分支应该具有良好的可读性">P.FMT.10  <code>match</code> 分支应该具有良好的可读性</a></h2>
 <p><strong>【描述】</strong></p>
 <ol>
 <li>当match分支右侧代码体太长无法和<code>=&gt;</code>置于同一行需要使用块(block)来包裹。</li>
 <li>在match分支左侧匹配表达式前不要增加管道符(<code>|</code>)</li>
 </ol>
 <p><strong>【反例】</strong></p>
-<pre><pre class="playground"><code class="language-rust">// 当 `match_arm_blocks=false`
+<pre><pre class="playground"><code class="language-rust">// 不符合： 与 `=&gt;` 不同行应该用块来包裹
+// 当 `match_arm_blocks=false`
 fn main() {
     match lorem {
         ipsum =&gt; 
@@ -162,6 +163,7 @@ fn main() {
 // 当 `match_arm_leading_pipes=&quot;Alaways&quot;`
 fn foo() {
     match foo {
+        // 不符合： 分支左侧匹配表达式前不要加管道符
         | &quot;foo&quot; | &quot;bar&quot; =&gt; {}
         | &quot;baz&quot;
         | &quot;something relatively long&quot;
@@ -175,10 +177,12 @@ fn foo() {
 <pre><pre class="playground"><code class="language-rust">// 当 `match_arm_blocks=true`
 fn main() {
     match lorem {
+        // 符合
         ipsum =&gt; { 
             foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x)
         }
         dolor =&gt; println!(&quot;{}&quot;, sit),
+        // 符合
         sit =&gt; foo(
             &quot;foooooooooooooooooooooooo&quot;,
             &quot;baaaaaaaaaaaaaaaaaaaaaaaarr&quot;,
@@ -190,7 +194,9 @@ fn main() {
 
 // 当 `match_arm_leading_pipes=&quot;Never&quot;`
 fn foo() {
+
     match foo {
+        // 符合
         &quot;foo&quot; | &quot;bar&quot; =&gt; {}
         &quot;baz&quot;
         | &quot;something relatively long&quot;
@@ -201,8 +207,6 @@ fn foo() {
 }
 </code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#match_arm_blocks"><code>match_arm_blocks</code></a></td><td>true（默认）</td><td>No</td><td>当match分支右侧代码体太长无法和<code>=&gt;</code>置于同一行需要使用块(block)来包裹</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#match_arm_leading_pipes"><code>match_arm_leading_pipes</code></a></td><td>Never（默认）</td><td>No</td><td>在match分支左侧匹配表达式前不要增加管道符(`</td></tr>

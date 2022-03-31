@@ -137,14 +137,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pfmt08--多个函数参数和导入模块的布局"><a class="header" href="#pfmt08--多个函数参数和导入模块的布局">P.FMT.08  多个函数参数和导入模块的布局</a></h2>
+                        <h2 id="pfmt08--函数参数超过五个或导入模块个数超过四个需换行"><a class="header" href="#pfmt08--函数参数超过五个或导入模块个数超过四个需换行">P.FMT.08  函数参数超过五个或导入模块个数超过四个需换行</a></h2>
 <p><strong>【描述】</strong></p>
 <ol>
 <li>五个以内函数参数可以置于一行，超过五个则使用「块」状缩进。</li>
 <li>导入模块每行超过四个，则换行。</li>
 </ol>
 <p><strong>【反例】</strong></p>
-<p>当 <code>fn_args_layout</code> 和 <code>imports_layout</code> 被设置为其他值时：</p>
+<p>当 rustfmt 配置型 <code>fn_args_layout</code> 和 <code>imports_layout</code> 未使用默认值：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -155,6 +155,7 @@
         // body
     }
 
+    // 不符合： 超过五个参数未使用块状缩进
     fn lorem(
         ipsum: Ipsum, dolor: Dolor, sit: Sit, amet: Amet, consectetur: Consectetur,
         adipiscing: Adipiscing, elit: Elit,
@@ -170,6 +171,7 @@
 
 use foo::{xxxxxxxxxxxxxxxxxx, yyyyyyyyyyyyyyyyyy, zzzzzzzzzzzzzzzzzz};
 
+// 不符合： 模块换行即可，无需使用块状缩进
 use foo::{
     aaaaaaaaaaaaaaaaaa,
     bbbbbbbbbbbbbbbbbb,
@@ -178,10 +180,10 @@ use foo::{
     eeeeeeeeeeeeeeeeee,
     ffffffffffffffffff,
 };
-
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
+<p>当 rustfmt 配置项 <code>fn_args_layout</code> 和 <code>imports_layout</code> 使用默认值时：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span>
@@ -193,6 +195,7 @@ use foo::{
         // body
     }
 
+    // 符合
     fn lorem(
         ipsum: Ipsum,
         dolor: Dolor,
@@ -203,6 +206,7 @@ use foo::{
         elit: Elit,
     );
 
+    // 符合
     fn lorem(
         ipsum: Ipsum,
         dolor: Dolor,
@@ -218,6 +222,7 @@ use foo::{
 
 use foo::{xxxxxxxxxxxxxxxxxx, yyyyyyyyyyyyyyyyyy, zzzzzzzzzzzzzzzzzz};
 
+// 符合
 use foo::{
     aaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccc, dddddddddddddddddd,
     eeeeeeeeeeeeeeeeee,
@@ -225,8 +230,6 @@ use foo::{
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【rustfmt 配置】</strong></p>
-<p>此规则 Clippy 不可检测，由 rustfmt 自动格式化。</p>
-<p>rustfmt 配置：</p>
 <table><thead><tr><th>对应选项</th><th>可选值</th><th>是否 stable</th><th>说明</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#fn_args_layout"><code>fn_args_layout</code></a></td><td>Tall（默认）</td><td>Yes</td><td>函数参数五个或以内可以一行，超过五个则使用块状缩进</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#imports_layout"><code>imports_layout</code></a></td><td>Mixed（默认）</td><td>No</td><td>导入模块每行超过四个则换行</td></tr>
