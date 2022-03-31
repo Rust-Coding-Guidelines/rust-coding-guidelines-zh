@@ -10,12 +10,12 @@
 fn foo() {
     println!("a");
 }
-// 1
-// 2
+// 不符合：空两行 
+// 不符合：空两行
 fn bar() {
     println!("b");
-// 1
-// 2
+// 不符合：空两行 
+// 不符合：空两行
     println!("c");
 }
 ```
@@ -26,7 +26,7 @@ fn bar() {
 fn foo() {
     println!("a");
 }
-// 1
+// 符合：空一行 
 fn bar() {
     println!("b");
     println!("c");
@@ -41,17 +41,13 @@ fn foo() {
 }
 fn bar() {
     println!("b");
-	// 1
+	// 符合：空一行 
     println!("c");
 }
 
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 

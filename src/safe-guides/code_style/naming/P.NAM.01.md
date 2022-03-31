@@ -9,11 +9,7 @@
 > 
 > 当crate中类型名称都按照 **动词-宾语-error** 这样的顺序来命名错误类型时，如果要增加新的错误类型，则也需要按同样的词序来增加。
 
-
-
-**【正例】**
-
-以下是来自标准库的处理错误的一些类型：
+以下是来自标准库的处理错误的一些类型示例：
 
 - [`JoinPathsError`](https://doc.rust-lang.org/std/env/struct.JoinPathsError.html)
 - [`ParseBoolError`](https://doc.rust-lang.org/std/str/struct.ParseBoolError.html)
@@ -25,13 +21,15 @@
 
 如果你想新增和标准库相似的错误类型，比如“解析地址错误”类型，为了保持词性一致，应该使用`ParseAddrError` 名称，而不是`AddrParseError`
 
+**【反例】**
 ```rust
+// 不符合：与标准库错误类型次序不一致，应该为 ParseAddrError
+struct AddrParseError {}
+```
+
+**【正例】**
+```rust
+// 符合： 与标准库错误类型一致
 struct ParseAddrError{}
 ```
 
-**【反例】**
-
-```rust
-// 与标准库错误类型次序不一致，应该为 ParseAddrError
-struct AddrParseError {}
-```

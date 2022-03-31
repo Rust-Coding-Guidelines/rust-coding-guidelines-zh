@@ -5,9 +5,9 @@
 
 **【描述】**
 
-Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风格，在 “值（实例）级别”的结构中使用 `snake_case`命名风格。
+Rust 倾向于在“类型”级的结构中使用驼峰（ `UpperCamelCase`） 命名风格，在 “变量、值（实例）、函数名”等结构中使用蛇形（ `snake_case`）命名风格。
 
-下面是具体汇总。
+下面是汇总信息：
 
 | Item | 规范 |
 | ---- | ---------- |
@@ -30,15 +30,15 @@ Rust 倾向于在“类型级别”的结构中使用 `UpperCamelCase` 命名风
 
 说明 :
 
-1. 在 `UpperCamelCase`情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作一个词。比如，应该使用 `Uuid` 而非 `UUID`，使用 `Usize` 而不是 `USize`，或者是 `Stdin` 而不是 `StdIn`。
-2. 在`snake_case`中，首字母缩写和缩略词是小写的：is_xid_start。
+1. 在 `UpperCamelCase`情况下，由首字母缩写组成的缩略语和 复合词的缩写，算作单个词。比如，应该使用 `Uuid` 而非 `UUID`，使用 `Usize` 而不是 `USize`，或者是 `Stdin` 而不是 `StdIn`。
+2. 在`snake_case`中，首字母缩写和缩略词是小写的 `is_xid_start`。
 3. 在 `snake_case` 或者 `SCREAMING_SNAKE_CASE` 情况下，每个词不应该由单个字母组成——除非这个字母是最后一个词。比如，使用 `btree_map` 而不使用 `b_tree_map`，使用 `PI_2` 而不使用 `PI2` 。
 
 
 关于包命名：
 
 - 由于历史问题，包名有两种形式 `snake_case` 或 `kebab-case` ，但实际在代码中需要引入包名的时候，Rust 只能识别 `snake_case`，也会自动将 `kebab-case` 识别为  `kebab_case`。所以建议使用`snake_case`。
-- Crate 的名称通常不应该使用 `-rs` 或者 `-rust` 作为后缀或者前缀。 因为每个 crate 都是 Rust 编写的！ 没必要一直提醒使用者这一点。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 `-rs` 后缀来表明这是 Rust 实现的版本。
+- Crate 的名称通常不应该使用 `-rs` 或者 `-rust` 作为后缀或者前缀。但是有些情况下，比如是其他语言移植的同名 Rust 实现，则可以使用 `-rs` 后缀来表明这是 Rust 实现的版本。
 
 **【参考】**
 

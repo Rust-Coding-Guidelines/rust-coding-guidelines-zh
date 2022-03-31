@@ -1,8 +1,6 @@
-## P.FMT.09  空格使用规则
+## P.FMT.09  不同的场景，使用不同的空格风格
 
 **【描述】**
-
-总结：
 
 1. 在冒号之后添加空格，在冒号之前不要加空格。
 2. 在范围（range）操作符（`..`和`..=`）前后不要使用空格。
@@ -11,6 +9,7 @@
 **【反例】**
 
 ```rust
+// 不符合： 冒号之后未加空格
 // 当 `space_after_colon=false`
 fn lorem<T:Eq>(t:T) {
     let lorem:Dolor = Lorem {
@@ -19,6 +18,7 @@ fn lorem<T:Eq>(t:T) {
     };
 }
 
+// 不符合： 冒号之前加空格
 // 当 `space_before_colon=true`
 fn lorem<T : Eq>(t : T) {
     let lorem : Dolor = Lorem {
@@ -27,10 +27,12 @@ fn lorem<T : Eq>(t : T) {
     };
 }
 
+// 不符合： `..`前后加空格
 // 当 `spaces_around_ranges=true`
 let lorem = 0 .. 10;
 let ipsum = 0 ..= 10;
 
+// 不符合： `+`和`=`前后加空格
 // 当 `type_punctuation_density="Compressed"`
 fn lorem<Ipsum: Dolor+Sit=Amet>() {
     // body
@@ -41,6 +43,7 @@ fn lorem<Ipsum: Dolor+Sit=Amet>() {
 **【正例】**
 
 ```rust
+// 符合
 // 当 `space_after_colon=true`
 fn lorem<T: Eq>(t: T) {
     let lorem: Dolor = Lorem {
@@ -49,6 +52,7 @@ fn lorem<T: Eq>(t: T) {
     };
 }
 
+// 符合
 // 当 `space_before_colon=false`
 fn lorem<T: Eq>(t: T) {
     let lorem: Dolor = Lorem {
@@ -57,10 +61,12 @@ fn lorem<T: Eq>(t: T) {
     };
 }
 
+// 符合
 // 当 `spaces_around_ranges=false`
 let lorem = 0..10;
 let ipsum = 0..=10;
 
+// 符合
 // 当 `type_punctuation_density="Wide"`
 fn lorem<Ipsum: Dolor + Sit = Amet>() {
     // body
@@ -69,10 +75,6 @@ fn lorem<Ipsum: Dolor + Sit = Amet>() {
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 

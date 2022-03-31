@@ -2,7 +2,7 @@
 
 **【描述】**
 
-当有多行表达式操作时，操作符应该置于行首。
+当有多行表达式操作时，操作符应该置于行首，这样有利于代码的可读性和可维护性。
 
 **【反例】**
 
@@ -10,13 +10,14 @@
 
 ```rust
 fn main() {
+    // 不符合
     let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo ||
         barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
-
+    // 不符合
     let sum = 123456789012345678901234567890 +
         123456789012345678901234567890 +
         123456789012345678901234567890;
-
+    // 不符合
     let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa..
         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
@@ -28,23 +29,21 @@ fn main() {
 
 ```rust
 fn main() {
+    // 符合
     let or = foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo
         || barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar;
 
+    // 符合
     let sum = 123456789012345678901234567890
         + 123456789012345678901234567890
         + 123456789012345678901234567890;
-
+    // 符合
     let range = aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         ..bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb;
 }
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 

@@ -1,4 +1,4 @@
-## P.FMT.05  存在多个标识符时应该保持块状（Block）缩进
+## P.FMT.05 存在多个标识符时应该保持块状（Block）缩进
 
 **【描述】**
 
@@ -8,6 +8,7 @@
 
 ```rust
 fn main() {
+    // 不符合：缩进不符合标准，只是为了对齐
     let lorem = vec!["ipsum",
                      "dolor",
                      "sit",
@@ -22,6 +23,7 @@ fn main() {
 
 ```rust
 fn main() {
+    // 不符合：缩进不符合标准，只是为了对齐
     if lorem_ipsum
        && dolor_sit // 注意：这里缩进只是三个空格，仅仅是和前一行 `lorem_ipsum`对齐
        && amet_consectetur
@@ -42,7 +44,7 @@ fn main() {
 fn lorem() {}
 
 fn lorem(ipsum: usize) {}
-
+// 不符合
 fn lorem(ipsum: usize,
          dolor: usize,
          sit: usize,
@@ -58,6 +60,7 @@ fn lorem(ipsum: usize,
 
 ```rust
 fn main() {
+    // 不符合
     lorem("lorem",
           "ipsum",
           "dolor",
@@ -73,6 +76,7 @@ fn main() {
 
 
 ```rust
+// 不符合
 fn lorem<Ipsum: Eq = usize,
          Dolor: Eq = usize,
          Sit: Eq = usize,
@@ -108,6 +112,7 @@ fn main() {
 
 ```rust
 fn main() {
+    // 符合： 缩进四个空格
     let lorem = vec![
         "ipsum",
         "dolor",
@@ -124,6 +129,7 @@ fn main() {
 
 ```rust
 fn main() {
+    // 符合： 缩进四个空格
     if lorem_ipsum
         && dolor_sit
         && amet_consectetur
@@ -144,6 +150,7 @@ fn lorem() {}
 
 fn lorem(ipsum: usize) {}
 
+// 符合： 缩进四个空格
 fn lorem(
     ipsum: usize,
     dolor: usize,
@@ -162,6 +169,7 @@ fn lorem(
 
 ```rust
 fn main() {
+    // 符合： 缩进四个空格
     lorem(
         "lorem",
         "ipsum",
@@ -178,6 +186,7 @@ fn main() {
 泛型
 
 ```rust
+// 符合： 缩进四个空格
 fn lorem<
     Ipsum: Eq = usize,
     Dolor: Eq = usize,
@@ -212,11 +221,7 @@ fn main() {
 
 **【rustfmt 配置】**
 
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
-
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
-| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Block（默认） | No| 多个标识符定义保持块状风格，但看上去可能不太工整 |
-| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Visual | No| 多个标识符定义保持对齐风格，为了看上去工整 |
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Block（默认） | No| 多个标识符定义保持块状风格，缩进符合标准 |
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Visual | No| 多个标识符定义保持对齐风格，但不符合缩进标准 |

@@ -1,4 +1,4 @@
-## P.FMT.10  `match` 分支格式
+## P.FMT.10  `match` 分支应该具有良好的可读性
 
 **【描述】**
 
@@ -8,6 +8,7 @@
 **【反例】**
 
 ```rust
+// 不符合： 与 `=>` 不同行应该用块来包裹
 // 当 `match_arm_blocks=false`
 fn main() {
     match lorem {
@@ -26,6 +27,7 @@ fn main() {
 // 当 `match_arm_leading_pipes="Alaways"`
 fn foo() {
     match foo {
+        // 不符合： 分支左侧匹配表达式前不要加管道符
         | "foo" | "bar" => {}
         | "baz"
         | "something relatively long"
@@ -42,10 +44,12 @@ fn foo() {
 // 当 `match_arm_blocks=true`
 fn main() {
     match lorem {
+        // 符合
         ipsum => { 
             foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(x)
         }
         dolor => println!("{}", sit),
+        // 符合
         sit => foo(
             "foooooooooooooooooooooooo",
             "baaaaaaaaaaaaaaaaaaaaaaaarr",
@@ -57,7 +61,9 @@ fn main() {
 
 // 当 `match_arm_leading_pipes="Never"`
 fn foo() {
+
     match foo {
+        // 符合
         "foo" | "bar" => {}
         "baz"
         | "something relatively long"
@@ -69,10 +75,6 @@ fn foo() {
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 
