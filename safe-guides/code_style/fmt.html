@@ -143,6 +143,12 @@
 <p>说明：</p>
 <p>对于 <code>rustfmt</code> 中未稳定的配置项（<code>Stable</code>为<code>No</code>），则表示该配置项不能在稳定版（Stable）Rust 中更改配置，但其默认值会在<code>cargo fmt</code>时生效。在 Nightly Rust 下则都可以自定义配置。</p>
 <p>如需了解在稳定版 Rust 中使用未稳定配置项的方法、配置示例及其他全局配置项说明，请参阅：<a href="./../Appendix/tools/rustfmt.html">Rustfmt 配置相关说明</a> 。</p>
+<p><strong>【注意事项】</strong></p>
+<p>因为 rustfmt 工具会自动修改代码，为了确保 rustfmt 不会因为意外而改错代码，所以在使用 rustfmt 时应该注意下面两项描述：</p>
+<ol>
+<li>务必保证在全部把代码修改完毕且编译通过之后再执行 rustfmt 命令。 因为 rustfmt 执行过程中不会对代码进行编译，所以就不会有静态检查保护。</li>
+<li>如果是使用 IDE 或 编辑器的时候开启了自动保护功能，就不要开启自动执行 rustfmt 功能。</li>
+</ol>
 <h2 id="列表"><a class="header" href="#列表">列表</a></h2>
 <ul>
 <li><a href="./fmt/P.FMT.01.html">P.FMT.01 使用 rustfmt 进行自动格式化代码</a></li>
