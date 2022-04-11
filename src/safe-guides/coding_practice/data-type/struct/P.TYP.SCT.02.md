@@ -9,31 +9,21 @@
  ```rust
  use std::{path::PathBuf, time::Duration};
  
- // note that we can simply auto-derive Default here.
  #[derive(Default, Debug, PartialEq)]
  struct MyConfiguration {
-     // Option defaults to None
      output: Option<PathBuf>,
-     // Vecs default to empty vector
      search_path: Vec<PathBuf>,
-     // Duration defaults to zero time
      timeout: Duration,
-     // bool defaults to false
      check: bool,
  }
- 
- impl MyConfiguration {
-     // add setters here
- }
- 
+
  fn main() {
-     // construct a new instance with default values
+     // 使用 default 方法创建实例
      let mut conf = MyConfiguration::default();
-     // do something with conf here
      conf.check = true;
      println!("conf = {:#?}", conf);
          
-     // partial initialization with default values, creates the same instance
+     // 创建新实例的时候，使用局部更新更加方便
      let conf1 = MyConfiguration {
          check: true,
          ..Default::default()
@@ -43,5 +33,5 @@
  ```
 
 
----
+
 

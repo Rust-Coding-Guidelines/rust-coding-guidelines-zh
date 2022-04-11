@@ -26,6 +26,6 @@ Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调
 - [P.FMT.11 导入模块分组应该具有良好的可读性](./fmt/P.FMT.11.md)
 - [P.FMT.12 声明宏分支应该具有良好的可读性](./fmt/P.FMT.12.md)
 - [P.FMT.13 具名结构体字段初始化时不要省略字段名](./fmt/P.FMT.13.md)
-- [P.FMT.14 extern 外部函数需要显式指定 ABI](./fmt/P.FMT.14.md)
+- [P.FMT.14  extern 外部函数需要显式指定 C-ABI](./fmt/P.FMT.14.md)
 - [P.FMT.15 解构元组的时候允许使用`..`来指代剩余元素](./fmt/P.FMT.15.md)
-- [P.FMT.16 不要将多个不相关的派生(Derive)宏合并为同一行](./fmt/P.FMT.16.md)
+- [P.FMT.16 不要将派生宏中多个不相关的特质合并为同一行](./fmt/P.FMT.16.md)

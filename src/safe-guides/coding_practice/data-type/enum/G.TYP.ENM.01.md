@@ -14,15 +14,16 @@
 这意味着：
 
 - 当你通过 `F` 对 `U` 进行 `map` 转换的时候，意味着这个转换是一定会成功的。
-- 当你通过 `F` 对 `U` 进行 `map` 转换的时候，意味着这个转换是不一定会成功的，需要在 `F` 调用之后对其结果 `Option<U>/Result<U>` 进行处理。
+- 当你通过 `F` 对 `U` 进行 `and_then` 转换的时候，意味着这个转换是不一定会成功的，需要在 `F` 调用之后对其结果 `Option<U>/Result<U>` 进行处理。
 
 在合适的场景中选择合适的组合算子，可以让代码更加简洁，提升可读性和可维护性。
 
 **【反例】**
 
 ```rust
-# fn opt() -> Option<&'static str> { Some("42") }
-# fn res() -> Result<&'static str, &'static str> { Ok("42") }
+// 不符合： 当前这种情况是一定会成功的情况，应该使用 map
+fn opt() -> Option<&'static str> { Some("42") }
+fn res() -> Result<&'static str, &'static str> { Ok("42") }
 let _ = opt().and_then(|s| Some(s.len()));
 let _ = res().and_then(|s| if s.len() == 42 { Ok(10) } else { Ok(20) });
 let _ = res().or_else(|s| if s.len() == 42 { Err(10) } else { Err(20) });
@@ -31,11 +32,10 @@ let _ = res().or_else(|s| if s.len() == 42 { Err(10) } else { Err(20) });
 
 **【正例】**
 
-像这种简单的一定会成功的情况，应该使用 `map`，否则使用`and_then`。
-
 ```rust
-# fn opt() -> Option<&'static str> { Some("42") }
-# fn res() -> Result<&'static str, &'static str> { Ok("42") }
+// 符合
+fn opt() -> Option<&'static str> { Some("42") }
+fn res() -> Result<&'static str, &'static str> { Ok("42") }
 let _ = opt().map(|s| s.len());
 let _ = res().map(|s| if s.len() == 42 { 10 } else { 20 });
 let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });

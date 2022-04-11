@@ -9,14 +9,18 @@
 **【反例】**
 
 ```rust
+// 不符合
+#[warn(clippy::unused_async)]
 async fn add(value: i32) -> i32 {
-    value + 1
+    value + 1 
 }
 ```
 
 **【正例】**
 
 ```rust
+// 符合
+#[warn(clippy::unused_async)]
 fn add(value: i32) -> i32 {
     value + 1
 }

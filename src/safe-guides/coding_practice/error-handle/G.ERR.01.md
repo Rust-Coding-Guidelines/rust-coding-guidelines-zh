@@ -9,24 +9,28 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::unwrap_used)]
+
 fn select(opt: Option<String>) {
-    opt.unwrap();  // 可以用 expect 方法来处理 None 的情况
+    opt.unwrap();  // 不符合
 }
 // OR
 fn select(opt: Result<String, ()>) {
-    res.unwrap();  // 可以用 expect 方法来处理 Err 的情况
+    res.unwrap();  // 不符合
 }
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::unwrap_used)]
+
 fn select(opt: Option<String>) {
-    opt.expect("more helpful message");  // 可以用 expect 方法来处理 None 的情况
+    opt.expect("more helpful message");  // 符合：可以用 expect 方法来处理 None 的情况
 }
 // OR
 fn select(opt: Result<String, ()>) {
-    res.expect("more helpful message");  // 可以用 expect 方法来处理 Err 的情况
+    res.expect("more helpful message");  // 符合：可以用 expect 方法来处理 Err 的情况
 }
 ```
 

@@ -9,16 +9,19 @@
 **【反例】**
 
 ```rust
-let a = [1, 2, 3];
+#![warn(clippy::cloned_instead_of_copied)]
 
+let a = [1, 2, 3];
+// 不符合
 let v_copied: Vec<_> = a.iter().cloned().collect();
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::cloned_instead_of_copied)]
 let a = [1, 2, 3];
-
+// 符合
 let v_copied: Vec<_> = a.iter().copied().collect();
 ```
 

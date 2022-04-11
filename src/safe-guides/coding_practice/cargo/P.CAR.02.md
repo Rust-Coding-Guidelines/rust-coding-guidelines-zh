@@ -2,7 +2,7 @@
 
 **【描述】**
 
-Rust 的 features 提供了方便的条件编译功能。从软件工程来说，features 应该是为了避免让用户依赖没必要依赖的功能而使用的。
+Rust 的 features 提供了方便的条件编译功能。从软件工程来说，features 适合应用于可选功能。
 
 在使用 features 的时候，应该考虑到底是不是真的需要 features。
 

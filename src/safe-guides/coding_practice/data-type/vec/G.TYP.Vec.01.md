@@ -11,24 +11,16 @@
  ```rust
  let mut vec: Vec<u8> = Vec::with_capacity(1000);
  unsafe { vec.set_len(1000); }
+ // 不符合
  reader.read(&mut vec); // error: Undefined Behavior: using uninitialized data, but this operation requires initialized memory
  ```
 
 **【正例】**
 
 ```rust
+// 符合
 let mut vec: Vec<u8> = vec![0; 1000];
 reader.read(&mut vec);
-
-// or
-let mut vec: Vec<MaybeUninit<T>> = Vec::with_capacity(1000);
-vec.set_len(1000);  // `MaybeUninit` can be uninitialized
-
-// or
-let mut vec: Vec<u8> = Vec::with_capacity(1000);
-let remaining = vec.spare_capacity_mut();  // `&mut [MaybeUninit<u8>]`
-// perform initialization with `remaining`
-vec.set_len(...);  // Safe to call `set_len()` on initialized part
 ```
 
 **【Lint 检测】**

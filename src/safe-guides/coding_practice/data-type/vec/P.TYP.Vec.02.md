@@ -7,14 +7,15 @@
 **【反例】**
 
 ```rust
+// 不符合
 let mut output = Vec::new();
 ```
 
 **【正例】**
 
 ```rust
+// 符合
 let mut output = Vec::with_capacity(input.len());
 ```
 
----
 

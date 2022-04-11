@@ -9,7 +9,11 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::struct_excessive_bools)]
+
+// 不符合
 struct S {
+    name: String,
     is_pending: bool,
     is_processing: bool,
     is_finished: bool,
@@ -19,7 +23,14 @@ struct S {
 **【正例】**
 
 ```rust
-enum S {
+#![warn(clippy::struct_excessive_bools)]
+// 符合
+struct S {
+    name: String,
+    state: State,
+}
+
+enum State {
     Pending,
     Processing,
     Finished,

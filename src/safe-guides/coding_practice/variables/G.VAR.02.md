@@ -6,11 +6,12 @@
 
 Rust 语言默认支持 Non ASCII 字符作为合法标识符。但是，为了统一团队代码风格，建议使用最常用的 ASCII 字符作为合法标识符。
 
-此外，通常**命名相关**的 Lint 检查只支持英文命名。
+> 此外，通常**命名相关**的 Clippy Lint 检查只支持英文命名。
 
 **【反例】**
 
 ```rust
+// 不符合
 #[derive(Debug)]
 struct 人 {
     /// 普通话
@@ -51,6 +52,7 @@ fn main () {
 **【正例】**
 
 ```rust
+// 符合
 #[derive(Debug)]
 struct People {
     name: String,

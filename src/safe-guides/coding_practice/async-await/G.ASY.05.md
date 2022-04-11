@@ -15,7 +15,7 @@ use std::error::Error;
 use std::{fs, io};
     
 async fn read_file() -> Result<String, std::io::Error> {
-    fs::read_to_string("test.txt")
+    fs::read_to_string("test.txt") // 不符合
 }
 ```
 
@@ -27,16 +27,7 @@ async fn read_file() -> Result<String, std::io::Error> {
 use tokio::fs;
 
 async fn read_file() -> std::io::Result<()> {
-    let _ = fs::read_to_string("test.txt").await?;
+    let _ = fs::read_to_string("test.txt").await?; // 符合
     Ok(())
 }
 ```
-
-**【Lint 检测】**
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-
-**【定制化参考】**
-这条规则如果需要定制Lint，则可以扫描异步过程，找到黑名单定义的阻塞操作调用，进行告警。

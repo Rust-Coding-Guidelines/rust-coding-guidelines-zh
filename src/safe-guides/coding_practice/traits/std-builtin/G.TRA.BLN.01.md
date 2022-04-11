@@ -9,12 +9,17 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::default_trait_access)]
+// 不符合
 let s: String = Default::default();
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::default_trait_access)]
+
+// 符合
 let s = String::default();
 ```
 

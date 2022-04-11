@@ -14,8 +14,6 @@ pub fn functional_blur(input: &Matrix) -> Matrix {
     assert!(input.width >= 3);
     assert!(input.height >= 3);
 
-    // Stash away the top and bottom rows so they can be
-    // directly copied across later
     let mut rows = input.rows();
     let first_row = rows.next().unwrap();
     let last_row = rows.next_back().unwrap();
@@ -44,18 +42,15 @@ fn blur_rows<'a>(
     middle_row: &'a [f32],
     bottom_row: &'a [f32],
 ) -> impl Iterator<Item = f32> + 'a {
-    // stash away the left-most and right-most elements so they can be copied across directly.
+    // 不符合： 使用迭代器处理矩阵变换，代码不直观
+
     let &first = middle_row.first().unwrap();
     let &last = middle_row.last().unwrap();
 
-    // Get the top, middle, and bottom row of our 3x3 sub-matrix so they can be
-    // averaged.
     let top_window = top_row.windows(3);
     let middle_window = middle_row.windows(3);
     let bottom_window = bottom_row.windows(3);
 
-    // slide the 3x3 window across our middle row so we can get the average
-    // of everything except the left-most and right-most elements.
     let averages = top_window
         .zip(middle_window)
         .zip(bottom_window)
@@ -77,14 +72,13 @@ pub fn imperative_blur(input: &Matrix) -> Matrix {
     assert!(input.width >= 3);
     assert!(input.height >= 3);
 
-    // allocate our output matrix, copying from the input so
-    // we don't need to worry about the edge cases.
     let mut output = input.clone();
 
     for y in 1..(input.height - 1) {
         for x in 1..(input.width - 1) {
             let mut pixel_value = 0.0;
 
+            // 符合： 直接使用数组计算坐标更加直观方便
             pixel_value += input[[x - 1, y - 1]];
             pixel_value += input[[x, y - 1]];
             pixel_value += input[[x + 1, y - 1]];

@@ -1,6 +1,6 @@
 ## G.UNS.PTR.03  尽量使用 `pointer::cast` 来代替 使用 `as` 强转指针
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -11,8 +11,8 @@
 ```rust
 let ptr: *const u32 = &42_u32;
 let mut_ptr: *mut u32 = &mut 42_u32;
-let _ = ptr as *const i32;
-let _ = mut_ptr as *mut i32;
+let _ = ptr as *const i32; // 不符合
+let _ = mut_ptr as *mut i32; // 不符合
 ```
 
 **【正例】**
@@ -20,8 +20,8 @@ let _ = mut_ptr as *mut i32;
 ```rust
 let ptr: *const u32 = &42_u32;
 let mut_ptr: *mut u32 = &mut 42_u32;
-let _ = ptr.cast::<i32>();
-let _ = mut_ptr.cast::<i32>();
+let _ = ptr.cast::<i32>(); // 符合
+let _ = mut_ptr.cast::<i32>(); // 符合
 ```
 
 **【Lint 检测】**

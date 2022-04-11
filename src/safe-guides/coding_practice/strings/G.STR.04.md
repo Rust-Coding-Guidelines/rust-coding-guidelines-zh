@@ -12,9 +12,11 @@ Rust 语言核心库和标准库都对字符串内置了一些方便的方法来
 
 ```rust
 let name = "_";
+// 不符合
 name.chars().last() == Some('_') || name.chars().next_back() == Some('-');
 
 let name = "foo";
+// 不符合
 if name.chars().next() == Some('_') {};
 ```
 
@@ -22,9 +24,11 @@ if name.chars().next() == Some('_') {};
 
 ```rust
 let name = "_";
+// 符合
 name.ends_with('_') || name.ends_with('-');
 
 let name = "foo";
+// 符合
 if name.starts_with('_') {};
 ```
 

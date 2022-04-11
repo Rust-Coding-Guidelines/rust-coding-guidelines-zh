@@ -1,4 +1,4 @@
-## G.TYP.03   不应用数字类型边界值判断能否安全转换，而应使用 `try_from` 方法
+## G.TYP.03  不要用数字类型边界值判断能否安全转换，而应使用 `try_from` 方法
 
 **【级别】** 建议
 
@@ -11,6 +11,9 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::checked_conversions)]
+
+// 不符合
 let foo: u32 = 5;
 let _ = foo <= i16::MAX as u32; // 等价于 let _ = foo <= (i32::MAX as u32);
 ```
@@ -18,6 +21,9 @@ let _ = foo <= i16::MAX as u32; // 等价于 let _ = foo <= (i32::MAX as u32);
 **【正例】**
 
 ```rust
+#![warn(clippy::checked_conversions)]
+
+// 符合
 let foo: u32 = 5; 
 let f = i16::try_from(foo).is_ok(); // 返回 false
 ```

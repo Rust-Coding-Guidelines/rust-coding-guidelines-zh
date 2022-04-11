@@ -1,4 +1,4 @@
-## G.TYP.FLT.03  对精度高要求的场景下，使用浮点数进行运算和比较时需要注意
+## G.TYP.FLT.03 对精度高要求的场景下，使用浮点数进行运算和比较时需要注意精度损失
 
 **【级别】** 建议
 
@@ -11,33 +11,46 @@
 **【反例】**
 
 ```rust
-let x = 1.2331f64;
-let y = 1.2332f64;
+#![warn(clippy::float_arithmetic, clippy::float_cmp, clippy::float_cmp_const)]
 
-if y == 1.23f64 { }
-if y != x {} // where both are floats
+fn main(){
+    let x = 1.2331f64;
+    let y = 1.2332f64;
 
-// or
-pub fn is_roughly_equal(a: f32, b: f32) -> bool {
-    (a - b) < f32::EPSILON
+    payment(x, y);
 }
+
+fn payment(x: f64, y: f64) -> f64{
+    // 不符合： 浮点数计算有精度损失
+    y - x
+}
+
 ```
 
 **【正例】**
 
+推荐使用精度更高的类型，比如 Decimal 类型（需要第三方库支持）。
+
 ```rust
-let x = 1.2331f64;
-let y = 1.2332f64;
 
-let error_margin = f64::EPSILON; // Use an epsilon for comparison
-// Or, if Rust <= 1.42, use `std::f64::EPSILON` constant instead.
-// let error_margin = std::f64::EPSILON;
-if (y - 1.23f64).abs() < error_margin { }
-if (y - x).abs() > error_margin { }
+#![warn(clippy::float_arithmetic, clippy::float_cmp, clippy::float_cmp_const)]
 
-// or
-pub fn is_roughly_equal(a: f32, b: f32) -> bool {
-    (a - b).abs() < f32::EPSILON
+fn main(){
+    let x = 1.2331f64;
+    let y = 1.2332f64;
+
+    payment(x, y);
+}
+
+fn payment(x: f64, y: f64) -> Result<f64, PaymentErr>{
+    let z = y - x;
+    let error_margin = f64::EPSILON;
+    // 符合：浮点数的差异绝对值在允许范围内
+    if z.abs() < error_margin {
+        return Ok(z);
+    } else {
+        return PaymentErr(e);
+    }
 }
 ```
 

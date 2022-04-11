@@ -11,6 +11,7 @@
 **【反例】**
 
 ```rust
+    // 不符合
     /// Creates a `Vec<T>` directly from the raw components of another vector.
     pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Self {
         unsafe { Self::from_raw_parts_in(ptr, length, capacity, Global) }
@@ -22,6 +23,7 @@
 示例来自于标准库文档： [https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167](https://doc.rust-lang.org/stable/src/alloc/vec/mod.rs.html#1167)
 
 ```rust
+    // 符合
     /// Creates a `Vec<T>` directly from the raw components of another vector.
     ///
     /// # Safety

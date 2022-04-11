@@ -11,12 +11,16 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::string_lit_as_bytes)]
+// 不符合
 let bs = "a byte string".as_bytes();
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::string_lit_as_bytes)]
+// 符合
 let bs = b"a byte string";
 ```
 

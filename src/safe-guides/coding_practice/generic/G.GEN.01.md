@@ -12,6 +12,7 @@
 这里 `u32` 会被认为是一个类型参数。
 
 ```rust
+// 不符合
 impl<u32> Foo<u32> {
     fn impl_func(&self) -> u32 {
         42
@@ -22,6 +23,7 @@ impl<u32> Foo<u32> {
 **【正例】**
 
 ```rust
+// 符合
 impl<T> Foo<T> {
     fn impl_func(&self) -> T {
         42

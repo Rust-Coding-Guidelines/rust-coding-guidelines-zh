@@ -1,6 +1,6 @@
-## G.STR.01   在实现`Display`特质时不应调用`to_string()`方法
+## G.STR.01  在实现`Display`特质时不应调用`to_string()`方法
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -14,7 +14,7 @@ use std::fmt;
 struct Structure(i32);
 impl fmt::Display for Structure {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.to_string())
+        write!(f, "{}", self.to_string()) // 不符合
     }
 }
 ```
@@ -27,7 +27,7 @@ use std::fmt;
 struct Structure(i32);
 impl fmt::Display for Structure {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
+        write!(f, "{}", self.0) // 符合
     }
 }
 ```

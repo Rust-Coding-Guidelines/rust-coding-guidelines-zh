@@ -12,7 +12,8 @@
 
 1. `check_*`函数返回`Option`，一旦发生溢出则返回None。
 2. `saturating_*`系列函数返回类型是整数，如果溢出，则给出该类型可表示范围的“最大/最小”值。
-3. `wrapping_*`系列函数则是直接抛弃已经溢出的最高位，将剩下的部分返回。
+3. `wrapping_*`系列函数则是直接抛弃已经溢出的最高位，将剩下的部分返回。即，返回直接二进制补码结果。
+4. `overflowing_*`系列函数返回二进制补码结果以及指示是否发生溢出的布尔值。
 
 Rust 编译器在编译时默认没有溢出检查（可通过编译参数来引入），但在运行时会有 Rust 内置 lint (`#[deny(arithmetic_overflow)]`)来检查，如果有溢出会 Panic。
 
@@ -21,14 +22,19 @@ Rust 编译器在编译时默认没有溢出检查（可通过编译参数来引
 **【反例】**
 
 ```rust
+#![warn(clippy::integer_arithmetic)]
+
+// 不符合
 assert_eq!((-5i32).abs(), 5);
 assert_eq!(100i32+1, 101);
 
 fn test_integer_overflow() {
-    // debug 与 release 编译都会有溢出检查
+
+    // 不符合：这种写法 debug 与 release 编译时会有溢出检查
     let mut a: u8 = 255 + 1;
     
-    // debug模式，运行panic；release模式，x = 0
+    // 不符合：这种写法，Rust 编译器不检查，但 Clippy可以检查到
+    //  debug模式，运行 panic；release模式，x = 0
     let mut x: u8 = 255;
     x += 1;
     println!("x={}", x);
@@ -38,15 +44,20 @@ fn test_integer_overflow() {
 **【正例】**
 
 ```rust
+#![warn(clippy::integer_arithmetic)]
+
+// 符合
 assert_eq!((-5i32).checked_abs(), Some(5));
 assert_eq!(100i32.saturating_add(1), 101);
 
+// 符合
 fn add_num(a: u8) -> u8 { a.wrapping_add(255) }
 
 fn test_integer_overflow() {
-    // 对于字面量或常量表达式，debug 与 release 编译模式都会有溢出检查
+    // 符合： 对于字面量或常量表达式，debug 与 release 编译模式都会有溢出检查
     let mut a: u8 = 255 + 1;
 
+    // 符合
     // debug模式，运行会Panic
     // release模式，x 会等于 0
     let mut x: u8 = 255;

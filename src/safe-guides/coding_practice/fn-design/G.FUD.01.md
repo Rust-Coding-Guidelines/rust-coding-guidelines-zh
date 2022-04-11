@@ -10,6 +10,7 @@
 
 ```rust
 struct Color;
+// 不符合
 fn foo(x: f32, y: f32, name: &str, c: Color, w: u32, h: u32, a: u32, b: u32) {
     // ..
 }
@@ -21,7 +22,7 @@ fn foo(x: f32, y: f32, name: &str, c: Color, w: u32, h: u32, a: u32, b: u32) {
 
 ```rust
 struct Color;
-// 此处使用 常量泛型（const generic） 来接收后面多个 u32 类型的参数
+// 符合：此处使用 常量泛型（const generic） 来接收后面多个 u32 类型的参数
 // 使用元组 缩短 2~3 个参数为一个参数
 fn foo<T, const N: usize>(x: (f32, f32), name: &str, c: Color, last: [T; N]) {
     ;

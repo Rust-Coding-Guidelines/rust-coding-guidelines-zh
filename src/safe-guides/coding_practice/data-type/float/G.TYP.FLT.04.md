@@ -9,55 +9,66 @@
 **【反例】**
 
 ```rust
-let a = 3f32;
-let _ = a.powf(1.0 / 3.0);
-let _ = (1.0 + a).ln();
-let _ = a.exp() - 1.0;
+#![warn(clippy::imprecise_flops, clippy::suboptimal_flops)]
 
-use std::f32::consts::E;
+// 不符合
+fn main() {
+    let a = 3f32;
+    let _ = a.powf(1.0 / 3.0);
+    let _ = (1.0 + a).ln();
+    let _ = a.exp() - 1.0;
 
-let a = 3f32;
-let _ = (2f32).powf(a);
-let _ = E.powf(a);
-let _ = a.powf(1.0 / 2.0);
-let _ = a.log(2.0);
-let _ = a.log(10.0);
-let _ = a.log(E);
-let _ = a.powf(2.0);
-let _ = a * 2.0 + 4.0;
-let _ = if a < 0.0 {
-    -a
-} else {
-    a
-};
-let _ = if a < 0.0 {
-    a
-} else {
-    -a
-};
+    use std::f32::consts::E;
+
+    let a = 3f32;
+    let _ = (2f32).powf(a);
+    let _ = E.powf(a);
+    let _ = a.powf(1.0 / 2.0);
+    let _ = a.log(2.0);
+    let _ = a.log(10.0);
+    let _ = a.log(E);
+    let _ = a.powf(2.0);
+    let _ = a * 2.0 + 4.0;
+    let _ = if a < 0.0 {
+        -a
+    } else {
+        a
+    };
+    let _ = if a < 0.0 {
+        a
+    } else {
+        -a
+    };
+}
 ```
 
 **【正例】**
 
 ```rust
-let a = 3f32;
-let _ = a.cbrt();
-let _ = a.ln_1p();
-let _ = a.exp_m1();
+#![warn(clippy::imprecise_flops, clippy::suboptimal_flops)]
 
-use std::f32::consts::E;
+// 符合
+fn main(){
+    let a = 3f32;
+    let _ = a.cbrt();
+    let _ = a.ln_1p();
+    let _ = a.exp_m1();
 
-let a = 3f32;
-let _ = a.exp2();
-let _ = a.exp();
-let _ = a.sqrt();
-let _ = a.log2();
-let _ = a.log10();
-let _ = a.ln();
-let _ = a.powi(2);
-let _ = a.mul_add(2.0, 4.0);
-let _ = a.abs();
-let _ = -a.abs();
+    use std::f32::consts::E;
+
+    let a = 3f32;
+    let _ = a.exp2();
+    let _ = a.exp();
+    let _ = a.sqrt();
+    let _ = a.log2();
+    let _ = a.log10();
+    let _ = a.ln();
+    let _ = a.powi(2);
+    let _ = a.mul_add(2.0, 4.0);
+    let _ = a.abs();
+    let _ = -a.abs();
+}
+
 ```
 
 **【Lint 检测】**

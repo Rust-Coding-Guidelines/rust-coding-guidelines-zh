@@ -9,29 +9,17 @@
 **【反例】**
 
 ```rust
+// 不符合
 fn foo(bar: &Box<T>) { ... }
 ```
 
 **【正例】**
 
 ```rust
+// 符合
 fn foo(bar: &T) { ... }
 ```
 
-**【例外】**
-
-用例来源：[actix-web-security](https://github.com/cschaible/actix-web-security/blob/6e3a7716a1391ea880da85dfa4631dce3aaafd18/src/authentication/scheme/authentication_provider.rs#L12)
-
-```rust
-#[async_trait]
-pub trait AuthenticationProvider: AuthenticationProviderClone {
-    #[allow(clippy::borrowed_box)]
-    async fn authenticate(
-        &self,
-        authentication: &Box<dyn Authentication>,
-    ) -> Result<Box<dyn UserDetails>, AuthenticationError>;
-}
-```
 
 **【Lint 检测】**
 

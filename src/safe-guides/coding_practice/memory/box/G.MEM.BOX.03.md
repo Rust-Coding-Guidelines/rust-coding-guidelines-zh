@@ -4,13 +4,13 @@
 
 **【描述】**
 
-此举会对性能造成不必要的影响。
-只有当某个栈变量太大，需要使用堆分配的情况下，或是栈变量需要逃逸的时候，才需要考虑是否对其使用 `Box` 装箱。
+此举会对性能造成不必要的影响。只有当某个栈变量太大，需要使用堆分配的情况下，或是栈变量需要逃逸的时候，才需要考虑是否对其使用 `Box` 装箱。
 
 **【反例】**
 
 ```rust
 fn foo(bar: usize) {}
+// 不符合
 let x = Box::new(1);
 foo(*x);
 println!("{}", *x);
@@ -20,6 +20,7 @@ println!("{}", *x);
 
 ```rust
 fn foo(bar: usize) {}
+// 符合
 let x = 1;
 foo(x);
 println!("{}", x);
@@ -38,6 +39,7 @@ impl<F> ServeFunc for F
 where
     F: FnOnce() -> Result<()>,
 {
+    // 特殊情况，F 是泛型，且要匹配 trait定义
     #[cfg_attr(feature = "cargo-clippy", allow(boxed_local))]
     fn call_box(self: Box<Self>) -> Result<()> {
         (*self)()

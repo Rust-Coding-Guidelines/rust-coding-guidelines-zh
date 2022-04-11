@@ -9,6 +9,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 let s = "yxz";
 s.split("x");
 ```
@@ -16,6 +17,7 @@ s.split("x");
 **【正例】**
 
 ```rust
+// 符合
 let s = "yxz";
 s.split('x');
 ```

@@ -1,6 +1,6 @@
 ## G.TRA.BLN.05   在使用`#[derive(Ord)]` 的时候，避免再手工实现 `PartialOrd`
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -21,7 +21,7 @@ k1.cmp(&k2) == k1.partial_cmp(&k2).unwrap()
 ```rust
 #[derive(Ord, PartialEq, Eq)]
 struct Foo;
-
+// 不符合
 impl PartialOrd for Foo {
     ...
 }
@@ -30,11 +30,11 @@ impl PartialOrd for Foo {
 **【正例】**
 
 ```rust
+// 符合
 #[derive(Ord, PartialOrd, PartialEq, Eq)]
 struct Foo;
 
-// or
-
+// 符合
 #[derive(PartialEq, Eq)]
 struct Foo;
 

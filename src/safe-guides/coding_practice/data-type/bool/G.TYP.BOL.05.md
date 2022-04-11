@@ -9,15 +9,18 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::needless_bitwise_bool)]
 let (x,y) = (true, false);
-if x & !y {} //  位运算符，不支持短路
+if x & !y {} //  不符合：位运算符，不支持短路
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::needless_bitwise_bool)]
+
 let (x,y) = (true, false);
-if x && !y {} //  逻辑运算符，支持短路
+if x && !y {} //  符合：逻辑运算符，支持短路
 ```
 
 **【Lint 检测】**

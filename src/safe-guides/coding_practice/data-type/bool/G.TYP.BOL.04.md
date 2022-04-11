@@ -1,4 +1,4 @@
-## G.TYP.BOL.04 禁止在if表达式条件中使用块（block）结构
+## G.TYP.BOL.04 禁止在if表达式条件中使用块结构
 
 **【级别】** 要求
 
@@ -9,19 +9,23 @@
 **【反例】**
 
 ```rust
+// 不符合
 if { true } { /* ... */ }
 
 # fn somefunc() -> bool { true };
+// 不符合
 if { let x = somefunc(); x } { /* ... */ }
 ```
 
 **【正例】**
 
 ```rust
+// 符合
 if true { /* ... */ }
 
 # fn somefunc() -> bool { true };
 let res = { let x = somefunc(); x };
+// 符合
 if res { /* ... */ }
 ```
 

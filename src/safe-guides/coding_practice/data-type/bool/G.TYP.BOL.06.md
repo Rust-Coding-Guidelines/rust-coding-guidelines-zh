@@ -13,6 +13,7 @@ Rust 中布尔值就是 `true`  和 `false`。 不要试图使用数字 `1` 和 
 **【反例】**
 
 ```rust
+// 不符合
 let a = 1;
 let b = 0;
 assert_eq!(true, a == 1);  
@@ -22,14 +23,9 @@ assert_eq!(false, b == 0);
 **【正例】**
 
 ```rust
+// 符合
 let a = true;
 let b = false;
-assert_eq!(1, a as u32);
-assert_eq!(0, b as u32);
+assert_eq!(true, a );
+assert_eq!(false, b);
 ```
-
-【例外】
-
-FFi 时从外部传入数字
-
----

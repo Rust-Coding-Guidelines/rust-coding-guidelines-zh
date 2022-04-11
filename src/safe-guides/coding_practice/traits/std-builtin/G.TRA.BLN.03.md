@@ -12,7 +12,7 @@
 struct Foo {
     bar: bool
 }
-
+// 不符合
 impl std::default::Default for Foo {
     fn default() -> Self {
         Self {
@@ -25,6 +25,7 @@ impl std::default::Default for Foo {
 **【正例】**
 
 ```rust
+// 符合
 #[derive(Default)]
 struct Foo {
     bar: bool

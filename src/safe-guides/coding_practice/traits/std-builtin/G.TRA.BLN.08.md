@@ -14,7 +14,7 @@
 
 ```rust
 struct StringWrapper(String);
-
+// 不符合
 impl Into<StringWrapper> for String {
     fn into(self) -> StringWrapper {
         StringWrapper(self)
@@ -26,7 +26,7 @@ impl Into<StringWrapper> for String {
 
 ```rust
 struct StringWrapper(String);
-
+// 符合
 impl From<String> for StringWrapper {
     fn from(s: String) -> StringWrapper {
         StringWrapper(s)

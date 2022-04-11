@@ -9,6 +9,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 const B: bool = false;
 assert!(B);
 assert!(true);
@@ -17,6 +18,7 @@ assert!(true);
 **【正例】**
 
 ```rust
+// 符合
 panic!（"something"）;
 ```
 

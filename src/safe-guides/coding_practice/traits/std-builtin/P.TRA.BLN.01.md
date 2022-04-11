@@ -6,7 +6,7 @@
 
 但是使用 `Borrow` 的时候，需要注意一致性问题。具体请看示例。
 
-【正例】
+**【反例】**
 
 ```rust
 // 这个结构体能不能作为 HashMap 的 key？
@@ -27,7 +27,7 @@ impl Eq for CaseInsensitiveString { }
 impl Hash for CaseInsensitiveString {
     fn hash<H: Hasher>(&self, state: &mut H) {
         for c in self.0.as_bytes() {
-            // 没有忽略大小写
+            // 不符合：没有忽略大小写
             c.to_ascii_lowercase().hash(state)
         }
     }

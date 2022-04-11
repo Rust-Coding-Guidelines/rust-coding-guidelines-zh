@@ -1,6 +1,6 @@
 ## G.TRA.BLN.04   在使用`#[derive(Hash)]` 的时候，避免再手工实现 `PartialEq`
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -21,7 +21,7 @@ k1 == k2  -> hash(k1) == hash(k2)
 ```rust
 #[derive(Hash)]
 struct Foo;
-
+// 不符合
 impl PartialEq for Foo {
     ...
 }
@@ -30,6 +30,7 @@ impl PartialEq for Foo {
 **【正例】**
 
 ```rust
+// 符合
 #[derive(PartialEq, Eq, Hash)]
 struct Foo;
 ```

@@ -22,6 +22,8 @@
 模块级文档，来自于 Rust 标准库`std::vec`：
 
 ```rust
+// 符合
+
 //! # The Rust core allocation and collections library
 //!
 //! This library provides smart pointers and collections for managing
@@ -42,20 +44,22 @@
 普通文档注释示例，来自标准库`Vec::new`方法：
 
 ```rust
-    /// Constructs a new, empty `Vec<T>`.
-    ///
-    /// The vector will not allocate until elements are pushed onto it.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// # #![allow(unused_mut)]
-    /// let mut vec: Vec<i32> = Vec::new();
-    /// ```
-    #[inline]
-    #[rustc_const_stable(feature = "const_vec_new", since = "1.39.0")]
-    #[stable(feature = "rust1", since = "1.0.0")]
-    pub const fn new() -> Self {
-        Vec { buf: RawVec::NEW, len: 0 }
-    }
+// 符合
+
+/// Constructs a new, empty `Vec<T>`.
+///
+/// The vector will not allocate until elements are pushed onto it.
+///
+/// # Examples
+///
+/// ```
+/// # #![allow(unused_mut)]
+/// let mut vec: Vec<i32> = Vec::new();
+/// ```
+#[inline]
+#[rustc_const_stable(feature = "const_vec_new", since = "1.39.0")]
+#[stable(feature = "rust1", since = "1.0.0")]
+pub const fn new() -> Self {
+    Vec { buf: RawVec::NEW, len: 0 }
+}
 ```

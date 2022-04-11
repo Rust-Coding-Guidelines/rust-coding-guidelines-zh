@@ -4,25 +4,29 @@
 
 **【描述】**
 
-与[上条规则](./G.ASY.02.md)类似，使用 `RefCell` 的独占（可变）借用会导致 Panic。因为 `RefCell` 是运行时检查独占的可变访问，如果跨 `await` 持有一个可变引用则可能会因为共享的可变引用而引起 Panic。
+使用 `RefCell` 的独占（可变）借用会导致 Panic。因为 `RefCell` 是运行时检查独占的可变访问，如果跨 `await` 持有一个可变引用则可能会因为共享的可变引用而引起 Panic。
 
 这种共享可变在编译期是无法被检查出来的。
 
 **【反例】**
 
 ```rust
+#![warn(clippy::await_holding_refcell_ref)] 
+
 use std::cell::RefCell;
 
 async fn foo(x: &RefCell<u32>) {
   let mut y = x.borrow_mut();
   *y += 1;
-  bar.await;
+  baz().await; // 不符合
 }
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::await_holding_refcell_ref)] 
+
 use std::cell::RefCell;
 
 async fn foo(x: &RefCell<u32>) {
@@ -30,7 +34,7 @@ async fn foo(x: &RefCell<u32>) {
     let mut y = x.borrow_mut();
     *y += 1;
   }
-  bar.await;
+  baz().await; // 符合
 }
 ```
 
@@ -44,8 +48,6 @@ async fn foo(x: &RefCell<u32>) {
 pub fn pull(&mut self, controller: sys::ReadableByteStreamController) -> Promise {
   let inner = self.inner.clone();
   let fut = async move {
-    // This mutable borrow can never panic, since the ReadableStream always queues
-    // each operation on the underlying source.
     // 这个可变借用永远不会恐慌，因为 ReadableStream 对底层源的每个操作总是有序的。
     let mut inner = inner.try_borrow_mut().unwrap_throw();
     inner.pull(controller).await

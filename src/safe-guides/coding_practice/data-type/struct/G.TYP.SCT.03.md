@@ -11,6 +11,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 let mut a: A = Default::default();
 a.i = 42;
 ```
@@ -18,6 +19,7 @@ a.i = 42;
 **【正例】**
 
 ```rust
+// 符合
 let a = A {
     i: 42,
     .. Default::default()

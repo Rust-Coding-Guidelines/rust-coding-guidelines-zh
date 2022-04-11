@@ -11,6 +11,7 @@
 ```rust
 let x = 1_u8;
 unsafe {
+    // 不符合
     let _: bool = std::mem::transmute(x); // where x: u8
 }
 

@@ -28,20 +28,21 @@ allowed-locales = ["Latin", "Cyrillic"]
 当 `clippy.toml` 做了上面配置时，下面代码会曝出警告。
 
 ```rust
-// Example code where clippy issues a warning
+#![warn(clippy::disallowed_method, clippy::disallowed_script_idents, clippy::disallowed_type)]
+// 不符合
 let xs = vec![1, 2, 3, 4];
-xs.leak(); // Vec::leak is disallowed in the config.
-// The diagnostic contains the message "no leaking memory".
+xs.leak(); // Vec::leak 被配置为不允许
+let _now = Instant::now(); // Instant::now 被配置为不允许
 
-let _now = Instant::now(); // Instant::now is disallowed in the config.
-
-let _box = Box::new(3); // Box::new is disallowed in the config.
+let _box = Box::new(3); // Box::new 被配置为不允许
 ```
 
 **【正例】**
 
 ```rust
-// Example code which does not raise clippy warning
+#![warn(clippy::disallowed_method, clippy::disallowed_script_idents, clippy::disallowed_type)]
+
+// 符合
 let mut xs = Vec::new(); // Vec::new is _not_ disallowed in the
 ```
 
