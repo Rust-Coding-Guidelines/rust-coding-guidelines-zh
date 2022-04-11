@@ -6,15 +6,13 @@
 
 在使用类似 C 语言的枚举写法且使用`repr(isize/usize)` 布局时，在32位架构上会截断变体值，但在64位上工作正常。
 
-但是没有这种风险的时候，可以正常使用。
-
 **【反例】**
 
 ```rust
-#[cfg(target_pointer_width = "64")]
+
 #[repr(usize)]
 enum NonPortable {
-    X = 0x1_0000_0000,
+    X = 0x1_0000_0000, // 不符合：如果在 32位架构上会截断变体值，导致该指针地址变化
     Y = 0,
 }
 ```
@@ -28,12 +26,11 @@ enum NonPortable {
 
 #[repr(isize)]
 pub enum ZBarColor {
-    ZBarSpace = 0,
+    ZBarSpace = 0, // 符合：因为值足够小，没有截断风险
     ZBarBar   = 1,
 }
 
-// 或者，没有指定 repr(isize/usize)
-
+// 符合：没有指定 repr(isize/usize)
 #[allow(clippy::enum_clike_unportable_variant)]
 pub(crate) enum PropertyType {
     ActionItemSchemaVersion = 0x0C003473,

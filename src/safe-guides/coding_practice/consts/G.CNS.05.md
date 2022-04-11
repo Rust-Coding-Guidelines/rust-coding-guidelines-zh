@@ -5,7 +5,8 @@
 **【描述】**
 
 函数或方法缺失`const`关键词时无法被指派给常量。
-但是要注意不是所有函数都能使用`const fn`，因为相比一般函数或方法，`const fn`在使用时会有限制，一些功能将无法在`const fn`内使用，例如迭代器。
+
+但是要注意不是所有函数都能使用`const fn`，因为相比一般函数或方法，`const fn`在使用时会有限制，必须满足const 安全，如果不满足，编译器会报告错误信息。
 
 **【反例】**
 
@@ -14,8 +15,8 @@ fn foo() -> usize {
     10
 }
 
-let bar: usize = foo();   // OK
-const BAZ: usize = foo(); // ERROR
+// 不符合：必须是 constant 函数才能用于声明 const 常量
+const BAZ: usize = foo(); 
 ```
 
 **【正例】**
@@ -25,8 +26,7 @@ const fn foo() -> usize {
     10
 } 
 
-let bar: usize = foo():   // OK
-const BAZ: usize = foo(); // OK
+const BAZ: usize = foo(); // 符合
 ```
 
 **【例外】**

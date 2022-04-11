@@ -1,14 +1,15 @@
-## G.FUD.06  函数参数建议使用借用类型
+## G.FUD.06  函数参数应该考虑兼容多种类型
 
 **【级别】** 建议
 
 **【描述】**
 
-这里是指 借用类型，而非 借用有所有权的类型。这样的好处是参数可以灵活兼容更多类型。
+这样的好处是参数可以灵活兼容更多类型，代码方便扩展。
 
 **【反例】**
 
 ```rust
+// 不符合
 fn three_vowels(word: &String) -> bool {
     let mut vowel_count = 0;
     for c in word.chars() {
@@ -38,7 +39,7 @@ fn main() {
 **【正例】**
 
 ```rust
-// 这里的参数可以接受 &String / &'str/ &'static str 三种类型参数
+// 符合：这里的参数可以接受 &String / &'str/ &'static str 三种类型参数
 fn three_vowels(word: &str) -> bool {
     let mut vowel_count = 0;
     for c in word.chars() {

@@ -35,10 +35,12 @@
 **【正例】**
 
 ```rust
+// 符合
 // 版权所有（c）XXX 技术有限公司 2015-2022。
 
 // Or
 
+// 符合
 // Copyright (c) XXX Technologies Co.Ltd. 2015-2022. 
 // All rights reserved. Licensed under Apache-2.0.
 ```

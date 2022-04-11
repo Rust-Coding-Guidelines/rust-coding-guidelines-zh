@@ -10,7 +10,7 @@
 **【反例】**
 
 ```toml
-# 此 `Cargo.toml` 缺失介绍(description)项。无法发布到 crates.io。
+# 不符合：此 `Cargo.toml` 缺失介绍(description)项。无法发布到 crates.io。
 [package]
 name = "clippy"
 version = "0.0.212"
@@ -24,7 +24,7 @@ categories = ["development-tools", "development-tools::cargo-plugins"]
 **【正例】**
 
 ```toml
-# 此 `Cargo.toml` 包含必要元信息。
+# 符合：此 `Cargo.toml` 包含必要元信息。
 [package]
 name = "clippy"
 version = "0.0.212"

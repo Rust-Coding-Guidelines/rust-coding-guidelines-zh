@@ -9,12 +9,14 @@
 **【反例】**
 
 ```rust
+// 不符合
 let x = Mutex::new(&y);
 ```
 
 **【正例】**
 
 ```rust
+// 符合
 let x = AtomicBool::new(y);
 ```
 

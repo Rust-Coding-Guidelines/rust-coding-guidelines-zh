@@ -19,17 +19,15 @@ use std::sync::Arc;
 
 fn main() {
     let a = "hello world".to_string();
-    let b: Rc<String> = Rc::from(a);
+    let b: Rc<String> = Rc::from(a); // 不符合
     println!("{}", b);
 
-    // or equivalently:
     let a = "hello world".to_string();
-    let b: Rc<String> = a.into();
+    let b: Rc<String> = a.into(); // 不符合
     println!("{}", b);
 
-    // we can also do this for Arc,
     let a = "hello world".to_string();
-    let b: Arc<String> = Arc::from(a);
+    let b: Arc<String> = Arc::from(a); // 不符合
     println!("{}", b);
 }
 ```
@@ -42,17 +40,30 @@ use std::sync::Arc;
 
 fn main() {
     let a: &str = "hello world";
-    let b: Rc<str> = Rc::from(a);
+    let b: Rc<str> = Rc::from(a); // 符合
     println!("{}", b);
 
-    // or equivalently:
-    let b: Rc<str> = a.into();
+    let b: Rc<str> = a.into(); // 符合
     println!("{}", b);
 
-    // we can also do this for Arc,
     let a: &str = "hello world";
-    let b: Arc<str> = Arc::from(a);
+    let b: Arc<str> = Arc::from(a); // 符合
     println!("{}", b);
+}
+```
+
+**【例外】**
+
+参考：[https://github.com/rust-lang/rust-clippy/pull/6044#issuecomment-699565080](https://github.com/rust-lang/rust-clippy/pull/6044#issuecomment-699565080)
+
+```rust
+// From: https://github.com/Fishrock123/surf/blob/master/src/client.rs#L33
+
+pub struct Client {
+    http_client: Arc<dyn HttpClient>,
+    /// Holds the middleware stack.
+    // 业务上必须要求持有一个 Vec 才能保证用户正常添加中间件
+    middleware: Arc<Vec<Arc<dyn Middleware>>>,
 }
 ```
 

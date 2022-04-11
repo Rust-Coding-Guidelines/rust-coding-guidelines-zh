@@ -11,6 +11,7 @@ Rust 代码风格中提倡使用**四个空格**代替tab，在文档注释中�
 下面文档注释中使用了 tab。
 
 ```rust
+// 不符合：文档注释中使用了 tab 缩进
 ///
 /// Struct to hold two strings:
 /// 	- first		one
@@ -30,6 +31,7 @@ pub struct DoubleString {
 **【正例】**
 
 ```rust
+// 符合：文档注释中使用了四个空格缩进
 ///
 /// Struct to hold two strings:
 ///     - first        one
@@ -51,5 +53,3 @@ pub struct DoubleString {
 | lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
 | ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
 | [tabs_in_doc_comments ](https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments ) | yes           | no           | Style      | warn       |
-
----

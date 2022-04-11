@@ -23,9 +23,6 @@ pub fn swap_remove(&mut self, index: usize) -> T {
         assert_failed(index, len);
     }
     unsafe {
-        // We replace self[index] with the last element. Note that if the
-        // bounds check above succeeds there must be a last element (which
-        // can be self[index] itself).
         let last = ptr::read(self.as_ptr().add(len - 1));
         let hole = self.as_mut_ptr().add(index);
         self.set_len(len - 1);

@@ -7,6 +7,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 // 先构建
 let mut dict = Dictionary::new();
 // 后初始化
@@ -16,6 +17,7 @@ dict.load_from_file("./words.txt")?;
 **【正例】**
 
 ```rust
+// 符合
 // 构建即初始化
 let dict = Dictionary::from_file("./words.txt")?;
 

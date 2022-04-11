@@ -1,4 +1,4 @@
-## G.TRA.BLN.02   不要为迭代器实现`Copy` 特质
+## G.TRA.BLN.02  不要为迭代器实现`Copy` 特质
 
 **【级别】** 要求
 
@@ -11,6 +11,8 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::copy_iterator)]
+
 use std::marker::PhantomData;
 
 #[derive(Debug)]
@@ -31,7 +33,7 @@ impl ABC {
 
 }
 
-// 这里为迭代器 ABCIterMut<'a>  实现 Copy 
+// 不符合：这里为迭代器 ABCIterMut<'a>  实现 Copy 
 #[derive(Copy, Clone)]
 struct ABCIterMut<'a> {
     abc: *mut ABC,
@@ -84,6 +86,8 @@ fn main(){
 
 
 ```rust
+#![warn(clippy::copy_iterator)]
+
 use std::marker::PhantomData;
 
 #[derive(Debug)]
@@ -104,7 +108,7 @@ impl ABC {
 
 }
 
-// 不实现 Copy
+// 符合：不实现 Copy
 // 在需要的时候只实现 Clone
 #[derive(Clone)]
 struct ABCIterMut<'a> {

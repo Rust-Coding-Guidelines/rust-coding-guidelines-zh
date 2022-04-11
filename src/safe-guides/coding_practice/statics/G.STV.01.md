@@ -5,11 +5,12 @@
 
 **【描述】**
 
-对可变静态变量直接进行全局修改是 Unsafe 的。在多线程应用中，修改静态变量会导致数据争用（data race），此未定义行为目前并不会被 Clippy 或 Rustc 检测出。
+对可变静态变量直接进行全局修改是 Unsafe 的。在多线程应用中，修改静态变量会导致数据竞争（data race）。
 
 **【反例】**
 
 ```rust
+// 不符合
 static mut NUM_OF_APPLES: usize = 0;
 
 unsafe fn buy_apples(count: usize) {
@@ -23,11 +24,22 @@ unsafe fn eat_apple() {
 
 **【正例】**
 
+如果必须使用的话，可以通过 `thread_local!`宏在本地线程中使用内部可变性容器：
+
+```rust
+thread_local!{
+    // 符合
+    static NEXT_USER_ID: Cell<u64> = Cell::new(0);
+}
+```
+
 若需要变更的值的类型为整数或布尔时，可直接使用 atomic。
 
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
 
+
+// 符合
 static NUM_OF_APPLES: AtomicUsize = AtomicUsize::new(0);
 
 fn buy_apple(count: usize) {
@@ -39,7 +51,7 @@ fn eat_apple() {
 }
 ```
 
-**【正例】**
+补充说明：
 
 若需修改整数或布尔之外的数据类型时，可考虑使用 Mutex 或 Rwlock 配合 once_cell 对全局变量进行变更。
 
@@ -105,8 +117,6 @@ fn main() {
     }
 }
 ```
-
-**【例外】**
 
 通常情况下直接修改 static mut 会有线程安全风险，但若配合使用 [std::sync::Once](https://doc.rust-lang.org/std/sync/struct.Once.html#) 则可保证该变量只初始化一次，不会产生线程安全风险。
 

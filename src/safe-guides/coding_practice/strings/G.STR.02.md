@@ -1,4 +1,4 @@
-## G.STR.02   在追加字符串时使用`push_str`方法
+## G.STR.02  在追加字符串时使用`push_str`方法
 
 **【级别】** 建议
 
@@ -9,18 +9,22 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::string_add_assign, clippy::string_add)]
+
 let mut x = "Hello".to_owned();
-x = x + ", World";
+x = x + ", World"; // 不符合
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::string_add_assign, clippy::string_add)]
+
 let mut x = "Hello".to_owned();
 
 // More readable
 x += ", World";
-x.push_str(", World");
+x.push_str(", World"); // 符合
 ```
 
 **【Lint 检测】**

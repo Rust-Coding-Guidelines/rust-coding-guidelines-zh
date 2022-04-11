@@ -10,6 +10,7 @@ Rust 的 `RefCell<T>` 在运行时会对通过 `borrow/borrow_mut` 方法借用�
 **【反例】**
 
 ```rust
+// 不符合
 // 以下两个函数会让 C 函数在多线程下调用
 // 运行过程中有一定几率会出现 Panic
 pub extern "C" fn nic_udrv_suspend() {
@@ -24,6 +25,7 @@ pub extern "C" fn nic_udrv_buf_recycle(buf_id: usize) {
 **【正例】**
 
 ```rust
+// 符合
 // 以下两个函数会让 C 函数在多线程下调用
 // 使用 try_borrow 或 try_borrow_mut 可以避免运行过程中出现 Panic
 pub extern "C" fn nic_udrv_suspend() {

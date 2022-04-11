@@ -1,29 +1,25 @@
-## P.FMT.14  extern 外部函数需要显式指定 ABI
+## P.FMT.14  extern 外部函数需要显式指定 C-ABI
 
 **【描述】**
 
-当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。`extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。
+当使用 `extern` 指定外部函数时，建议显式指定 `C-ABI`。
+
+虽然 `extern` 不指定的话默认就是 `C-ABI`，但是 Rust 语言显式指定是一种约定俗成。
 
 
 **【反例】**
 
 ```rust
-// 省略 ABI 指定，则默认是 C-ABI
+// 不符合：不要省略 C-ABI 指定
 extern {
     pub static lorem: c_int;
-}
-
-// 非 C-ABI 是无法省略的
-extern "Rust" {
-    type MyType;
-    fn f(&self) -> usize;
 }
 ```
 
 **【正例】**
 
 ```rust
-// 默认就是 `C-ABI`
+// 符合
 extern "C" {
     pub static lorem: c_int;
 }
@@ -35,10 +31,6 @@ extern "Rust" {
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项 | 可选值 | 是否 stable | 说明 |
 | ------ | ---- | ---- | ---- | 

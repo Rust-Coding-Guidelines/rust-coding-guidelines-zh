@@ -10,7 +10,7 @@
 
 ```rust
 struct X {
-    // Vec已在堆上分配了内存
+    // 不符合：Vec已在堆上分配了内存
     values: Box<Vec<Foo>>,
 }
 ```
@@ -19,6 +19,7 @@ struct X {
 
 ```rust
 struct X {
+    // 符合
     values: Vec<Foo>,
 }
 ```

@@ -32,7 +32,7 @@ impl<'a> Buffer<'a> {
     fn new(b: &'_ [u8]) -> Buffer {
         Buffer { buf: b, pos: 0 }
     }
-    // 此处依赖编译器推断的生命周期将导致main函数中该方法调用编译错误
+    // 不符合：此处依赖编译器推断的生命周期将导致main函数中该方法调用编译错误
     fn read_bytes(&'_ mut self) -> &'_ [u8] {
         self.pos += 3;
         &self.buf[self.pos - 3..self.pos]
@@ -56,12 +56,12 @@ struct Buffer<'a> {
     pos: usize,
 }
 
-// 明确标示清楚生命周期，向编译器传达开发者意图，则可正常编译
+// 符合：明确标示清楚生命周期，向编译器传达开发者意图，则可正常编译
 impl<'b, 'a: 'b> Buffer<'a> {
     fn new(b: &'_ [u8]) -> Buffer {
         Buffer { buf: b, pos: 0 }
     }
-    // 明确标示清楚输入引用和输出引用的生命周期关系是 `'a: 'b`
+    // 符合：明确标示清楚输入引用和输出引用的生命周期关系是 `'a: 'b`
     fn read_bytes(&'b mut self) -> &'a [u8] {
         self.pos += 3;
         &self.buf[self.pos - 3..self.pos]

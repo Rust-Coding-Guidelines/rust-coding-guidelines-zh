@@ -1,4 +1,4 @@
-## G.MOD.02   如果是作为库供别人使用，在 `lib.rs`中重新导出对外类型、函数和 trait 等
+## G.MOD.02  如果是作为库供别人使用，在 `lib.rs`中重新导出对外类型、函数和 trait 等
 
 **【级别】** 建议
 
@@ -9,16 +9,10 @@
 **【正例】**
 
 ```rust
+// 符合
 // From syn crate
 pub use crate::data::{
     Field, Fields, FieldsNamed, FieldsUnnamed, Variant, VisCrate, VisPublic, VisRestricted,
     Visibility,
 };
 ```
-
-**【Lint 检测】**
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-

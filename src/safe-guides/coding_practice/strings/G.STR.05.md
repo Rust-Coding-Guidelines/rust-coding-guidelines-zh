@@ -9,23 +9,35 @@
 **【反例】**
 
 ```rust
-let s = "Ölkanne";
-// thread 'main' panicked at 'byte index 1 is not a char boundary; 
-// it is inside 'Ö' (bytes 0..2) of `Ölkanne`'
-let sub_s = &s[1..];
-// println!("{:?}", sub_s);
+#![warn(clippy::string_slice)]
+
+fn main(){ 
+    let s = "Ölkanne";
+    // 不符合
+    // 字节索引 1 不是字符的边界，所以程序会 panic 
+    // `Ölkanne` 的 'Ö' 是 字节 `0..2`
+    let sub_s = &s[1..];
+    // println!("{:?}", sub_s);
+}
+
 ```
 
 **【正例】**
 
 ```rust
-let s = "Ölkanne";
-let mut char_indices = s.char_indices();
-assert_eq!(Some((0, 'Ö')), char_indices.next());
-// assert_eq!(Some((2, 'l')), char_indices.next()); 
-let pos = if let Some((pos, _)) = char_indices.next(){ pos } else {0};
-let sub_s = &s[pos..];
-assert_eq!("lkanne", sub_s);
+#![allow(clippy::string_slice)]
+
+fn main(){
+    let s = "Ölkanne";
+    let mut char_indices = s.char_indices();
+    assert_eq!(Some((0, 'Ö')), char_indices.next());
+    // assert_eq!(Some((2, 'l')), char_indices.next()); 
+    let pos = if let Some((pos, _)) = char_indices.next(){ pos } else {0};
+    // 符合：计算出了正确的字符位置
+    // 注意，这里 lint 检查工具可能误报，但这里是合法的，所以将lint设置为 allow
+    let sub_s = &s[pos..];
+    assert_eq!("lkanne", sub_s);
+}
 ```
 
 **【Lint 检测】**

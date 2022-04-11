@@ -11,7 +11,7 @@
 ```rust
 let mut a = 5;
 let b = 0;
-a = a + b;
+a = a + b; // 不符合
 ```
 
 **【正例】**
@@ -19,7 +19,7 @@ a = a + b;
 ```rust
 let mut a = 5;
 let b = 0;
-a += b;
+a += b; // 符合
 ```
 
 【Lint 检测】

@@ -9,6 +9,8 @@ Rust 中的 `%` 符号为余数运算符，它的行为与`C`或`Java`等语言�
 **【反例】**
 
 ```rust
+#![warn(clippy::modulo_arithmetic)]
+
 fn main() {
     let a: i32 = -1;
     let b: i32 = 6;
@@ -20,6 +22,8 @@ fn main() {
 **【正例】**
 
 ```rust
+#![warn(clippy::modulo_arithmetic)]
+
 fn main() {
     let a: i32 = -1;
     let b: i32 = 6;

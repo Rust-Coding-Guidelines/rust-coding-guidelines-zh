@@ -9,9 +9,11 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::expl_impl_clone_on_copy)]
+
 #[derive(Copy)]
 struct Foo;
-
+// 不符合
 impl Clone for Foo {
     // ..
 }
@@ -20,6 +22,9 @@ impl Clone for Foo {
 **【正例】**
 
 ```rust
+#![warn(clippy::expl_impl_clone_on_copy)]
+
+// 符合
 #[derive(Copy, Clone)]
 struct Foo;
 ```

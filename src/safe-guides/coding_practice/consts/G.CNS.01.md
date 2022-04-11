@@ -11,15 +11,15 @@ Rust标准库中已经提供了一些特殊常量的定义，其精确度通常�
 **【反例】**
 
 ```rust
-let x = 3.14;
-let y = 1_f64 / x;
+let x = 3.14; // 不符合：自定义 Pi
+let y = 1_f64 / x; // 不符合
 ```
 
 **【正例】**
 
 ```rust
-let x = std::f32::consts::PI;
-let y = std::f64::consts::FRAC_1_PI;
+let x = std::f32::consts::PI; // 符合
+let y = std::f64::consts::FRAC_1_PI; // 符合
 ```
 
 **【Lint 检测】**
@@ -28,4 +28,4 @@ let y = std::f64::consts::FRAC_1_PI;
 | ------ | ---- | --------- | ------ | ------ | 
 | [approx_constant](https://rust-lang.github.io/rust-clippy/master/#approx_constant) | yes| no | Correctness | deny |
 
-该 Lint 默认为 `deny`，但在某些场景下，可以设置为`allow`.
+该 Lint 默认为 `deny`，但在某些场景下，可以设置为`allow`，`#![allow(clippy::approx_constant)]`。

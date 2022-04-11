@@ -9,6 +9,8 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::default_numeric_fallback)]
+// 符合
 let i = 10; // i32
 let f = 1.23; // f64
 ```
@@ -16,6 +18,9 @@ let f = 1.23; // f64
 **【正例】**
 
 ```rust
+#![warn(clippy::default_numeric_fallback)]
+
+// 符合
 let i = 10u32;
 let f = 1.23f32;
 ```

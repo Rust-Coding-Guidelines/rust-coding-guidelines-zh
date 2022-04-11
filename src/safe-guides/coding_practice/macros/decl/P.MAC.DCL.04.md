@@ -6,7 +6,7 @@
 
 **【反例】**
 
-宏解析器无法确定第一次匹配的应该是多少个 ident。
+宏解析器无法确定第一次匹配的应该是多少个 `ident`。
 
 ```rust
 macro_rules! ambiguity {

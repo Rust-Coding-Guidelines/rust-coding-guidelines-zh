@@ -1,6 +1,6 @@
-## G.TRA.BLN.06    不要对实现 `Copy`  或引用类型调用  `std::mem::drop` 和 `std::mem::forgot`
+## G.TRA.BLN.06   不要对实现 `Copy`  或引用类型调用  `std::mem::drop` 和 `std::mem::forgot`
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -15,6 +15,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 let x: i32 = 42; // i32 implements Copy
 std::mem::drop(x) // A copy of x is passed to the function, leaving the
                   // original unaffected
@@ -36,7 +37,7 @@ pub fn format(&mut self) -> String {
     }
     let this = std::mem::take(self);
     self.consumed = true;
-    drop(self); // Get rid of the self reference so we don't use it by mistake.
+    drop(self); // 显式 drop self，避免后面误用它
     // ...
 }
 ```

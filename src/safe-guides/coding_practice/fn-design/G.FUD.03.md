@@ -3,18 +3,24 @@
 **【级别】** 建议
 
 **【描述】**
+
 布尔类型的参数过多，很难让人记住，容易出错。将其封装为枚举或结构体，可以更好地利用类型系统的检查而避免出错。
 其他类型参数过多时，也可以考虑是否可以用自定义结构体或枚举进行封装。
 
 **【反例】**
 
 ```rust
+#![warn(clippy::fn_params_excessive_bools)]
+
+// 不符合
 fn f(is_round: bool, is_hot: bool) { ... }
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::fn_params_excessive_bools)]
+
 enum Shape {
     Round,
     Spiky,
@@ -25,6 +31,7 @@ enum Temperature {
     IceCold,
 }
 
+// 符合
 fn f(shape: Shape, temperature: Temperature) { ... }
 ```
 

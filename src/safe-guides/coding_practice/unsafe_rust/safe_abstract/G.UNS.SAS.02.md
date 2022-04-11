@@ -11,6 +11,8 @@
 **【反例】**
 
 ```rust
+    #![warn(clippy::debug_assert_with_mut_call)]
+    // 不符合
 	// 使用了 debug_assert! 那就说明这个校验在 Release 模式不一定有效
     // 那么该函数就要被标记为  unsafe
 	pub unsafe fn split_at_mut(&mut self, mid: usize) -> (&mut [T], &mut [T]) {
@@ -20,7 +22,7 @@
         unsafe { self.split_at_mut_unchecked(mid) }
     }
 
-   // or
+   // 不符合
    // 在 debug_assert_eq! 中包含可变引用的调用，
    // 也会因为 debug_assert_ 系列的断言宏在 Release 下产生不可预料的结果，它是 unsafe 的
    debug_assert_eq!(vec![3].pop(), Some(3));
@@ -31,6 +33,8 @@
 来自标准库 `slice` 的代码示例。
 
 ```rust
+    #![warn(clippy::debug_assert_with_mut_call)]
+    // 符合
 	pub fn split_at_mut(&mut self, mid: usize) -> (&mut [T], &mut [T]) {
         assert!(mid <= self.len()); // 判断边界条件，杜绝非法参数
         // SAFETY: `[ptr; mid]` and `[mid; len]` are inside `self`, which

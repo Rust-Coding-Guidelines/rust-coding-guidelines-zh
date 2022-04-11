@@ -15,11 +15,11 @@ let num1 = Rc::new(1);
 let num2 = Rc::new(2);
 let num3 = Rc::new(3);
 let closure = {
-    // `num1` is moved
-    let num2 = num2.clone();  // `num2` is cloned
-    let num3 = num3.as_ref();  // `num3` is borrowed
+    // `num1` 所有权已经转移
+    let num2 = num2.clone();  
+    let num3 = num3.as_ref(); 
     move || {
-        *num1 + *num2 + *num3;
+        *num1 + *num2 + *num3; // 不符合
     }
 };
 ```
@@ -32,10 +32,10 @@ use std::rc::Rc;
 let num1 = Rc::new(1);
 let num2 = Rc::new(2);
 let num3 = Rc::new(3);
-// 单独对要传递到闭包的变量重新绑定
+// 符合： 单独对要传递到闭包的变量重新绑定
 let num2_cloned = num2.clone();
 let num3_borrowed = num3.as_ref();
 let closure = move || {
-    *num1 + *num2_cloned + *num3_borrowed;
+    *num1 + *num2_cloned + *num3_borrowed; // 符合
 };
 ```

@@ -1,24 +1,29 @@
-## P.FMT.16  不要将多个不相关的 派生(Derive) 宏合并为同一行
+## P.FMT.16  不要将派生宏中多个不相关的特质合并为同一行
 
 **【描述】**
 
-不要将多个不相关的 Derive 宏合并为同一行，可以增加代码可读性，明确语义。
-rustfmt 不会识别Derive 宏是否相关，这是开发者自己编写的。
+不要将派生宏（Derive）中多个特质（trait）合并为同一行，这样可以增加代码可读性，明确语义。
+
+`rustfmt` 配置项 `merge_derives` 用于匹配此格式，其默认值是让派生宏中多个特质在同一行，所以需要修改其默认值。
+
+说明： `rustfmt` 并不会识别哪些特质相关，所以需要开发者手工指定好。
 
 **【反例】**
 
-用默认设置  `merge_derives = true`
+当使用默认设置  `merge_derives = true` 时，不符合。
 
 ```rust
+// 不符合：不相关的特质放到一行
 #[derive(Eq, PartialEq, Debug, Copy, Clone)]
 pub enum Foo {}
 ```
 
 **【正例】**
 
-修改默认设置 `merge_derives = false`
+修改默认设置 `merge_derives = false`，符合。
 
 ```rust
+// 符合
 #[derive(Eq, PartialEq)]
 #[derive(Debug)]
 #[derive(Copy, Clone)]
@@ -26,10 +31,6 @@ pub enum Foo {}
 ```
 
 **【rustfmt 配置】**
-
-此规则 Clippy 不可检测，由 rustfmt 自动格式化。
-
-rustfmt 配置：
 
 | 对应选项                                                     | 可选值                     | 是否 stable | 说明                             |
 | ------------------------------------------------------------ | -------------------------- | ----------- | -------------------------------- |

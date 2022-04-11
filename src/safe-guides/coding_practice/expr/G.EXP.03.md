@@ -10,14 +10,14 @@
 
 ```rust
 fn main(){
-    [42, 55][get_usize()];
-    compute_array()[0];
+   // 不符合
+   [42, 55][get_usize()];
+   compute_array()[0];
 }
 
 fn get_usize() -> usize {
    6
 }
-
 
 fn compute_array() -> [i32; 3] {
    [1,2,3]
@@ -28,8 +28,9 @@ fn compute_array() -> [i32; 3] {
 
 ```rust
 fn main(){
-    assert!([42, 55].len() > get_usize());
-    assert!(compute_array().len() > 0);
+   // 符合
+   assert!([42, 55].len() > get_usize());
+   assert!(compute_array().len() > 0);
 }
 
 fn get_usize() -> usize {

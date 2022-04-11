@@ -10,6 +10,10 @@
 **【反例】**
 
 ```rust
+#![feature(never_type)] // 当启用该功能的时候，下面的clippy才会生效
+#![warn(clippy::empty_enum)]
+
+// 不符合
 enum Test {}
 ```
 
@@ -18,7 +22,10 @@ enum Test {}
 所以，如果想在稳定版 Rust 中使用，建议使用[`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 。 `Infallible` 枚举是一个合法的空枚举，常用于错误处理中，表示永远不可能出现的错误。但是目前也可以用于在稳定版中替代  `never`   类型。
 
 ```rust
-// 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
+#![feature(never_type)] // 当启用该功能的时候，下面的clippy才会生效
+#![warn(clippy::empty_enum)]
+
+//符合： 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
 pub type Infallible = !;
 ```
 
@@ -27,6 +34,8 @@ pub type Infallible = !;
 因为 [`std::convert::Infallible`](https://doc.rust-lang.org/std/convert/enum.Infallible.html#) 默认实现了很多 trait，如果不想依赖其他 trait ，那么可以用 空枚举。
 
 ```rust
+#![feature(never_type)] // 当启用该功能的时候，下面的clippy才会生效
+#![allow(clippy::empty_enum)]
 pub enum NoUserError {}
 
 impl Display for NoUserError {

@@ -11,6 +11,7 @@
 ```rust
 let x = 37_u32;
 unsafe {
+    // 不符合
     let x: char = std::mem::transmute(x); // where x: u32
     assert_eq!('%', x);
 }
@@ -21,10 +22,13 @@ unsafe {
 ```rust
 let x = 37_u32;
 
-let x = std::char::from_u32(x).unwrap(); // 请按情况处理 None
-// let x = std::char::from_u32_unchecked(x);  // 如果确定该整数对应合法的unicode，可以使用 uncheck 方法加速
+// 符合：x 会返回一个 Result 类型，开发者可以进行错误处理
+let x = std::char::from_u32(x); 
 assert_eq!('%', x);
 
+// 符合：如果确定该整数对应合法的 unicode，可以使用 uncheck 方法加速
+let x = std::char::from_u32_unchecked(x);  
+assert_eq!('%', x);
 ```
 
 **【Lint 检测】**

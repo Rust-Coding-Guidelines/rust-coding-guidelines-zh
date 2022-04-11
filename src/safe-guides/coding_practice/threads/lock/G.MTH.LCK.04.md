@@ -12,7 +12,7 @@
 
 ```rust
 use std::thread;
-use std::sync::mpsc::channel;
+use std::sync::mpsc::channel; // 不符合
 
 let (tx, rx) = channel();
 
@@ -32,7 +32,7 @@ for _ in 0..10 {
 **【正例】**
 
 ```rust
-use crossbeam_channel::unbounded;
+use crossbeam_channel::unbounded; // 符合
 
 let (tx, rx) = unbounded();
 
@@ -48,12 +48,3 @@ for _ in 0..10 {
     assert!(0 <= j && j < 10);
 }
 ```
-
-**【Lint 检测】**
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 是否可定制 |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| _ | no           | no           | _ | yes |
-
-**【定制化参考】**
-这条规则如果需要定制 Lint，则可以扫描对 `std::sync::mpsc::channel` 的使用，推荐优先选择 crate `crossbeam`。

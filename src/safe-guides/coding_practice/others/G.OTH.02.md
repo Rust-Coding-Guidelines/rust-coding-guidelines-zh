@@ -13,8 +13,8 @@
 let dur = Duration::new(5, 0);
 
 // Bad
-let _micros = dur.subsec_nanos() / 1_000;      // 用纳秒计算微秒
-let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒计算毫秒
+let _micros = dur.subsec_nanos() / 1_000;      // 不符合：用纳秒计算微秒
+let _millis = dur.subsec_nanos() / 1_000_000;  // 不符合：用纳秒计算毫秒
 ```
 
 **【正例】**
@@ -24,8 +24,8 @@ let _millis = dur.subsec_nanos() / 1_000_000;  // 用纳秒计算毫秒
 let dur = Duration::new(5, 0);
 
 // Good
-let _micros = dur.subsec_micros(); // 通过标准库函数得到微秒
-let _millis = dur.subsec_millis(); // 通过标准库函数得到毫秒
+let _micros = dur.subsec_micros(); // 符合：通过标准库函数得到微秒
+let _millis = dur.subsec_millis(); // 符合：通过标准库函数得到毫秒
 ```
 
 **【Lint 检测】**

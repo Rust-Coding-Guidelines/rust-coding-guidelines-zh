@@ -12,14 +12,14 @@ use std::collections::VecDeque;
 
 fn main() {
 
-    // HashMap
+    // 不符合
     let mut map = HashMap::new();
     map.insert("a", 1);
     map.insert("b", 2);
     map.insert("c", 3);
     println!("{:#?}", map);
     
-    // VecDeque
+    // 不符合
     let mut deque = VecDeque::new();
     deque.push_back(1);
     deque.push_back(2);
@@ -36,14 +36,14 @@ use std::collections::VecDeque;
 
 fn main() {
 
-    // HashMap
+    // 符合
     let mut map = HashMap::with_capacity(3);
     map.insert("a", 1);
     map.insert("b", 2);
     map.insert("c", 3);
     println!("{:#?}", map);
     
-    // VecDeque
+    // 符合
     let mut deque = VecDeque::with_capacity(3);
     deque.push_back(1);
     deque.push_back(2);

@@ -13,6 +13,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 let mut vec = vec![2, 1, 3];
 vec.sort();  // stable sort
 ```
@@ -20,6 +21,7 @@ vec.sort();  // stable sort
 **【正例】**
 
 ```rust
+// 符合
 let mut vec = vec![2, 1, 3];
 vec.sort_unstable(); // unstable sort
 ```
@@ -31,7 +33,7 @@ vec.sort_unstable(); // unstable sort
  pub fn generate_index(&self, limit_load_slot_count_from_snapshot: Option<usize>) {
         let mut slots = self.storage.all_slots();
         #[allow(clippy::stable_sort_primitive)]
-        slots.sort(); // The business requirement here is to use stable sort 
+        slots.sort(); // 商业需求这里需要稳定排序
         // ...
 }
 ```

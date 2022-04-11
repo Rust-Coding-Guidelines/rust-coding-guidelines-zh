@@ -1,4 +1,4 @@
-## P.GEN.01    用泛型来抽象公共语义
+## P.GEN.01  用泛型来抽象公共语义
 
 **【描述】**
 
@@ -49,6 +49,7 @@ impl Add for Kilogram {
     }
 }
 fn main() {
+    // 不符合：如果要再新增新的单位，还需要实现很多重复代码
     let one_meter = Meter::new(1.0);
     let two_kilograms = Kilogram::new(2.0);
     
@@ -96,6 +97,7 @@ struct KilogramType;
 type Meter = Unit<MeterType>;
 type Kilogram = Unit<KilogramType>;
 fn main() {
+    // 符合：如果要再新增新的单位，就方便很多了
     let one_meter = Meter::new(1.0);
     let two_kilograms = Kilogram::new(2.0);
     

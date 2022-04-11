@@ -24,6 +24,7 @@ struct ConstraintGeneration<'a, 'b, 'c> {
 **【正例】**
 
 ```rust
+// 增加 'cg 意义的文档注释
 /// 'cg = the duration of the constraint generation process itself.
 struct ConstraintGeneration<'cg, 'cx, 'tcx> {
     infcx: &'cg InferCtxt<'cx, 'tcx>,

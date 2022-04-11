@@ -14,13 +14,13 @@
 pub fn expect(self, msg: &str) -> T {
     match self {
         Ok(t) => t,
-        Err(e) => panic!("{}: {:?}", msg, &e),
+        Err(e) => panic!("{}: {:?}", msg, &e),  // 不符合
     }
 }
 
 pub fn unwrap_err(self) -> E {
     match self {
-        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t),
+        Ok(t) => panic!("{}: {:?}", "called `Result::unwrap_err()` on an `Ok` value", &t), // 不符合
         Err(e) => e,
     }
 }
@@ -39,21 +39,14 @@ fn unwrap_failed(msg: &str, error: &dyn fmt::Debug) -> ! {
 pub fn expect(self, msg: &str) -> T {
     match self {
         Ok(t) => t,
-        Err(e) => unwrap_failed(msg, &e),
+        Err(e) => unwrap_failed(msg, &e), // 符合
     }
 }
 
 pub fn unwrap_err(self) -> E {
     match self {
-        Ok(t) => unwrap_failed("called `Result::unwrap_err()` on an `Ok` value", &t),
+        Ok(t) => unwrap_failed("called `Result::unwrap_err()` on an `Ok` value", &t),  // 符合
         Err(e) => e,
     }
 }
 ```
-
-**【Lint 检测】**
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-

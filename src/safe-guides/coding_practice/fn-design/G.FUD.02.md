@@ -9,20 +9,24 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::large_types_passed_by_value)]
+
 #[derive(Clone, Copy)]
 struct TooLarge([u8; 2048]);
 
-// Bad
+// 不符合
 fn foo(v: TooLarge) {}
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::large_types_passed_by_value)]
+
 #[derive(Clone, Copy)]
 struct TooLarge([u8; 2048]);
 
-// Good
+// 符合
 fn foo(v: &TooLarge) {}
 ```
 

@@ -11,6 +11,7 @@
 来源于 [std标准库文档](https://doc.rust-lang.org/std/sync/struct.Mutex.html)
 
 ```rust
+// 不符合
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc::channel;
@@ -41,6 +42,7 @@ rx.recv().unwrap();
 相比`std::sync::Mutex`，使用 `parking_lot::Mutex` 能实现'无中毒'，锁在 panic 时正常释放，更少的空间占用等优势。
 
 ```rust
+// 符合
 use parking_lot::Mutex;
 use std::sync::{Arc, mpsc::channel};
 use std::thread;
@@ -63,12 +65,3 @@ for _ in 0..10 {
 
 rx.recv().unwrap();
 ```
-
-**【Lint 检测】**
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 是否可定制 |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| _ | no           | no           | _ | yes |
-
-**【定制化参考】**
-这条规则如果需要定制 Lint，则可以扫描 `std::sync` 锁同步原语的使用，推荐优先选择 crate `parking_lot` 中对应的同步原语。

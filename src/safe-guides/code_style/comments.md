@@ -8,7 +8,7 @@
 ## 列表
 
 - [P.CMT.01 代码能做到自注释，文档要干练简洁](./comments/P.CMT.01.md)
-- [P.CMT.02 注释应该有一定宽度限制](./comments/P.CMT.02.md)
+- [P.CMT.02 注释应该有宽度限制](./comments/P.CMT.02.md)
 - [P.CMT.03 使用行注释而避免使用块注释](./comments/P.CMT.03.md)
 - [P.CMT.04 文件头注释包含版权说明](./comments/P.CMT.04.md)
 - [P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作](./comments/P.CMT.05.md)

@@ -53,7 +53,7 @@ Number 从`01`开始递增。其中 `Element` 为领域知识中关键元素（�
 | FMT     | 格式 (Format)  | TYP     | 数据类型 (Data Type) |
 | CNS     | 常量 (Const)   | VAR     | 变量  (Variables)   |
 | EXP     | 表达式 (Expression) | CTF     | 控制流程 (Control Flow) |
-| RFE     | 引用 (Reference)  | PTR     | 指针  (Pointer)   |
+| REF     | 引用 (Reference)  | PTR     | 指针  (Pointer)   |
 | STR     | 字符串 (String) | INT     | 整数 (Integer)    |
 | MOD     | 模块  (Module) | CAR     | 包管理  (Cargo) |
 | MEM     | 内存 (Memory)  | FUD     | 函数设计 (Function Design) |

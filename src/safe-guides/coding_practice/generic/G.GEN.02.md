@@ -2,12 +2,6 @@
 
 **【级别】** 建议
 
-**【Lint 检测】**
-
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [inefficient_to_string](https://rust-lang.github.io/rust-clippy/master/#inefficient_to_string) | yes           | no           | pedantic   | allow |
-
 **【描述】**
 
 Rust 标准库内部某些类型使用了 泛型特化（未稳定特性），比如 `ToString` trait。
@@ -21,15 +15,27 @@ Rust 标准库内部某些类型使用了 泛型特化（未稳定特性），�
 **【反例】**
 
 ```rust
+#![warn(clippy::inefficient_to_string)]
+
+// 不符合
 // 闭包参数中， s 为 `&&str` 类型
 //  `&&str` 就会去调用泛型的默认实现
-["foo", "bar"].iter().map(|&s| s.to_string() );
+["foo", "bar"].iter().map(|s| s.to_string() );
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::inefficient_to_string)]
+
+// 符合
 // 闭包参数中， s 为 `&&str` 类型，使用 `|&s|` 对参数模式匹配后，闭包体内 `s` 就变成了 `&str` 类型
 // 经过这样的转换，直接调用 `&str`的 `to_string()` 方法，而如果是 `&&str` 就会去调用泛型的默认实现。 
 ["foo", "bar"].iter().map(|&s| s.to_string() );
 ```
+
+**【Lint 检测】**
+
+| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [inefficient_to_string](https://rust-lang.github.io/rust-clippy/master/#inefficient_to_string) | yes           | no           | pedantic   | allow |

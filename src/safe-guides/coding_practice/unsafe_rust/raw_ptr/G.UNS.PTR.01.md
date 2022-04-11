@@ -10,11 +10,12 @@
 
 ```rust
 fn main() {
-    let a = (&1u8 as *const u8) as *const u16;
-    let b = (&mut 1u8 as *mut u8) as *mut u16;
+    let a = (&1u8 as *const u8) as *const u16; // 不符合
+    let b = (&mut 1u8 as *mut u8) as *mut u16; // 不符合
 
-    let c =  (&1u8 as *const u8).cast::<u16>();
+    let c =  (&1u8 as *const u8).cast::<u16>(); // 不符合
 
+    
     // Undefined Behavior: dereferencing pointer failed: alloc1411 has size 1, so pointer to 2 bytes starting at offset 0 is out-of-bounds
     unsafe { *a }; 
     // Undefined Behavior: dereferencing pointer failed: alloc1411 has size 1, so pointer to 2 bytes starting at offset 0 is out-of-bounds
@@ -29,11 +30,12 @@ fn main() {
 
 ```rust
 fn main() {
-    let a = (&1u8 as *const u8) as *const u8;
-    let b = (&mut 1u8 as *mut u8) as *mut u8;
+    let a = (&1u8 as *const u8) as *const u8; // 符合
+    let b = (&mut 1u8 as *mut u8) as *mut u8; // 符合
 
-    let c =  (&1u8 as *const u8).cast::<u8>();
+    let c =  (&1u8 as *const u8).cast::<u8>(); // 符合
    
+    
     // safe
     unsafe { *a }; 
     // safe

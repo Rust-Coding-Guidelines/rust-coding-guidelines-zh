@@ -11,6 +11,7 @@
 **【反例】**
 
 ```rust
+// 不符合
 if x == true {}
 if y == false {}
 
@@ -21,6 +22,7 @@ assert_ne!("a".is_empty(), true);
 **【正例】**
 
 ```rust
+// 符合
 if x {}
 if !y {}
 

@@ -1,5 +1,5 @@
 
-## G.MOD.03   导入模块不要随便使用 通配符`*` 
+## G.MOD.03 导入模块不要随便使用 通配符`*` 
 
 **【级别】** 建议
 
@@ -10,7 +10,7 @@
 **【反例】**
 
 ```rust
-
+#![warn(clippy::wildcard_imports)]
 use crate2::*; // Has a function named foo
 foo(); // Calls crate1::foo
 ```
@@ -18,6 +18,7 @@ foo(); // Calls crate1::foo
 **【正例】**
 
 ```rust
+#![warn(clippy::wildcard_imports)]
 use crate1::foo; // Imports a function named foo
 foo(); // Calls crate1::foo
 ```

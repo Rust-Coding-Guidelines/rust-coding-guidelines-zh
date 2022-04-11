@@ -1,4 +1,4 @@
-## G.MOD.01   使用导入模块中的类型或函数，在某些情况下需要带 模块名前缀
+## G.MOD.01  使用导入模块中的类型或函数，在某些情况下需要带模块名前缀
 
 **【级别】** 建议
 
@@ -25,16 +25,7 @@ let mut rust = vec!['b', 'u', 's', 't'];
 // `mem::replace` would have the same effect without requiring the unsafe
 // block.
 let b = unsafe {
+    // 符合
     ptr::replace(&mut rust[0], 'r')
 };
 ```
-
-**【Lint 检测】**
-
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 是否可定制 |
-| --------- | ------------- | ------------ | ---------- | ---------- |
-| _         | no            | no           | _          | yes        |
-
-【定制化参考】
-
-可以检测外部模块导入的自定义的类型是否带模块前缀，给予建议。

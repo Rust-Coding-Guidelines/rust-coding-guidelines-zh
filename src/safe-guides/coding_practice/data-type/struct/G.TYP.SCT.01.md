@@ -11,10 +11,12 @@
 在 `#[non_exhaustive]` 属性稳定之前，社区内还有一种约定俗成的写法来达到防止下游自定义枚举方法。通过 `manual_non_exhaustive` 可以监控这类写法。
 
 ```rust
+#![warn(clippy::exhaustive_structs)]
+
 struct S {
     pub a: i32,
     pub b: i32,
-    _priv: (),  // 这里用 下划线作为前缀定义的字段，作为私有字段，不对外公开
+    _priv: (),  // 不符合：这里用 下划线作为前缀定义的字段，作为私有字段，不对外公开
 }
 
 // 用户无法自定义实现该结构体的方法。
@@ -23,6 +25,9 @@ struct S {
 **【正例】**
 
 ```rust
+#![warn(clippy::exhaustive_structs)]
+
+// 符合
 #[non_exhaustive]
 struct Foo {
     bar: u8,

@@ -11,7 +11,8 @@
 **【反例】**
 
 ```rust
-// Release 模式编译
+#![warn(clippy::dbg_macro)]
+// 不符合：代码加入版本控制时还保留着 dbg! 代码
 let foo = false;
 dbg!(foo); 
 ```
@@ -19,11 +20,9 @@ dbg!(foo);
 **【正例】**
 
 ```rust
-// Debug 模式编译
-let foo = false;
-dbg!(foo); 
+#![warn(clippy::dbg_macro)]
 
-// Release 模式编译
+// 符合：代码加入版本控制时注释掉 dbg! 代码
 let foo = false;
 // dbg!(foo); 
 ```

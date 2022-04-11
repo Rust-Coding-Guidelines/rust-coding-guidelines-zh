@@ -1,6 +1,6 @@
 ## G.UNS.PTR.02  禁止将不可变指针手工转换为可变指针
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -11,7 +11,7 @@
 ```rust
 fn x(r: &i32) {
     unsafe {
-        *(r as *const _ as *mut _) += 1;
+        *(r as *const _ as *mut _) += 1; // 不符合
     }
 }
 ```
@@ -21,9 +21,10 @@ fn x(r: &i32) {
  ```rust
 use std::cell::UnsafeCell;
 
+// 符合
 fn x(r: &UnsafeCell<i32>) {
     unsafe {
-        *r.get() += 1;
+        *r.get() += 1; 
     }
 }
  ```

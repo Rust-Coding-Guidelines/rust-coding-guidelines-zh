@@ -14,12 +14,18 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::large_stack_arrays)]
+
+// 不符合
 pub const A: [u32;1_000_000] = [0u32; 1_000_000];
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::large_stack_arrays)]
+
+// 符合
 pub static A: [u32;1_000_000] = [0u32; 1_000_000];
 ```
 

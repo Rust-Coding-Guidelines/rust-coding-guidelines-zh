@@ -9,16 +9,20 @@
 **【反例】**
 
 ```rust
+#![warn(clippy::trivially_copy_pass_by_ref)]
 fn foo(v: &u32) {}
 ```
 
 **【正例】**
 
 ```rust
+#![warn(clippy::trivially_copy_pass_by_ref)]
 fn foo(v: u32) {}
 ```
 
 **【例外】**
+
+需要注意这种情况下，lint 检查工具会误报。
 
 ```rust
 #[derive(Clone, Copy)]

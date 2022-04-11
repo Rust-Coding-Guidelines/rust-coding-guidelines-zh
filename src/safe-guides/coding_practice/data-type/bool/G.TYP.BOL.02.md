@@ -4,14 +4,17 @@
 
 **【描述】**
 
-对于布尔表达式更倾向于使用 `if ... else ...`，相比较 `match` 模式匹配更有利于代码可读性。
+对于布尔表达式更倾向于使用 `if ... else ...`，相比 `match` 模式匹配更有利于代码可读性。
 
 **【反例】**
 
 ```rust
+#![warn(clippy::match_bool)]
+
 # fn foo() {}
 # fn bar() {}
 let condition: bool = true;
+// 不符合
 match condition {
     true => foo(),
     false => bar(),
@@ -21,9 +24,12 @@ match condition {
 **【正例】**
 
 ```rust
+#![warn(clippy::match_bool)]
+
 # fn foo() {}
 # fn bar() {}
 let condition: bool = true;
+// 符合
 if condition {
     foo();
 } else {

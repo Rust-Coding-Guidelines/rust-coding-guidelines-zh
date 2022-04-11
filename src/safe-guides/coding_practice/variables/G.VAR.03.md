@@ -13,74 +13,62 @@
 **【反例】**
 
 ```rust
-let x = 2;
-let x = x + 1; // 将会改变x的值
-
-let x = &x; // 只是改变引用级别
-
-let x = y; // 更早的绑定
-let x = z; // 遮蔽了更早的绑定
-
-// or
+#![warn(clippy::shadow_reuse, clippy::shadow_same, clippy::shadow_unrelated)]
 
 fn main() {
     let mut a = 0;
     {
-        // 这里使用变量遮蔽逻辑已经被改变
+        // 不符合：这里使用变量遮蔽，代码逻辑已经被改变
+        // clippy::shadow_unrelated
         let a = 42;
     }
     
     a; // use a again
+
+    let x = 2; 
+    // 不符合： 将会改变x的值
+    // clippy::shadow_reuse
+    let x = x + 1; 
+
+    // 不符合：只是改变引用级别
+    // clippy::shadow_same
+    let x = &x; 
+
+    let y = 1;
+    // 不符合：这里使用变量遮蔽逻辑已经被改变
+    // clippy::shadow_unrelated
+    let x = y; // 更早的绑定
+    let z = 2;
+    // 不符合：这里使用变量遮蔽逻辑已经被改变
+    // clippy::shadow_unrelated
+    let x = z; // 遮蔽了更早的绑定
 }
 ```
 
 **【正例】**
 
 ```rust
-let x = 2;
-let y = x + 1; // 不改变x的值，声明新的变量y
-
-let y = &x; // 不改变x的绑定，声明新的变量
-
-let w = z; // 使用不同的名字
-
-// or
+#![warn(clippy::shadow_reuse, clippy::shadow_same, clippy::shadow_unrelated)]
 
 fn main() {
     let mut a = 0;
     {
-        // do something
+        // 符合
         a = 42;
     }
     a;// use a again
+
+
+    let x = 2;
+    let y = x + 1; // 符合： 不改变x的值，声明新的变量y
+
+
+    let ref_x = &x; // 符合：不改变x的绑定，声明新的变量
+    let z = 2;
+    let w = z; // 符合： 使用不同的名字
 }
 ```
 
-**【例外】**
-
-在某些场景，可能会临时准备或处理一些数据，但在此之后，数据只用于检查而非修改。
-
-那么可以将其通过变量遮蔽功能，重写绑定为不可变变量，来表明这种 临时可变，但后面不变的意图。
-
-```rust
-// 不建议用法
-let data = { 
-    let mut data = get_vec();
-    data.sort();
-    data // 虽然后面不再改动，但代码语义上没有表现出来先改变，后不变那种顺序语义
-};
-
-// Here `data` is immutable.
-```
-
-```rust
-// 建议用法
-let mut data = get_vec();
-data.sort(); // 临时需要排序
-let data = data; //  由编译器确保后面不再改动
-
-// Here `data` is immutable.
-```
 
 **【Lint 检测】**
 

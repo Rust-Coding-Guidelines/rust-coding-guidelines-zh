@@ -1,4 +1,4 @@
-## G.CTF.03 如果要通过 `if` 条件表达式来判断是否panic，请优先使用断言
+## G.CTF.03 如果要通过 `if` 条件表达式来判断是否 Panic，请优先使用断言
 
 **【级别】** 建议
 
@@ -10,6 +10,7 @@
 
 ```rust
 let sad_people: Vec<&str> = vec![];
+// 不符合
 if !sad_people.is_empty() {
     panic!("there are sad people: {:?}", sad_people);
 }
@@ -19,6 +20,7 @@ if !sad_people.is_empty() {
 
 ```rust
 let sad_people: Vec<&str> = vec![];
+// 符合
 assert!(sad_people.is_empty(), "there are sad people: {:?}", sad_people);
 ```
 

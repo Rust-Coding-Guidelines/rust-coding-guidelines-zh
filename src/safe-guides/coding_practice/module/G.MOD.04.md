@@ -1,4 +1,4 @@
-## G.MOD.04    一个项目中应该避免使用不同的模块布局风格
+## G.MOD.04  一个项目中应该避免使用不同的模块布局风格
 
 **【级别】** 建议
 
@@ -13,15 +13,18 @@ Rust 支持两种 模块布局，文件夹内使用 `mod.rs` 或者是使用跟�
  **【反例】**
 
 ```rust
-// 使用 `self_named_module_files`，不允许下面模块布局
+#![warn(clippy::self_named_module_files, clippy::mod_module_files)]
+
+// 不符合：使用 `self_named_module_files`，不允许下面模块布局
+#![warn(clippy::self_named_module_files)]
 src/
   stuff/
     stuff_files.rs
   stuff.rs
   lib.rs
 
-// 使用 `mod_module_files`，不允许下面模块布局
-
+// 不符合：使用 `mod_module_files`，不允许下面模块布局
+#![warn(clippy::mod_module_files)]
 src/
   stuff/
     stuff_files.rs
@@ -32,14 +35,16 @@ src/
 **【正例】**
 
 ```rust
-// 使用 `self_named_module_files`，允许下面模块布局
+// 符合：使用 `self_named_module_files`，允许下面模块布局
+#![warn(clippy::self_named_module_files)]
 src/
   stuff/
     stuff_files.rs
     mod.rs
   lib.rs
 
-// 使用 `mod_module_files`，允许下面模块布局
+// 符合：使用 `mod_module_files`，允许下面模块布局
+#![warn(clippy::mod_module_files)]
 src/
   stuff/
     stuff_files.rs

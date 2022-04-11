@@ -1,6 +1,6 @@
 ## G.UNS.MEM.01   使用 `MaybeUninit<T>` 来处理未初始化的内存
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -17,21 +17,22 @@
 由调用者来保证`MaybeUninit<T>`确实处于初始化状态。当内存尚未完全初始化时调用 `assume_init()` 会导致立即未定义的行为。
 
 ```rust
+
 use std::mem::{self, MaybeUninit};
-// 零初始化引用
+// 不符合：零初始化引用
 let x: &i32 = unsafe { mem::zeroed() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<&i32>`:
+// 等价于 `MaybeUninit<&i32>`:
 let x: &i32 = unsafe { MaybeUninit::zeroed().assume_init() }; // undefined behavior! 
-// 布尔值必须初始化
+// 不符合：布尔值必须初始化
 let b: bool = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<bool>`:
+// 等价于 `MaybeUninit<bool>`:
 let b: bool = unsafe { MaybeUninit::uninit().assume_init() }; // undefined behavior! 
-// 整数类型也必须初始化
+// 不符合：整数类型也必须初始化
 let x: i32 = unsafe { mem::uninitialized() }; // undefined behavior! ⚠️
-// The equivalent code with `MaybeUninit<i32>`:
+// 等价于 `MaybeUninit<i32>`:
 let x: i32 = unsafe { MaybeUninit::uninit().assume_init() }; 
 
-// Vec未初始化内存使用 set_len 是未定义行为
+// 不符合：Vec未初始化内存使用 set_len 是未定义行为
 let mut vec: Vec<u8> = Vec::with_capacity(1000);
 unsafe { vec.set_len(1000); }
 reader.read(&mut vec); // undefined behavior!
@@ -43,22 +44,22 @@ reader.read(&mut vec); // undefined behavior!
 use std::mem::MaybeUninit;
 
 let mut x = MaybeUninit::<bool>::uninit();
-x.write(true); // 这里正确进行了初始化
+x.write(true); // 符合：这里正确进行了初始化
 let x_init = unsafe { x.assume_init() }; // 通过 assume_init 对 MaybeUninit 的内存取值
 assert_eq!(x_init, true);
 
-// 下面数组应该是可以的
+// 符合：下面数组应该是可以的
 let _: [MaybeUninit<bool>; 5] = unsafe {
     MaybeUninit::uninit().assume_init()
 };
 
-// Vec 未初始化内存正确处理
+// 符合：Vec 未初始化内存正确处理
 let mut vec: Vec<u8> = vec![0; 1000];
 reader.read(&mut vec);
-// or
+// 符合
 let mut vec: Vec<MaybeUninit<T>> = Vec::with_capacity(1000);
 vec.set_len(1000);  // `MaybeUninit` can be uninitialized
-// or
+// 符合：
 let mut vec: Vec<u8> = Vec::with_capacity(1000);
 let remaining = vec.spare_capacity_mut();  // `&mut [MaybeUninit<u8>]`
 // perform initialization with `remaining`

@@ -11,14 +11,15 @@ Feature 命名应该避免出现 `no-` 或 `not-` 之类的否定前缀，或诸
 ```toml
 [features]
 default = ["no-abc", "with-def", "ghi-support"]
-no-abc = []         # 命名否定式
-with-def = []       # 多余前缀
-ghi-support = []    # 多余后缀
+no-abc = []         # 不符合：命名否定式
+with-def = []       # 不符合：多余前缀
+ghi-support = []    # 不符合：多余后缀
 ```
 
 **【正例】**
 
 ```toml
+# 符合
 [features]
 default = ["abc", "def", "ghi"]
 abc = []
