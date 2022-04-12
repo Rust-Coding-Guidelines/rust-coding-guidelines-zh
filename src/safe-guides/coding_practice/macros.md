@@ -36,26 +36,3 @@ rustc -Z unstable-options --pretty expanded hello.rs
 # 对项目里的二进制 rs 文件
 cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 ```
-
-## 列表
-
-- [P.MAC.01 不要轻易使用宏](./macros/P.MAC.01.md)
-- [P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法](./macros/P.MAC.02.md)
-- [G.MAC.01 dbg!() 宏只应该用于调试代码](./macros/G.MAC.01.md)
-- [G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响](./macros/G.MAC.02.md)
-- [声明宏](./macros/decl.md)
-    - [P.MAC.DCL.01 不要将声明宏内的变量作为外部变量使用](./macros/decl/P.MAC.DCL.01.md)
-    - [P.MAC.DCL.02 在编写多个宏规则时，应该先从匹配粒度最小的开始写](./macros/decl/P.MAC.DCL.02.md)
-    - [P.MAC.DCL.03 不要在片段分类符跟随它不匹配的符号](./macros/decl/P.MAC.DCL.03.md)
-    - [P.MAC.DCL.04 匹配规则要精准，不要模糊不清](./macros/decl/P.MAC.DCL.04.md)
-    - [P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符](./macros/decl/P.MAC.DCL.05.md)
-    - [P.MAC.DCL.06 当宏需要接收 self 时需要注意](./macros/decl/P.MAC.DCL.06.md)
-    - [P.MAC.DCL.07 确保在宏定义之后再去调用宏](./macros/decl/P.MAC.DCL.07.md)
-    - [P.MAC.DCL.08 同一个 crate 内定义的宏相互调用时，需要注意卫生性](./macros/decl/P.MAC.DCL.08.md)
-- [过程宏](./macros/proc.md)
-    - [P.MAC.PRO.01 不要使用过程宏来规避静态分析检查](./macros/proc/P.MAC.PRO.01.md)
-    - [P.MAC.PRO.02 实现过程宏时要对关键特性增加测试](./macros/proc/P.MAC.PRO.02.md)
-    - [P.MAC.PRO.03 保证过程宏的卫生性](./macros/proc/P.MAC.PRO.03.md)
-    - [P.MAC.PRO.04 给出正确的错误位置](./macros/proc/P.MAC.PRO.04.md)
-    - [P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs](./macros/proc/P.MAC.PRO.05.md)
-    - [P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告](./macros/proc/P.MAC.PRO.06.md)

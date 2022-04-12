@@ -6,7 +6,3 @@
 
 本部分只关注 Safe Rust 下 I/O 相关规范。
 
-## 列表
-
-- [P.FIO.01 使用`read_to_end/read_to_string`方法时注意文件的大小能否一次性读入内存中](./io/P.FIO.01.md)
-- [G.FIO.01 文件读取建议使用 `BufReader/BufWriter` 来代替 `Reader/Write`](./io/G.FIO.01.md)

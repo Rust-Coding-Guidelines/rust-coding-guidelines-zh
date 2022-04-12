@@ -1,4 +1,4 @@
-## P.UNS.SAS.05  Unsafe 代码中手动实现 auto trait 需要注意
+## P.UNS.SAS.05  手动实现 auto trait 时要充分考虑其安全性
 
 **【描述】**
 

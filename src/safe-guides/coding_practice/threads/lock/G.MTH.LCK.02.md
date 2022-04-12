@@ -1,4 +1,4 @@
-## G.MTH.LCK.02 建议使用 `Arc<str> / Arc<[T]>` 来代替  `Arc<String> / Arc<Vec<T>>`
+## G.MTH.LCK.02 宜使用 `Arc<str> / Arc<[T]>` 来代替  `Arc<String> / Arc<Vec<T>>`
 
 **【级别】** 建议
 
