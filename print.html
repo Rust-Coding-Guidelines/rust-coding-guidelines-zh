@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rust 编码规范 V 0.3</title>
+        <title>Rust 编码规范 V 1.0 beta</title>
         <meta name="robots" content="noindex" />
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="overview.html"><strong aria-hidden="true">1.</strong> 概述</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/overview/why.html"><strong aria-hidden="true">1.1.</strong> 为什么需要 Rust 编码规范</a></li><li class="chapter-item "><a href="safe-guides/overview/convention.html"><strong aria-hidden="true">1.2.</strong> 编码规范基本约定</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style.html"><strong aria-hidden="true">2.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming.html"><strong aria-hidden="true">2.1.</strong> 命名</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.01.html"><strong aria-hidden="true">2.1.1.</strong> P.NAM.01</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.02.html"><strong aria-hidden="true">2.1.2.</strong> P.NAM.02</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.03.html"><strong aria-hidden="true">2.1.3.</strong> P.NAM.03</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.04.html"><strong aria-hidden="true">2.1.4.</strong> P.NAM.04</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.05.html"><strong aria-hidden="true">2.1.5.</strong> P.NAM.05</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.06.html"><strong aria-hidden="true">2.1.6.</strong> P.NAM.06</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.07.html"><strong aria-hidden="true">2.1.7.</strong> P.NAM.07</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.08.html"><strong aria-hidden="true">2.1.8.</strong> P.NAM.08</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.09.html"><strong aria-hidden="true">2.1.9.</strong> P.NAM.09</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/G.NAM.01.html"><strong aria-hidden="true">2.1.10.</strong> G.NAM.01</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/G.NAM.02.html"><strong aria-hidden="true">2.1.11.</strong> G.NAM.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style/fmt.html"><strong aria-hidden="true">2.2.</strong> 格式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.01.html"><strong aria-hidden="true">2.2.1.</strong> P.FMT.01</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.02.html"><strong aria-hidden="true">2.2.2.</strong> P.FMT.02</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.03.html"><strong aria-hidden="true">2.2.3.</strong> P.FMT.03</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.04.html"><strong aria-hidden="true">2.2.4.</strong> P.FMT.04</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.05.html"><strong aria-hidden="true">2.2.5.</strong> P.FMT.05</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.06.html"><strong aria-hidden="true">2.2.6.</strong> P.FMT.06</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.07.html"><strong aria-hidden="true">2.2.7.</strong> P.FMT.07</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.08.html"><strong aria-hidden="true">2.2.8.</strong> P.FMT.08</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.09.html"><strong aria-hidden="true">2.2.9.</strong> P.FMT.09</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.10.html"><strong aria-hidden="true">2.2.10.</strong> P.FMT.10</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.11.html"><strong aria-hidden="true">2.2.11.</strong> P.FMT.11</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.12.html"><strong aria-hidden="true">2.2.12.</strong> P.FMT.12</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.13.html"><strong aria-hidden="true">2.2.13.</strong> P.FMT.13</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.14.html"><strong aria-hidden="true">2.2.14.</strong> P.FMT.14</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.15.html"><strong aria-hidden="true">2.2.15.</strong> P.FMT.15</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.16.html"><strong aria-hidden="true">2.2.16.</strong> P.FMT.16</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style/comments.html"><strong aria-hidden="true">2.3.</strong> 注释</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.01.html"><strong aria-hidden="true">2.3.1.</strong> P.CMT.01</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.02.html"><strong aria-hidden="true">2.3.2.</strong> P.CMT.02</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.03.html"><strong aria-hidden="true">2.3.3.</strong> P.CMT.03</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.04.html"><strong aria-hidden="true">2.3.4.</strong> P.CMT.04</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.05.html"><strong aria-hidden="true">2.3.5.</strong> P.CMT.05</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.01.html"><strong aria-hidden="true">2.3.6.</strong> G.CMT.01</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.02.html"><strong aria-hidden="true">2.3.7.</strong> G.CMT.02</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.03.html"><strong aria-hidden="true">2.3.8.</strong> G.CMT.03</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice.html"><strong aria-hidden="true">3.</strong> 编码实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/consts.html"><strong aria-hidden="true">3.1.</strong> 常量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.01.html"><strong aria-hidden="true">3.1.1.</strong> G.CNS.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.02.html"><strong aria-hidden="true">3.1.2.</strong> G.CNS.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.03.html"><strong aria-hidden="true">3.1.3.</strong> G.CNS.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.04.html"><strong aria-hidden="true">3.1.4.</strong> G.CNS.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.05.html"><strong aria-hidden="true">3.1.5.</strong> G.CNS.05</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/statics.html"><strong aria-hidden="true">3.2.</strong> 静态变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/statics/G.STV.01.html"><strong aria-hidden="true">3.2.1.</strong> G.STV.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables.html"><strong aria-hidden="true">3.3.</strong> 本地变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/variables/P.VAR.01.html"><strong aria-hidden="true">3.3.1.</strong> P.VAR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/P.VAR.02.html"><strong aria-hidden="true">3.3.2.</strong> P.VAR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.01.html"><strong aria-hidden="true">3.3.3.</strong> G.VAR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.02.html"><strong aria-hidden="true">3.3.4.</strong> G.VAR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.03.html"><strong aria-hidden="true">3.3.5.</strong> G.VAR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.04.html"><strong aria-hidden="true">3.3.6.</strong> G.VAR.04</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type.html"><strong aria-hidden="true">3.4.</strong> 数据类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/P.TYP.01.html"><strong aria-hidden="true">3.4.1.</strong> P.TYP.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.01.html"><strong aria-hidden="true">3.4.2.</strong> G.TYP.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.02.html"><strong aria-hidden="true">3.4.3.</strong> G.TYP.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.03.html"><strong aria-hidden="true">3.4.4.</strong> G.TYP.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool.html"><strong aria-hidden="true">3.4.5.</strong> 布尔</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.01.html"><strong aria-hidden="true">3.4.5.1.</strong> G.TYP.BOL.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.02.html"><strong aria-hidden="true">3.4.5.2.</strong> G.TYP.BOL.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.03.html"><strong aria-hidden="true">3.4.5.3.</strong> G.TYP.BOL.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.04.html"><strong aria-hidden="true">3.4.5.4.</strong> G.TYP.BOL.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.05.html"><strong aria-hidden="true">3.4.5.5.</strong> G.TYP.BOL.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.06.html"><strong aria-hidden="true">3.4.5.6.</strong> G.TYP.BOL.06</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char.html"><strong aria-hidden="true">3.4.6.</strong> 字符</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.01.html"><strong aria-hidden="true">3.4.6.1.</strong> G.TYP.CHR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.02.html"><strong aria-hidden="true">3.4.6.2.</strong> G.TYP.CHR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.03.html"><strong aria-hidden="true">3.4.6.3.</strong> G.TYP.CHR.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int.html"><strong aria-hidden="true">3.4.7.</strong> 整数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.01.html"><strong aria-hidden="true">3.4.7.1.</strong> G.TYP.INT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.02.html"><strong aria-hidden="true">3.4.7.2.</strong> G.TYP.INT.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.03.html"><strong aria-hidden="true">3.4.7.3.</strong> G.TYP.INT.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float.html"><strong aria-hidden="true">3.4.8.</strong> 浮点数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.01.html"><strong aria-hidden="true">3.4.8.1.</strong> G.TYP.FLT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.02.html"><strong aria-hidden="true">3.4.8.2.</strong> G.TYP.FLT.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.03.html"><strong aria-hidden="true">3.4.8.3.</strong> G.TYP.FLT.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.04.html"><strong aria-hidden="true">3.4.8.4.</strong> G.TYP.FLT.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.05.html"><strong aria-hidden="true">3.4.8.5.</strong> G.TYP.FLT.05</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice.html"><strong aria-hidden="true">3.4.9.</strong> 切片</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice/P.TYP.SLC.01.html"><strong aria-hidden="true">3.4.9.1.</strong> P.TYP.SLC.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice/P.TYP.SLC.02.html"><strong aria-hidden="true">3.4.9.2.</strong> P.TYP.SLC.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/tuple.html"><strong aria-hidden="true">3.4.10.</strong> 元组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/tuple/G.TYP.TUP.01.html"><strong aria-hidden="true">3.4.10.1.</strong> G.TYP.TUP.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array.html"><strong aria-hidden="true">3.4.11.</strong> 固定长度数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.01.html"><strong aria-hidden="true">3.4.11.1.</strong> G.TYP.ARR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.02.html"><strong aria-hidden="true">3.4.11.2.</strong> G.TYP.ARR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.03.html"><strong aria-hidden="true">3.4.11.3.</strong> G.TYP.ARR.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec.html"><strong aria-hidden="true">3.4.12.</strong> 动态数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/P.TYP.VEC.01.html"><strong aria-hidden="true">3.4.12.1.</strong> P.TYP.VEC.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/P.TYP.VEC.02.html"><strong aria-hidden="true">3.4.12.2.</strong> P.TYP.VEC.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/G.TYP.VEC.01.html"><strong aria-hidden="true">3.4.12.3.</strong> G.TYP.VEC.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct.html"><strong aria-hidden="true">3.4.13.</strong> 结构体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/P.TYP.SCT.01.html"><strong aria-hidden="true">3.4.13.1.</strong> P.TYP.SCT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/P.TYP.SCT.02.html"><strong aria-hidden="true">3.4.13.2.</strong> P.TYP.SCT.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.01.html"><strong aria-hidden="true">3.4.13.3.</strong> G.TYP.SCT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.02.html"><strong aria-hidden="true">3.4.13.4.</strong> G.TYP.SCT.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.03.html"><strong aria-hidden="true">3.4.13.5.</strong> G.TYP.SCT.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum.html"><strong aria-hidden="true">3.4.14.</strong> 枚举体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.01.html"><strong aria-hidden="true">3.4.14.1.</strong> G.TYP.ENM.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.02.html"><strong aria-hidden="true">3.4.14.2.</strong> G.TYP.ENM.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.03.html"><strong aria-hidden="true">3.4.14.3.</strong> G.TYP.ENM.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.04.html"><strong aria-hidden="true">3.4.14.4.</strong> G.TYP.ENM.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.05.html"><strong aria-hidden="true">3.4.14.5.</strong> G.TYP.ENM.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.06.html"><strong aria-hidden="true">3.4.14.6.</strong> G.TYP.ENM.06</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr.html"><strong aria-hidden="true">3.5.</strong> 表达式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.01.html"><strong aria-hidden="true">3.5.1.</strong> G.EXP.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.02.html"><strong aria-hidden="true">3.5.2.</strong> G.EXP.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.03.html"><strong aria-hidden="true">3.5.3.</strong> G.EXP.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.04.html"><strong aria-hidden="true">3.5.4.</strong> G.EXP.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.05.html"><strong aria-hidden="true">3.5.5.</strong> G.EXP.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.06.html"><strong aria-hidden="true">3.5.6.</strong> G.EXP.06</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow.html"><strong aria-hidden="true">3.6.</strong> 控制流程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/P.CTF.01.html"><strong aria-hidden="true">3.6.1.</strong> P.CTF.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/P.CTF.02.html"><strong aria-hidden="true">3.6.2.</strong> P.CTF.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.01.html"><strong aria-hidden="true">3.6.3.</strong> G.CTF.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.02.html"><strong aria-hidden="true">3.6.4.</strong> G.CTF.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.03.html"><strong aria-hidden="true">3.6.5.</strong> G.CTF.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.04.html"><strong aria-hidden="true">3.6.6.</strong> G.CTF.04</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings.html"><strong aria-hidden="true">3.7.</strong> 字符串</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.01.html"><strong aria-hidden="true">3.7.1.</strong> P.STR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.02.html"><strong aria-hidden="true">3.7.2.</strong> P.STR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.03.html"><strong aria-hidden="true">3.7.3.</strong> P.STR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.04.html"><strong aria-hidden="true">3.7.4.</strong> P.STR.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.05.html"><strong aria-hidden="true">3.7.5.</strong> P.STR.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.01.html"><strong aria-hidden="true">3.7.6.</strong> G.STR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.02.html"><strong aria-hidden="true">3.7.7.</strong> G.STR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.03.html"><strong aria-hidden="true">3.7.8.</strong> G.STR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.04.html"><strong aria-hidden="true">3.7.9.</strong> G.STR.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.05.html"><strong aria-hidden="true">3.7.10.</strong> G.STR.05</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/collections.html"><strong aria-hidden="true">3.8.</strong> 集合容器</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/collections/P.CLT.01.html"><strong aria-hidden="true">3.8.1.</strong> P.CLT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/collections/G.CLT.01.html"><strong aria-hidden="true">3.8.2.</strong> G.CLT.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design.html"><strong aria-hidden="true">3.9.</strong> 函数设计</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/P.FUD.01.html"><strong aria-hidden="true">3.9.1.</strong> P.FUD.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/P.FUD.02.html"><strong aria-hidden="true">3.9.2.</strong> P.FUD.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.01.html"><strong aria-hidden="true">3.9.3.</strong> G.FUD.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.02.html"><strong aria-hidden="true">3.9.4.</strong> G.FUD.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.03.html"><strong aria-hidden="true">3.9.5.</strong> G.FUD.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.04.html"><strong aria-hidden="true">3.9.6.</strong> G.FUD.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.05.html"><strong aria-hidden="true">3.9.7.</strong> G.FUD.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.06.html"><strong aria-hidden="true">3.9.8.</strong> G.FUD.06</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic.html"><strong aria-hidden="true">3.10.</strong> 泛型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.01.html"><strong aria-hidden="true">3.10.1.</strong> P.GEN.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.02.html"><strong aria-hidden="true">3.10.2.</strong> P.GEN.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.03.html"><strong aria-hidden="true">3.10.3.</strong> P.GEN.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.04.html"><strong aria-hidden="true">3.10.4.</strong> P.GEN.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.05.html"><strong aria-hidden="true">3.10.5.</strong> P.GEN.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/G.GEN.01.html"><strong aria-hidden="true">3.10.6.</strong> G.GEN.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/G.GEN.02.html"><strong aria-hidden="true">3.10.7.</strong> G.GEN.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits.html"><strong aria-hidden="true">3.11.</strong> 特质</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/P.TRA.01.html"><strong aria-hidden="true">3.11.1.</strong> P.TRA.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin.html"><strong aria-hidden="true">3.11.2.</strong> 标准库内置 trait</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/P.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.1.</strong> P.TRA.BLN.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.2.</strong> G.TRA.BLN.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.02.html"><strong aria-hidden="true">3.11.2.3.</strong> G.TRA.BLN.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.03.html"><strong aria-hidden="true">3.11.2.4.</strong> G.TRA.BLN.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.04.html"><strong aria-hidden="true">3.11.2.5.</strong> G.TRA.BLN.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.05.html"><strong aria-hidden="true">3.11.2.6.</strong> G.TRA.BLN.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.06.html"><strong aria-hidden="true">3.11.2.7.</strong> G.TRA.BLN.06</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.07.html"><strong aria-hidden="true">3.11.2.8.</strong> G.TRA.BLN.07</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.08.html"><strong aria-hidden="true">3.11.2.9.</strong> G.TRA.BLN.08</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.09.html"><strong aria-hidden="true">3.11.2.10.</strong> G.TRA.BLN.09</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.10.html"><strong aria-hidden="true">3.11.2.11.</strong> G.TRA.BLN.10</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object.html"><strong aria-hidden="true">3.11.3.</strong> trait 对象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.01.html"><strong aria-hidden="true">3.11.3.1.</strong> P.TRA.OBJ.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.02.html"><strong aria-hidden="true">3.11.3.2.</strong> P.TRA.OBJ.02</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle.html"><strong aria-hidden="true">3.12.</strong> 错误处理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/P.ERR.01.html"><strong aria-hidden="true">3.12.1.</strong> P.ERR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/P.ERR.02.html"><strong aria-hidden="true">3.12.2.</strong> P.ERR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/G.ERR.01.html"><strong aria-hidden="true">3.12.3.</strong> G.ERR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/G.ERR.02.html"><strong aria-hidden="true">3.12.4.</strong> G.ERR.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory.html"><strong aria-hidden="true">3.13.</strong> 内存管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime.html"><strong aria-hidden="true">3.13.1.</strong> 生命周期</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.01.html"><strong aria-hidden="true">3.13.1.1.</strong> P.MEM.LFT.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.02.html"><strong aria-hidden="true">3.13.1.2.</strong> P.MEM.LFT.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/smart-ptr.html"><strong aria-hidden="true">3.13.2.</strong> 智能指针</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/smart-ptr/P.MEM.SPT.01.html"><strong aria-hidden="true">3.13.2.1.</strong> P.MEM.SPT.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box.html"><strong aria-hidden="true">3.13.3.</strong> Box 类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.01.html"><strong aria-hidden="true">3.13.3.1.</strong> G.MEM.BOX.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.02.html"><strong aria-hidden="true">3.13.3.2.</strong> G.MEM.BOX.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.03.html"><strong aria-hidden="true">3.13.3.3.</strong> G.MEM.BOX.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/drop.html"><strong aria-hidden="true">3.13.4.</strong> Drop 析构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/drop/G.MEM.DRP.01.html"><strong aria-hidden="true">3.13.4.1.</strong> G.MEM.DRP.01</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/module.html"><strong aria-hidden="true">3.14.</strong> 模块</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/module/P.MOD.01.html"><strong aria-hidden="true">3.14.1.</strong> P.MOD.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/P.MOD.02.html"><strong aria-hidden="true">3.14.2.</strong> P.MOD.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.01.html"><strong aria-hidden="true">3.14.3.</strong> G.MOD.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.02.html"><strong aria-hidden="true">3.14.4.</strong> G.MOD.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.03.html"><strong aria-hidden="true">3.14.5.</strong> G.MOD.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.04.html"><strong aria-hidden="true">3.14.6.</strong> G.MOD.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.05.html"><strong aria-hidden="true">3.14.7.</strong> G.MOD.05</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">3.15.</strong> 包管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.01.html"><strong aria-hidden="true">3.15.1.</strong> P.CAR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.02.html"><strong aria-hidden="true">3.15.2.</strong> P.CAR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.03.html"><strong aria-hidden="true">3.15.3.</strong> P.CAR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.04.html"><strong aria-hidden="true">3.15.4.</strong> P.CAR.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.01.html"><strong aria-hidden="true">3.15.5.</strong> G.CAR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.02.html"><strong aria-hidden="true">3.15.6.</strong> G.CAR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.03.html"><strong aria-hidden="true">3.15.7.</strong> G.CAR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.04.html"><strong aria-hidden="true">3.15.8.</strong> G.CAR.04</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros.html"><strong aria-hidden="true">3.16.</strong> 宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/P.MAC.01.html"><strong aria-hidden="true">3.16.1.</strong> P.MAC.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/P.MAC.02.html"><strong aria-hidden="true">3.16.2.</strong> P.MAC.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/G.MAC.01.html"><strong aria-hidden="true">3.16.3.</strong> G.MAC.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/G.MAC.02.html"><strong aria-hidden="true">3.16.4.</strong> G.MAC.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl.html"><strong aria-hidden="true">3.16.5.</strong> 声明宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.01.html"><strong aria-hidden="true">3.16.5.1.</strong> P.MAC.DCL.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.02.html"><strong aria-hidden="true">3.16.5.2.</strong> P.MAC.DCL.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.03.html"><strong aria-hidden="true">3.16.5.3.</strong> P.MAC.DCL.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.04.html"><strong aria-hidden="true">3.16.5.4.</strong> P.MAC.DCL.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.05.html"><strong aria-hidden="true">3.16.5.5.</strong> P.MAC.DCL.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.06.html"><strong aria-hidden="true">3.16.5.6.</strong> P.MAC.DCL.06</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.07.html"><strong aria-hidden="true">3.16.5.7.</strong> P.MAC.DCL.07</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.08.html"><strong aria-hidden="true">3.16.5.8.</strong> P.MAC.DCL.08</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc.html"><strong aria-hidden="true">3.16.6.</strong> 过程宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.01.html"><strong aria-hidden="true">3.16.6.1.</strong> P.MAC.PRO.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.02.html"><strong aria-hidden="true">3.16.6.2.</strong> P.MAC.PRO.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.03.html"><strong aria-hidden="true">3.16.6.3.</strong> P.MAC.PRO.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.04.html"><strong aria-hidden="true">3.16.6.4.</strong> P.MAC.PRO.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.05.html"><strong aria-hidden="true">3.16.6.5.</strong> P.MAC.PRO.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.06.html"><strong aria-hidden="true">3.16.6.6.</strong> P.MAC.PRO.06</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads.html"><strong aria-hidden="true">3.17.</strong> 多线程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock.html"><strong aria-hidden="true">3.17.1.</strong> 锁同步</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/P.MTH.LCK.01.html"><strong aria-hidden="true">3.17.1.1.</strong> P.MTH.LCK.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.01.html"><strong aria-hidden="true">3.17.1.2.</strong> G.MTH.LCK.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.02.html"><strong aria-hidden="true">3.17.1.3.</strong> G.MTH.LCK.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.03.html"><strong aria-hidden="true">3.17.1.4.</strong> G.MTH.LCK.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.04.html"><strong aria-hidden="true">3.17.1.5.</strong> G.MTH.LCK.04</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free.html"><strong aria-hidden="true">3.17.2.</strong> 无锁</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.01.html"><strong aria-hidden="true">3.17.2.1.</strong> P.MTH.LKF.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.02.html"><strong aria-hidden="true">3.17.2.2.</strong> P.MTH.LKF.02</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await.html"><strong aria-hidden="true">3.18.</strong> 异步编程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/P.ASY.01.html"><strong aria-hidden="true">3.18.1.</strong> P.ASY.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.01.html"><strong aria-hidden="true">3.18.2.</strong> G.ASY.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.02.html"><strong aria-hidden="true">3.18.3.</strong> G.ASY.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.03.html"><strong aria-hidden="true">3.18.4.</strong> G.ASY.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.04.html"><strong aria-hidden="true">3.18.5.</strong> G.ASY.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.05.html"><strong aria-hidden="true">3.18.6.</strong> G.ASY.05</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust.html"><strong aria-hidden="true">3.19.</strong> Unsafe Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/P.UNS.01.html"><strong aria-hidden="true">3.19.1.</strong> P.UNS.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/P.UNS.02.html"><strong aria-hidden="true">3.19.2.</strong> P.UNS.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/G.UNS.01.html"><strong aria-hidden="true">3.19.3.</strong> G.UNS.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">3.19.4.</strong> 安全抽象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.1.</strong> P.UNS.SAS.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.2.</strong> P.UNS.SAS.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.03.html"><strong aria-hidden="true">3.19.4.3.</strong> P.UNS.SAS.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.04.html"><strong aria-hidden="true">3.19.4.4.</strong> P.UNS.SAS.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.05.html"><strong aria-hidden="true">3.19.4.5.</strong> P.UNS.SAS.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.06.html"><strong aria-hidden="true">3.19.4.6.</strong> P.UNS.SAS.06</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.07.html"><strong aria-hidden="true">3.19.4.7.</strong> P.UNS.SAS.07</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.08.html"><strong aria-hidden="true">3.19.4.8.</strong> P.UNS.SAS.08</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.09.html"><strong aria-hidden="true">3.19.4.9.</strong> P.UNS.SAS.09</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.10.</strong> G.UNS.SAS.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.11.</strong> G.UNS.SAS.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr.html"><strong aria-hidden="true">3.19.5.</strong> 裸指针操作</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.1.</strong> P.UNS.PTR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.02.html"><strong aria-hidden="true">3.19.5.2.</strong> P.UNS.PTR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.03.html"><strong aria-hidden="true">3.19.5.3.</strong> P.UNS.PTR.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.4.</strong> G.UNS.PTR.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.02.html"><strong aria-hidden="true">3.19.5.5.</strong> G.UNS.PTR.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.03.html"><strong aria-hidden="true">3.19.5.6.</strong> G.UNS.PTR.03</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union.html"><strong aria-hidden="true">3.19.6.</strong> 联合体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union/P.UNS.UNI.01.html"><strong aria-hidden="true">3.19.6.1.</strong> P.UNS.UNI.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union/P.UNS.UNI.02.html"><strong aria-hidden="true">3.19.6.2.</strong> P.UNS.UNI.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem.html"><strong aria-hidden="true">3.19.7.</strong> 内存</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.1.</strong> P.UNS.MEM.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.02.html"><strong aria-hidden="true">3.19.7.2.</strong> P.UNS.MEM.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.03.html"><strong aria-hidden="true">3.19.7.3.</strong> P.UNS.MEM.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.04.html"><strong aria-hidden="true">3.19.7.4.</strong> P.UNS.MEM.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.05.html"><strong aria-hidden="true">3.19.7.5.</strong> P.UNS.MEM.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/G.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.6.</strong> G.UNS.MEM.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi.html"><strong aria-hidden="true">3.19.8.</strong> FFi</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.01.html"><strong aria-hidden="true">3.19.8.1.</strong> P.UNS.FFI.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.02.html"><strong aria-hidden="true">3.19.8.2.</strong> P.UNS.FFI.02</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.03.html"><strong aria-hidden="true">3.19.8.3.</strong> P.UNS.FFI.03</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.04.html"><strong aria-hidden="true">3.19.8.4.</strong> P.UNS.FFI.04</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.05.html"><strong aria-hidden="true">3.19.8.5.</strong> P.UNS.FFI.05</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.06.html"><strong aria-hidden="true">3.19.8.6.</strong> P.UNS.FFI.06</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.07.html"><strong aria-hidden="true">3.19.8.7.</strong> P.UNS.FFI.07</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.08.html"><strong aria-hidden="true">3.19.8.8.</strong> P.UNS.FFI.08</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.09.html"><strong aria-hidden="true">3.19.8.9.</strong> P.UNS.FFI.09</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.10.html"><strong aria-hidden="true">3.19.8.10.</strong> P.UNS.FFI.10</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.11.html"><strong aria-hidden="true">3.19.8.11.</strong> P.UNS.FFI.11</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.12.html"><strong aria-hidden="true">3.19.8.12.</strong> P.UNS.FFI.12</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.13.html"><strong aria-hidden="true">3.19.8.13.</strong> P.UNS.FFI.13</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.14.html"><strong aria-hidden="true">3.19.8.14.</strong> P.UNS.FFI.14</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.15.html"><strong aria-hidden="true">3.19.8.15.</strong> P.UNS.FFI.15</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/io.html"><strong aria-hidden="true">3.19.9.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/io/P.UNS.FIO.01.html"><strong aria-hidden="true">3.19.9.1.</strong> P.UNS.FIO.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/glossary.html"><strong aria-hidden="true">3.19.10.</strong> Unsafe 代码术语指南</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/no-std.html"><strong aria-hidden="true">3.20.</strong> no-std</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/no-std/P.EMB.01.html"><strong aria-hidden="true">3.20.1.</strong> P.EMB.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/no-std/P.EMB.02.html"><strong aria-hidden="true">3.20.2.</strong> P.EMB.02</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/io.html"><strong aria-hidden="true">3.21.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/io/P.FIO.01.html"><strong aria-hidden="true">3.21.1.</strong> P.FIO.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/io/G.FIO.01.html"><strong aria-hidden="true">3.21.2.</strong> G.FIO.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/security.html"><strong aria-hidden="true">3.22.</strong> 信息安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/security/P.SEC.01.html"><strong aria-hidden="true">3.22.1.</strong> P.SEC.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/security/G.SEC.01.html"><strong aria-hidden="true">3.22.2.</strong> G.SEC.01</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/others.html"><strong aria-hidden="true">3.23.</strong> 其他</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/others/G.OTH.01.html"><strong aria-hidden="true">3.23.1.</strong> G.OTH.01</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/others/G.OTH.02.html"><strong aria-hidden="true">3.23.2.</strong> G.OTH.01</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/toc.html"><strong aria-hidden="true">4.</strong> 附录</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/dev_env.html"><strong aria-hidden="true">4.1.</strong> A.开发环境</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test.html"><strong aria-hidden="true">4.2.</strong> B.测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/test/unit_test.html"><strong aria-hidden="true">4.2.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test/benchmark.html"><strong aria-hidden="true">4.2.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test/fuzz.html"><strong aria-hidden="true">4.2.3.</strong> 模糊测试</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/terms.html"><strong aria-hidden="true">4.3.</strong> C.术语解释</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/intro.html"><strong aria-hidden="true">4.4.</strong> D.模板</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/templates/rustfmt.toml.html"><strong aria-hidden="true">4.4.1.</strong> rustfmt 模板</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/clippy.toml.html"><strong aria-hidden="true">4.4.2.</strong> clippy 模板</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/deny.toml.html"><strong aria-hidden="true">4.4.3.</strong> deny 模板</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/intro.html"><strong aria-hidden="true">4.5.</strong> E.工具链</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/tools/rustfmt.html"><strong aria-hidden="true">4.5.1.</strong> rustfmt</a></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/noisy-clippy.html"><strong aria-hidden="true">4.5.2.</strong> noisy-clippy</a></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/cargo-udeps.html"><strong aria-hidden="true">4.5.3.</strong> cargo-udeps</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/cheat-sheet/index.html"><strong aria-hidden="true">4.6.</strong> F.Cheat Sheet</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/cheat-sheet/Numbers/float.html"><strong aria-hidden="true">4.6.1.</strong> 浮点数</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/optimizing/intro.html"><strong aria-hidden="true">4.7.</strong> G.优化指南</a></li><li class="chapter-item "><a href="safe-guides/Appendix/rustc-flag.html"><strong aria-hidden="true">4.8.</strong> H.编译参数说明</a></li><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/intro.html"><strong aria-hidden="true">4.9.</strong> I.最佳实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/qa.html"><strong aria-hidden="true">4.9.1.</strong> 初学者常见问题Q&amp;A</a></li><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/tips.html"><strong aria-hidden="true">4.9.2.</strong> Rust 编程技巧</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/contribution.html"><strong aria-hidden="true">4.10.</strong> J.贡献说明</a></li><li class="chapter-item "><a href="safe-guides/Appendix/old_guidelines.html"><strong aria-hidden="true">4.11.</strong> K.淘汰的规则</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="overview.html"><strong aria-hidden="true">1.</strong> 概述</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/overview/why.html"><strong aria-hidden="true">1.1.</strong> 为什么需要 Rust 编码规范</a></li><li class="chapter-item "><a href="safe-guides/overview/convention.html"><strong aria-hidden="true">1.2.</strong> 编码规范基本约定</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style.html"><strong aria-hidden="true">2.</strong> 代码风格</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming.html"><strong aria-hidden="true">2.1.</strong> 命名</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.01.html"><strong aria-hidden="true">2.1.1.</strong> P.NAM.01 同一个crate中标识符的命名规则应该使用统一的词序</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.02.html"><strong aria-hidden="true">2.1.2.</strong> P.NAM.02 为 cargo feature 命名时不应含有无意义的占位词</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.03.html"><strong aria-hidden="true">2.1.3.</strong> P.NAM.03 标识符命名应该符合阅读习惯</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.04.html"><strong aria-hidden="true">2.1.4.</strong> P.NAM.04 作用域越大命名越精确，反之应简短</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.05.html"><strong aria-hidden="true">2.1.5.</strong> P.NAM.05 用于访问或获取数据的 getter 类方法通常不要使用 get_ 前缀</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.06.html"><strong aria-hidden="true">2.1.6.</strong> P.NAM.06 遵循 iter/ iter_mut/ into_iter 规范来生成迭代器</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.07.html"><strong aria-hidden="true">2.1.7.</strong> P.NAM.07 避免使用语言内置保留字、关键字、内置类型和trait等特殊名称</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.08.html"><strong aria-hidden="true">2.1.8.</strong> P.NAM.08 避免在变量的命名中添加类型标识</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/P.NAM.09.html"><strong aria-hidden="true">2.1.9.</strong> P.NAM.09 定义全局静态变量时需加前缀G_以便和常量有所区分</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/G.NAM.01.html"><strong aria-hidden="true">2.1.10.</strong> G.NAM.01 使用统一的命名风格</a></li><li class="chapter-item "><a href="safe-guides/code_style/naming/G.NAM.02.html"><strong aria-hidden="true">2.1.11.</strong> G.NAM.02 类型转换函数命名需要遵循所有权语义</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style/fmt.html"><strong aria-hidden="true">2.2.</strong> 格式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.01.html"><strong aria-hidden="true">2.2.1.</strong> P.FMT.01 使用 rustfmt 进行自动格式化代码</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.02.html"><strong aria-hidden="true">2.2.2.</strong> P.FMT.02 缩进使用空格而非制表符</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.03.html"><strong aria-hidden="true">2.2.3.</strong> P.FMT.03 行间距最大宽度空一行</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.04.html"><strong aria-hidden="true">2.2.4.</strong> P.FMT.04 语言项（Item) 定义时左花括号（brace）位置应该与语言项保持同一行</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.05.html"><strong aria-hidden="true">2.2.5.</strong> P.FMT.05 存在多个标识符时应该保持块状（Block）缩进</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.06.html"><strong aria-hidden="true">2.2.6.</strong> P.FMT.06 当有多行表达式操作时，操作符应该置于行首</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.07.html"><strong aria-hidden="true">2.2.7.</strong> P.FMT.07 枚举变体和结构体字段都应左对齐</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.08.html"><strong aria-hidden="true">2.2.8.</strong> P.FMT.08 函数参数超过五个或导入模块个数超过四个需换行</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.09.html"><strong aria-hidden="true">2.2.9.</strong> P.FMT.09 不同的场景，使用不同的空格风格</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.10.html"><strong aria-hidden="true">2.2.10.</strong> P.FMT.10 match 分支应该具有良好的可读性</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.11.html"><strong aria-hidden="true">2.2.11.</strong> P.FMT.11 导入模块分组应该具有良好的可读性</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.12.html"><strong aria-hidden="true">2.2.12.</strong> P.FMT.12 声明宏分支应该具有良好的可读性</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.13.html"><strong aria-hidden="true">2.2.13.</strong> P.FMT.13 具名结构体字段初始化时不要省略字段名</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.14.html"><strong aria-hidden="true">2.2.14.</strong> P.FMT.14 extern 外部函数需要显式指定 C-ABI</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.15.html"><strong aria-hidden="true">2.2.15.</strong> P.FMT.15 解构元组的时候允许使用..来指代剩余元素</a></li><li class="chapter-item "><a href="safe-guides/code_style/fmt/P.FMT.16.html"><strong aria-hidden="true">2.2.16.</strong> P.FMT.16 不要将派生宏中多个不相关的特质合并为同一行</a></li></ol></li><li class="chapter-item "><a href="safe-guides/code_style/comments.html"><strong aria-hidden="true">2.3.</strong> 注释</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.01.html"><strong aria-hidden="true">2.3.1.</strong> P.CMT.01 代码能做到自注释，文档要干练简洁</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.02.html"><strong aria-hidden="true">2.3.2.</strong> P.CMT.02 注释应该有宽度限制</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.03.html"><strong aria-hidden="true">2.3.3.</strong> P.CMT.03 使用行注释而避免使用块注释</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.04.html"><strong aria-hidden="true">2.3.4.</strong> P.CMT.04 文件头注释包含版权说明</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/P.CMT.05.html"><strong aria-hidden="true">2.3.5.</strong> P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.01.html"><strong aria-hidden="true">2.3.6.</strong> G.CMT.01 在公开的返回Result类型的函数文档中增加 Error 注释</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.02.html"><strong aria-hidden="true">2.3.7.</strong> G.CMT.02 如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释</a></li><li class="chapter-item "><a href="safe-guides/code_style/comments/G.CMT.03.html"><strong aria-hidden="true">2.3.8.</strong> G.CMT.03 在文档注释中要使用空格代替 tab</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice.html"><strong aria-hidden="true">3.</strong> 编码实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/consts.html"><strong aria-hidden="true">3.1.</strong> 常量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.01.html"><strong aria-hidden="true">3.1.1.</strong> G.CNS.01 对于科学计算中涉及浮点数近似值的常量宜使用预定义常量</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.02.html"><strong aria-hidden="true">3.1.2.</strong> G.CNS.02 不应断言常量布尔类型</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.03.html"><strong aria-hidden="true">3.1.3.</strong> G.CNS.03 不应将内部可变性容器声明为常量</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.04.html"><strong aria-hidden="true">3.1.4.</strong> G.CNS.04 不应在常量定义中增加显式的 'static 生命周期</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/consts/G.CNS.05.html"><strong aria-hidden="true">3.1.5.</strong> G.CNS.05 对于适用 const fn 的函数或方法宜尽可能地使用 const fn</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/statics.html"><strong aria-hidden="true">3.2.</strong> 静态变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/statics/G.STV.01.html"><strong aria-hidden="true">3.2.1.</strong> G.STV.01 不宜直接使用可变静态变量作为全局变量</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables.html"><strong aria-hidden="true">3.3.</strong> 本地变量</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/variables/P.VAR.01.html"><strong aria-hidden="true">3.3.1.</strong> P.VAR.01 一般情况下避免先声明可变变量再赋值</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/P.VAR.02.html"><strong aria-hidden="true">3.3.2.</strong> P.VAR.02 利用变量遮蔽功能保证变量安全使用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.01.html"><strong aria-hidden="true">3.3.3.</strong> G.VAR.01 以解构元组方式定义超过四个变量时不应使用太多无意义变量名</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.02.html"><strong aria-hidden="true">3.3.4.</strong> G.VAR.02 不应使用非 ASCII 字符作为标识符</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.03.html"><strong aria-hidden="true">3.3.5.</strong> G.VAR.03 变量遮蔽功能应当合理使用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/variables/G.VAR.04.html"><strong aria-hidden="true">3.3.6.</strong> G.VAR.04 避免因局部变量过大而导致的大量栈分配</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type.html"><strong aria-hidden="true">3.4.</strong> 数据类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/P.TYP.01.html"><strong aria-hidden="true">3.4.1.</strong> P.TYP.01 必要时，应使类型可以表达更明确的语义，而不是只是直接使用原生类型</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.01.html"><strong aria-hidden="true">3.4.2.</strong> G.TYP.01 类型转换尽可能使用安全的转换函数代替 as</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.02.html"><strong aria-hidden="true">3.4.3.</strong> G.TYP.02 数字字面量在使用的时候应该明确标注类型</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/G.TYP.03.html"><strong aria-hidden="true">3.4.4.</strong> G.TYP.03 不要用数字类型边界值判断能否安全转换，而应使用 try_from 方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool.html"><strong aria-hidden="true">3.4.5.</strong> 布尔</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.01.html"><strong aria-hidden="true">3.4.5.1.</strong> G.TYP.BOL.01 不应将布尔值和布尔字面量进行比较</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.02.html"><strong aria-hidden="true">3.4.5.2.</strong> G.TYP.BOL.02 如果 match 匹配表达式为布尔类型，宜使用 if 表达式来代替</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.03.html"><strong aria-hidden="true">3.4.5.3.</strong> G.TYP.BOL.03 不应将数字类型转换为布尔值</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.04.html"><strong aria-hidden="true">3.4.5.4.</strong> G.TYP.BOL.04 禁止在if表达式条件中使用块结构</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.05.html"><strong aria-hidden="true">3.4.5.5.</strong> G.TYP.BOL.05 非必要时，布尔运算应使用逻辑运算符( &amp;&amp;/||)而非位运算符 (&amp;/|)</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/bool/G.TYP.BOL.06.html"><strong aria-hidden="true">3.4.5.6.</strong> G.TYP.BOL.06 不应使用数字代替布尔值</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char.html"><strong aria-hidden="true">3.4.6.</strong> 字符</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.01.html"><strong aria-hidden="true">3.4.6.1.</strong> G.TYP.CHR.01 不应将字符字面量强制转换为 u8</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.02.html"><strong aria-hidden="true">3.4.6.2.</strong> G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/char/G.TYP.CHR.03.html"><strong aria-hidden="true">3.4.6.3.</strong> G.TYP.CHR.03 需要将整数转换为字符时，应使用安全转换函数，而非 transmute</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int.html"><strong aria-hidden="true">3.4.7.</strong> 整数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.01.html"><strong aria-hidden="true">3.4.7.1.</strong> G.TYP.INT.01 在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.02.html"><strong aria-hidden="true">3.4.7.2.</strong> G.TYP.INT.02 避免在有符号整数和无符号整数之间进行强制转换</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/int/G.TYP.INT.03.html"><strong aria-hidden="true">3.4.7.3.</strong> G.TYP.INT.03 对负数取模计算的时候不应使用 %</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float.html"><strong aria-hidden="true">3.4.8.</strong> 浮点数</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.01.html"><strong aria-hidden="true">3.4.8.1.</strong> G.TYP.FLT.01 使用浮点数字面量时，要警惕是否存在被Rust编译器截断的风险</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.02.html"><strong aria-hidden="true">3.4.8.2.</strong> G.TYP.FLT.02 从任何数字类型转换为浮点类型时注意避免损失精度</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.03.html"><strong aria-hidden="true">3.4.8.3.</strong> G.TYP.FLT.03 对精度高要求的场景下，使用浮点数进行运算和比较时需要注意精度损失</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.04.html"><strong aria-hidden="true">3.4.8.4.</strong> G.TYP.FLT.04 宜使用Rust内置方法处理浮点数计算</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/float/G.TYP.FLT.05.html"><strong aria-hidden="true">3.4.8.5.</strong> G.TYP.FLT.05 禁止在浮点数和整数相互转换时使用 transmute</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice.html"><strong aria-hidden="true">3.4.9.</strong> 切片</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice/P.TYP.SLC.01.html"><strong aria-hidden="true">3.4.9.1.</strong> P.TYP.SLC.01 宜使用切片迭代器来代替手工索引</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/slice/P.TYP.SLC.02.html"><strong aria-hidden="true">3.4.9.2.</strong> P.TYP.SLC.02 宜使用切片模式来提升代码的可读性</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/tuple.html"><strong aria-hidden="true">3.4.10.</strong> 元组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/tuple/G.TYP.TUP.01.html"><strong aria-hidden="true">3.4.10.1.</strong> G.TYP.TUP.01 使用元组时，其元素不宜超过3个</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array.html"><strong aria-hidden="true">3.4.11.</strong> 固定长度数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.01.html"><strong aria-hidden="true">3.4.11.1.</strong> G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.02.html"><strong aria-hidden="true">3.4.11.2.</strong> G.TYP.ARR.02 使用数组索引时禁止越界访问</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/array/G.TYP.ARR.03.html"><strong aria-hidden="true">3.4.11.3.</strong> G.TYP.ARR.03 当数组元素为原生数据类型（Primitive），排序时优先选用非稳定排序</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec.html"><strong aria-hidden="true">3.4.12.</strong> 动态数组</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/P.TYP.VEC.01.html"><strong aria-hidden="true">3.4.12.1.</strong> P.TYP.VEC.01 非必要时不宜使用动态数组</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/P.TYP.VEC.02.html"><strong aria-hidden="true">3.4.12.2.</strong> P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/vec/G.TYP.VEC.01.html"><strong aria-hidden="true">3.4.12.3.</strong> G.TYP.VEC.01 禁止访问未初始化的数组</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct.html"><strong aria-hidden="true">3.4.13.</strong> 结构体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/P.TYP.SCT.01.html"><strong aria-hidden="true">3.4.13.1.</strong> P.TYP.SCT.01 为结构体实现构造性方法时，避免构造后再初始化的情况</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/P.TYP.SCT.02.html"><strong aria-hidden="true">3.4.13.2.</strong> P.TYP.SCT.02 结构体实例需要默认实现时，宜使用Default特质</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.01.html"><strong aria-hidden="true">3.4.13.3.</strong> G.TYP.SCT.01 对外导出的公开的 Struct，宜添加#[non_exhaustive]属性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.02.html"><strong aria-hidden="true">3.4.13.4.</strong> G.TYP.SCT.02 当结构体中有超过三个布尔类型的字段，宜将其独立为新的枚举类</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/struct/G.TYP.SCT.03.html"><strong aria-hidden="true">3.4.13.5.</strong> G.TYP.SCT.03 宜使用结构体功能更新语法来提升代码可读性</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum.html"><strong aria-hidden="true">3.4.14.</strong> 枚举体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.01.html"><strong aria-hidden="true">3.4.14.1.</strong> G.TYP.ENM.01 合理使用map和and_then方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.02.html"><strong aria-hidden="true">3.4.14.2.</strong> G.TYP.ENM.02 不应自行创建空枚举</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.03.html"><strong aria-hidden="true">3.4.14.3.</strong> G.TYP.ENM.03 在使用类似 C 语言的枚举写法且使用repr(isize/usize) 布局时注意 32位架构上截断的问题</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.04.html"><strong aria-hidden="true">3.4.14.4.</strong> G.TYP.ENM.04 不宜在use语句中引入Enum的全部变体（variants）</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.05.html"><strong aria-hidden="true">3.4.14.5.</strong> G.TYP.ENM.05 对外导出的公开Enum，宜添加#[non_exhaustive]属性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/data-type/enum/G.TYP.ENM.06.html"><strong aria-hidden="true">3.4.14.6.</strong> G.TYP.ENM.06 Enum内变体的大小差异不宜过大</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr.html"><strong aria-hidden="true">3.5.</strong> 表达式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.01.html"><strong aria-hidden="true">3.5.1.</strong> G.EXP.01 当需要对表达式求值后重新赋值时，宜使用复合赋值模式</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.02.html"><strong aria-hidden="true">3.5.2.</strong> G.EXP.02 不宜在比较中使用不兼容的位掩码</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.03.html"><strong aria-hidden="true">3.5.3.</strong> G.EXP.03 不应利用数组表达式的边界检查来 Panic，而应使用断言</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.04.html"><strong aria-hidden="true">3.5.4.</strong> G.EXP.04 自增或自减运算使用+=或-=</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.05.html"><strong aria-hidden="true">3.5.5.</strong> G.EXP.05 使用括号来清楚表示表达式的计算顺序</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/expr/G.EXP.06.html"><strong aria-hidden="true">3.5.6.</strong> G.EXP.06 避免在比较中添加无用的掩码操作</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow.html"><strong aria-hidden="true">3.6.</strong> 控制流程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/P.CTF.01.html"><strong aria-hidden="true">3.6.1.</strong> P.CTF.01 避免滥用迭代器</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/P.CTF.02.html"><strong aria-hidden="true">3.6.2.</strong> P.CTF.02 优先使用模式匹配而非判断后再取值</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.01.html"><strong aria-hidden="true">3.6.3.</strong> G.CTF.01 当需要通过多个if判断来比较大小来区分不同情况时，优先使用match和cmp来代替if表达式</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.02.html"><strong aria-hidden="true">3.6.4.</strong> G.CTF.02 if条件表达式分支中如果包含了else if分支也应该包含else分支</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.03.html"><strong aria-hidden="true">3.6.5.</strong> G.CTF.03 如果要通过 if 条件表达式来判断是否 Panic，请优先使用断言</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/control-flow/G.CTF.04.html"><strong aria-hidden="true">3.6.6.</strong> G.CTF.04 在 Match 分支的 Guard 语句中不要使用带有副作用的条件表达式</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings.html"><strong aria-hidden="true">3.7.</strong> 字符串</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.01.html"><strong aria-hidden="true">3.7.1.</strong> P.STR.01 处理字符串元素时优先按字节处理而非字符</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.02.html"><strong aria-hidden="true">3.7.2.</strong> P.STR.02 创建字符串时，宜预先分配大约足够的容量来避免后续操作中产生多次分配</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.03.html"><strong aria-hidden="true">3.7.3.</strong> P.STR.03 在使用内建字符串处理函数或方法的时候，应注意避免隐藏的嵌套迭代或多次迭代</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.04.html"><strong aria-hidden="true">3.7.4.</strong> P.STR.04 只在合适的场景下，使用正则表达式第三方库regex</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/P.STR.05.html"><strong aria-hidden="true">3.7.5.</strong> P.STR.05 在拼接字符串时，优先使用format!</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.01.html"><strong aria-hidden="true">3.7.6.</strong> G.STR.01 在实现Display特质时不应调用to_string()方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.02.html"><strong aria-hidden="true">3.7.7.</strong> G.STR.02 在追加字符串时使用push_str方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.03.html"><strong aria-hidden="true">3.7.8.</strong> G.STR.03 将只包含 ASCII字符的字符串字面量转为字节序列可以直接使用b&quot;str&quot; 语法代替调用as_bytes方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.04.html"><strong aria-hidden="true">3.7.9.</strong> G.STR.04 需要辨别字符串的字符开头或结尾字符时，不应按字符迭代比较</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/strings/G.STR.05.html"><strong aria-hidden="true">3.7.10.</strong> G.STR.05 对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/collections.html"><strong aria-hidden="true">3.8.</strong> 集合容器</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/collections/P.CLT.01.html"><strong aria-hidden="true">3.8.1.</strong> P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/collections/G.CLT.01.html"><strong aria-hidden="true">3.8.2.</strong> G.CLT.01 非必要情况下，不要使用LinkedList，而用Vec或VecDeque代替</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design.html"><strong aria-hidden="true">3.9.</strong> 函数设计</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/P.FUD.01.html"><strong aria-hidden="true">3.9.1.</strong> P.FUD.01 传递到闭包的变量建议单独重新绑定</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/P.FUD.02.html"><strong aria-hidden="true">3.9.2.</strong> P.FUD.02 函数返回值不要使用 return</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.01.html"><strong aria-hidden="true">3.9.3.</strong> G.FUD.01 函数参数最长不要超过五个</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.02.html"><strong aria-hidden="true">3.9.4.</strong> G.FUD.02 当函数参数实现了 Copy，并且是按值传入，如果值可能会太大，则宜考虑按引用传递</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.03.html"><strong aria-hidden="true">3.9.5.</strong> G.FUD.03 当函数参数出现太多 bool 类型的参数时，应该考虑将其封装为自定义的结构体或枚举</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.04.html"><strong aria-hidden="true">3.9.6.</strong> G.FUD.04 当Copy 类型的足够小的值作为函数参数时，应该按值（by-value）传入，而不是引用(by-ref)</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.05.html"><strong aria-hidden="true">3.9.7.</strong> G.FUD.05 不要总是为函数指定 inline(always)</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/fn-design/G.FUD.06.html"><strong aria-hidden="true">3.9.8.</strong> G.FUD.06 函数参数应该考虑兼容多种类型</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic.html"><strong aria-hidden="true">3.10.</strong> 泛型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.01.html"><strong aria-hidden="true">3.10.1.</strong> P.GEN.01 用泛型来抽象公共语义</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.02.html"><strong aria-hidden="true">3.10.2.</strong> P.GEN.02 不要随便使用 impl Trait 语法替代泛型限定</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.03.html"><strong aria-hidden="true">3.10.3.</strong> P.GEN.03 不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.04.html"><strong aria-hidden="true">3.10.4.</strong> P.GEN.04 为泛型类型实现方法时，impl 中声明的泛型类型参数一定要被用到</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/P.GEN.05.html"><strong aria-hidden="true">3.10.5.</strong> P.GEN.05 定义泛型函数时，如果该函数实现用到来自 trait 定义的相关行为，需要为泛型指定相关 trait 的限定</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/G.GEN.01.html"><strong aria-hidden="true">3.10.6.</strong> G.GEN.01 不要在泛型位置上使用内建类型</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/generic/G.GEN.02.html"><strong aria-hidden="true">3.10.7.</strong> G.GEN.02 使用 Rust 标准库中某些方法，要注意避免使用其泛型默认实现，而应该使用具体类型的实现</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits.html"><strong aria-hidden="true">3.11.</strong> 特质</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/P.TRA.01.html"><strong aria-hidden="true">3.11.1.</strong> P.TRA.01 使用 trait 时要注意 trait 一致性规则</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin.html"><strong aria-hidden="true">3.11.2.</strong> 标准库内置 trait</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/P.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.1.</strong> P.TRA.BLN.01 在实现Borrow特质时，需要注意一致性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.01.html"><strong aria-hidden="true">3.11.2.2.</strong> G.TRA.BLN.01 应该具体类型的 default() 方法代替 Default::default() 调用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.02.html"><strong aria-hidden="true">3.11.2.3.</strong> G.TRA.BLN.02 不要为迭代器实现Copy 特质</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.03.html"><strong aria-hidden="true">3.11.2.4.</strong> G.TRA.BLN.03 能使用派生宏（Derive）自动实现Default特质就不要用手工实现</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.04.html"><strong aria-hidden="true">3.11.2.5.</strong> G.TRA.BLN.04 在使用#[derive(Hash)] 的时候，避免再手工实现 PartialEq</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.05.html"><strong aria-hidden="true">3.11.2.6.</strong> G.TRA.BLN.05 在使用#[derive(Ord)] 的时候，避免再手工实现 PartialOrd</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.06.html"><strong aria-hidden="true">3.11.2.7.</strong> G.TRA.BLN.06 不要对实现 Copy 或引用类型调用 std::mem::drop 和 std::mem::forgot</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.07.html"><strong aria-hidden="true">3.11.2.8.</strong> G.TRA.BLN.07 对实现 Copy 的可迭代类型来说，要通过迭代器拷贝其所有元素时，应该使用 copied方法，而非cloned</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.08.html"><strong aria-hidden="true">3.11.2.9.</strong> G.TRA.BLN.08 实现 From 而不是 Into</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.09.html"><strong aria-hidden="true">3.11.2.10.</strong> G.TRA.BLN.09 一般情况下不要给 Copy 类型手工实现 Clone</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/std-builtin/G.TRA.BLN.10.html"><strong aria-hidden="true">3.11.2.11.</strong> G.TRA.BLN.10 不要随便使用Deref特质来模拟继承</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object.html"><strong aria-hidden="true">3.11.3.</strong> trait 对象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.01.html"><strong aria-hidden="true">3.11.3.1.</strong> P.TRA.OBJ.01 根据场景合理选择使用trait对象或泛型静态分发</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/traits/trait-object/P.TRA.OBJ.02.html"><strong aria-hidden="true">3.11.3.2.</strong> P.TRA.OBJ.02 除非必要，避免自定义虚表</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle.html"><strong aria-hidden="true">3.12.</strong> 错误处理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/P.ERR.01.html"><strong aria-hidden="true">3.12.1.</strong> P.ERR.01 当传入函数的参数值因为超出某种限制可能会导致函数调用失败，应该使用断言</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/P.ERR.02.html"><strong aria-hidden="true">3.12.2.</strong> P.ERR.02 在确定 Option 和 Result&lt;T, E&gt;类型的值不可能是 None 或 Err 时，请用 expect 代替 unwrap()</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/G.ERR.01.html"><strong aria-hidden="true">3.12.3.</strong> G.ERR.01 在处理 Option 和 Result&lt;T, E&gt; 类型时，不要随便使用 unwrap</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/error-handle/G.ERR.02.html"><strong aria-hidden="true">3.12.4.</strong> G.ERR.02 不要滥用 expect，请考虑用 unwrap_or_ 系列方法代替</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory.html"><strong aria-hidden="true">3.13.</strong> 内存管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime.html"><strong aria-hidden="true">3.13.1.</strong> 生命周期</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.01.html"><strong aria-hidden="true">3.13.1.1.</strong> P.MEM.LFT.01 生命周期参数命名尽量有意义且简洁</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/lifetime/P.MEM.LFT.02.html"><strong aria-hidden="true">3.13.1.2.</strong> P.MEM.LFT.02 通常需要显式地标注生命周期，而非利用编译器推断</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/smart-ptr.html"><strong aria-hidden="true">3.13.2.</strong> 智能指针</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/smart-ptr/P.MEM.SPT.01.html"><strong aria-hidden="true">3.13.2.1.</strong> P.MEM.SPT.01 使用 RefCell&lt;T&gt; 时宜使用 try_borrow/try_borrow_mut 方法</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box.html"><strong aria-hidden="true">3.13.3.</strong> Box 类型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.01.html"><strong aria-hidden="true">3.13.3.1.</strong> G.MEM.BOX.01 一般情况下，不应直接对 Box&lt;T&gt; 进行借用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.02.html"><strong aria-hidden="true">3.13.3.2.</strong> G.MEM.BOX.02 一般情况下，不应直接对已经在堆上分配内存的类型进行 Box 装箱</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/box/G.MEM.BOX.03.html"><strong aria-hidden="true">3.13.3.3.</strong> G.MEM.BOX.03 一般情况下，不应直接对栈分配类型进行 Box 装箱</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/memory/drop.html"><strong aria-hidden="true">3.13.4.</strong> Drop 析构</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/memory/drop/G.MEM.DRP.01.html"><strong aria-hidden="true">3.13.4.1.</strong> G.MEM.DRP.01 要注意防范内存泄漏</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/module.html"><strong aria-hidden="true">3.14.</strong> 模块</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/module/P.MOD.01.html"><strong aria-hidden="true">3.14.1.</strong> P.MOD.01 合理控制对外接口和模块之间的可见性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/P.MOD.02.html"><strong aria-hidden="true">3.14.2.</strong> P.MOD.02 将模块的测试移动到单独的文件，有助于增加编译速度</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.01.html"><strong aria-hidden="true">3.14.3.</strong> G.MOD.01 使用导入模块中的类型或函数，在某些情况下需要带模块名前缀</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.02.html"><strong aria-hidden="true">3.14.4.</strong> G.MOD.02 如果是作为库供别人使用，在 lib.rs中重新导出对外类型、函数和 trait 等</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.03.html"><strong aria-hidden="true">3.14.5.</strong> G.MOD.03 导入模块不要随便使用 通配符*</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.04.html"><strong aria-hidden="true">3.14.6.</strong> G.MOD.04 一个项目中应该避免使用不同的模块布局风格</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/module/G.MOD.05.html"><strong aria-hidden="true">3.14.7.</strong> G.MOD.05 不要在私有模块中设置其内部类型或函数方法为 pub(crate)</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo.html"><strong aria-hidden="true">3.15.</strong> 包管理</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.01.html"><strong aria-hidden="true">3.15.1.</strong> P.CAR.01 应该尽量把项目划分为合理的 crate 组合</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.02.html"><strong aria-hidden="true">3.15.2.</strong> P.CAR.02 不要滥用 Features</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.03.html"><strong aria-hidden="true">3.15.3.</strong> P.CAR.03 使用 cargo features 来代替 --cfg 条件编译参数</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/P.CAR.04.html"><strong aria-hidden="true">3.15.4.</strong> P.CAR.04 如果可能的话，使用 cfg! 来代替 #[cfg]</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.01.html"><strong aria-hidden="true">3.15.5.</strong> G.CAR.01 当项目是可执行程序而非库时，建议使用 src/main.rs 和 src/lib.rs 模式</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.02.html"><strong aria-hidden="true">3.15.6.</strong> G.CAR.02 Crate 的 Cargo.toml 中应该包含必要的元信息</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.03.html"><strong aria-hidden="true">3.15.7.</strong> G.CAR.03 Feature 命名应该避免否定式或多余的前后缀</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/cargo/G.CAR.04.html"><strong aria-hidden="true">3.15.8.</strong> G.CAR.04 Cargo.toml 中依赖包版本不应使用通配符</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros.html"><strong aria-hidden="true">3.16.</strong> 宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/P.MAC.01.html"><strong aria-hidden="true">3.16.1.</strong> P.MAC.01 不要轻易使用宏</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/P.MAC.02.html"><strong aria-hidden="true">3.16.2.</strong> P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/G.MAC.01.html"><strong aria-hidden="true">3.16.3.</strong> G.MAC.01 dbg!() 宏只应该用于调试代码</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/G.MAC.02.html"><strong aria-hidden="true">3.16.4.</strong> G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl.html"><strong aria-hidden="true">3.16.5.</strong> 声明宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.01.html"><strong aria-hidden="true">3.16.5.1.</strong> P.MAC.DCL.01 不要将声明宏内的变量作为外部变量使用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.02.html"><strong aria-hidden="true">3.16.5.2.</strong> P.MAC.DCL.02 在编写多个宏规则时，应该先从匹配粒度最小的开始写</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.03.html"><strong aria-hidden="true">3.16.5.3.</strong> P.MAC.DCL.03 不要在片段分类符跟随它不匹配的符号</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.04.html"><strong aria-hidden="true">3.16.5.4.</strong> P.MAC.DCL.04 匹配规则要精准，不要模糊不清</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.05.html"><strong aria-hidden="true">3.16.5.5.</strong> P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.06.html"><strong aria-hidden="true">3.16.5.6.</strong> P.MAC.DCL.06 当宏需要接收 self 时需要注意</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.07.html"><strong aria-hidden="true">3.16.5.7.</strong> P.MAC.DCL.07 确保在宏定义之后再去调用宏</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/decl/P.MAC.DCL.08.html"><strong aria-hidden="true">3.16.5.8.</strong> P.MAC.DCL.08 同一个 crate 内定义的宏相互调用时，需要注意卫生性</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc.html"><strong aria-hidden="true">3.16.6.</strong> 过程宏</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.01.html"><strong aria-hidden="true">3.16.6.1.</strong> P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.02.html"><strong aria-hidden="true">3.16.6.2.</strong> P.MAC.PRO.02 实现过程宏时要对关键特性增加测试</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.03.html"><strong aria-hidden="true">3.16.6.3.</strong> P.MAC.PRO.03 保证过程宏的卫生性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.04.html"><strong aria-hidden="true">3.16.6.4.</strong> P.MAC.PRO.04 给出正确的错误位置</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.05.html"><strong aria-hidden="true">3.16.6.5.</strong> P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/macros/proc/P.MAC.PRO.06.html"><strong aria-hidden="true">3.16.6.6.</strong> P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads.html"><strong aria-hidden="true">3.17.</strong> 多线程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock.html"><strong aria-hidden="true">3.17.1.</strong> 锁同步</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/P.MTH.LCK.01.html"><strong aria-hidden="true">3.17.1.1.</strong> P.MTH.LCK.01 多线程下要注意识别锁争用的情况，避免死锁</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.01.html"><strong aria-hidden="true">3.17.1.2.</strong> G.MTH.LCK.01 对布尔或引用并发访问应该使用原子类型而非互斥锁</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.02.html"><strong aria-hidden="true">3.17.1.3.</strong> G.MTH.LCK.02 宜使用 Arc / Arc&lt;[T]&gt; 来代替 Arc / Arc&lt;Vec&gt;</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.03.html"><strong aria-hidden="true">3.17.1.4.</strong> G.MTH.LCK.03 尽量避免直接使用标准库 std::sync 模块中的同步原语，替换为 parking_lot</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock/G.MTH.LCK.04.html"><strong aria-hidden="true">3.17.1.5.</strong> G.MTH.LCK.04 尽量避免直接使用标准库 std::sync::mpsc 模块中的 channel，替换为 crossbeam</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free.html"><strong aria-hidden="true">3.17.2.</strong> 无锁</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.01.html"><strong aria-hidden="true">3.17.2.1.</strong> P.MTH.LKF.01 除非必要，否则建议使用同步锁</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/threads/lock-free/P.MTH.LKF.02.html"><strong aria-hidden="true">3.17.2.2.</strong> P.MTH.LKF.02 使用无锁编程时，需要合理选择内存顺序</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await.html"><strong aria-hidden="true">3.18.</strong> 异步编程</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/P.ASY.01.html"><strong aria-hidden="true">3.18.1.</strong> P.ASY.01 异步编程并不适合所有场景，计算密集型场景应该考虑同步编程</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.01.html"><strong aria-hidden="true">3.18.2.</strong> G.ASY.01 在 async 块或函数中调用 async 函数或闭包请不要忘记添加.await</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.02.html"><strong aria-hidden="true">3.18.3.</strong> G.ASY.02 在跨 await 调用中，需要对其持有的同步互斥锁进行处理</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.03.html"><strong aria-hidden="true">3.18.4.</strong> G.ASY.03 在跨 await 调用中，需要对其持有 RefCell 的引用进行处理</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.04.html"><strong aria-hidden="true">3.18.5.</strong> G.ASY.04 避免定义不必要的异步函数</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/async-await/G.ASY.05.html"><strong aria-hidden="true">3.18.6.</strong> G.ASY.05 避免在异步处理过程中包含阻塞操作</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust.html"><strong aria-hidden="true">3.19.</strong> Unsafe Rust</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/P.UNS.01.html"><strong aria-hidden="true">3.19.1.</strong> P.UNS.01 不要为了逃避编译器安全检查而滥用 Unsafe Rust</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/P.UNS.02.html"><strong aria-hidden="true">3.19.2.</strong> P.UNS.02 不要为了提升性能而盲目使用 Unsafe Rust</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/G.UNS.01.html"><strong aria-hidden="true">3.19.3.</strong> G.UNS.01 不宜为带有 unsafe 命名的类型或方法创建别名</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract.html"><strong aria-hidden="true">3.19.4.</strong> 安全抽象</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.1.</strong> P.UNS.SAS.01 代码中要注意是否会因为 Panic 发生而导致内存安全问题</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.2.</strong> P.UNS.SAS.02 Unsafe 代码编写者有义务检查代码是否满足安全不变式</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.03.html"><strong aria-hidden="true">3.19.4.3.</strong> P.UNS.SAS.03 不要随便在公开的 API 中暴露未初始化内存</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.04.html"><strong aria-hidden="true">3.19.4.4.</strong> P.UNS.SAS.04 避免因为 Panic Safety 而导致双重释放</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.05.html"><strong aria-hidden="true">3.19.4.5.</strong> P.UNS.SAS.05 手动实现 auto trait 时要充分考虑其安全性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.06.html"><strong aria-hidden="true">3.19.4.6.</strong> P.UNS.SAS.06 不要随便在公开的 API 中暴露裸指针</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.07.html"><strong aria-hidden="true">3.19.4.7.</strong> P.UNS.SAS.07 在抽象安全方法的同时，也建议为性能考虑而增加相应的 Unsafe 方法</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.08.html"><strong aria-hidden="true">3.19.4.8.</strong> P.UNS.SAS.08 函数参数是不可变借用的时候，返回值不应该是可变借用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/P.UNS.SAS.09.html"><strong aria-hidden="true">3.19.4.9.</strong> P.UNS.SAS.09 在任何 Unsafe 块之前都应该加 SAFETY 注释</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.01.html"><strong aria-hidden="true">3.19.4.10.</strong> G.UNS.SAS.01 在公开的 unsafe 函数的文档中必须增加 Safety 注释</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/safe_abstract/G.UNS.SAS.02.html"><strong aria-hidden="true">3.19.4.11.</strong> G.UNS.SAS.02 在 Unafe 函数中应使用 assert! 而非 debug_assert! 去校验边界条件</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr.html"><strong aria-hidden="true">3.19.5.</strong> 裸指针操作</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.1.</strong> P.UNS.PTR.01 不要将裸指针在多线程间共享</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.02.html"><strong aria-hidden="true">3.19.5.2.</strong> P.UNS.PTR.02 建议使用 NonNull&lt;T&gt; 来替代 *mut T</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/P.UNS.PTR.03.html"><strong aria-hidden="true">3.19.5.3.</strong> P.UNS.PTR.03 使用指针类型构造泛型结构体时，需要使用 PhantomData&lt;T&gt; 来指定 T上的协变和所有权</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.01.html"><strong aria-hidden="true">3.19.5.4.</strong> G.UNS.PTR.01 当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.02.html"><strong aria-hidden="true">3.19.5.5.</strong> G.UNS.PTR.02 禁止将不可变指针手工转换为可变指针</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/raw_ptr/G.UNS.PTR.03.html"><strong aria-hidden="true">3.19.5.6.</strong> G.UNS.PTR.03 尽量使用 pointer::cast 来代替 使用 as 强转指针</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union.html"><strong aria-hidden="true">3.19.6.</strong> 联合体</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union/P.UNS.UNI.01.html"><strong aria-hidden="true">3.19.6.1.</strong> P.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/union/P.UNS.UNI.02.html"><strong aria-hidden="true">3.19.6.2.</strong> P.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem.html"><strong aria-hidden="true">3.19.7.</strong> 内存</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.1.</strong> P.UNS.MEM.01 要注意选择合适的结构体、元组、枚举的数据布局</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.02.html"><strong aria-hidden="true">3.19.7.2.</strong> P.UNS.MEM.02 不能修改其它进程或动态库的内存变量</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.03.html"><strong aria-hidden="true">3.19.7.3.</strong> P.UNS.MEM.03 不能让 String/Vec 自动 Drop 其它进程或动态库的内存数据</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.04.html"><strong aria-hidden="true">3.19.7.4.</strong> P.UNS.MEM.04 尽量用可重入(reentrant)版本的 C-API 或系统调用</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/P.UNS.MEM.05.html"><strong aria-hidden="true">3.19.7.5.</strong> P.UNS.MEM.05 如果需要使用位域，推荐使用第三方库</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/mem/G.UNS.MEM.01.html"><strong aria-hidden="true">3.19.7.6.</strong> G.UNS.MEM.01 使用 MaybeUninit&lt;T&gt; 来处理未初始化的内存</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi.html"><strong aria-hidden="true">3.19.8.</strong> FFi</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.01.html"><strong aria-hidden="true">3.19.8.1.</strong> P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.02.html"><strong aria-hidden="true">3.19.8.2.</strong> P.UNS.FFI.02 在使用标准库 std::ffi 模块提供的类型时需要仔细查看其文档</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.03.html"><strong aria-hidden="true">3.19.8.3.</strong> P.UNS.FFI.03 当使用来自 C 的指针时，如果该指针需要管理内存，则需要为包装该指针的 Rust 类型实现 Drop 特质</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.04.html"><strong aria-hidden="true">3.19.8.4.</strong> P.UNS.FFI.04 如果一个函数正在跨越 FFi 边界，那么需要处理 Panic</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.05.html"><strong aria-hidden="true">3.19.8.5.</strong> P.UNS.FFI.05 建议使用诸如标准库或 libc crate 所提供的可移植类型别名，而不是特定平台的类型</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.06.html"><strong aria-hidden="true">3.19.8.6.</strong> P.UNS.FFI.06 Rust 和 C 之间传递字符或字符串时需要注意字符串要符合 C-ABI 以及 字符串的编码</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.07.html"><strong aria-hidden="true">3.19.8.7.</strong> P.UNS.FFI.07 不要为任何传出外部的类型实现 Drop</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.08.html"><strong aria-hidden="true">3.19.8.8.</strong> P.UNS.FFI.08 FFi 中要进行合理的错误处理</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.09.html"><strong aria-hidden="true">3.19.8.9.</strong> P.UNS.FFI.09 当 Rust 调用外部 C 函数时，如果可以确认安全，可以通过引用来代替裸指针</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.10.html"><strong aria-hidden="true">3.19.8.10.</strong> P.UNS.FFI.10 当 Rust 函数导出外部函数时，必须从设计上保证被跨线程调用的安全性</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.11.html"><strong aria-hidden="true">3.19.8.11.</strong> P.UNS.FFI.11 如需引用指定为 #[repr(packed)] 内存布局的结构体成员字段要注意合理规避未定义行为</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.12.html"><strong aria-hidden="true">3.19.8.12.</strong> P.UNS.FFI.12 当依赖 C 端传入参数时，需要在文档注释中不变性声明，根据不同的调用场景选择合适的安全抽象方式</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.13.html"><strong aria-hidden="true">3.19.8.13.</strong> P.UNS.FFI.13 自定义数据类型要保证一致的数据布局</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.14.html"><strong aria-hidden="true">3.19.8.14.</strong> P.UNS.FFI.14 在 FFi 中使用的类型应该拥有稳定布局</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/ffi/P.UNS.FFI.15.html"><strong aria-hidden="true">3.19.8.15.</strong> P.UNS.FFI.15 从外部传入的不健壮类型的外部值要进行检查</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/io.html"><strong aria-hidden="true">3.19.9.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/io/P.UNS.FIO.01.html"><strong aria-hidden="true">3.19.9.1.</strong> P.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/unsafe_rust/glossary.html"><strong aria-hidden="true">3.19.10.</strong> Unsafe 代码术语指南</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/no-std.html"><strong aria-hidden="true">3.20.</strong> no-std</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/no-std/P.EMB.01.html"><strong aria-hidden="true">3.20.1.</strong> P.EMB.01 no-std 下必须定义一个Panic行为以确保安全</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/no-std/P.EMB.02.html"><strong aria-hidden="true">3.20.2.</strong> P.EMB.02 no-std 下要确保程序中的类型有正确的内存布局</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/io.html"><strong aria-hidden="true">3.21.</strong> I/O</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/io/P.FIO.01.html"><strong aria-hidden="true">3.21.1.</strong> P.FIO.01 使用 read_to_end/read_to_string方法时注意文件的大小能否一次性读入内存中</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/io/G.FIO.01.html"><strong aria-hidden="true">3.21.2.</strong> G.FIO.01 文件读取建议使用 BufReader/BufWriter 来代替 Reader/Write</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/security.html"><strong aria-hidden="true">3.22.</strong> 信息安全</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/security/P.SEC.01.html"><strong aria-hidden="true">3.22.1.</strong> P.SEC.01 使用第三方库的时候要确保可信的依赖，小心供应链攻击</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/security/G.SEC.01.html"><strong aria-hidden="true">3.22.2.</strong> G.SEC.01 代码中不要出现非法 Unicode 字符，也要防范非法 Unicode 字符</a></li></ol></li><li class="chapter-item "><a href="safe-guides/coding_practice/others.html"><strong aria-hidden="true">3.23.</strong> 其他</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/coding_practice/others/G.OTH.01.html"><strong aria-hidden="true">3.23.1.</strong> G.OTH.01 对于某些场景下不建议使用的方法可以通过配置 clippy.toml 来拒绝</a></li><li class="chapter-item "><a href="safe-guides/coding_practice/others/G.OTH.02.html"><strong aria-hidden="true">3.23.2.</strong> G.OTH.01 使用标准库中对应的方法计算秒级、毫秒级、微秒级的时间</a></li></ol></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/toc.html"><strong aria-hidden="true">4.</strong> 附录</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/dev_env.html"><strong aria-hidden="true">4.1.</strong> A.开发环境</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test.html"><strong aria-hidden="true">4.2.</strong> B.测试</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/test/unit_test.html"><strong aria-hidden="true">4.2.1.</strong> 单元测试</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test/benchmark.html"><strong aria-hidden="true">4.2.2.</strong> 基准测试</a></li><li class="chapter-item "><a href="safe-guides/Appendix/test/fuzz.html"><strong aria-hidden="true">4.2.3.</strong> 模糊测试</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/terms.html"><strong aria-hidden="true">4.3.</strong> C.术语解释</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/intro.html"><strong aria-hidden="true">4.4.</strong> D.模板</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/templates/rustfmt.toml.html"><strong aria-hidden="true">4.4.1.</strong> rustfmt 模板</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/clippy.toml.html"><strong aria-hidden="true">4.4.2.</strong> clippy 模板</a></li><li class="chapter-item "><a href="safe-guides/Appendix/templates/deny.toml.html"><strong aria-hidden="true">4.4.3.</strong> deny 模板</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/intro.html"><strong aria-hidden="true">4.5.</strong> E.工具链</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/tools/rustfmt.html"><strong aria-hidden="true">4.5.1.</strong> rustfmt</a></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/noisy-clippy.html"><strong aria-hidden="true">4.5.2.</strong> noisy-clippy</a></li><li class="chapter-item "><a href="safe-guides/Appendix/tools/cargo-udeps.html"><strong aria-hidden="true">4.5.3.</strong> cargo-udeps</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/cheat-sheet/index.html"><strong aria-hidden="true">4.6.</strong> F.Cheat Sheet</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/cheat-sheet/Numbers/float.html"><strong aria-hidden="true">4.6.1.</strong> 浮点数</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/optimizing/intro.html"><strong aria-hidden="true">4.7.</strong> G.优化指南</a></li><li class="chapter-item "><a href="safe-guides/Appendix/rustc-flag.html"><strong aria-hidden="true">4.8.</strong> H.编译参数说明</a></li><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/intro.html"><strong aria-hidden="true">4.9.</strong> I.最佳实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/qa.html"><strong aria-hidden="true">4.9.1.</strong> 初学者常见问题Q&amp;A</a></li><li class="chapter-item "><a href="safe-guides/Appendix/best-practice/tips.html"><strong aria-hidden="true">4.9.2.</strong> Rust 编程技巧</a></li></ol></li><li class="chapter-item "><a href="safe-guides/Appendix/contribution.html"><strong aria-hidden="true">4.10.</strong> J.贡献说明</a></li><li class="chapter-item "><a href="safe-guides/Appendix/old_guidelines.html"><strong aria-hidden="true">4.11.</strong> K.淘汰的规则</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -105,7 +105,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust 编码规范 V 0.3</h1>
+                    <h1 class="menu-title">Rust 编码规范 V 1.0 beta</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -144,6 +144,7 @@
 <li>《Rust 编码规范》初稿发布 2021-10-31 (V 0.1)</li>
 <li>《Rust 编码规范》经社区和公司内第一次评审版本发布 2022-02 (V 0.2) </li>
 <li>《Rust 编码规范》经社区和公司内第二次评审版本发布 2022-03 (V 0.3) </li>
+<li>《Rust 编码规范》经社区和公司内第二次评审版本发布 2022-04 (V 1.0 beta) </li>
 </ul>
 <h2 id="详细"><a class="header" href="#详细">详细</a></h2>
 <ul>
@@ -274,20 +275,6 @@
 <p>代码风格包含标识符的命名风格、排版与格式风格、注释风格等。一致的编码习惯与风格，可以提高代码可读性和可维护性。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="21-命名"><a class="header" href="#21-命名">2.1 命名</a></h1>
 <p>好的命名风格能让我们快速地了解某个名字代表的含义（类型、变量、函数、常量、宏等），甚至能凸显其在整个代码上下文中的语义。命名管理对提升代码的可读性和维护性相当重要。</p>
-<h2 id="列表"><a class="header" href="#列表">列表</a></h2>
-<ul>
-<li><a href="safe-guides/code_style/./naming/P.NAM.01.html">P.NAM.01 类型名称应该使用统一的词序</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.02.html">P.NAM.02 为 cargo feature 命名时不应含有无意义的占位词</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.03.html">P.NAM.03 标识符命名应该符合阅读习惯</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.04.html">P.NAM.04 作用域越大命名越精确，反之应简短</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.05.html">P.NAM.05 用于访问或获取数据的 <code>getter</code> 类方法通常不要使用 <code>get_</code> 等前缀</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.06.html">P.NAM.06 遵循 <code>iter/ iter_mut/ into_iter</code> 规范来生成迭代器</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.07.html">P.NAM.07 避免使用语言内置保留字、关键字、内置类型和trait等特殊名称</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.08.html">P.NAM.08 避免在变量的命名中添加类型标识</a></li>
-<li><a href="safe-guides/code_style/./naming/P.NAM.09.html">P.NAM.09 定义全局静态变量时需加前缀<code>G_</code>以便和常量有所区分</a></li>
-<li><a href="safe-guides/code_style/./naming/G.NAM.01.html">G.NAM.01 使用统一的命名风格</a></li>
-<li><a href="safe-guides/code_style/./naming/G.NAM.02.html">G.NAM.02 类型转换函数命名需要遵循所有权语义</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pnam01--同一个crate中标识符的命名规则应该使用统一的词序"><a class="header" href="#pnam01--同一个crate中标识符的命名规则应该使用统一的词序">P.NAM.01  同一个crate中标识符的命名规则应该使用统一的词序</a></h2>
 <p><strong>【描述】</strong></p>
 <p>具体选择什么样的词序并不重要，但务必要保证同一个 crate 内词序的一致性。
@@ -756,25 +743,6 @@ const MAGIC_NUM: i32 = 65 ;
 <li>务必保证在全部把代码修改完毕且编译通过之后再执行 rustfmt 命令。 因为 rustfmt 执行过程中不会对代码进行编译，所以就不会有静态检查保护。</li>
 <li>如果是使用 IDE 或 编辑器的时候开启了自动保护功能，就不要开启自动执行 rustfmt 功能。</li>
 </ol>
-<h2 id="列表-1"><a class="header" href="#列表-1">列表</a></h2>
-<ul>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.01.html">P.FMT.01 使用 rustfmt 进行自动格式化代码</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.02.html">P.FMT.02 缩进使用空格（space）而非制表符（tab）</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.03.html">P.FMT.03 行间距最大宽度空一行</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.04.html">P.FMT.04 语言项（Item) 定义时左花括号（brace）位置应该与语言项保持同一行</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.05.html">P.FMT.05 存在多个标识符时应该保持块状（Block）缩进</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.06.html">P.FMT.06 当有多行表达式操作时，操作符应该置于行首</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.07.html">P.FMT.07 枚举变体和结构体字段都应左对齐</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.08.html">P.FMT.08 函数参数超过五个或导入模块个数超过四个需换行</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.09.html">P.FMT.09 不同的场景，使用不同的空格风格</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.10.html">P.FMT.10  <code>match</code> 分支应该具有良好的可读性</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.11.html">P.FMT.11 导入模块分组应该具有良好的可读性</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.12.html">P.FMT.12 声明宏分支应该具有良好的可读性</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.13.html">P.FMT.13 具名结构体字段初始化时不要省略字段名</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.14.html">P.FMT.14  extern 外部函数需要显式指定 C-ABI</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.15.html">P.FMT.15 解构元组的时候允许使用<code>..</code>来指代剩余元素</a></li>
-<li><a href="safe-guides/code_style/./fmt/P.FMT.16.html">P.FMT.16 不要将派生宏中多个不相关的特质合并为同一行</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pfmt01--使用-rustfmt-进行自动格式化代码"><a class="header" href="#pfmt01--使用-rustfmt-进行自动格式化代码">P.FMT.01  使用 rustfmt 进行自动格式化代码</a></h2>
 <p><strong>【描述】</strong></p>
 <p>应该总是在项目中添加 <code>rustfmt.toml</code> 或 <code>.rustfmt.toml</code>文件。即使它是空文件，这是向潜在的合作者表明你希望代码是自动格式化的。</p>
@@ -834,7 +802,7 @@ const MAGIC_NUM: i32 = 65 ;
     ];
 }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pfmt02--缩进使用空格space而非制表符tab"><a class="header" href="#pfmt02--缩进使用空格space而非制表符tab">P.FMT.02  缩进使用空格（space）而非制表符（tab）</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pfmt02--缩进使用空格而非制表符"><a class="header" href="#pfmt02--缩进使用空格而非制表符">P.FMT.02  缩进使用空格而非制表符</a></h2>
 <p><strong>【描述】</strong></p>
 <p>缩进要使用四个空格，不要使用制表符（<code>\t</code>）代替。可以通过 IDE 或编辑器把缩进设置为四个空格。</p>
 <p><strong>【rustfmt 配置】</strong></p>
@@ -1862,17 +1830,6 @@ pub enum Foo {}
 <div style="break-before: page; page-break-before: always;"></div><h1 id="23-注释与文档"><a class="header" href="#23-注释与文档">2.3 注释与文档</a></h1>
 <p>在 Rust 中，注释分为两类：普通注释和文档注释。普通注释使用 <code>//</code> 或 <code>/* ... */</code>，文档注释使用 <code>///</code>、<code>//!</code> 或 <code>/** ... **/</code>。</p>
 <p>在原则和规则中提到「注释」时，包括普通注释和文档注释。当提到「文档」时，特指文档注释。</p>
-<h2 id="列表-2"><a class="header" href="#列表-2">列表</a></h2>
-<ul>
-<li><a href="safe-guides/code_style/./comments/P.CMT.01.html">P.CMT.01 代码能做到自注释，文档要干练简洁</a></li>
-<li><a href="safe-guides/code_style/./comments/P.CMT.02.html">P.CMT.02 注释应该有宽度限制</a></li>
-<li><a href="safe-guides/code_style/./comments/P.CMT.03.html">P.CMT.03 使用行注释而避免使用块注释</a></li>
-<li><a href="safe-guides/code_style/./comments/P.CMT.04.html">P.CMT.04 文件头注释包含版权说明</a></li>
-<li><a href="safe-guides/code_style/./comments/P.CMT.05.html">P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作</a></li>
-<li><a href="safe-guides/code_style/./comments/G.CMT.01.html">G.CMT.01 在公开的返回Result类型返回的函数文档中增加 Error 注释</a></li>
-<li><a href="safe-guides/code_style/./comments/G.CMT.02.html">G.CMT.02 如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释</a></li>
-<li><a href="safe-guides/code_style/./comments/G.CMT.03.html">G.CMT.03 在文档注释中要使用空格代替 tab</a></li>
-</ul>
 <h2 id="参考"><a class="header" href="#参考">参考</a></h2>
 <ol>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505: API 注释约定</a></li>
@@ -2240,14 +2197,6 @@ pub struct DoubleString {
 <li>编译时求值 （CTEF, compile-time evaluable functions）</li>
 </ul>
 <p>常量命名风格指南请看 <a href="safe-guides/coding_practice/../code_style/naming.html">编码风格-命名</a></p>
-<h2 id="列表-3"><a class="header" href="#列表-3">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./consts/G.CNS.01.html">G.CNS.01 对于科学计算中涉及浮点数近似值的常量宜使用预定义常量</a></li>
-<li><a href="safe-guides/coding_practice/./consts/G.CNS.02.html">G.CNS.02 不应断言常量布尔类型</a></li>
-<li><a href="safe-guides/coding_practice/./consts/G.CNS.03.html">G.CNS.03 不应将内部可变性容器声明为常量</a></li>
-<li><a href="safe-guides/coding_practice/./consts/G.CNS.04.html">G.CNS.04 不应在常量定义中增加显式的 <code>'static</code> 生命周期</a></li>
-<li><a href="safe-guides/coding_practice/./consts/G.CNS.05.html">G.CNS.05 对于适用 <code>const fn</code> 的函数或方法宜尽可能地使用 <code>const fn</code></a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gcns01-对于科学计算中涉及浮点数近似值的常量宜使用预定义常量"><a class="header" href="#gcns01-对于科学计算中涉及浮点数近似值的常量宜使用预定义常量">G.CNS.01 对于科学计算中涉及浮点数近似值的常量宜使用预定义常量</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -2426,10 +2375,6 @@ const BAZ: usize = foo(); // 符合
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="32-静态变量"><a class="header" href="#32-静态变量">3.2 静态变量</a></h1>
 <p>静态变量是用 <code>static</code> 关键字定义的全局静态变量。</p>
-<h2 id="列表-4"><a class="header" href="#列表-4">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./statics/G.STV.01.html">G.STV.01 不宜直接使用可变静态变量作为全局变量</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gstv01--不宜直接使用可变静态变量作为全局变量"><a class="header" href="#gstv01--不宜直接使用可变静态变量作为全局变量">G.STV.01  不宜直接使用可变静态变量作为全局变量</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -2571,15 +2516,6 @@ fn main() {
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="33-本地变量"><a class="header" href="#33-本地变量">3.3 本地变量</a></h1>
 <p>这里所说的变量单指局部变量而不包括全局变量。 默认情况下，Rust 会强制初始化所有变量的值，以防止使用未初始化的内存。</p>
-<h2 id="列表-5"><a class="header" href="#列表-5">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./variables/P.VAR.01.html">P.VAR.01 一般情况下避免先声明可变变量再赋值</a></li>
-<li><a href="safe-guides/coding_practice/./variables/P.VAR.02.html">P.VAR.02 利用变量遮蔽功能保证变量安全使用</a></li>
-<li><a href="safe-guides/coding_practice/./variables/G.VAR.01.html">G.VAR.01 以解构元组方式定义超过四个变量时不应使用太多无意义变量名</a></li>
-<li><a href="safe-guides/coding_practice/./variables/G.VAR.02.html">G.VAR.02 不应使用非 ASCII 字符作为标识符</a></li>
-<li><a href="safe-guides/coding_practice/./variables/G.VAR.03.html">G.VAR.03 变量遮蔽功能应当合理使用</a></li>
-<li><a href="safe-guides/coding_practice/./variables/G.VAR.04.html">G.VAR.04 避免因局部变量过大而导致的大量栈分配</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pvar01--一般情况下避免先声明可变变量再赋值"><a class="header" href="#pvar01--一般情况下避免先声明可变变量再赋值">P.VAR.01  一般情况下避免先声明可变变量再赋值</a></h2>
 <p><strong>【描述】</strong></p>
 <p>一般情况下，不要先声明一个可变的变量，然后在后续过程中再去改变它的值。声明一个变量的时候，要对其进行初始化。如果后续可能会改变其值，要考虑优先使用变量遮蔽（继承式可变）功能。如果需要在一个子作用域内改变其值，再使用可变绑定或可变引用。</p>
@@ -2853,90 +2789,6 @@ let _: [i32; 8000] = [1; 8000];
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="34-数据类型"><a class="header" href="#34-数据类型">3.4 数据类型</a></h1>
 <p>数据类型记录 Rust 标准库提供的 原生类型，以及结构体和枚举体等编码实践。</p>
-<h2 id="列表-6"><a class="header" href="#列表-6">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/P.TYP.01.html">P.TYP.01 必要时，应使类型可以表达更明确的语义，而不是只是直接使用原生类型</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/G.TYP.01.html">G.TYP.01 类型转换尽可能使用安全的转换函数代替 <code>as</code></a></li>
-<li><a href="safe-guides/coding_practice/./data-type/G.TYP.02.html">G.TYP.02 数字字面量在使用的时候应该明确标注类型</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/G.TYP.03.html">G.TYP.03 不应用数字类型边界值判断能否安全转换，而应使用 <code>try_from</code> 方法</a></li>
-<li><a href="safe-guides/coding_practice/./safe-guides/coding_practice/data-type/bool.html">布尔</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.01.html">G.TYP.BOL.01 不应将布尔值和布尔字面量进行比较</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.02.html">G.TYP.BOL.02 如果 match 匹配表达式为布尔类型，宜使用 if 表达式来代替</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.03.html">G.TYP.BOL.03 不应使用数字代替布尔值</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.04.html">G.TYP.BOL.04 禁止在<code>if</code>表达式条件中使用块（block）结构</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.05.html">G.TYP.BOL.05 非必要时，布尔运算应使用逻辑运算符(<code>&amp;&amp;/||</code>)而非位运算符(<code>&amp;/|</code>)</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/bool/G.TYP.BOL.06.html">G.TYP.BOL.06 不应使用数字来代替布尔值</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/char.html">字符</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/char/G.TYP.CHR.01.html">G.TYP.CHR.01 不应将字符字面量强制转换为 <code>u8</code></a></li>
-<li><a href="safe-guides/coding_practice/./data-type/char/G.TYP.CHR.02.html">G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/char/G.TYP.CHR.03.html">G.TYP.CHR.03 需要将整数转换为字符时，应使用安全转换函数，而非 transmute</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/int.html">整数</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/int/G.TYP.INT.01.html">G.TYP.INT.01 在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/int/G.TYP.INT.02.html">G.TYP.INT.02 避免在有符号整数和无符号整数之间进行强制转换</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/int/G.TYP.INT.03.html">G.TYP.INT.03 对负数取模计算的时候不应使用<code>%</code></a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/float.html">浮点数</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/float/G.TYP.FLT.01.html">G.TYP.FLT.01 使用浮点数字面量时，避免被Rust编译器截断</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/float/G.TYP.FLT.02.html">G.TYP.FLT.02 从任何数字类型转换为浮点类型时注意避免损失精度</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/float/G.TYP.FLT.03.html">G.TYP.FLT.03 对精度高要求的场景下，不应直接使用浮点数进行运算和比较</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/float/G.TYP.FLT.04.html">G.TYP.FLT.04 宜使用Rust内置方法处理浮点数计算</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/float/G.TYP.FLT.05.html">G.TYP.FLT.05 禁止在浮点数和整数相互转换时使用 transmute</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/slice.html">切片</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/slice/P.TYP.SLC.01.html">P.TYP.SLC.01 宜使用切片迭代器来代替手工索引</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/slice/P.TYP.SLC.02.html">P.TYP.SLC.02 宜使用切片模式来提升代码的可读性</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/tuple.html">元组</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/tuple/G.TYP.TUP.01.html">G.TYP.TUP.01 使用元组时，其元素不宜超过3个</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/array.html">固定长度数组</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/array/G.TYP.ARR.01.html">G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/array/G.TYP.ARR.02.html">G.TYP.ARR.02 使用数组索引时禁止越界访问</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/array/G.TYP.ARR.03.html">G.TYP.ARR.03 当数组元素为原生数据类型（Primitive），排序时优先选用非稳定排序</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/vec.html">动态数组</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/vec/P.TYP.VEC.01.html">P.TYP.VEC.01 非必要时不宜使用动态数组</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/vec/P.TYP.VEC.02.html">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/vec/G.TYP.VEC.01.html">G.TYP.VEC.01 禁止访问未初始化的数组</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/struct.html">结构体</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/struct/P.TYP.SCT.01.html">P.TYP.SCT.01 为结构体实现构造性方法时，避免构造后再初始化的情况</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/struct/P.TYP.SCT.02.html">P.TYP.SCT.02 结构体实例需要默认实现时，宜使用Default特质</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/struct/G.TYP.SCT.01.html">G.TYP.SCT.01 对外导出的公开的 Struct，宜添加<code>#[non_exhaustive]</code>属性</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/struct/G.TYP.SCT.02.html">G.TYP.SCT.02 当结构体中有超过三个布尔类型的字段，宜将其独立为新的枚举类</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/struct/G.TYP.SCT.03.html">G.TYP.SCT.03 宜使用结构体功能更新语法来提升代码可读性</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./data-type/enum.html">枚举体</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.01.html">G.TYP.ENM.01 合理使用<code>map</code>和<code>and_then</code></a></li>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.02.html">G.TYP.ENM.02 不应自行创建空枚举</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.03.html">G.TYP.ENM.03 在使用类似 C 语言的枚举写法且使用<code>repr(isize/usize)</code> 布局时注意 32位架构上截断的问题</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.04.html">G.TYP.ENM.04 不宜在<code>use</code>语句中引入Enum的全部变体（variants）</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.05.html">G.TYP.ENM.05 对外导出的公开Enum，宜添加<code>#[non_exhaustive]</code>属性</a></li>
-<li><a href="safe-guides/coding_practice/./data-type/enum/G.TYP.ENM.06.html">G.TYP.ENM.06 Enum内变体的大小差异不宜过大</a></li>
-</ul>
-</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptyp01--必要时应使类型可以表达更明确的语义而不是只是直接使用原生类型"><a class="header" href="#ptyp01--必要时应使类型可以表达更明确的语义而不是只是直接使用原生类型">P.TYP.01  必要时，应使类型可以表达更明确的语义，而不是只是直接使用原生类型</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在类型中表达语义，可以增加代码的可读性。</p>
@@ -3084,15 +2936,6 @@ let f = i16::try_from(foo).is_ok(); // 返回 false
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="布尔"><a class="header" href="#布尔">布尔</a></h1>
 <p>Rust 中的布尔类型有 <code>true</code>和<code>false</code>两种值。</p>
-<h2 id="列表-7"><a class="header" href="#列表-7">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.01.html">G.TYP.BOL.01 返回为布尔值的表达式或函数值不应和布尔字面量进行比较</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.02.html">G.TYP.BOL.02 如果 match 匹配表达式为布尔类型，应使用 if 表达式来代替</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.03.html">G.TYP.BOL.03 不应将数字类型转换为布尔值</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.04.html">G.TYP.BOL.04 禁止在<code>if</code>表达式条件中使用块（block）结构</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.05.html">G.TYP.BOL.05 非必要时，布尔运算应使用逻辑运算符(<code>&amp;&amp;/||</code>)而非位运算符(<code>&amp;/|</code>)</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./bool/G.TYP.BOL.06.html">G.TYP.BOL.06 不应使用数字来代替布尔值</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypbol01-不应将布尔值和布尔字面量进行比较"><a class="header" href="#gtypbol01-不应将布尔值和布尔字面量进行比较">G.TYP.BOL.01 不应将布尔值和布尔字面量进行比较</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
@@ -3282,12 +3125,6 @@ assert_eq!(false, b);
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="字符"><a class="header" href="#字符">字符</a></h1>
 <p>在 Rust 中，字符是一个合法的 Unicode 标量值（Unicode scalar value），一个字符大小为 4 字节，对应一个 Unicode 码位（CodePoint）。</p>
-<h2 id="列表-8"><a class="header" href="#列表-8">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./char/G.TYP.CHR.01.html">G.TYP.CHR.01 不宜将字符字面量强制转换为 <code>u8</code></a></li>
-<li><a href="safe-guides/coding_practice/data-type/./char/G.TYP.CHR.02.html">G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./char/G.TYP.CHR.03.html">G.TYP.CHR.03 当需要将整数转换为字符时，应使用安全转换函数，而非 transmute</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypchr01--不应将字符字面量强制转换为-u8"><a class="header" href="#gtypchr01--不应将字符字面量强制转换为-u8">G.TYP.CHR.01  不应将字符字面量强制转换为 <code>u8</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -3375,12 +3212,6 @@ assert_eq!('%', x);
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="整数"><a class="header" href="#整数">整数</a></h1>
 <p>Rust 中有目前有十二种整数类型：<code>i8/u8</code>, <code>i16/u16</code>, <code>i32/u32</code>, <code>i64/u64</code>, <code>i128/u128</code>, <code>isize/usize</code> 。</p>
-<h2 id="列表-9"><a class="header" href="#列表-9">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./int/G.TYP.INT.01.html">G.TYP.INT.01 在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./int/G.TYP.INT.02.html">G.TYP.INT.02 避免有符号整数和无符号整数之间的强制转换</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./int/G.TYP.INT.03.html">G.TYP.INT.03 对负数取模计算的时候不应使用<code>%</code></a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypint01--在用整数计算的时候需要考虑整数溢出回绕和截断的风险"><a class="header" href="#gtypint01--在用整数计算的时候需要考虑整数溢出回绕和截断的风险">G.TYP.INT.01  在用整数计算的时候需要考虑整数溢出、回绕和截断的风险</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -3515,14 +3346,6 @@ fn main() {
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="浮点数"><a class="header" href="#浮点数">浮点数</a></h1>
 <p>Rust 的浮点数包括 <code>f32</code> 和 <code>f64</code> 两种类型。Rust 编译器默认推断的 Float 类型是 <code>f64</code>。</p>
-<h2 id="列表-10"><a class="header" href="#列表-10">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.01.html">G.TYP.FLT.01 使用浮点数字面量时，要警惕是否存在被Rust编译器截断的风险</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.02.html">G.TYP.FLT.02 从任何数字类型转换为<code>f64</code>类型时注意避免损失精度</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.03.html">G.TYP.FLT.03 对精度高要求的场景下，使用浮点数进行运算和比较时需要注意精度损失</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.04.html">G.TYP.FLT.04 宜使用Rust内置方法处理浮点数计算</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./float/G.TYP.FLT.05.html">G.TYP.FLT.05 禁止在浮点数和整数相互转换时使用 transmute</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypflt01-使用浮点数字面量时要警惕是否存在被rust编译器截断的风险"><a class="header" href="#gtypflt01-使用浮点数字面量时要警惕是否存在被rust编译器截断的风险">G.TYP.FLT.01 使用浮点数字面量时，要警惕是否存在被Rust编译器截断的风险</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -3733,11 +3556,6 @@ let _: f32 = f32::from_bits(1_u32);
 <div style="break-before: page; page-break-before: always;"></div><h1 id="切片"><a class="header" href="#切片">切片</a></h1>
 <p>切片（slice）允许开发者引用集合中连续的元素序列，类型签名用 <code>[T]</code>表示，但因为它是动态大小类型（DST），所以一般用 <code>&amp;[T]</code> 表示切片。</p>
 <p><code>&amp;str</code> 就是一种字符串切片。</p>
-<h2 id="列表-11"><a class="header" href="#列表-11">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./slice/P.TYP.SLC.01.html">P.TYP.SLC.01 宜使用切片迭代器来代替手工索引</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./slice/P.TYP.SLC.02.html">P.TYP.SLC.02 宜使用切片模式来提升代码的可读性</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptypslc01--宜使用切片迭代器来代替手工索引"><a class="header" href="#ptypslc01--宜使用切片迭代器来代替手工索引">P.TYP.SLC.01  宜使用切片迭代器来代替手工索引</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在 for 循环中使用索引是比较常见的编程习惯，但是这种方式是最有可能导致边界错误的。</p>
@@ -3794,10 +3612,6 @@ fn is_palindrome(items: &amp;[char]) -&gt; bool {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="元组"><a class="header" href="#元组">元组</a></h1>
 <p>元组是异构复合类型，可以存储多个不同类型的元素。</p>
-<h2 id="列表-12"><a class="header" href="#列表-12">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./tuple/G.TYP.TUP.01.html">G.TYP.TUP.01 使用元组时，其元素最多不宜超过3个</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtyptup01--使用元组时其元素不宜超过3个"><a class="header" href="#gtyptup01--使用元组时其元素不宜超过3个">G.TYP.TUP.01  使用元组时，其元素不宜超过3个</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -3817,12 +3631,6 @@ fn main(){
 <div style="break-before: page; page-break-before: always;"></div><h1 id="数组"><a class="header" href="#数组">数组</a></h1>
 <p>这里指固定长度数组。注意，不同长度的数组，被视为不同的类型。比如 <code>[T;1]</code>和 <code>[T;3]</code> 是两种不同的类型。</p>
 <p>从 Rust 1.51 版本开始，稳定了常量泛型（const generics）功能，形如 <code>[T;1]</code>和 <code>[T;3]</code> 这种不同的类型可以统一为 <code>[T; N]</code>。</p>
-<h2 id="列表-13"><a class="header" href="#列表-13">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./array/G.TYP.ARR.01.html">G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./array/G.TYP.ARR.02.html">G.TYP.ARR.02 使用数组索引时禁止越界访问</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./array/G.TYP.ARR.03.html">G.TYP.ARR.03 当数组元素为原生数据类型（Primitive），排序时宜使用非稳定排序</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtyparr01-创建大全局数组时宜使用静态变量而非常量"><a class="header" href="#gtyparr01-创建大全局数组时宜使用静态变量而非常量">G.TYP.ARR.01 创建大全局数组时宜使用静态变量而非常量</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -3930,25 +3738,11 @@ vec.sort_unstable(); // unstable sort
 <div style="break-before: page; page-break-before: always;"></div><h1 id="动态数组"><a class="header" href="#动态数组">动态数组</a></h1>
 <p>这里指可以动态增长的数组<code>Vec&lt;T&gt;</code>。</p>
 <p>在数组一节中有<a href="safe-guides/coding_practice/data-type/./array.html">部分原则和规则</a>也适用于这里。</p>
-<h2 id="列表-14"><a class="header" href="#列表-14">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./vec/P.TYP.VEC.01.html">P.TYP.VEC.01 非必要时不宜使用动态数组</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./vec/P.TYP.VEC.02.html">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./vec/G.TYP.VEC.01.html">G.TYP.VEC.01 禁止访问未初始化的数组</a></li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec01"><a class="header" href="#ptypvec01">P.TYP.VEC.01</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec02"><a class="header" href="#ptypvec02">P.TYP.VEC.02</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gtypvec01"><a class="header" href="#gtypvec01">G.TYP.VEC.01</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec01-非必要时不宜使用动态数组"><a class="header" href="#ptypvec01-非必要时不宜使用动态数组">P.TYP.VEC.01 非必要时不宜使用动态数组</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配"><a class="header" href="#ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gtypvec01-禁止访问未初始化的数组"><a class="header" href="#gtypvec01-禁止访问未初始化的数组">G.TYP.VEC.01 禁止访问未初始化的数组</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="结构体"><a class="header" href="#结构体">结构体</a></h1>
 <p>Rust 包含了三种结构体： 命名结构体、元组结构体、单元结构体。</p>
-<h2 id="列表-15"><a class="header" href="#列表-15">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./struct/P.TYP.SCT.01.html">P.TYP.SCT.01 为结构体实现构造性方法时，避免构造后再初始化的情况</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./struct/P.TYP.SCT.02.html">P.TYP.SCT.02 结构体实例需要默认实现时，宜使用Default特质</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./struct/G.TYP.SCT.01.html">G.TYP.SCT.01 对外导出的公开的 Struct，宜添加<code>#[non_exhaustive]</code>属性</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./struct/G.TYP.SCT.02.html">G.TYP.SCT.02 当结构体中有超过三个布尔类型的字段，宜将其独立为一个枚举</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./struct/G.TYP.SCT.03.html">G.TYP.SCT.03 宜使用结构体功能更新语法来提升代码可读性</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptypsct01-为结构体实现构造性方法时避免构造后再初始化的情况"><a class="header" href="#ptypsct01-为结构体实现构造性方法时避免构造后再初始化的情况">P.TYP.SCT.01 为结构体实现构造性方法时，避免构造后再初始化的情况</a></h2>
 <p><strong>【描述】</strong></p>
 <p>跟其他OOP 或 FP 语言不一样， Rust 的惯用方式是构建即初始化。</p>
@@ -4192,15 +3986,6 @@ impl&lt;'a&gt; Colorize for &amp;'a str {
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="枚举体"><a class="header" href="#枚举体">枚举体</a></h1>
 <p>Rust 的枚举是一种带 Tag 的联合体。 一般分为三类：空枚举、无字段（fieldless）枚举和数据承载（data carrying）枚举。</p>
-<h2 id="列表-16"><a class="header" href="#列表-16">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.01.html">G.TYP.ENM.01 合理选择<code>map</code>和<code>and_then</code></a></li>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.02.html">G.TYP.ENM.02 非必要时不应自行创建空枚举</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.03.html">G.TYP.ENM.03 在使用类似 C 语言的枚举写法且使用<code>repr(isize/usize)</code> 布局时注意 32位架构上截断的问题</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.04.html">G.TYP.ENM.04 不宜在<code>use</code>语句中引入Enum的全部变体（variants）</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.05.html">G.TYP.ENM.05 对外导出的公开Enum，宜添加<code>#[non_exhaustive]</code>属性</a></li>
-<li><a href="safe-guides/coding_practice/data-type/./enum/G.TYP.ENM.06.html">G.TYP.ENM.06 Enum内变体的大小差异不宜过大</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gtypenm01-合理使用map和and_then方法"><a class="header" href="#gtypenm01-合理使用map和and_then方法">G.TYP.ENM.01 合理使用<code>map</code>和<code>and_then</code>方法</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -4463,15 +4248,6 @@ enum Test {
 <p>该 lint 可以通过 clippy 配置项 <code>enum-variant-size-threshold = 200</code> 来配置，默认是 <code>200</code> 字节。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="35-表达式"><a class="header" href="#35-表达式">3.5 表达式</a></h1>
 <p>Rust 中几乎一切皆表达式。</p>
-<h2 id="列表-17"><a class="header" href="#列表-17">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.01.html">G.EXP.01 当需要对表达式求值后重新赋值时，宜使用复合赋值模式</a></li>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.02.html">G.EXP.02 不宜在比较中使用不兼容的位掩码</a></li>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.03.html">G.EXP.03 不应利用数组表达式的边界检查来 Panic，而应使用断言</a></li>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.04.html">G.EXP.04 自增/自减运算使用 <code>+=/-=</code></a></li>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.05.html">G.EXP.05 使用括号来清楚表示表达式的计算顺序</a></li>
-<li><a href="safe-guides/coding_practice/./expr/G.EXP.06.html">G.EXP.06 避免在比较中添加无用的掩码操作</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="gexp01-当需要对表达式求值后重新赋值时宜使用复合赋值模式"><a class="header" href="#gexp01-当需要对表达式求值后重新赋值时宜使用复合赋值模式">G.EXP.01 当需要对表达式求值后重新赋值时，宜使用复合赋值模式</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -4571,7 +4347,7 @@ fn compute_array() -&gt; [i32; 3] {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#unnecessary_operation">unnecessary_operation</a></td><td>yes</td><td>no</td><td><strong>complexity</strong></td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp04-自增自减运算使用--"><a class="header" href="#gexp04-自增自减运算使用--">G.EXP.04 自增/自减运算使用 <code>+=</code>/<code>-=</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gexp04-自增或自减运算使用或-"><a class="header" href="#gexp04-自增或自减运算使用或-">G.EXP.04 自增或自减运算使用<code>+=</code>或<code>-=</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>C/Cpp 等编程语言常用的自增自减操作，如 <code>++i</code> 、<code>i++</code> 、<code>i--</code> 等不是合法的 Rust 表达式， <code>--i</code> 虽然是合法的 Rust 表达式，但是表达对i取反两次，而不是自减语义。</p>
@@ -4650,15 +4426,6 @@ if (x &gt; 3) {  }
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="36-控制流程"><a class="header" href="#36-控制流程">3.6 控制流程</a></h1>
 <p>Rust中流程控制也是属于表达式，但在本规范中将其独立出来。</p>
-<h2 id="列表-18"><a class="header" href="#列表-18">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./control-flow/P.CTF.01.html">P.CTF.01 避免滥用迭代器</a></li>
-<li><a href="safe-guides/coding_practice/./control-flow/P.CTF.02.html">P.CTF.02 优先使用模式匹配而非判断后再取值</a></li>
-<li><a href="safe-guides/coding_practice/./control-flow/G.CTF.01.html">G.CTF.01 当需要通过多个if判断来比较大小来区分不同情况时，优先使用match和cmp来代替if表达式</a></li>
-<li><a href="safe-guides/coding_practice/./control-flow/G.CTF.02.html">G.CTF.02 if条件表达式分支中如果包含了else if分支也应该包含else分支</a></li>
-<li><a href="safe-guides/coding_practice/./control-flow/G.CTF.03.html">G.CTF.03 如果要通过 if 条件表达式来判断是否panic，请优先使用断言</a></li>
-<li><a href="safe-guides/coding_practice/./control-flow/G.CTF.04.html">G.CTF.04 在Match分支的Guard语句中不要使用带有副作用的条件表达式</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pctf01-避免滥用迭代器"><a class="header" href="#pctf01-避免滥用迭代器">P.CTF.01 避免滥用迭代器</a></h2>
 <p><strong>【描述】</strong></p>
 <p>迭代器虽然是 Rust 中比较推崇的方式，但也没必要过度使用它。总之，如果使用迭代器让代码太复杂，就考虑换个非迭代器的方式实现吧。</p>
@@ -4931,19 +4698,6 @@ fn main() {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="37-字符串"><a class="header" href="#37-字符串">3.7 字符串</a></h1>
 <p>Rust 中字符串是有效的 UTF-8 编码的字节数组。</p>
 <p>Rust 字符串类型众多，但本节内容主要围绕 ：<code>String</code> / <code>&amp;str</code></p>
-<h2 id="列表-19"><a class="header" href="#列表-19">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./strings/P.STR.01.html">P.STR.01 处理字符串元素时优先按字节处理而非字符</a></li>
-<li><a href="safe-guides/coding_practice/./strings/P.STR.02.html">P.STR.02 创建字符串时，宜预先分配大约足够的容量来避免后续操作中产生多次分配</a></li>
-<li><a href="safe-guides/coding_practice/./strings/P.STR.03.html">P.STR.03 在使用内建字符串处理函数或方法的时候，应注意避免隐藏的嵌套迭代或多次迭代</a></li>
-<li><a href="safe-guides/coding_practice/./strings/P.STR.04.html">P.STR.04 只在合适的场景下，使用正则表达式第三方库</a></li>
-<li><a href="safe-guides/coding_practice/./strings/P.STR.05.html">P.STR.05 在拼接字符串时，优先使用<code>format!</code></a></li>
-<li><a href="safe-guides/coding_practice/./strings/G.STR.01.html">G.STR.01 在实现Display特质时不要调用to_string()方法</a></li>
-<li><a href="safe-guides/coding_practice/./strings/G.STR.02.html">G.STR.02 在追加字符串时使用push_str方法</a></li>
-<li><a href="safe-guides/coding_practice/./strings/G.STR.03.html">G.STR.03 将只包含 ASCII字符的字符串字面量转为字节序列可以直接使用b&quot;str&quot; 语法代替调用as_bytes方法</a></li>
-<li><a href="safe-guides/coding_practice/./strings/G.STR.04.html">G.STR.04 需要辨别字符串的字符开头或结尾字符时，不应按字符迭代比较</a></li>
-<li><a href="safe-guides/coding_practice/./strings/G.STR.05.html">G.STR.05 对字符串按指定位置进行切片的时候需要小心破坏其 UTF-8 编码</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pstr01---处理字符串元素时优先按字节处理而非字符"><a class="header" href="#pstr01---处理字符串元素时优先按字节处理而非字符">P.STR.01   处理字符串元素时优先按字节处理而非字符</a></h2>
 <p><strong>【描述】</strong></p>
 <p>处理字符串有两种方式，一种是按字符处理，即把字符串转为字符数组<code>[char]</code>，另一种是直接按字节处理<code>[u8]</code>。</p>
@@ -5252,11 +5006,6 @@ fn main(){
 <li>集合： <a href="https://doc.rust-lang.org/stable/std/collections/hash_set/struct.HashSet.html"><code>HashSet</code></a>, <a href="https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html"><code>BTreeSet</code></a></li>
 <li>其他： <a href="https://doc.rust-lang.org/stable/std/collections/struct.BinaryHeap.html"><code>BinaryHeap</code></a></li>
 </ul>
-<h2 id="列表-20"><a class="header" href="#列表-20">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./collections/P.CLT.01.html">P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配</a></li>
-<li><a href="safe-guides/coding_practice/./collections/G.CLT.01.html">G.CLT.01 非必要情况下，不要使用LinkedList，而用Vec或VecDeque代替</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pclt01-创建hashmapvecdeque时可以预先分配大约足够的容量来避免后续操作中产生多次分配"><a class="header" href="#pclt01-创建hashmapvecdeque时可以预先分配大约足够的容量来避免后续操作中产生多次分配">P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配</a></h2>
 <p><strong>【描述】</strong></p>
 <p>预分配足够的容量，避免后续内存分配，可以提升代码性能。</p>
@@ -5317,17 +5066,6 @@ avoid-breaking-exported-api=true
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="39-函数设计"><a class="header" href="#39-函数设计">3.9 函数设计</a></h1>
 <p>创建函数或使用闭包时需要注意的地方。</p>
-<h2 id="列表-21"><a class="header" href="#列表-21">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./fn-design/P.FUD.01.html">P.FUD.01 传递到闭包的变量建议单独重新绑定</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/P.FUD.02.html">P.FUD.02 函数返回值不要使用 return</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.01.html">G.FUD.01 函数参数最长不要超过五个</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.02.html">G.FUD.02 当函数参数实现了 Copy，并且是按值传入，如果值可能会太大，则宜考虑按引用传递</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.03.html">G.FUD.03 当函数参数出现太多 bool 类型的参数时，应该考虑将其封装为自定义的结构体或枚举</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.04.html">G.FUD.04 当Copy 类型的足够小的值作为函数参数时，应该按值（by-value）传入，而不是引用(by-ref)</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.05.html">G.FUD.05 不要为函数指定 inline(always)</a></li>
-<li><a href="safe-guides/coding_practice/./fn-design/G.FUD.06.html">G.FUD.06 函数参数建议使用借用类型</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pfud01---传递到闭包的变量建议单独重新绑定"><a class="header" href="#pfud01---传递到闭包的变量建议单独重新绑定">P.FUD.01   传递到闭包的变量建议单独重新绑定</a></h2>
 <p><strong>【描述】</strong></p>
 <p>默认情况下，闭包通过借用来捕获环境变量。或者，可以使用 <code>move</code> 关键字来移动环境变量到闭包中。</p>
@@ -5672,16 +5410,6 @@ fn main() {
 </code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="310-泛型"><a class="header" href="#310-泛型">3.10 泛型</a></h1>
 <p>Rust 中的泛型允许开发人员编写更加简洁、更少重复的代码。但泛型可能会引起编译文件大小膨胀，酌情使用。</p>
-<h2 id="列表-22"><a class="header" href="#列表-22">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./generic/P.GEN.01.html">P.GEN.01 用泛型来抽象公共语义</a></li>
-<li><a href="safe-guides/coding_practice/./generic/P.GEN.02.html">P.GEN.02 不要随便使用 impl Trait 语法替代泛型限定</a></li>
-<li><a href="safe-guides/coding_practice/./generic/P.GEN.03.html">P.GEN.03 不要使用太多泛型参数和 trait 限定，否则会增长编译时间</a></li>
-<li><a href="safe-guides/coding_practice/./generic/P.GEN.04.html">P.GEN.04 为泛型类型实现方法时，impl 中声明的泛型类型参数一定要被用到</a></li>
-<li><a href="safe-guides/coding_practice/./generic/P.GEN.05.html">P.GEN.05 定义泛型函数时，如果该函数实现用到来自 trait 定义的相关行为，需要为泛型指定相关 trait 的限定</a></li>
-<li><a href="safe-guides/coding_practice/./generic/G.GEN.01.html">G.GEN.01 不要在泛型位置上使用内建类型</a></li>
-<li><a href="safe-guides/coding_practice/./generic/G.GEN.02.html">G.GEN.02 使用 Rust 标准库中某些方法，要注意避免使用其泛型默认实现，而应该使用具体类型的实现</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pgen01--用泛型来抽象公共语义"><a class="header" href="#pgen01--用泛型来抽象公共语义">P.GEN.01  用泛型来抽象公共语义</a></h2>
 <p><strong>【描述】</strong></p>
 <p>应该巧用泛型来抽象公共语义，消除重复代码。</p>
@@ -6092,31 +5820,6 @@ impl&lt;T&gt; Foo&lt;T&gt; {
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="311-特质"><a class="header" href="#311-特质">3.11 特质</a></h1>
 <p>特质就是指 trait。在 Rust 中， trait 不是具体类型，而是一种抽象接口。但是通过 <code>impl Trait</code> 和 <code>dyn Trait</code> 也可以将 trait 作为类型使用。</p>
-<h2 id="列表-23"><a class="header" href="#列表-23">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./traits/P.TRA.01.html">P.TRA.01 使用 trait 时要注意 trait 一致性规则</a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin.html">标准库内置 trait</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/P.TRA.BLN.01.html">P.TRA.BLN.01 在实现<code>Borrow</code>特质时，需要注意一致性</a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.01.html">G.TRA.BLN.01 应该具体类型的 <code>default()</code> 方法代替 <code>Default::default()</code> 调用</a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.02.html">G.TRA.BLN.02 不要为迭代器实现Copy特质</a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.03.html">G.TRA.BLN.03 能使用派生宏（Derive）自动实现Default特质就不要用手工实现</a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.04.html">G.TRA.BLN.04 在使用<code>#[derive(Hash)]</code>的时候，避免再手工实现<code>PartialEq</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.05.html">G.TRA.BLN.05 在使用<code>#[derive(Ord)]</code> 的时候，避免再手工实现 <code>PartialOrd</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.06.html">G.TRA.BLN.06 不要对实现 <code>Copy</code> 或引用类型调用 <code>std::mem::drop</code> 和 <code>std::mem::forgot</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.07.html">G.TRA.BLN.07 对实现 <code>Copy</code> 的可迭代类型来说，要通过迭代器拷贝其所有元素时，应该使用 <code>copied</code>方法，而非<code>cloned</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.08.html">G.TRA.BLN.08 实现 <code>From</code> 而不是 <code>Into</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.09.html">G.TRA.BLN.09 一般情况下不要给 <code>Copy</code> 类型手工实现 <code>Clone</code></a></li>
-<li><a href="safe-guides/coding_practice/./traits/std-builtin/G.TRA.BLN.10.html">G.TRA.BLN.10 不要随便使用Deref特质来模拟继承</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./traits/trait-object.html">trait 对象</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./traits/trait-object/P.TRA.OBJ.01.html">P.TRA.OBJ.01 根据场景合理选择使用trait对象或泛型静态分发</a></li>
-<li><a href="safe-guides/coding_practice/./traits/trait-object/P.TRA.OBJ.02.html">P.TRA.OBJ.02 除非必要，避免自定义虚表</a></li>
-</ul>
-</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptra01--使用-trait-时要注意-trait-一致性规则"><a class="header" href="#ptra01--使用-trait-时要注意-trait-一致性规则">P.TRA.01  使用 trait 时要注意 trait 一致性规则</a></h2>
 <p><strong>【描述】</strong></p>
 <p>使用 trait 的时候，必须要满足 trait 一致性规则，即，<strong>孤儿规则（orphans rule）</strong>：类型和trait，必须有一个是在本地crate内定义的。
@@ -6148,7 +5851,7 @@ impl FromStr for PhoneNumber {
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="内置-trait"><a class="header" href="#内置-trait">内置 trait</a></h1>
 <p>Rust 标准库内置了很多 trait，在使用这些 trait 的时候也需要注意。</p>
-<h2 id="列表-24"><a class="header" href="#列表-24">列表</a></h2>
+<h2 id="列表"><a class="header" href="#列表">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/traits/./std-builtin/P.TRA.BLN.01.html">P.TRA.BLN.01 在实现<code>Borrow</code>特质时，需要注意一致性</a></li>
 <li><a href="safe-guides/coding_practice/traits/./std-builtin/G.TRA.BLN.01.html">G.TRA.BLN.01 应该具体类型的 <code>default()</code> 方法代替 <code>Default::default()</code> 调用</a></li>
@@ -6790,7 +6493,7 @@ fn main() {
 </code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="trait-对象"><a class="header" href="#trait-对象">trait 对象</a></h1>
 <p>trait 对象需要注意 动态安全 （dyn safe），也叫对象安全 （object safe），但官方现在倾向于 动态安全这个术语。</p>
-<h2 id="列表-25"><a class="header" href="#列表-25">列表</a></h2>
+<h2 id="列表-1"><a class="header" href="#列表-1">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/traits/./trait-object/P.TRA.OBJ.01.html">P.TRA.OBJ.01 根据场景合理选择使用trait对象或泛型静态分发</a></li>
 <li><a href="safe-guides/coding_practice/traits/./trait-object/P.TRA.OBJ.02.html">P.TRA.OBJ.02 除非必要，避免自定义虚表</a></li>
@@ -6964,13 +6667,6 @@ pub(crate) struct Vtable {
 <li>对于错误，Rust 提供了基于返回值的分层错误处理方式，比如 Option 可以用来处理可能存在空值的情况，而 Result 就专门用来处理可以被合理解决并需要传播的错误。</li>
 <li>对于异常，Rust 将其看作无法被合理解决的问题，提供了线程恐慌机制，在发生异常的时候，线程可以安全地退出。</li>
 </ul>
-<h2 id="列表-26"><a class="header" href="#列表-26">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./error-handle/P.ERR.01.html">P.ERR.01 当传入函数的参数值因为超出某种限制可能会导致函数调用失败，应该使用断言</a></li>
-<li><a href="safe-guides/coding_practice/./error-handle/P.ERR.03.html">P.ERR.02 在确定 <code>Option&lt;T&gt;</code> 和 <code>Result&lt;T, E&gt;</code>类型的值不可能是 <code>None</code> 或 <code>Err </code>时，请用 <code>expect</code> 代替 <code>unwrap()</code></a></li>
-<li><a href="safe-guides/coding_practice/./error-handle/G.ERR.01.html">G.ERR.01 在处理 <code>Option&lt;T&gt;</code> 和 <code>Result&lt;T, E&gt;</code> 类型时，不要随便使用 <code>unwrap</code></a></li>
-<li><a href="safe-guides/coding_practice/./error-handle/G.ERR.02.html">G.ERR.02 不要滥用 <code>expect</code>，请考虑用 <code>unwrap_or_</code> 系列方法代替</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="perr01---当传入函数的参数值因为超出某种限制可能会导致函数调用失败应该使用断言"><a class="header" href="#perr01---当传入函数的参数值因为超出某种限制可能会导致函数调用失败应该使用断言">P.ERR.01   当传入函数的参数值因为超出某种限制可能会导致函数调用失败，应该使用断言</a></h2>
 <p><strong>【描述】</strong></p>
 <p>当传入函数的某个参数值可能因为超出某种限制，比如超出数组长度的索引、字符串是否包含某个字符、数组是否为空等，应该使用断言。</p>
@@ -7140,35 +6836,9 @@ let _home: IpAddr = &quot;127.0.0.1&quot;.parse().expect(&quot;Provide the corre
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#expect_used">expect_used</a></td><td>yes</td><td>no</td><td>restriction</td><td>allow</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="313-内存管理"><a class="header" href="#313-内存管理">3.13 内存管理</a></h1>
-<h2 id="列表-27"><a class="header" href="#列表-27">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./memory/lifetime.html">生命周期</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./memory/lifetime/P.MEM.LFT.01.html">P.MEM.LFT.01 生命周期参数命名尽量有意义且简洁</a></li>
-<li><a href="safe-guides/coding_practice/./memory/lifetime/P.MEM.LFT.02.html">P.MEM.LFT.02 通常需要显式地标注生命周期，而非利用编译器推断</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./memory/smart-ptr.html">智能指针</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./memory/smart-ptr/P.MEM.SPT.01.html">P.MEM.SPT.01 使用 <code>RefCell&lt;T&gt;</code> 时宜使用 <code>try_borrow/try_borrow_mut</code> 方法</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./memory/box.html">Box 类型</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./memory/box/G.MEM.BOX.01.html">G.MEM.BOX.01 一般情况下，不应直接对 <code>Box&lt;T&gt;</code> 进行借用</a></li>
-<li><a href="safe-guides/coding_practice/./memory/box/G.MEM.BOX.02.html">G.MEM.BOX.02 一般情况下，不应直接对已经在堆上分配内存的类型进行 Box 装箱</a></li>
-<li><a href="safe-guides/coding_practice/./memory/box/G.MEM.BOX.03.html">G.MEM.BOX.03 一般情况下，不应直接对栈分配类型进行 Box 装箱</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./memory/drop.html">Drop 析构</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./memory/drop/G.MEM.DRP.01.html">G.MEM.DRP.01 要注意防范内存泄漏</a></li>
-</ul>
-</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="生命周期"><a class="header" href="#生命周期">生命周期</a></h1>
 <p>生命周期（lifetime），也被叫做 生存期。可以理解为引用的有效范围。</p>
-<h2 id="列表-28"><a class="header" href="#列表-28">列表</a></h2>
+<h2 id="列表-2"><a class="header" href="#列表-2">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/memory/./lifetime/P.MEM.LFT.01.html">P.MEM.LFT.01 生命周期参数命名尽量有意义且简洁</a></li>
 <li><a href="safe-guides/coding_practice/memory/./lifetime/P.MEM.LFT.02.html">P.MEM.LFT.02 通常需要显式地标注生命周期，而非利用编译器推断</a></li>
@@ -7278,7 +6948,7 @@ impl&lt;'b, 'a: 'b&gt; Buffer&lt;'a&gt; {
 <li>引用计数：<code>Rc&lt;T&gt; / Arc&lt;T&gt;</code></li>
 <li>内部可变性容器：<code>Cell&lt;T&gt; / RefCell&lt;T&gt;</code></li>
 </ul>
-<h2 id="列表-29"><a class="header" href="#列表-29">列表</a></h2>
+<h2 id="列表-3"><a class="header" href="#列表-3">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/memory/./smart-ptr/P.MEM.SPT.01.html">P.MEM.SPT.01 使用 <code>RefCell&lt;T&gt;</code> 时宜使用 <code>try_borrow/try_borrow_mut</code> 方法</a></li>
 </ul>
@@ -7325,7 +6995,7 @@ pub extern &quot;C&quot; fn nic_udrv_buf_recycle(buf_id: usize) {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="box-类型"><a class="header" href="#box-类型">Box 类型</a></h1>
 <p>Rust 中分配堆内存必须要使用的类型，类型签名为 <code>Box&lt;T&gt;</code>。</p>
-<h2 id="列表-30"><a class="header" href="#列表-30">列表</a></h2>
+<h2 id="列表-4"><a class="header" href="#列表-4">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/memory/./box/G.MEM.BOX.01.html">G.MEM.BOX.01 一般情况下，不应直接对 <code>Box&lt;T&gt;</code> 进行借用</a></li>
 <li><a href="safe-guides/coding_practice/memory/./box/G.MEM.BOX.02.html">G.MEM.BOX.02 一般情况下，不应直接对已经在堆上分配内存的类型进行 Box 装箱</a></li>
@@ -7470,7 +7140,7 @@ where
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="drop-析构"><a class="header" href="#drop-析构">Drop 析构</a></h1>
 <p>在 Safe Rust 中，Drop 比较安全。在 Unsafe Rust 中则需要注意更多关于 Drop 的问题。 </p>
-<h2 id="列表-31"><a class="header" href="#列表-31">列表</a></h2>
+<h2 id="列表-5"><a class="header" href="#列表-5">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/memory/./drop/G.MEM.DRP.01.html">G.MEM.DRP.01 要注意防范内存泄漏</a></li>
 </ul>
@@ -7492,16 +7162,6 @@ where
 <li><code>use</code> 则是用来决定使用或导出哪个模块中的具体的类型或方法。</li>
 <li><code>Path</code>，则是一个命名系统，类似于命名空间。</li>
 </ol>
-<h2 id="列表-32"><a class="header" href="#列表-32">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./module/P.MOD.01.html">P.MOD.01 合理控制对外接口和模块之间的可见性</a></li>
-<li><a href="safe-guides/coding_practice/./module/P.MOD.02.html">P.MOD.02 将模块的测试移动到单独的文件，有助于增加编译速度</a></li>
-<li><a href="safe-guides/coding_practice/./module/G.MOD.01.html">G.MOD.01 使用导入模块中的类型或函数，在某些情况下需要带 模块名前缀</a></li>
-<li><a href="safe-guides/coding_practice/./module/G.MOD.02.html">G.MOD.02 如果是作为库供别人使用，在 lib.rs中重新导出对外类型、函数和 trait 等</a></li>
-<li><a href="safe-guides/coding_practice/./module/G.MOD.03.html">G.MOD.03 导入模块不要随便使用 通配符<code>*</code></a></li>
-<li><a href="safe-guides/coding_practice/./module/G.MOD.04.html">G.MOD.04 一个项目中应该避免使用不同的模块布局风格</a></li>
-<li><a href="safe-guides/coding_practice/./module/G.MOD.05.html">G.MOD.05 不要在私有模块中设置其内部类型或函数方法为<code>pub(crate)</code></a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmod01--合理控制对外接口和模块之间的可见性"><a class="header" href="#pmod01--合理控制对外接口和模块之间的可见性">P.MOD.01  合理控制对外接口和模块之间的可见性</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Rust提供强大的模块（module）系统，并且可以管理这些模块之间的可见性（公有（public）或私有（private））。</p>
@@ -7696,17 +7356,6 @@ mod internal {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="315-包管理"><a class="header" href="#315-包管理">3.15 包管理</a></h1>
 <p>Cargo 不仅仅是包管理，它还是一个 Workflow 工具。这一节包含 Cargo 和 Crate 相关内容。</p>
-<h2 id="列表-33"><a class="header" href="#列表-33">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./cargo/P.CAR.01.html">P.CAR.01 应该尽量把项目划分为合理的 crate 组合</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/P.CAR.02.html">P.CAR.02 不要滥用 Features</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/P.CAR.03.html">P.CAR.03 使用 <code>cargo features</code> 来代替 <code>--cfg</code> 条件编译参数</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/P.CAR.04.html">P.CAR.04 如果可能的话，使用 <code>cfg!</code> 来代替 <code>#[cfg]</code></a></li>
-<li><a href="safe-guides/coding_practice/./cargo/G.CAR.01.html">G.CAR.01 当项目是可执行程序而非库时，建议使用 <code>src/main.rs</code> 和 <code>src/lib.rs</code> 模式</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/G.CAR.02.html">G.CAR.02 Crate 的 <code>Cargo.toml</code> 中应该包含必要的元信息</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/G.CAR.03.html">G.CAR.03 Feature 命名应该避免否定式或多余的前后缀</a></li>
-<li><a href="safe-guides/coding_practice/./cargo/G.CAR.04.html">G.CAR.04 <code>Cargo.toml</code> 中依赖包版本不应使用通配符</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pcar01-应该尽量把项目划分为合理的-crate-组合"><a class="header" href="#pcar01-应该尽量把项目划分为合理的-crate-组合">P.CAR.01 应该尽量把项目划分为合理的 crate 组合</a></h2>
 <p><strong>【描述】</strong></p>
 <p>将整个项目按一定逻辑划分为合理的 crate，在工程方面有利于组件化。并且 crate 是 Rust 的编译单元，也有助于提升编译速度。</p>
@@ -7856,35 +7505,6 @@ rustc -Z unstable-options --pretty expanded hello.rs
 # 对项目里的二进制 rs 文件
 cargo rustc --bin hello -- -Z unstable-options --pretty=expanded
 </code></pre>
-<h2 id="列表-34"><a class="header" href="#列表-34">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./macros/P.MAC.01.html">P.MAC.01 不要轻易使用宏</a></li>
-<li><a href="safe-guides/coding_practice/./macros/P.MAC.02.html">P.MAC.02 实现宏语法的时候，应该尽量贴近 Rust 语法</a></li>
-<li><a href="safe-guides/coding_practice/./macros/G.MAC.01.html">G.MAC.01 dbg!() 宏只应该用于调试代码</a></li>
-<li><a href="safe-guides/coding_practice/./macros/G.MAC.02.html">G.MAC.02 使用宏时应该考虑宏展开会让编译文件膨胀的影响</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl.html">声明宏</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.01.html">P.MAC.DCL.01 不要将声明宏内的变量作为外部变量使用</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.02.html">P.MAC.DCL.02 在编写多个宏规则时，应该先从匹配粒度最小的开始写</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.03.html">P.MAC.DCL.03 不要在片段分类符跟随它不匹配的符号</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.04.html">P.MAC.DCL.04 匹配规则要精准，不要模糊不清</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.05.html">P.MAC.DCL.05 使用宏替换（substitution）元变量的时候要注意选择合适的片段分类符</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.06.html">P.MAC.DCL.06 当宏需要接收 self 时需要注意</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.07.html">P.MAC.DCL.07 确保在宏定义之后再去调用宏</a></li>
-<li><a href="safe-guides/coding_practice/./macros/decl/P.MAC.DCL.08.html">P.MAC.DCL.08 同一个 crate 内定义的宏相互调用时，需要注意卫生性</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./macros/proc.html">过程宏</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.01.html">P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></li>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.02.html">P.MAC.PRO.02 实现过程宏时要对关键特性增加测试</a></li>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.03.html">P.MAC.PRO.03 保证过程宏的卫生性</a></li>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.04.html">P.MAC.PRO.04 给出正确的错误位置</a></li>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.05.html">P.MAC.PRO.05 代码生成要按情况选择使用过程宏还是 build.rs</a></li>
-<li><a href="safe-guides/coding_practice/./macros/proc/P.MAC.PRO.06.html">P.MAC.PRO.06 build.rs 生成的代码要保证没有任何警告</a></li>
-</ul>
-</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pmac01--不要轻易使用宏"><a class="header" href="#pmac01--不要轻易使用宏">P.MAC.01  不要轻易使用宏</a></h2>
 <p><strong>【描述】</strong></p>
 <p>当一个开发者想要能写出强大且用户友好的宏API时，不仅需要掌握如何用宏去实现，更需要掌握宏之外关于 Rust 的一切。</p>
@@ -8022,7 +7642,7 @@ pub fn unwrap_err(self) -&gt; E {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="声明宏"><a class="header" href="#声明宏">声明宏</a></h1>
 <p><a href="https://doc.rust-lang.org/reference/macros-by-example.html">声明宏</a> 也被叫做 示例宏（macros by example），或者简单地叫做 宏。目前声明宏使用 <code>macro_rules!</code>来定义。</p>
 <p>声明宏的特点是：它只用作代码替换，而无法进行计算。</p>
-<h2 id="列表-35"><a class="header" href="#列表-35">列表</a></h2>
+<h2 id="列表-6"><a class="header" href="#列表-6">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/macros/./decl/P.MAC.DCL.01.html">P.MAC.DCL声明宏内的变量作为外部变量使用</a></li>
 <li><a href="safe-guides/coding_practice/macros/./decl/P.MAC.DCL.02.html">P.MAC.DCL.02 在编写多个宏规则时，应该先从匹配粒度最小的开始写</a></li>
@@ -8417,7 +8037,7 @@ fn unit() {
 <p>过程宏有两类报告错误的方式：<code>panic</code> 或 通过 <code>compile_error</code>  宏调用发出错误。</p>
 <p>过程宏不具有卫生性（hygiene），这意味着它会受到外部语法项（item）的影响，也会影响到外部导入。</p>
 <p>过程宏可以在编译期执行任意代码。</p>
-<h2 id="列表-36"><a class="header" href="#列表-36">列表</a></h2>
+<h2 id="列表-7"><a class="header" href="#列表-7">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.01.html">P.MAC.PRO.01 不要使用过程宏来规避静态分析检查</a></li>
 <li><a href="safe-guides/coding_practice/macros/./proc/P.MAC.PRO.02.html">P.MAC.PRO.02 实现过程宏时要对关键特性增加测试</a></li>
@@ -8663,27 +8283,9 @@ let mut client = WorldClient::new(client::Config::default(), client_transport).s
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="317-多线程"><a class="header" href="#317-多线程">3.17 多线程</a></h1>
 <p>Rust 天生可以有效消除数据竞争。</p>
-<h2 id="列表-37"><a class="header" href="#列表-37">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./threads/lock.html">锁同步</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./threads/lock/P.MTH.LCK.01.html">P.MTH.LCK.01 多线程下要注意识别锁争用的情况，避免死锁</a></li>
-<li><a href="safe-guides/coding_practice/./threads/lock/G.MTH.LCK.01.html">G.MTH.LCK.01 对布尔或引用并发访问应该使用原子类型而非互斥锁</a></li>
-<li><a href="safe-guides/coding_practice/./threads/lock/G.MTH.LCK.02.html">G.MTH.LCK.02 建议使用 <code>Arc&lt;str&gt; / Arc&lt;[T]&gt;</code> 来代替 <code>Arc&lt;String&gt; / Arc&lt;Vec&lt;T&gt;&gt;</code></a></li>
-<li><a href="safe-guides/coding_practice/./threads/lock/G.MTH.LCK.03.html">G.MTH.LCK.03 尽量避免直接使用标准库 <code>std::sync</code> 模块中的同步原语，替换为 <code>parking_lot</code></a></li>
-<li><a href="safe-guides/coding_practice/./threads/lock/G.MTH.LCK.04.html">G.MTH.LCK.04 尽量避免直接使用标准库 <code>std::sync::mpsc</code> 模块中的 <code>channel</code>，替换为 <code>crossbeam</code></a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./threads/lock-free.html">无锁</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./threads/lock-free/P.MTH.LKF.01.html">P.MTH.LKF.01 除非必要，否则建议使用同步锁</a></li>
-<li><a href="safe-guides/coding_practice/./threads/lock-free/P.MTH.LKF.02.html">P.MTH.LKF.02 使用无锁编程时，需要合理选择内存顺序</a></li>
-</ul>
-</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="锁同步"><a class="header" href="#锁同步">锁同步</a></h1>
 <p>Rust 中多线程并发使用锁来进行线程同步。</p>
-<h2 id="列表-38"><a class="header" href="#列表-38">列表</a></h2>
+<h2 id="列表-8"><a class="header" href="#列表-8">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/threads/./lock/P.MTH.LCK.01.html">P.MTH.LCK.01 多线程下要注意识别锁争用的情况，避免死锁</a></li>
 <li><a href="safe-guides/coding_practice/threads/./lock/G.MTH.LCK.01.html">G.MTH.LCK.01 对布尔或引用并发访问应该使用原子类型而非互斥锁</a></li>
@@ -8823,7 +8425,7 @@ let x = AtomicBool::new(y);
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#mutex_atomic">mutex_atomic</a></td><td>yes</td><td>no</td><td>perf</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gmthlck02-建议使用-arcstr--arct-来代替--arcstring--arcvect"><a class="header" href="#gmthlck02-建议使用-arcstr--arct-来代替--arcstring--arcvect">G.MTH.LCK.02 建议使用 <code>Arc&lt;str&gt; / Arc&lt;[T]&gt;</code> 来代替  <code>Arc&lt;String&gt; / Arc&lt;Vec&lt;T&gt;&gt;</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gmthlck02-宜使用-arcstr--arct-来代替--arcstring--arcvect"><a class="header" href="#gmthlck02-宜使用-arcstr--arct-来代替--arcstring--arcvect">G.MTH.LCK.02 宜使用 <code>Arc&lt;str&gt; / Arc&lt;[T]&gt;</code> 来代替  <code>Arc&lt;String&gt; / Arc&lt;Vec&lt;T&gt;&gt;</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p><code>Arc&lt;str&gt; / Arc&lt;[T]&gt;</code> 的性能比  <code>Arc&lt;String&gt; / Arc&lt;Vec&lt;T&gt;&gt;</code> 更好。</p>
@@ -8999,7 +8601,7 @@ for _ in 0..10 {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="无锁并发"><a class="header" href="#无锁并发">无锁并发</a></h1>
 <p>Rust 也支持原子类型，其内存顺序模型与 <code>C++20</code> 相同。</p>
-<h2 id="列表-39"><a class="header" href="#列表-39">列表</a></h2>
+<h2 id="列表-9"><a class="header" href="#列表-9">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/threads/./lock-free/P.MTH.LKF.01.html">P.MTH.LKF.01 除非必要，否则建议使用同步锁</a></li>
 <li><a href="safe-guides/coding_practice/threads/./lock-free/P.MTH.LKF.02.html">P.MTH.LKF.02 使用无锁编程时，需要合理选择内存顺序</a></li>
@@ -9054,19 +8656,10 @@ fn main() {
 <p><code>async / await</code> 是 Rust 语言用于编写像同步代码一样的异步函数的内置工具。<code>async</code> 将一个代码块转化为一个实现了名为 <code>Future</code> 的特质 (trait)
 的状态机。虽然在同步方法中调用阻塞函数会阻塞整个线程，但阻塞的 <code>Future</code> 将让出线程控制权，允许其他 <code>Future</code> 运行。</p>
 <p>Rust 异步编程需要依赖于异步运行时，生产环境中比较推荐的开源异步运行时是 <a href="https://github.com/tokio-rs/tokio">Tokio</a>。</p>
-<h2 id="列表-40"><a class="header" href="#列表-40">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./async-await/P.ASY.01.html">P.ASY.01 异步编程并不适合所有场景，计算密集型场景应该考虑同步编程</a></li>
-<li><a href="safe-guides/coding_practice/./async-await/G.ASY.01.html">G.ASY.01 在 async 块/函数中调用 async 函数/闭包请不要忘记添加.await</a></li>
-<li><a href="safe-guides/coding_practice/./async-await/G.ASY.02.html">G.ASY.02 在跨 await 调用中，需要对其持有的同步互斥锁进行处理</a></li>
-<li><a href="safe-guides/coding_practice/./async-await/G.ASY.03.html">G.ASY.03 在跨 await 调用中，需要对其持有 RefCell 的引用进行处理</a></li>
-<li><a href="safe-guides/coding_practice/./async-await/G.ASY.04.html">G.ASY.04 避免定义不必要的异步函数</a></li>
-<li><a href="safe-guides/coding_practice/./async-await/G.ASY.05.html">G.ASY.05 避免在异步处理过程中包含阻塞操作</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pasy01-异步编程并不适合所有场景计算密集型场景应该考虑同步编程"><a class="header" href="#pasy01-异步编程并不适合所有场景计算密集型场景应该考虑同步编程">P.ASY.01 异步编程并不适合所有场景，计算密集型场景应该考虑同步编程</a></h2>
 <p><strong>【描述】</strong></p>
 <p>异步编程适合 I/O 密集型应用，如果是计算密集型场景应该考虑使用同步编程。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gasy01-在-async-块函数中调用-async-函数闭包请不要忘记添加await"><a class="header" href="#gasy01-在-async-块函数中调用-async-函数闭包请不要忘记添加await">G.ASY.01 在 <code>async</code> 块/函数中调用 <code>async</code> 函数/闭包请不要忘记添加<code>.await</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gasy01-在-async-块或函数中调用-async-函数或闭包请不要忘记添加await"><a class="header" href="#gasy01-在-async-块或函数中调用-async-函数或闭包请不要忘记添加await">G.ASY.01 在 <code>async</code> 块或函数中调用 <code>async</code> 函数或闭包请不要忘记添加<code>.await</code></a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
 <p>在此条件下 <code>.await</code> 语句通常为必须的。</p>
@@ -9327,79 +8920,8 @@ async fn read_file() -&gt; std::io::Result&lt;()&gt; {
 <p>使用 Unsafe Rust 的时候，需要遵守一定的规范，这样可以避免未定义行为的发生。</p>
 <p>关于 Unsafe Rust 下的一些专用术语可以查看 <a href="safe-guides/coding_practice/./unsafe_rust/glossary.html">Unsafe 代码术语指南</a> 。</p>
 <p><strong>Unsafe Rust 的语义：这是编译器无法保证安全的地方，需要程序员来保证安全。</strong> </p>
-<h2 id="列表-41"><a class="header" href="#列表-41">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/P.UNS.01.html">P.UNS.01 不要为了逃避 编译器安全检查而滥用 Unsafe Rust</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/P.UNS.02.html">P.UNS.02 不要为了提升性能而盲目使用 Unsafe Rust</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/G.UNS.01.html">G.UNS.01 不要随便为 带有 unsafe命名的 类型或方法创建别名</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract.html">安全抽象</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.01.html">P.UNS.SAS.01 代码中要注意是否会因为 Panic 发生而导致内存安全问题</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.02.html">P.UNS.SAS.02 Unsafe 代码编写者有义务检查代码是否满足安全不变式</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.03.html">P.UNS.SAS.03 不要随便在公开的 API 中暴露未初始化内存</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.04.html">P.UNS.SAS.04 要考虑 Panic Safety 的情况</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/G.UNS.SAS.01.html">G.UNS.SAS.01 在公开的 unsafe 函数的文档中必须增加 Safety 注释</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/G.UNS.SAS.02.html">G.UNS.SAS.02 在 Unafe 函数中应该使用 <code>assert!</code> 而非 <code>debug_assert!</code> 去校验边界条件</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.05.html">P.UNS.SAS.05 Unsafe 代码中手动实现 <code>auto trait</code> 需要注意</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.06.html">P.UNS.SAS.06 不要随便在公开的 API 中暴露裸指针</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.07.html">P.UNS.SAS.07 在抽象安全方法的同时，也建议为性能考虑而增加相应的 Unsafe 方法</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.08.html">P.UNS.SAS.08 函数参数是不可变借用的时候，返回值不应该是可变借用</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/safe_abstract/P.UNS.SAS.09.html">P.UNS.SAS.09 在任何 Unsafe 块之前都应该加 <code>SAFETY</code> 注释</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr.html">裸指针操作</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/P.UNS.PTR.01.html">P.UNS.PTR.01 不要将裸指针在多线程间共享</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/P.UNS.PTR.02.html">P.UNS.PTR.02 建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/P.UNS.PTR.03.html">P.UNS.PTR.03 使用指针类型构造泛型结构体时，需要使用 PhantomData<T> 来指定 T上的协变和所有权</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/G.UNS.PTR.01.html">G.UNS.PTR.01 当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/G.UNS.PTR.02.html">G.UNS.PTR.02 禁止将不可变指针手工转换为可变指针</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/raw_ptr/G.UNS.PTR.03.html">G.UNS.PTR.03 尽量使用 pointer::cast 来代替 使用 as 强转指针</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/union.html">联合体</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/union/P.UNS.UNI.01.html">P.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/union/P.UNS.UNI.02.html">P.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem.html">内存</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/P.UNS.MEM.01.html">P.UNS.MEM.01 要注意选择合适的结构体、元组、枚举的数据布局</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/P.UNS.MEM.02.html">P.UNS.MEM.02 不能修改其它进程/动态库的内存变量</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/P.UNS.MEM.03.html">P.UNS.MEM.03 不能让 <code>String/Vec</code> 自动 <code>Drop</code> 其它进程/动态库的内存数据</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/P.UNS.MEM.04.html">P.UNS.MEM.04 尽量用可重入(reentrant)版本的 C-API 或系统调用</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/P.UNS.MEM.05.html">P.UNS.MEM.05 如果需要使用位域，推荐使用第三方库</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/mem/G.UNS.MEM.01.html">G.UNS.MEM.01 使用 <code>MaybeUninit&lt;T&gt;</code> 来处理未初始化的内存</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi.html">FFi</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.01.html">P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.02.html">P.UNS.FFI.02 在使用标准库 std::ffi 模块提供的类型时需要仔细查看其文档</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.03.html">P.UNS.FFI.03 当使用来自 C 的指针时，如果该指针需要管理内存，则需要为包装该指针的 Rust 类型实现 Drop 特质</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.04.html">P.UNS.FFI.04 如果一个函数正在跨越 FFi 边界，那么需要处理 Panic</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.05.html">P.UNS.FFI.05 建议使用诸如标准库或 <code>libc crate</code> 所提供的可移植类型别名，而不是特定平台的类型</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.06.html">P.UNS.FFI.06 Rust 和 C 之间传递字符或字符串时需要注意字符串要符合 C-ABI 以及 字符串的编码</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.07.html">P.UNS.FFI.07 不要为任何传入到外部的类型实现 Drop</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.08.html">P.UNS.FFI.08 FFi 中要进行合理的错误处理</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.09.html">P.UNS.FFI.09 当 Rust 调用外部 C 函数时，如果可以确认安全，可以通过引用来代替裸指针</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.10.html">P.UNS.FFI.10 当 Rust 函数导出外部函数时，必须从设计上保证被跨线程调用的安全性</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.11.html">P.UNS.FFI.11 如需引用指定为 <code>#[repr(packed)]</code> 内存布局的结构体成员字段要注意合理规避未定义行为</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.12.html">P.UNS.FFI.12 当依赖 C 端传入参数时，需要在文档注释中不变性声明，根据不同的调用场景选择合适的安全抽象方式</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.13.html">P.UNS.FFI.13 自定义数据类型要保证一致的数据布局</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.14.html">P.UNS.FFI.14 在 FFi 中使用的类型应该拥有稳定布局</a></li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/ffi/P.UNS.FFI.15.html">P.UNS.FFI.15 从外部传入的不健壮类型的外部值要进行检查</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/io.html">I/O</a>
-<ul>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/io/P.UNS.FIO.01.html">P.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性</a></li>
-</ul>
-</li>
-<li><a href="safe-guides/coding_practice/./unsafe_rust/glossary.html">Unsafe 代码术语指南</a></li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="puns01--不要为了逃避-编译器安全检查而滥用-unsafe-rust"><a class="header" href="#puns01--不要为了逃避-编译器安全检查而滥用-unsafe-rust">P.UNS.01  不要为了逃避 编译器安全检查而滥用 Unsafe Rust</a></h2>
+<p><a href="safe-guides/coding_practice/./unsafe_rust/glossary.html">Unsafe 代码术语指南</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="puns01--不要为了逃避编译器安全检查而滥用-unsafe-rust"><a class="header" href="#puns01--不要为了逃避编译器安全检查而滥用-unsafe-rust">P.UNS.01  不要为了逃避编译器安全检查而滥用 Unsafe Rust</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Unsafe Rust 有其应用范围和目标，不要为了逃避 编译器安全检查而随便滥用 Unsafe Rust，否则很可能引起未定义行为（UB）。</p>
 <p>【反例】</p>
@@ -9455,7 +8977,7 @@ use crossbeam::{spawn_unsafe};
 <li>对 API 进行安全封装，即，安全抽象。在内部使用断言来保证当越过安全边界时可以 Panic，从而避免 UB 产生。</li>
 </ol>
 <p>第二种方式，对 Unsafe 代码进行安全抽象，是 Rust 生态的一种约定俗成。</p>
-<h2 id="列表-42"><a class="header" href="#列表-42">列表</a></h2>
+<h2 id="列表-10"><a class="header" href="#列表-10">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.01.html">P.UNS.SAS.01 代码中要注意是否会因为 Panic 发生而导致内存安全问题</a></li>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.02.html">P.UNS.SAS.02 Unsafe 代码编写者有义务检查代码是否满足安全不变式</a></li>
@@ -9681,7 +9203,7 @@ fn read_vec(&amp;mut self) -&gt; Result&lt;Vec&lt;u8&gt;&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="punssas04--要考虑-panic-safety-的情况"><a class="header" href="#punssas04--要考虑-panic-safety-的情况">P.UNS.SAS.04  要考虑 Panic Safety 的情况</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punssas04-避免因为-panic-safety-而导致双重释放"><a class="header" href="#punssas04-避免因为-panic-safety-而导致双重释放">P.UNS.SAS.04 避免因为 Panic Safety 而导致双重释放</a></h2>
 <p><strong>【描述】</strong></p>
 <p>要注意 Panic Safety 的情况，避免双重释放（double free）的问题发生。</p>
 <p>在使用 <code>std::ptr</code> 模块中接口需要注意，容易产生 UB 问题，要多多查看 API 文档。</p>
@@ -9747,7 +9269,7 @@ macro_rules! from_event_option_array_into_event_list(
 );
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="punssas05--unsafe-代码中手动实现-auto-trait-需要注意"><a class="header" href="#punssas05--unsafe-代码中手动实现-auto-trait-需要注意">P.UNS.SAS.05  Unsafe 代码中手动实现 auto trait 需要注意</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punssas05--手动实现-auto-trait-时要充分考虑其安全性"><a class="header" href="#punssas05--手动实现-auto-trait-时要充分考虑其安全性">P.UNS.SAS.05  手动实现 auto trait 时要充分考虑其安全性</a></h2>
 <p><strong>【描述】</strong></p>
 <p>所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 <code>Send/Sync</code> 。在 Unsafe Rust中就需要手动实现这俩 trait 了。</p>
 <p>所以，在手动实现的时候要充分考虑其安全性。</p>
@@ -9918,7 +9440,7 @@ pub unsafe fn data_unchecked_mut(&amp;self) -&gt; &amp;mut [u8] {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gunssas09-在任何-unsafe-块之前都应该加-safety-注释"><a class="header" href="#gunssas09-在任何-unsafe-块之前都应该加-safety-注释">G.UNS.SAS.09 在任何 Unsafe 块之前都应该加 <code>SAFETY</code> 注释</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punssas09-在任何-unsafe-块之前都应该加-safety-注释"><a class="header" href="#punssas09-在任何-unsafe-块之前都应该加-safety-注释">P.UNS.SAS.09 在任何 Unsafe 块之前都应该加 <code>SAFETY</code> 注释</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在任何 unsafe 块（即 <code>unsafe {...}</code>）之前都应该加 <code># SAFETY</code> 注释，用于表明 Unsafe 块里面的代码为什么是正确的。并且 <code># SAFETY</code> 是全大写，注意区分与文档注释中 <code># Safety</code> 的用法。</p>
 <p>虽然有时原因可能看起来微不足道或很明显，但编写这些注释不仅是记录所考虑内容的好方法，而且最重要的是，它提供了一种知道没有额外隐含约束的方法。</p>
@@ -10032,7 +9554,7 @@ pub unsafe fn unwrap_unchecked(self) -&gt; T {
 <table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>默认 level</th></tr></thead><tbody>
 <tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_safety_doc">missing_safety_doc</a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="gunssas02--在-unafe-函数中应该使用-assert-而非-debug_assert-去校验边界条件"><a class="header" href="#gunssas02--在-unafe-函数中应该使用-assert-而非-debug_assert-去校验边界条件">G.UNS.SAS.02  在 Unafe 函数中应该使用 <code>assert!</code> 而非 <code>debug_assert!</code> 去校验边界条件</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gunssas02--在-unafe-函数中应使用-assert-而非-debug_assert-去校验边界条件"><a class="header" href="#gunssas02--在-unafe-函数中应使用-assert-而非-debug_assert-去校验边界条件">G.UNS.SAS.02  在 Unafe 函数中应使用 <code>assert!</code> 而非 <code>debug_assert!</code> 去校验边界条件</a></h2>
 <p><strong>【级别】</strong> 要求</p>
 <p><strong>【描述】</strong></p>
 <p><code>assert!</code> 宏在 Release 和 Debug 模式下都会被检查，并且不能被禁用。它通常用来在 unsafe 函数中判断传入的参数是否满足某种边界条件，以此来防止不合法的参数传入导致未定义行为。</p>
@@ -10088,7 +9610,7 @@ pub unsafe fn unwrap_unchecked(self) -&gt; T {
 <li>不能保证线程安全。</li>
 </ul>
 <p>可见，原生指针并不受Safe Rust提供的那一层“安全外衣”保护，所以也被称为“裸指针”。</p>
-<h2 id="列表-43"><a class="header" href="#列表-43">列表</a></h2>
+<h2 id="列表-11"><a class="header" href="#列表-11">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/P.UNS.PTR.01.html">P.UNS.PTR.01 不要将裸指针在多线程间共享</a></li>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/P.UNS.PTR.02.html">P.UNS.PTR.02 建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></li>
@@ -10295,7 +9817,7 @@ let _ = mut_ptr.cast::&lt;i32&gt;(); // 符合
 <p>Union 是没有 tag 的 Enum，Enum 是有 tag 的Union 。</p>
 <p>内存布局 Union 和 Enum 相似。</p>
 <p>正因为没有 tag，Rust 编译器无法检查当前使用的正是哪个变体，所以，访问 Union 的变体是 Unsafe 的。</p>
-<h2 id="列表-44"><a class="header" href="#列表-44">列表</a></h2>
+<h2 id="列表-12"><a class="header" href="#列表-12">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./union/P.UNS.UNI.01.html">P.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union</a></li>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./union/P.UNS.UNI.02.html">P.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内</a></li>
@@ -10350,7 +9872,7 @@ fn test() {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="内存"><a class="header" href="#内存">内存</a></h1>
 <p>这里指 Unsafe Rust 下的数据布局、内存管理和使用相关规范。</p>
-<h2 id="列表-45"><a class="header" href="#列表-45">列表</a></h2>
+<h2 id="列表-13"><a class="header" href="#列表-13">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.01.html">P.UNS.MEM.01 要注意选择合适的结构体、元组、枚举的数据布局</a></li>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.02.html">P.UNS.MEM.02 不能修改其它进程/动态库的内存变量</a></li>
@@ -10404,7 +9926,7 @@ fn test() {
 <li>无字段枚举不允许指定判别式大小的 C 兼容布局，比如 <code>[repr(C, Int)]</code></li>
 <li>数据承载（有字段）枚举则允许所有类型的 <code>repr</code> 属性</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem02--不能修改其它进程动态库的内存变量"><a class="header" href="#punsmem02--不能修改其它进程动态库的内存变量">P.UNS.MEM.02  不能修改其它进程/动态库的内存变量</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem02--不能修改其它进程或动态库的内存变量"><a class="header" href="#punsmem02--不能修改其它进程或动态库的内存变量">P.UNS.MEM.02  不能修改其它进程或动态库的内存变量</a></h2>
 <p><strong>【描述】</strong></p>
 <p>除非调用合法的API，否则不要尝试修改其它进程/动态库的内存数据，否则会出现内存段错误(SIGSEGV)。</p>
 <p><strong>【反例】</strong></p>
@@ -10428,7 +9950,7 @@ fn edit_sqlite_version() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem03--不能让-stringvec-自动-drop-其它进程动态库的内存数据"><a class="header" href="#punsmem03--不能让-stringvec-自动-drop-其它进程动态库的内存数据">P.UNS.MEM.03  不能让 String/Vec 自动 Drop 其它进程/动态库的内存数据</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem03--不能让-stringvec-自动-drop-其它进程或动态库的内存数据"><a class="header" href="#punsmem03--不能让-stringvec-自动-drop-其它进程或动态库的内存数据">P.UNS.MEM.03  不能让 <code>String/Vec</code> 自动 Drop 其它进程或动态库的内存数据</a></h2>
 <p><strong>【描述】</strong></p>
 <p>使用 <code>String/Vec</code> 指向其它进程/动态库的内存数据时，一定要手动禁止 <code>String/Vec</code> 的 Drop 方法(析构函数)的调用，避免 free 其它进程/动态库的内存数据。</p>
 <p><strong>【反例】</strong></p>
@@ -10669,7 +10191,7 @@ vec.set_len(...);  // Safe to call `set_len()` on initialized part
 <p>一般来说，FFi 是指在其他语言中调用 Rust 代码，Rust代码会按 C-ABI 来暴露接口。这类 Rust crate或模块，常以 <code>-ffi</code>后缀结尾。</p>
 <p>另一类是 Rust 去调用 C-ABI 接口，相关代码通常被封装到以 <code>-sys</code> 为后缀命名的 crate 或 模块中。 </p>
 <p>本小节内容，包含以上两种情况。</p>
-<h2 id="列表-46"><a class="header" href="#列表-46">列表</a></h2>
+<h2 id="列表-14"><a class="header" href="#列表-14">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.01.html">P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中</a></li>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.02.html">P.UNS.FFI.02 在使用标准库 std::ffi 模块提供的类型时需要仔细查看其文档</a></li>
@@ -10777,7 +10299,7 @@ fn main() {}
 </span>let f = libc::fopen(&quot;/proc/uptime\0&quot;.as_ptr().cast(), &quot;r\0&quot;.as_ptr().cast());
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="punsffi07--要为任何传入到外部的类型实现-drop"><a class="header" href="#punsffi07--要为任何传入到外部的类型实现-drop">P.UNS.FFI.07  要为任何传入到外部的类型实现 Drop</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="punsffi07--不要为任何传出外部的类型实现-drop"><a class="header" href="#punsffi07--不要为任何传出外部的类型实现-drop">P.UNS.FFI.07  不要为任何传出外部的类型实现 Drop</a></h2>
 <p><strong>【描述】</strong></p>
 <p>因为有可能在传出去之前被析构。需要明确是由哪种语言负责分配和释放内存，谁分配内存，谁来释放。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsffi08-ffi-中要进行合理的错误处理"><a class="header" href="#punsffi08-ffi-中要进行合理的错误处理">P.UNS.FFI.08 FFi 中要进行合理的错误处理</a></h2>
@@ -11168,7 +10690,7 @@ extern {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-io"><a class="header" href="#unsafe-io">Unsafe I/O</a></h1>
 <p>Rust 标准库提供了 I/O 安全性，保证程序持有私有的原始句柄（raw handle），其他部分无法访问它。但是 <code>FromRawFd::from_raw_fd</code> 是 Unsafe 的，所以在 Safe Rust中无法做到 <code>File::from_raw(7)</code> 这种事。 在这个文件描述符上面进行<code> I/O</code> 操作，而这个文件描述符可能被程序的其他部分私自持有。</p>
-<h2 id="列表-47"><a class="header" href="#列表-47">列表</a></h2>
+<h2 id="列表-15"><a class="header" href="#列表-15">列表</a></h2>
 <ul>
 <li><a href="safe-guides/coding_practice/unsafe_rust/./io/G.UNS.FIO.01.html">G.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性</a></li>
 </ul>
@@ -11326,11 +10848,6 @@ assert_eq!(raw2 as usize, raw2_wrong as usize);
 <blockquote>
 <p>参考数据： <code>core</code> 在编译后文件大小中只占大约 3k 大小。</p>
 </blockquote>
-<h2 id="列表-48"><a class="header" href="#列表-48">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./no-std/P.EMB.01.html">P.EMB.01 <code>no-std</code> 下必须定义一个Panic行为以确保安全</a></li>
-<li><a href="safe-guides/coding_practice/./no-std/P.EMB.02.html">P.EMB.02 要确保程序中的类型有正确的内存布局</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pemb01--no-std-下必须定义一个panic行为以确保安全"><a class="header" href="#pemb01--no-std-下必须定义一个panic行为以确保安全">P.EMB.01  <code>no-std</code> 下必须定义一个Panic行为以确保安全</a></h2>
 <p><strong>【描述】</strong></p>
 <p>鉴于<code>#![no_std]</code>应用程序没有标准输出，并且某些<code>#![no_std]</code>应用程序（例如嵌入式应用程序）需要不同的 Panic 行为来进行开发和发布。</p>
@@ -11388,7 +10905,7 @@ fn main() {
     // ..
 }
 </code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pemb02--要确保程序中的类型有正确的内存布局"><a class="header" href="#pemb02--要确保程序中的类型有正确的内存布局">P.EMB.02  要确保程序中的类型有正确的内存布局</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="pemb02--no-std-下要确保程序中的类型有正确的内存布局"><a class="header" href="#pemb02--no-std-下要确保程序中的类型有正确的内存布局">P.EMB.02  no-std 下要确保程序中的类型有正确的内存布局</a></h2>
 <p><strong>【描述】</strong></p>
 <p>链接器决定 no-std 程序的最终内存布局，但我们可以使用<a href="https://sourceware.org/binutils/docs/ld/Scripts.html">链接器脚本</a>对其进行一些控制。链接器脚本给我们的布局控制粒度是在 段（ Section） 级别。段是在连续内存中布置的 符号 集合。反过来，符号可以是数据（静态变量）或指令（Rust 函数）。</p>
 <p>这些编译器生成的符号和段名称不能保证在 Rust 编译器的不同版本中保持不变。但是，Rust 允许我们通过以下属性控制符号名称和部分位置：</p>
@@ -11402,11 +10919,6 @@ fn main() {
 <p>在标准库中也提供了标准 I/O 类型，在 Safe Rust 下，I/O 操作是足够安全的，但是对于 原生句柄 (Raw Fd) 的操作，则属于不安全。</p>
 <p>在 Unsafe Rust 下也有相关 I/O  的规范，请参加 <a href="safe-guides/coding_practice/./unsafe_rust/io.html">Unsafe Rust - I/O</a>   部分。</p>
 <p>本部分只关注 Safe Rust 下 I/O 相关规范。</p>
-<h2 id="列表-49"><a class="header" href="#列表-49">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./io/P.FIO.01.html">P.FIO.01 使用<code>read_to_end/read_to_string</code>方法时注意文件的大小能否一次性读入内存中</a></li>
-<li><a href="safe-guides/coding_practice/./io/G.FIO.01.html">G.FIO.01 文件读取建议使用 <code>BufReader/BufWriter</code> 来代替 <code>Reader/Write</code></a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pfio01--使用-read_to_endread_to_string方法时注意文件的大小能否一次性读入内存中"><a class="header" href="#pfio01--使用-read_to_endread_to_string方法时注意文件的大小能否一次性读入内存中">P.FIO.01  使用 <code>read_to_end/read_to_string</code>方法时注意文件的大小能否一次性读入内存中</a></h2>
 <p><strong>【描述】</strong></p>
 <p>对于内存可以一次性读完的文件，可以使用 <code>read_to_end/read_to_string</code>之类的方法。但是如果你想读任意大小的文件，则不适合使用它们。</p>
@@ -11461,11 +10973,6 @@ pub fn scan() -&gt; Result&lt;(), io::Error&gt; {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="322-security"><a class="header" href="#322-security">3.22 Security</a></h1>
 <p>Security 用于规范可能引起信息安全（Security）缺陷的代码实现，而非功能安全（ Safety）类问题。</p>
-<h2 id="列表-50"><a class="header" href="#列表-50">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./security/P.SEC.01.html">P.SEC.01 使用第三方库的时候要确保可信的依赖，小心供应链攻击</a></li>
-<li><a href="safe-guides/coding_practice/./security/G.SEC.01.html">G.SEC.01 代码中不要出现非法 Unicode 字符，也要防范非法 Unicode 字符</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="psec01-使用第三方库的时候要确保可信的依赖小心供应链攻击"><a class="header" href="#psec01-使用第三方库的时候要确保可信的依赖小心供应链攻击">P.SEC.01 使用第三方库的时候要确保可信的依赖，小心供应链攻击</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在 npm 中，node-ipc作者最近使用 npm 的安装脚本功能发起了 <a href="http://blog.nsfocus.net/node-ipc-npm/">供应链投毒攻击</a>。 在 Rust 中，<code>build.rs</code> 和 过程宏 有可能被利用来做同样的事。</p>
@@ -11584,11 +11091,6 @@ pub fn get_embed_languages() -&gt; FileContent {
 <tr><td><a href="https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#mixed-script-confusables"><code>mixed_script_confusables</code></a></td><td>no</td><td>yes</td><td>-</td><td>warn</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="323-其他"><a class="header" href="#323-其他">3.23 其他</a></h1>
-<h2 id="列表-51"><a class="header" href="#列表-51">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/./others/G.OTH.01.html">G.OTH.01 对于某些场景下不建议使用的方法可以通过配置 clippy.toml 来拒绝</a></li>
-<li><a href="safe-guides/coding_practice/./others/G.OTH.02.html">G.OTH.01 使用标准库中对应的方法计算秒级、毫秒级、微秒级的时间</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="goth01--对于某些场景下不建议使用的方法可以通过配置-clippytoml-来拒绝"><a class="header" href="#goth01--对于某些场景下不建议使用的方法可以通过配置-clippytoml-来拒绝">G.OTH.01  对于某些场景下不建议使用的方法可以通过配置 <code>clippy.toml</code> 来拒绝</a></h2>
 <p><strong>【级别】</strong> 建议</p>
 <p><strong>【描述】</strong></p>
@@ -14297,7 +13799,7 @@ $ rustc --help
 <p>https://doc.rust-lang.org/rustc/command-line-arguments.html</p>
 <p>https://doc.rust-lang.org/rustc/codegen-options/index.html</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="i最佳实践"><a class="header" href="#i最佳实践">I.最佳实践</a></h1>
-<h2 id="列表-52"><a class="header" href="#列表-52">列表</a></h2>
+<h2 id="列表-16"><a class="header" href="#列表-16">列表</a></h2>
 <ul>
 <li><a href="safe-guides/Appendix/best-practice/./qa.html">Q&amp;A</a></li>
 <li><a href="safe-guides/Appendix/best-practice/./tips.html">Tips</a></li>
