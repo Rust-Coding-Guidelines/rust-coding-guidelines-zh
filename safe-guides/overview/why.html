@@ -145,7 +145,7 @@
 <h2 id="rustfmt-和-clippy-的局限性"><a class="header" href="#rustfmt-和-clippy-的局限性">Rustfmt 和 Clippy 的局限性</a></h2>
 <h3 id="rustfmt-局限性"><a class="header" href="#rustfmt-局限性">Rustfmt 局限性</a></h3>
 <p>Rust 有自动化格式化工具 rustfmt ，可以帮助开发者摆脱手工调整代码格式的工作，提升生产力。但它并不能代替编码规范对 Rust 代码的编码风格进行规范。</p>
-<p>rustftm主要存在以下缺陷：</p>
+<p>rustfmt主要存在以下缺陷：</p>
 <ol>
 <li>Rust 语言是一门非常注重语义的语言。Rust 中的变量、类型和函数等命名是非常讲究语义的，尤其是所有权语义。rustfmt 工具无法判断代码中命名的语义。这方面利用 Clippy 可以满足部分需求，但是对于开发者来说比较片面。</li>
 <li>Rustfmt 如果使用不当或配置不当，会导致问题。因为rustfmt是自动格式化工具，它会自动修改代码，但是它修改的时候并不会编译代码。如果开发者配置自动保存以后自动执行rustfmt，就会导致代码被修改错误，或者，有一些rustfmt 配置选项配置错误，也可能导致代码修改错误。</li>
