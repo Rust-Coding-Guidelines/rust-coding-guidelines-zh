@@ -147,8 +147,22 @@
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不符合
-let mut a: A = Default::default();
-a.i = 42;
+impl&lt;'a&gt; Colorize for &amp;'a str {
+    fn red(self) -&gt; ColoredString {
+        ColoredString {
+            fgcolor: String::from(&quot;31&quot;),
+            input: String::from(self), // 该方法只更新 fgcolor 和 input
+            bgcolor: String::default(); // 如果该结构体字段比较多的话，此处就需要指派很多字段，不太方便
+        }   
+    }
+    fn on_yellow(self) -&gt; ColoredString {
+        ColoredString {
+            bgcolor: String::from(&quot;43&quot;),
+            input: String::from(self),
+            fgcolor: String::default();
+        }   
+    }
+}
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【正例】</strong></p>
@@ -156,10 +170,22 @@ a.i = 42;
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 符合
-let a = A {
-    i: 42,
-    .. Default::default()
-};
+impl&lt;'a&gt; Colorize for &amp;'a str {
+    fn red(self) -&gt; ColoredString {
+        ColoredString {
+            fgcolor: String::from(&quot;31&quot;),
+            input: String::from(self),
+            ..ColoredString::default() // 通过该语法，开发者可以快速了解该方法只更新 fgcolor 和 input，也不需要指派其他不需要更新的字段，更加方便
+        }   
+    }
+    fn on_yellow(self) -&gt; ColoredString {
+        ColoredString {
+            bgcolor: String::from(&quot;43&quot;),
+            input: String::from(self),
+            ..ColoredString::default()
+        }
+    }
+}
 <span class="boring">}
 </span></code></pre></pre>
 <p><strong>【Lint 检测】</strong></p>
