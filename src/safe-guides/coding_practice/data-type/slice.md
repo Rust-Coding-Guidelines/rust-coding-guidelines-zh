@@ -4,7 +4,3 @@
 
 `&str` 就是一种字符串切片。
 
-## 列表
-
-- [P.TYP.SLC.01 宜使用切片迭代器来代替手工索引](./slice/P.TYP.SLC.01.md)
-- [P.TYP.SLC.02 宜使用切片模式来提升代码的可读性](./slice/P.TYP.SLC.02.md)

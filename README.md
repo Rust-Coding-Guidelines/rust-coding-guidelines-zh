@@ -5,6 +5,7 @@
 - 《Rust 编码规范》初稿发布 2021-10-31 (V 0.1)
 - 《Rust 编码规范》经社区和公司内第一次评审版本发布 2022-02 (V 0.2) ，改进内容参考 [Changelog](./Changelog.md)。
 - 《Rust 编码规范》经社区和公司内第二次评审版本发布 2022-03 (V 0.3) ，改进内容参考 [Changelog](./Changelog.md)。
+- 《Rust 编码规范》经社区和公司内第二次评审版本发布 2022-04 (V 1.0 beta) ，改进内容参考 [Changelog](./Changelog.md)。
 
 ## 介绍
 

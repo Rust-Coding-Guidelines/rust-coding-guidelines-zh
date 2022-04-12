@@ -7,7 +7,3 @@ Rust 中的集合类型包括四大类：
 - 集合： [`HashSet`](https://doc.rust-lang.org/stable/std/collections/hash_set/struct.HashSet.html), [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html)
 - 其他： [`BinaryHeap`](https://doc.rust-lang.org/stable/std/collections/struct.BinaryHeap.html)
 
-## 列表
-
-- [P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配](./collections/P.CLT.01.md)
-- [G.CLT.01 非必要情况下，不要使用LinkedList，而用Vec或VecDeque代替](./collections/G.CLT.01.md)
