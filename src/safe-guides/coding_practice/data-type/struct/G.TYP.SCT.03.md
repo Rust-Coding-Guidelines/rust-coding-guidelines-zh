@@ -12,18 +12,44 @@
 
 ```rust
 // 不符合
-let mut a: A = Default::default();
-a.i = 42;
+impl<'a> Colorize for &'a str {
+    fn red(self) -> ColoredString {
+        ColoredString {
+            fgcolor: String::from("31"),
+            input: String::from(self), // 该方法只更新 fgcolor 和 input
+            bgcolor: String::default(); // 如果该结构体字段比较多的话，此处就需要指派很多字段，不太方便
+        }   
+    }
+    fn on_yellow(self) -> ColoredString {
+        ColoredString {
+            bgcolor: String::from("43"),
+            input: String::from(self),
+            fgcolor: String::default();
+        }   
+    }
+}
 ```
 
 **【正例】**
 
 ```rust
 // 符合
-let a = A {
-    i: 42,
-    .. Default::default()
-};
+impl<'a> Colorize for &'a str {
+    fn red(self) -> ColoredString {
+        ColoredString {
+            fgcolor: String::from("31"),
+            input: String::from(self),
+            ..ColoredString::default() // 通过该语法，开发者可以快速了解该方法只更新 fgcolor 和 input，也不需要指派其他不需要更新的字段，更加方便
+        }   
+    }
+    fn on_yellow(self) -> ColoredString {
+        ColoredString {
+            bgcolor: String::from("43"),
+            input: String::from(self),
+            ..ColoredString::default()
+        }
+    }
+}
 ```
 
 **【Lint 检测】**
