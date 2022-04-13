@@ -5823,7 +5823,7 @@ impl&lt;T&gt; Foo&lt;T&gt; {
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptra01--使用-trait-时要注意-trait-一致性规则"><a class="header" href="#ptra01--使用-trait-时要注意-trait-一致性规则">P.TRA.01  使用 trait 时要注意 trait 一致性规则</a></h2>
 <p><strong>【描述】</strong></p>
 <p>使用 trait 的时候，必须要满足 trait 一致性规则，即，<strong>孤儿规则（orphans rule）</strong>：类型和trait，必须有一个是在本地crate内定义的。
-当不满足古尔规则时，可以考虑使用<code>NewType</code>模式来解决问题。</p>
+当不满足孤儿规则时，可以考虑使用<code>NewType</code>模式来解决问题。</p>
 <p><strong>【正例】</strong></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
