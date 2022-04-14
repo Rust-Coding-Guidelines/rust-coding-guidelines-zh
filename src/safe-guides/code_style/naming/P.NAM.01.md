@@ -19,11 +19,13 @@
 - [`RecvTimeoutError`](https://doc.rust-lang.org/std/sync/mpsc/enum.RecvTimeoutError.html)
 - [`StripPrefixError`](https://doc.rust-lang.org/std/path/struct.StripPrefixError.html)
 
-如果你想新增和标准库相似的错误类型，比如“解析地址错误”类型，为了保持词性一致，应该使用`ParseAddrError` 名称，而不是`AddrParseError`
+如果你想新增和标准库相似的错误类型，比如“解析地址错误”类型，为了保持词性一致，应该使用`ParseAddrError` 名称，而不是`AddrParseError`。
+
+> 说明：现在标准库文档中 net模块解析地址错误类型是 `AddrParseError`，其实和标准库中大部分错误类型遵循的 "动-宾-Error" 词序没有保持一致，所以它是一个特例。
 
 **【反例】**
 ```rust
-// 不符合：与标准库错误类型次序不一致，应该为 ParseAddrError
+// 不符合：与标准库错误类型词序 "动-宾-Error"  不一致，应该为 ParseAddrError
 struct AddrParseError {}
 ```
 
