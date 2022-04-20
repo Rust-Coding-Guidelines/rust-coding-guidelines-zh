@@ -70,6 +70,7 @@
             - [G.TYP.BOL.04 禁止在if表达式条件中使用块结构](./safe-guides/coding_practice/data-type/bool/G.TYP.BOL.04.md)
             - [G.TYP.BOL.05 非必要时，布尔运算应使用逻辑运算符( &&/||)而非位运算符 (&/|)](./safe-guides/coding_practice/data-type/bool/G.TYP.BOL.05.md)
             - [G.TYP.BOL.06 不应使用数字代替布尔值](./safe-guides/coding_practice/data-type/bool/G.TYP.BOL.06.md)
+            - [G.TYP.BOL.07 使用 `.not()` 方法代替逻辑取反运算符 (`!`)](./safe-guides/coding_practice/data-type/bool/G.TYP.BOL.07.md)
         - [字符](./safe-guides/coding_practice/data-type/char.md)
             - [G.TYP.CHR.01 不应将字符字面量强制转换为 u8](./safe-guides/coding_practice/data-type/char/G.TYP.CHR.01.md)
             - [G.TYP.CHR.02 字符串方法中如果需要单个字符的值作为参数，宜使用字符而非字符串](./safe-guides/coding_practice/data-type/char/G.TYP.CHR.02.md)
