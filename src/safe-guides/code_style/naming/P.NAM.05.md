@@ -60,7 +60,7 @@ impl S {
     }
 
     // set_前缀是可以的
-    pub fn set_first(&mut self, f: First) -> &mut First {
+    pub fn set_first(&mut self, f: First)  {
         self.first = f;
     }
 }

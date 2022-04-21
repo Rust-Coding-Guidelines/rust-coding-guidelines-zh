@@ -12,8 +12,7 @@ type Sized = u16;
 
 fn main() {
     // 不符合：try 为保留关键字
-    // 如果必须要用，使用`r#`前缀可以使用它，但要尽力避免
-    let r#try = 1;
+    let try = 1;
 }
 ```
 
@@ -26,5 +25,29 @@ type Size = u16;
 fn main() {
     // 符合
     let tried = 1;
+}
+```
+
+**【例外】**
+
+在一些特定场合，比如对接遗留数据库中的字段和Rust关键字冲突：
+
+```rust
+
+struct SomeTable{
+    // 使用 `r#`+type 来解决这种问题
+    r#type: String
+}
+
+```
+
+或者当序列化为 json 或 proto 时，存在成员为关键字，则可以通过相关库提供的功能来使用：
+
+```rust
+pub struct UserRepr {
+    // ...
+    #[serde(rename="self")]
+    pub self_: Option<String>,
+    // ...
 }
 ```
