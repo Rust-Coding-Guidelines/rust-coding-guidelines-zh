@@ -9,7 +9,7 @@
 ```rust
 /// 假如调用环境可以保证地址是非空，那么可以使用这个 "_unchecked" 的函数
 #[inline(always)]
-pub unsafe fn io_read_u32_unchecked(ioaddr: usize) -> u32 {
+unsafe fn io_read_u32_unchecked(ioaddr: usize) -> u32 {
     let val = ptr::read_volatile(ioaddr as *const u32);
     trace!("io_read_u32 {:#x}={:#x}", ioaddr, val);
     val
@@ -17,7 +17,7 @@ pub unsafe fn io_read_u32_unchecked(ioaddr: usize) -> u32 {
 
 /// 安全抽象版本
 #[inline(always)]
-pub unsafe fn io_read_u32() -> Result<u32, MyError> {
+fn io_read_u32() -> Result<u32, MyError> {
     let ioaddr = ioaddr as * const u32;
     if ioaddr.is_null() {
         return Err(MyError::Content("io_read_u32 addr is null!"));
