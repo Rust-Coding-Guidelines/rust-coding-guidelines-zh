@@ -146,7 +146,7 @@
 </span><span class="boring">fn main() {
 </span>/// 假如调用环境可以保证地址是非空，那么可以使用这个 &quot;_unchecked&quot; 的函数
 #[inline(always)]
-pub unsafe fn io_read_u32_unchecked(ioaddr: usize) -&gt; u32 {
+unsafe fn io_read_u32_unchecked(ioaddr: usize) -&gt; u32 {
     let val = ptr::read_volatile(ioaddr as *const u32);
     trace!(&quot;io_read_u32 {:#x}={:#x}&quot;, ioaddr, val);
     val
@@ -154,7 +154,7 @@ pub unsafe fn io_read_u32_unchecked(ioaddr: usize) -&gt; u32 {
 
 /// 安全抽象版本
 #[inline(always)]
-pub unsafe fn io_read_u32() -&gt; Result&lt;u32, MyError&gt; {
+fn io_read_u32() -&gt; Result&lt;u32, MyError&gt; {
     let ioaddr = ioaddr as * const u32;
     if ioaddr.is_null() {
         return Err(MyError::Content(&quot;io_read_u32 addr is null!&quot;));
