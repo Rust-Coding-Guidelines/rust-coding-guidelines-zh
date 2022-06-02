@@ -7,11 +7,13 @@
 **【正例】**
 
 ```rust
+#[no_mangle]
 pub extern "C" fn nic_udrv_suspend() {
 	NIC_ENTITY.try_borrow_mut().suspend(); // suspend()需要可变引用
 }
 
 // 对外被 C 调用的接口
+#[no_mangle]
 pub extern "C" fn nic_udrv_buf_recycle(buf_id: usize) {
 	NIC_ENTITY.try_borrow().buf_recycle(buf_id); // buf_recycle()内有锁可以避免多线程竞争
 }

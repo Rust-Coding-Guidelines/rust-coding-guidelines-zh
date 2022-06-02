@@ -16,7 +16,7 @@ let (a, b, c, d, e, f, g) = (...);
 
 **【正例】**
 
-元组元素超过三个的，建议使用包含语义的变量命。
+元组元素超过四个的，建议使用包含语义的变量命。
 
 ```rust
 #![warn(clippy::many_single_char_names)]

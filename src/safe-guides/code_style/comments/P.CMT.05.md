@@ -2,7 +2,7 @@
 
 **【描述】**
 
-通过在注释中开启 `FIXME` 和 `TODO` 可以方便协作。
+通过在注释中开启 `FIXME` 和 `TODO` 可以方便协作。正式发布版本可以不做此类标注。
 
 注意：此条目不适于使用 `rustfmt`相关配置项 `report_fixme` 和 `report_todo`，在 `rustfmt` v2.0 中已经移除这两项配置。
 
