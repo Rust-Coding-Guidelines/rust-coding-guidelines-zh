@@ -9046,20 +9046,6 @@ use crossbeam::{spawn_unsafe};
 <li>对 API 进行安全封装，即，安全抽象。在内部使用断言来保证当越过安全边界时可以 Panic，从而避免 UB 产生。</li>
 </ol>
 <p>第二种方式，对 Unsafe 代码进行安全抽象，是 Rust 生态的一种约定俗成。</p>
-<h2 id="列表-10"><a class="header" href="#列表-10">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.01.html">P.UNS.SAS.01 代码中要注意是否会因为 Panic 发生而导致内存安全问题</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.02.html">P.UNS.SAS.02 Unsafe 代码编写者有义务检查代码是否满足安全不变式</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./uafe_abstract/P.UNS.SAS.03.html">P.UNS.SAS.03 不要随便在公开的 API 中暴露未初始化内存</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.04.html">P.UNS.SAS.04 要考虑 Panic Safety 的情况</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.05.html">P.UNS.SAS.05 Unsafe 代码中手动实现 <code>auto trait</code> 需要注意</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.06.html">P.UNS.SAS.06 不要随便在公开的 API 中暴露裸指针</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.07.html">P.UNS.SAS.07 在抽象安全方法的同时，也建议为性能考虑而增加相应的 Unsafe 方法</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.08.html">P.UNS.SAS.08 函数参数是不可变借用的时候，返回值不应该是可变借用</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/P.UNS.SAS.09.html">P.UNS.SAS.09 在任何 Unsafe 块之前都应该加 <code>SAFETY</code> 注释</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/G.UNS.SAS.01.html">G.UNS.SAS.01 在公开的 unsafe 函数的文档中必须增加 Safety 注释</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./safe_abstract/G.UNS.SAS.02.html">G.UNS.SAS.02 在 Unafe 函数中应该使用 <code>assert!</code> 而非 <code>debug_assert!</code> 去校验边界条件</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punssas01--代码中要注意是否会因为-panic-发生而导致内存安全问题"><a class="header" href="#punssas01--代码中要注意是否会因为-panic-发生而导致内存安全问题">P.UNS.SAS.01  代码中要注意是否会因为 Panic 发生而导致内存安全问题</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Panic 一般在程序达到不可恢复的状态才用，当然在 Rust 中也可以对一些实现了<code>UnwindSafe</code> trait 的类型捕获Panic。</p>
@@ -9679,15 +9665,6 @@ pub unsafe fn unwrap_unchecked(self) -&gt; T {
 <li>不能保证线程安全。</li>
 </ul>
 <p>可见，原生指针并不受Safe Rust提供的那一层“安全外衣”保护，所以也被称为“裸指针”。</p>
-<h2 id="列表-11"><a class="header" href="#列表-11">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/P.UNS.PTR.01.html">P.UNS.PTR.01 不要将裸指针在多线程间共享</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/P.UNS.PTR.02.html">P.UNS.PTR.02 建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/P.UNS.PTR.03.html">P.UNS.PTR.03 使用指针类型构造泛型结构体时，需要使用 PhantomData<T> 来指定 T上的协变和所有权</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/G.UNS.PTR.01.html">G.UNS.PTR.01 当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/G.UNS.PTR.02.html">G.UNS.PTR.02 禁止将不可变指针手工转换为可变指针</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./raw_ptr/G.UNS.PTR.03.html">G.UNS.PTR.03 尽量使用 pointer::cast 来代替 使用 as 强转指针</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsptr01--不要将裸指针在多线程间共享"><a class="header" href="#punsptr01--不要将裸指针在多线程间共享">P.UNS.PTR.01  不要将裸指针在多线程间共享</a></h2>
 <p><strong>【描述】</strong></p>
 <p>裸指针在 Rust 中不是线程安全的，将裸指针在多线程传递编译器也会编译出错。如果需要在多线程间共享裸指针，则考虑使用 <code>NewType</code> 模式来包装它。</p>
@@ -9886,11 +9863,6 @@ let _ = mut_ptr.cast::&lt;i32&gt;(); // 符合
 <p>Union 是没有 tag 的 Enum，Enum 是有 tag 的Union 。</p>
 <p>内存布局 Union 和 Enum 相似。</p>
 <p>正因为没有 tag，Rust 编译器无法检查当前使用的正是哪个变体，所以，访问 Union 的变体是 Unsafe 的。</p>
-<h2 id="列表-12"><a class="header" href="#列表-12">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./union/P.UNS.UNI.01.html">P.UNS.UNI.01 除了与 C 交互，尽量不要使用 Union</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./union/P.UNS.UNI.02.html">P.UNS.UNI.02 不要把联合体的不同变体用在不同生命周期内</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsuni01--除了与-c-交互尽量不要使用-union"><a class="header" href="#punsuni01--除了与-c-交互尽量不要使用-union">P.UNS.UNI.01  除了与 C 交互，尽量不要使用 Union</a></h2>
 <p><strong>【描述】</strong></p>
 <p>Rust 支持 Union 就是为了调用 C 接口。如果不是 FFi ，就避免使用 Union。</p>
@@ -9941,15 +9913,6 @@ fn test() {
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="内存"><a class="header" href="#内存">内存</a></h1>
 <p>这里指 Unsafe Rust 下的数据布局、内存管理和使用相关规范。</p>
-<h2 id="列表-13"><a class="header" href="#列表-13">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.01.html">P.UNS.MEM.01 要注意选择合适的结构体、元组、枚举的数据布局</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.02.html">P.UNS.MEM.02 不能修改其它进程/动态库的内存变量</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.03.html">P.UNS.MEM.03 不能让 <code>String/Vec</code> 自动 <code>Drop</code> 其它进程/动态库的内存数据</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.04.html">P.UNS.MEM.04 尽量用可重入(reentrant)版本的 C-API 或系统调用</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/P.UNS.MEM.05.html">P.UNS.MEM.05 如果需要使用位域，推荐使用第三方库</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./mem/G.UNS.MEM.01.html">G.UNS.MEM.01 使用 <code>MaybeUninit&lt;T&gt;</code> 来处理未初始化的内存</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsmem01--要注意选择合适的结构体元组枚举的数据布局"><a class="header" href="#punsmem01--要注意选择合适的结构体元组枚举的数据布局">P.UNS.MEM.01  要注意选择合适的结构体、元组、枚举的数据布局</a></h2>
 <p><strong>【描述】</strong></p>
 <p>对于 Rust 中结构体和元组，编译器会随意重排其字段来优化布局。请根据具体的场景来选择合适的数据布局。</p>
@@ -10251,24 +10214,6 @@ vec.set_len(...);  // Safe to call `set_len()` on initialized part
 <p>一般来说，FFi 是指在其他语言中调用 Rust 代码，Rust代码会按 C-ABI 来暴露接口。这类 Rust crate或模块，常以 <code>-ffi</code>后缀结尾。</p>
 <p>另一类是 Rust 去调用 C-ABI 接口，相关代码通常被封装到以 <code>-sys</code> 为后缀命名的 crate 或 模块中。 </p>
 <p>本小节内容，包含以上两种情况。</p>
-<h2 id="列表-14"><a class="header" href="#列表-14">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.01.html">P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.02.html">P.UNS.FFI.02 在使用标准库 std::ffi 模块提供的类型时需要仔细查看其文档</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.03.html">P.UNS.FFI.03 当使用来自 C 的指针时，如果该指针需要管理内存，则需要为包装该指针的 Rust 类型实现 Drop 特质</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.04.html">P.UNS.FFI.04 如果一个函数正在跨越 FFi 边界，那么需要处理 Panic</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.05.html">P.UNS.FFI.05 建议使用诸如标准库或 <code>libc crate</code> 所提供的可移植类型别名，而不是特定平台的类型</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.06.html">P.UNS.FFI.06 Rust 和 C 之间传递字符或字符串时需要注意字符串要符合 C-ABI 以及 字符串的编码</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.07.html">P.UNS.FFI.07 不要为任何传入到外部的类型实现 Drop</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.08.html">P.UNS.FFI.08 FFi 中要进行合理的错误处理</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.09.html">P.UNS.FFI.09 当 Rust 调用外部 C 函数时，如果可以确认安全，可以通过引用来代替裸指针</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.10.html">P.UNS.FFI.10 当 Rust 函数导出外部函数时，必须从设计上保证被跨线程调用的安全性</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.11.html">P.UNS.FFI.11 如需引用指定为 <code>#[repr(packed)]</code> 内存布局的结构体成员字段要注意合理规避未定义行为</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/P.UNS.FFI.12.html">P.UNS.FFI.12 当依赖 C 端传入参数时，需要在文档注释中不变性声明，根据不同的调用场景选择合适的安全抽象方式</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/G.UNS.FFI.13.html">P.UNS.FFI.13 自定义数据类型要保证一致的数据布局</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/G.UNS.FFI.14.html">P.UNS.FFI.14 在 FFi 中使用的类型应该拥有稳定布局</a></li>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./ffi/G.UNS.FFI.15.html">P.UNS.FFI.15 从外部传入的不健壮类型的外部值要进行检查</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsffi01-避免从公开的-rust-api-直接传字符串到-c-中"><a class="header" href="#punsffi01-避免从公开的-rust-api-直接传字符串到-c-中">P.UNS.FFI.01 避免从公开的 Rust API 直接传字符串到 C 中</a></h2>
 <p><strong>【描述】</strong></p>
 <p>在跨越 C 边界的时候，应该对 字符串进行边界检查，避免传入一些非法字符串。</p>
@@ -10846,10 +10791,6 @@ extern &quot;C&quot; {
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-io"><a class="header" href="#unsafe-io">Unsafe I/O</a></h1>
 <p>Rust 标准库提供了 I/O 安全性，保证程序持有私有的原始句柄（raw handle），其他部分无法访问它。但是 <code>FromRawFd::from_raw_fd</code> 是 Unsafe 的，所以在 Safe Rust中无法做到 <code>File::from_raw(7)</code> 这种事。 在这个文件描述符上面进行<code> I/O</code> 操作，而这个文件描述符可能被程序的其他部分私自持有。</p>
-<h2 id="列表-15"><a class="header" href="#列表-15">列表</a></h2>
-<ul>
-<li><a href="safe-guides/coding_practice/unsafe_rust/./io/G.UNS.FIO.01.html">G.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="punsfio01--在使用原始句柄的时候要注意-io-安全性"><a class="header" href="#punsfio01--在使用原始句柄的时候要注意-io-安全性">P.UNS.FIO.01  在使用原始句柄的时候，要注意 I/O 安全性</a></h2>
 <p><strong>【描述】</strong></p>
 <p>很多 API 通过接受原始句柄来进行 I/O 操作：</p>
@@ -13957,7 +13898,7 @@ $ rustc --help
 <p>https://doc.rust-lang.org/rustc/command-line-arguments.html</p>
 <p>https://doc.rust-lang.org/rustc/codegen-options/index.html</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="i最佳实践"><a class="header" href="#i最佳实践">I.最佳实践</a></h1>
-<h2 id="列表-16"><a class="header" href="#列表-16">列表</a></h2>
+<h2 id="列表-10"><a class="header" href="#列表-10">列表</a></h2>
 <ul>
 <li><a href="safe-guides/Appendix/best-practice/./qa.html">Q&amp;A</a></li>
 <li><a href="safe-guides/Appendix/best-practice/./tips.html">Tips</a></li>

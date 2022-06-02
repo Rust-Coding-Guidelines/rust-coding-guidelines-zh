@@ -139,10 +139,6 @@
                     <main>
                         <h1 id="unsafe-io"><a class="header" href="#unsafe-io">Unsafe I/O</a></h1>
 <p>Rust 标准库提供了 I/O 安全性，保证程序持有私有的原始句柄（raw handle），其他部分无法访问它。但是 <code>FromRawFd::from_raw_fd</code> 是 Unsafe 的，所以在 Safe Rust中无法做到 <code>File::from_raw(7)</code> 这种事。 在这个文件描述符上面进行<code> I/O</code> 操作，而这个文件描述符可能被程序的其他部分私自持有。</p>
-<h2 id="列表"><a class="header" href="#列表">列表</a></h2>
-<ul>
-<li><a href="./io/G.UNS.FIO.01.html">G.UNS.FIO.01 在使用原始句柄的时候，要注意 I/O 安全性</a></li>
-</ul>
 
                     </main>
 

@@ -147,15 +147,6 @@
 <li>不能保证线程安全。</li>
 </ul>
 <p>可见，原生指针并不受Safe Rust提供的那一层“安全外衣”保护，所以也被称为“裸指针”。</p>
-<h2 id="列表"><a class="header" href="#列表">列表</a></h2>
-<ul>
-<li><a href="./raw_ptr/P.UNS.PTR.01.html">P.UNS.PTR.01 不要将裸指针在多线程间共享</a></li>
-<li><a href="./raw_ptr/P.UNS.PTR.02.html">P.UNS.PTR.02 建议使用 <code>NonNull&lt;T&gt;</code> 来替代 <code>*mut T</code></a></li>
-<li><a href="./raw_ptr/P.UNS.PTR.03.html">P.UNS.PTR.03 使用指针类型构造泛型结构体时，需要使用 PhantomData<T> 来指定 T上的协变和所有权</a></li>
-<li><a href="./raw_ptr/G.UNS.PTR.01.html">G.UNS.PTR.01 当指针类型被强转为和当前内存对齐不一致的指针类型时，禁止对其解引用</a></li>
-<li><a href="./raw_ptr/G.UNS.PTR.02.html">G.UNS.PTR.02 禁止将不可变指针手工转换为可变指针</a></li>
-<li><a href="./raw_ptr/G.UNS.PTR.03.html">G.UNS.PTR.03 尽量使用 pointer::cast 来代替 使用 as 强转指针</a></li>
-</ul>
 
                     </main>
 
