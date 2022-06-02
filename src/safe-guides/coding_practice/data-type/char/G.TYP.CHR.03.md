@@ -27,7 +27,7 @@ let x = std::char::from_u32(x);
 assert_eq!('%', x);
 
 // 符合：如果确定该整数对应合法的 unicode，可以使用 uncheck 方法加速
-let x = std::char::from_u32_unchecked(x);  
+let x = unsafe {std::char::from_u32_unchecked(x) };  
 assert_eq!('%', x);
 ```
 

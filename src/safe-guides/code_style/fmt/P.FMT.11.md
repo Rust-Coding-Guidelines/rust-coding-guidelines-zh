@@ -13,6 +13,8 @@
 
 **【反例】**
 
+例1:
+
 ```rust
 // 不符合： 同一模块类型应该置于同一个块内
 // 当 `imports_granularity="Preserve"`
@@ -20,7 +22,11 @@ use foo::b;
 use foo::b::{f, g};
 use foo::{a, c, d::e};
 use qux::{h, i};
+```
 
+例2:
+
+```rust
 // 不符合：当按默认值设置时，模块导入比较乱，影响可读性
 use super::update::convert_publish_payload;
 use chrono::Utc;
@@ -40,6 +46,8 @@ use core::f32;
 
 **【正例】**
 
+例1:
+
 ```rust
 // 符合
 // 当 `imports_granularity="Crate"`
@@ -50,7 +58,11 @@ use foo::{
     d::e,
 };
 use qux::{h, i};
+```
 
+例2:
+
+```rust
 // 符合
 // 当 `group_imports="StdExternalCrate` 且 `reorder_imports=true`
 use alloc::alloc::Layout;

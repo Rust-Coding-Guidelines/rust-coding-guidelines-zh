@@ -25,7 +25,7 @@ let data = {
 ```rust
 // 符合
 let mut data = get_vec();
-data_sort(); //临时需要排序
+data.sort(); //临时需要排序
 let data = data; // 符合： 后面就不需要改动了，由编译器可以确保
 
 //  `data` 在后面不会再被改变

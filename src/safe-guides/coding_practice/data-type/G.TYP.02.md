@@ -10,7 +10,7 @@
 
 ```rust
 #![warn(clippy::default_numeric_fallback)]
-// 符合
+// 不符合
 let i = 10; // i32
 let f = 1.23; // f64
 ```
