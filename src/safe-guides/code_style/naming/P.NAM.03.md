@@ -30,8 +30,8 @@ fn not_number(s:&str) -> bool {/* ... */}
 // 符合
 let first_name: &str = "John";
 let last_name: &str = "Smith";
-const ERROR_DIRECTORY_NOT_SUPPORTED: u32 = 336;
-const ERROR_DRIVER_CANCEL_TIMEOUT: u32 = 594;
+const ERR_DIR_NOT_SUPPORTED: u32 = 336;
+const ERR_DVER_CANCEL_TIMEOUT: u32 = 594;
 // 符合
 fn is_number(s:&str) -> bool {/* ... */} 
 ```
