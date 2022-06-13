@@ -111,6 +111,7 @@
             - [G.TYP.ENM.04 不宜在use语句中引入Enum的全部变体（variants）](./safe-guides/coding_practice/data-type/enum/G.TYP.ENM.04.md)
             - [G.TYP.ENM.05 对外导出的公开Enum，宜添加#[non_exhaustive]属性](./safe-guides/coding_practice/data-type/enum/G.TYP.ENM.05.md)
             - [G.TYP.ENM.06 Enum内变体的大小差异不宜过大](./safe-guides/coding_practice/data-type/enum/G.TYP.ENM.06.md)
+            - [G.TYP.ENM.07 如需依赖 Enum 中变体的序数，则应显示为变体设置明确的数值](./safe-guides/coding_practice/data-type/enum/G.TYP.ENM.07.md)
     - [表达式](./safe-guides/coding_practice/expr.md)
         - [G.EXP.01 当需要对表达式求值后重新赋值时，宜使用复合赋值模式](./safe-guides/coding_practice/expr/G.EXP.01.md)
         - [G.EXP.02 不宜在比较中使用不兼容的位掩码](./safe-guides/coding_practice/expr/G.EXP.02.md)
