@@ -137,7 +137,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配"><a class="header" href="#ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></h1>
+                        <h2 id="ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配"><a class="header" href="#ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></h2>
+<p><strong>【描述】</strong></p>
+<p>预分配足够的容量，避免后续内存分配，可以提升代码性能。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 不符合
+let mut output = Vec::new();
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 符合
+let mut output = Vec::with_capacity(input.len());
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

@@ -137,7 +137,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ptypvec01-非必要时不宜使用动态数组"><a class="header" href="#ptypvec01-非必要时不宜使用动态数组">P.TYP.VEC.01 非必要时不宜使用动态数组</a></h1>
+                        <h2 id="ptypvec01-非必要时不宜使用动态数组"><a class="header" href="#ptypvec01-非必要时不宜使用动态数组">P.TYP.VEC.01 非必要时不宜使用动态数组</a></h2>
+<p><strong>【描述】</strong></p>
+<p>非必须不宜使用 <code>Vec&lt;T&gt;</code>，应该优先尝试使用固定长度数组或常量泛型。</p>
+<p>或者可以参考第三方库，诸如 <a href="https://docs.rs/smallvec/latest/smallvec"><code>smallvec</code></a> ，在元素比较少量的时候，可以放到栈上进行管理，如果超过一定元素才会选择堆内存。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合
+    let v: Vec&lt;i32&gt; = vec![1, 2, 3];
+    println!(&quot;{:#}&quot;, v);
+}
+</code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合
+    let v = [1, 2, 3];
+    println!(&quot;{:#?}&quot;, v);
+}
+</code></pre></pre>
 
                     </main>
 

@@ -3811,9 +3811,70 @@ vec.sort_unstable(); // unstable sort
 <div style="break-before: page; page-break-before: always;"></div><h1 id="动态数组"><a class="header" href="#动态数组">动态数组</a></h1>
 <p>这里指可以动态增长的数组<code>Vec&lt;T&gt;</code>。</p>
 <p>在数组一节中有<a href="safe-guides/coding_practice/data-type/./array.html">部分原则和规则</a>也适用于这里。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec01-非必要时不宜使用动态数组"><a class="header" href="#ptypvec01-非必要时不宜使用动态数组">P.TYP.VEC.01 非必要时不宜使用动态数组</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配"><a class="header" href="#ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gtypvec01-禁止访问未初始化的数组"><a class="header" href="#gtypvec01-禁止访问未初始化的数组">G.TYP.VEC.01 禁止访问未初始化的数组</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="ptypvec01-非必要时不宜使用动态数组"><a class="header" href="#ptypvec01-非必要时不宜使用动态数组">P.TYP.VEC.01 非必要时不宜使用动态数组</a></h2>
+<p><strong>【描述】</strong></p>
+<p>非必须不宜使用 <code>Vec&lt;T&gt;</code>，应该优先尝试使用固定长度数组或常量泛型。</p>
+<p>或者可以参考第三方库，诸如 <a href="https://docs.rs/smallvec/latest/smallvec"><code>smallvec</code></a> ，在元素比较少量的时候，可以放到栈上进行管理，如果超过一定元素才会选择堆内存。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // 不符合
+    let v: Vec&lt;i32&gt; = vec![1, 2, 3];
+    println!(&quot;{:#}&quot;, v);
+}
+</code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // 符合
+    let v = [1, 2, 3];
+    println!(&quot;{:#?}&quot;, v);
+}
+</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配"><a class="header" href="#ptypvec02-创建动态数组时宜预先分配足够容量避免后续操作中产生多次分配">P.TYP.VEC.02 创建动态数组时，宜预先分配足够容量，避免后续操作中产生多次分配</a></h2>
+<p><strong>【描述】</strong></p>
+<p>预分配足够的容量，避免后续内存分配，可以提升代码性能。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 不符合
+let mut output = Vec::new();
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 符合
+let mut output = Vec::with_capacity(input.len());
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="gtypvec01--禁止访问未初始化的数组"><a class="header" href="#gtypvec01--禁止访问未初始化的数组">G.TYP.VEC.01  禁止访问未初始化的数组</a></h2>
+<p><strong>【级别】</strong> 建议</p>
+<p><strong>【描述】</strong></p>
+<p>访问未初始化数组的内存会导致未定义行为。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut vec: Vec&lt;u8&gt; = Vec::with_capacity(1000);
+unsafe { vec.set_len(1000); }
+// 不符合
+reader.read(&amp;mut vec); // error: Undefined Behavior: using uninitialized data, but this operation requires initialized memory
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 符合
+let mut vec: Vec&lt;u8&gt; = vec![0; 1000];
+reader.read(&amp;mut vec);
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【Lint 检测】</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#uninit_vec">uninit_vec</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
+</tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="结构体"><a class="header" href="#结构体">结构体</a></h1>
 <p>Rust 包含了三种结构体： 命名结构体、元组结构体、单元结构体。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ptypsct01-为结构体实现构造性方法时避免构造后再初始化的情况"><a class="header" href="#ptypsct01-为结构体实现构造性方法时避免构造后再初始化的情况">P.TYP.SCT.01 为结构体实现构造性方法时，避免构造后再初始化的情况</a></h2>

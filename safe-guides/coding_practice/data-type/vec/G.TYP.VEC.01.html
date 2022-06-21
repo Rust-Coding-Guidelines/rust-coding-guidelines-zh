@@ -137,7 +137,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="gtypvec01-禁止访问未初始化的数组"><a class="header" href="#gtypvec01-禁止访问未初始化的数组">G.TYP.VEC.01 禁止访问未初始化的数组</a></h1>
+                        <h2 id="gtypvec01--禁止访问未初始化的数组"><a class="header" href="#gtypvec01--禁止访问未初始化的数组">G.TYP.VEC.01  禁止访问未初始化的数组</a></h2>
+<p><strong>【级别】</strong> 建议</p>
+<p><strong>【描述】</strong></p>
+<p>访问未初始化数组的内存会导致未定义行为。</p>
+<p><strong>【反例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut vec: Vec&lt;u8&gt; = Vec::with_capacity(1000);
+unsafe { vec.set_len(1000); }
+// 不符合
+reader.read(&amp;mut vec); // error: Undefined Behavior: using uninitialized data, but this operation requires initialized memory
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【正例】</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 符合
+let mut vec: Vec&lt;u8&gt; = vec![0; 1000];
+reader.read(&amp;mut vec);
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【Lint 检测】</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy 可检测</th><th>Rustc 可检测</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#uninit_vec">uninit_vec</a></td><td>yes</td><td>no</td><td>correctness</td><td>deny</td></tr>
+</tbody></table>
 
                     </main>
 
