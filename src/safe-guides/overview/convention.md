@@ -75,7 +75,7 @@ Number 从`01`开始递增。其中 `Element` 为领域知识中关键元素（�
 | BOX | `Box<T>` 类型 | DRP  |  析构函数 (Drop) |  
 | DCL | 声明宏 (Declarative)  | PRO  |  过程宏 (Procedural) |  
 | LCK | 锁同步 (Lock)  | LKF |  无锁 (Lock Free) |  
-|  |  | OTH | 其他 (Ohters) |  
+| CGN | 代码生成（Code Generation）  | OTH | 其他 (Ohters) |  
 
 
 ## 引用代码开源许可证说明
