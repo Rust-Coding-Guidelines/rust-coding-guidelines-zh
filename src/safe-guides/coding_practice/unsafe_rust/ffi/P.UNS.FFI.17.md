@@ -1,4 +1,4 @@
-# P.UNS.FFI.17 当Rust绑定 C-API 不透明(Opaque)类型时，应该使用指向专用不透明类型的指针而不是`c_void`指针
+# P.UNS.FFI.17 当Rust绑定C-API不透明(Opaque)类型时，应该使用指向专用不透明类型的指针而不是`c_void`指针
 
 ## 【描述】
 
