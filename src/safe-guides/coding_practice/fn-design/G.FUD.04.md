@@ -39,7 +39,7 @@ impl Point {
     pub fn raw(&self) -> *const RawPoint {
         &self.raw
     }
-    // 如果听信 lint 的建议，将上面的 raw 函数参数 self 的引用去掉就是 raw_linted 函数
+    // 如果听信 lint 的建议，将上面的 raw 函数参数 self 的引用去掉就是 raw_linted 函数, 这在没有编译优化的情况下（如只是 cargo build 运行在dev模式下）的时候不会出错，但在有编译优化的场景下（如 cargo build --release）就会出现以下问题。
     pub fn raw_linted(self) -> *const RawPoint {
         &self.raw
     }
