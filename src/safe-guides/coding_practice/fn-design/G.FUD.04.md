@@ -50,7 +50,8 @@ fn main() {
 
     // This passes
     assert_eq!(p.raw(), p.raw());
-    // This fails 事实上，如果去掉那个 self 的引用，该函数的行为就变了
+    // This fails 
+    // 事实上，如果去掉那个 self 的引用，该函数的行为就变了
     // 因为 结构体 Point 是 Copy 的，每次调用 raw_linted 方法，结构体实例就会被复制一次，得到的结果就不一样了
     assert_eq!(p.raw_linted(), p.raw_linted());
 }
