@@ -5507,7 +5507,7 @@ impl Point {
     pub fn raw(&amp;self) -&gt; *const RawPoint {
         &amp;self.raw
     }
-    // 如果听信 lint 的建议，将上面的 raw 函数参数 self 的引用去掉就是 raw_linted 函数
+    // 如果听信 lint 的建议，将上面的 raw 函数参数 self 的引用去掉就是 raw_linted 函数, 这在没有编译优化的情况下（如只是 cargo build 运行在debug模式下）的时候不会出错，但在有编译优化的场景下（如 cargo build --release 运行在release模式）就会出现以下问题。
     pub fn raw_linted(self) -&gt; *const RawPoint {
         &amp;self.raw
     }
@@ -5518,7 +5518,8 @@ fn main() {
 
     // This passes
     assert_eq!(p.raw(), p.raw());
-    // This fails 事实上，如果去掉那个 self 的引用，该函数的行为就变了
+    // This fails 
+    // 事实上，如果去掉那个 self 的引用，该函数的行为就变了
     // 因为 结构体 Point 是 Copy 的，每次调用 raw_linted 方法，结构体实例就会被复制一次，得到的结果就不一样了
     assert_eq!(p.raw_linted(), p.raw_linted());
 }
