@@ -146,7 +146,7 @@
 fn three_vowels(word: &amp;String) -&gt; bool {
     let mut vowel_count = 0;
     for c in word.chars() {
-        matchc {
+        match c {
             'a' | 'e' | 'i' | 'o' | 'u' =&gt; {
                 vowel_count += 1;
                 if vowel_count &gt;= 3 {
