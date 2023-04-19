@@ -163,15 +163,15 @@
 </li>
 <li><code>to_</code>
 <ul>
-<li>[<code>Path::to_str</code>] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str"><code>Path::to_str</code></a>
 对操作系统路径进行 UTF-8 字节检查，开销昂贵。
 虽然输入和输出都是借用，但是这个方法对运行时产生不容忽视的代价，
 所以不应使用 <code>as_str</code> 名称。</li>
-<li>[<code>str::to_lowercase()</code>] (https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
+<li><a href="https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase"><code>str::to_lowercase()</code></a>
 生成正确的 Unicode 小写字符，
 涉及遍历字符串的字符，可能需要分配内存。
 输入值是 <code>&amp;str</code> 类型，输出值是 <code>String</code> 类型。</li>
-<li>[<code>f64::to_radians()</code>] (https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
+<li><a href="https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians"><code>f64::to_radians()</code></a>
 把浮点数的角度制转换成弧度制。
 输入和输出都是 <code>f64</code> 。没必要传入 <code>&amp;f64</code> ，因为复制 <code>f64</code> 花销很小。
 但是使用 <code>into_radians</code> 名称就会具有误导性，因为输入数据没有被消耗。</li>
@@ -182,10 +182,10 @@
 <li><a href="https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes"><code>String::into_bytes()</code></a>
 从 <code>String</code> 提取出背后的 <code>Vec&lt;u8&gt;</code> 数据，这是无代价的。
 它转移了 <code>String</code> 的所有权，然后返回具有所有权的 <code>Vec&lt;u8&gt;</code> 。</li>
-<li>[<code>BufReader::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
+<li><a href="https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner"><code>BufReader::into_inner()</code></a>
 转移了 buffered reader 的所有权，取出其背后的 reader ，这是无代价的。
 存于缓冲区的数据被丢弃了。</li>
-<li>[<code>BufWriter::into_inner()</code>] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
+<li><a href="https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner"><code>BufWriter::into_inner()</code></a>
 转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。</li>
 </ul>
 </li>
