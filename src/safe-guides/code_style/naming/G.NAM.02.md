@@ -31,15 +31,15 @@
     - [`str::as_bytes()`](https://doc.rust-lang.org/std/primitive.str.html#method.as_bytes) 
       用于查看 UTF-8 字节的 `str` 切片，这是无内存代价的（不会产生内存分配）。 传入值是 `&str` 类型，输出值是 `&[u8]` 类型。
 - `to_`
-    - [`Path::to_str`] (https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
+    - [`Path::to_str`](https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.to_str)
       对操作系统路径进行 UTF-8 字节检查，开销昂贵。
       虽然输入和输出都是借用，但是这个方法对运行时产生不容忽视的代价，
       所以不应使用 `as_str` 名称。
-    - [`str::to_lowercase()`] (https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
+    - [`str::to_lowercase()`](https://doc.rust-lang.org/std/primitive.str.html#method.to_lowercase)
       生成正确的 Unicode 小写字符，
       涉及遍历字符串的字符，可能需要分配内存。
       输入值是 `&str` 类型，输出值是 `String` 类型。
-    - [`f64::to_radians()`] (https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
+    - [`f64::to_radians()`](https://doc.rust-lang.org/std/primitive.f64.html#method.to_radians)
       把浮点数的角度制转换成弧度制。
       输入和输出都是 `f64` 。没必要传入 `&f64` ，因为复制 `f64` 花销很小。
       但是使用 `into_radians` 名称就会具有误导性，因为输入数据没有被消耗。
@@ -47,10 +47,10 @@
     - [`String::into_bytes()`](https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes)
       从 `String` 提取出背后的 `Vec<u8>` 数据，这是无代价的。
       它转移了 `String` 的所有权，然后返回具有所有权的 `Vec<u8>` 。
-    - [`BufReader::into_inner()`] (https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
+    - [`BufReader::into_inner()`](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)
       转移了 buffered reader 的所有权，取出其背后的 reader ，这是无代价的。
       存于缓冲区的数据被丢弃了。
-    - [`BufWriter::into_inner()`] (https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
+    - [`BufWriter::into_inner()`](https://doc.rust-lang.org/std/io/struct.BufWriter.html#method.into_inner)
       转移了 buffered writer 的所有权，取出其背后的 writer ，这可能以很大的代价刷新所有缓存数据。
 
 如果类型转换方法返回的类型具有 `mut` 修饰，那么这个方法的名称应如同返回类型组成部分的顺序那样，带有 `mut` 。
