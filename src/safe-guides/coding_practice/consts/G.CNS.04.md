@@ -21,12 +21,12 @@ static FOO: &'static [(&'static str, &'static str, fn(&Bar) -> bool)] =
 ```rust
 // 符合
 const FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
- static FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
+static FOO: &[(&str, &str, fn(&Bar) -> bool)] = &[...]
 ```
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [redundant_static_lifetimes](https://rust-lang.github.io/rust-clippy/master/#redundant_static_lifetimes) | yes| no | Style | warn |
+| lint name                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| -------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ----- |
+| [redundant_static_lifetimes](https://rust-lang.github.io/rust-clippy/master/#redundant_static_lifetimes) | yes           | no           | Style      | warn  |
 

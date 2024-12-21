@@ -25,7 +25,7 @@ s.split('x');
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [single_char_pattern](https://rust-lang.github.io/rust-clippy/master/#single_char_pattern) | yes           | no           | perf       | warn  |
+| lint name                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [single_char_pattern](https://rust-lang.github.io/rust-clippy/master/#single_char_pattern) | yes           | no           | perf       | warn      |
 

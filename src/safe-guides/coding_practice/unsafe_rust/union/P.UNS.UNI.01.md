@@ -6,7 +6,7 @@ Rust 支持 Union 就是为了调用 C 接口。如果不是 FFi ，就避免使
 
 一般情况下请使用 枚举 或 结构体代替。
 
-使用 Copy 类型的值和 `ManuallyDrop` 来初始化 Union 的变体，不需要使用 Unsafe 块。
+使用 `Copy` 类型的值和 `ManuallyDrop` 来初始化 Union 的变体，不需要使用 Unsafe 块。
 
 **【反例】**
 

@@ -31,12 +31,12 @@ assert!(!"a".is_empty());
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [bool_comparison ](https://rust-lang.github.io/rust-clippy/master/#bool_comparison ) | yes| no | complexity | warn |
-| [bool_assert_comparison ](https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison ) | yes| no | style | warn |
-| [needless_bool ](https://rust-lang.github.io/rust-clippy/master/#needless_bool ) | yes| no | complexity | warn |
-| [nonminimal_bool  ](https://rust-lang.github.io/rust-clippy/master/#nonminimal_bool  ) | yes| no | complexity | warn |
-| [needless_bitwise_bool  ](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool  ) | yes| no | pedantic | allow |
-| [assertions_on_constants  ](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool  ) | yes| no | pedantic | warn |
+| lint name                                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [bool_comparison](https://rust-lang.github.io/rust-clippy/master/#bool_comparison)               | yes           | no           | complexity | warn      |
+| [bool_assert_comparison](https://rust-lang.github.io/rust-clippy/master/#bool_assert_comparison) | yes           | no           | style      | warn      |
+| [needless_bool](https://rust-lang.github.io/rust-clippy/master/#needless_bool)                   | yes           | no           | complexity | warn      |
+| [nonminimal_bool](https://rust-lang.github.io/rust-clippy/master/#nonminimal_bool)               | yes           | no           | complexity | warn      |
+| [needless_bitwise_bool](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool)   | yes           | no           | pedantic   | allow     |
+| [assertions_on_constants](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool) | yes           | no           | pedantic   | warn      |
 

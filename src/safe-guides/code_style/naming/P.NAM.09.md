@@ -10,7 +10,7 @@
 ```rust
 // 不符合： 无法通过命名直接区分常量和静态变量
 static EVENT: [i32;5]=[1,2,3,4,5];
-const MAGIC_NUM: i32 = 65 ;
+const MAGIC_NUM: i32 = 65;
 ```
 
 **【正例】**
@@ -18,5 +18,5 @@ const MAGIC_NUM: i32 = 65 ;
 ```rust
 // 符合
 static G_EVENT: [i32;5]=[1,2,3,4,5];
-const MAGIC_NUM: i32 = 65 ;
+const MAGIC_NUM: i32 = 65;
 ```

@@ -18,7 +18,7 @@ unsafe fn io_read_u32_unchecked(ioaddr: usize) -> u32 {
 /// 安全抽象版本
 #[inline(always)]
 fn io_read_u32() -> Result<u32, MyError> {
-    let ioaddr = ioaddr as * const u32;
+    let ioaddr = ioaddr as *const u32;
     if ioaddr.is_null() {
         return Err(MyError::Content("io_read_u32 addr is null!"));
     }

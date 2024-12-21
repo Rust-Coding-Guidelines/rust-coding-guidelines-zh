@@ -2,7 +2,7 @@
 
 **【描述】**
 
-所谓 auto trait 是指 Safe Rust中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
+所谓 auto trait 是指 Safe Rust 中由编译器自动实现的 trait，比如 `Send/Sync` 。在 Unsafe Rust中就需要手动实现这俩 trait 了。
 
 所以，在手动实现的时候要充分考虑其安全性。
 

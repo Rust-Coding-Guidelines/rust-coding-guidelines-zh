@@ -24,8 +24,8 @@ println!("{}", v); //  0.123_456_789_9
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [excessive_precision](https://rust-lang.github.io/rust-clippy/master/#excessive_precision) | yes           | no           | style      | warn  |
+| lint name                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [excessive_precision](https://rust-lang.github.io/rust-clippy/master/#excessive_precision) | yes           | no           | style      | warn      |
 
 

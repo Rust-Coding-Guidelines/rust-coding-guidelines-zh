@@ -47,6 +47,6 @@ struct Foo;
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [derive_hash_xor_eq](https://rust-lang.github.io/rust-clippy/master/#derive_hash_xor_eq) | yes           | no           | correctness | deny  |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [derive_hash_xor_eq](https://rust-lang.github.io/rust-clippy/master/#derive_hash_xor_eq) | yes           | no           | correctness | deny      |

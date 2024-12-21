@@ -26,8 +26,8 @@ let bs = b"a byte string";
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [string_lit_as_bytes](https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes) | yes           | no           | nursery | allow |
+| lint name                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [string_lit_as_bytes](https://rust-lang.github.io/rust-clippy/master/#string_lit_as_bytes) | yes           | no           | nursery    | allow     |
 
 

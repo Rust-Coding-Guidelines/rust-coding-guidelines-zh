@@ -25,8 +25,8 @@ if x && !y {} //  符合：逻辑运算符，支持短路
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [needless_bitwise_bool](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool) | yes           | no           | pedantic   | allow |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [needless_bitwise_bool](https://rust-lang.github.io/rust-clippy/master/#needless_bitwise_bool) | yes           | no           | pedantic   | allow     |
 
 

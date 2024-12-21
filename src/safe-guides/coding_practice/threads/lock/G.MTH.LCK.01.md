@@ -22,6 +22,6 @@ let x = AtomicBool::new(y);
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [mutex_atomic](https://rust-lang.github.io/rust-clippy/master/#mutex_atomic) | yes           | no           | perf       | warn  |
+| lint name                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [mutex_atomic](https://rust-lang.github.io/rust-clippy/master/#mutex_atomic) | yes           | no           | perf       | warn      |

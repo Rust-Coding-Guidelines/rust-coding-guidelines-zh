@@ -16,7 +16,7 @@ let (a, b, c, d, e, f, g) = (...);
 
 **【正例】**
 
-元组元素超过四个的，建议使用包含语义的变量命。
+元组元素超过四个的，建议使用包含语义的变量名。
 
 ```rust
 #![warn(clippy::many_single_char_names)]
@@ -26,8 +26,8 @@ let (width, high, len, shape, color, status) = (...);
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| lint name                                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
 | [many_single_char_names](https://rust-lang.github.io/rust-clippy/master/#many_single_char_names) | yes           | no           | pedantic   | allow |
 
 该 lint 对应 `clippy.toml` 配置项：

@@ -29,7 +29,7 @@ ghi = []
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [negative_feature_names](https://rust-lang.github.io/rust-clippy/master/#negative_feature_names) | yes           | no           | cargo      | allow |
-| [redundant_feature_names](https://rust-lang.github.io/rust-clippy/master/#redundant_feature_names) | yes           | no           | cargo      | allow |
+| lint name                                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [negative_feature_names](https://rust-lang.github.io/rust-clippy/master/#negative_feature_names)   | yes           | no           | cargo      | allow     |
+| [redundant_feature_names](https://rust-lang.github.io/rust-clippy/master/#redundant_feature_names) | yes           | no           | cargo      | allow     |

@@ -35,10 +35,10 @@ enum E {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [exhaustive_enums](https://rust-lang.github.io/rust-clippy/master/#exhaustive_enums) | yes           | no           | restriction | allow |
-| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn  |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [exhaustive_enums](https://rust-lang.github.io/rust-clippy/master/#exhaustive_enums)           | yes           | no           | restriction | allow     |
+| [manual_non_exhaustive](https://rust-lang.github.io/rust-clippy/master/#manual_non_exhaustive) | yes           | no           | style       | warn      |
 
 
 

@@ -31,8 +31,8 @@ if res { /* ... */ }
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [blocks_in_if_conditions  ](https://rust-lang.github.io/rust-clippy/master/#blocks_in_if_conditions  ) | yes| no | style | warn |
+| lint name                                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [blocks_in_if_conditions](https://rust-lang.github.io/rust-clippy/master/#blocks_in_if_conditions) | yes           | no           | style      | warn      |
 
 

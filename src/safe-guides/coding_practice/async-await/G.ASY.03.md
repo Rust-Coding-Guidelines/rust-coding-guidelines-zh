@@ -1,6 +1,6 @@
 ## G.ASY.03 在跨 `await` 调用中，需要对其持有 `RefCell` 的引用进行处理
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -58,6 +58,6 @@ pub fn pull(&mut self, controller: sys::ReadableByteStreamController) -> Promise
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [await_holding_refcell_ref](https://rust-lang.github.io/rust-clippy/master/#await_holding_refcell_ref) | yes           | no           | pedantic   | allow |
+| lint name                                                                                              | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [await_holding_refcell_ref](https://rust-lang.github.io/rust-clippy/master/#await_holding_refcell_ref) | yes           | no           | pedantic   | allow     |

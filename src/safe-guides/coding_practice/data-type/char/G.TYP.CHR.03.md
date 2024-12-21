@@ -33,7 +33,7 @@ assert_eq!('%', x);
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [transmute_int_to_char](https://rust-lang.github.io/rust-clippy/master/#transmute_int_to_char) | yes           | no           | complexity       | warn  |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [transmute_int_to_char](https://rust-lang.github.io/rust-clippy/master/#transmute_int_to_char) | yes           | no           | complexity | warn      |
 

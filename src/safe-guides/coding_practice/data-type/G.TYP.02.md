@@ -27,7 +27,7 @@ let f = 1.23f32;
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [default_numeric_fallback](https://rust-lang.github.io/rust-clippy/master/#default_numeric_fallback) | yes           | no           | restriction | allow |
+| lint name                                                                                            | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [default_numeric_fallback](https://rust-lang.github.io/rust-clippy/master/#default_numeric_fallback) | yes           | no           | restriction | allow     |
 

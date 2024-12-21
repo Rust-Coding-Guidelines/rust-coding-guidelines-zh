@@ -22,10 +22,10 @@ let b = 0;
 a += b; // 符合
 ```
 
-【Lint 检测】
+**【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [assign_op_pattern](https://rust-lang.github.io/rust-clippy/master/#assign_op_pattern) | yes| no | style | warn |
+| lint name                                                                              | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [assign_op_pattern](https://rust-lang.github.io/rust-clippy/master/#assign_op_pattern) | yes           | no           | style      | warn      |
 
 

@@ -49,6 +49,6 @@ where
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [boxed_local ](https://rust-lang.github.io/rust-clippy/master/#boxed_local ) | yes| no | perf | warn |
+| lint name                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [boxed_local](https://rust-lang.github.io/rust-clippy/master/#boxed_local) | yes           | no           | perf       | warn      |

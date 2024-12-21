@@ -34,10 +34,10 @@ if name.starts_with('_') {};
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [chars_last_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_last_cmp) | yes           | no           | style      | warn  |
-| [chars_next_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_next_cmp) | yes           | no           | style      | warn  |
+| lint name                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [chars_last_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_last_cmp) | yes           | no           | style      | warn      |
+| [chars_next_cmp](https://rust-lang.github.io/rust-clippy/master/#chars_next_cmp) | yes           | no           | style      | warn      |
 
 
 

@@ -38,6 +38,6 @@ categories = ["development-tools", "development-tools::cargo-plugins"]
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cargo_common_metadata](https://rust-lang.github.io/rust-clippy/master/#cargo_common_metadata) | yes           | no           | cargo      | allow |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [cargo_common_metadata](https://rust-lang.github.io/rust-clippy/master/#cargo_common_metadata) | yes           | no           | cargo      | allow     |

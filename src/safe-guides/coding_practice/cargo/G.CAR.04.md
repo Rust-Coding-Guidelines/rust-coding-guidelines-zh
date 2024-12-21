@@ -24,6 +24,6 @@ regex = "1.5" # 符合
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [wildcard_dependencies](https://rust-lang.github.io/rust-clippy/master/#wildcard_dependencies) | yes           | no           | cargo      | allow |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [wildcard_dependencies](https://rust-lang.github.io/rust-clippy/master/#wildcard_dependencies) | yes           | no           | cargo      | allow     |

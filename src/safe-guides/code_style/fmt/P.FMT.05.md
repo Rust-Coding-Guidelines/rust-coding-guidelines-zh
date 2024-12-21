@@ -19,7 +19,7 @@ fn main() {
 }
 ```
 
-流程控制
+流程控制：
 
 ```rust
 fn main() {
@@ -37,7 +37,7 @@ fn main() {
 }
 ```
 
-函数参数
+函数参数：
 
 
 ```rust
@@ -56,7 +56,7 @@ fn lorem(ipsum: usize,
 }
 ```
 
-函数调用
+函数调用：
 
 ```rust
 fn main() {
@@ -72,7 +72,7 @@ fn main() {
 }
 ```
 
-泛型
+泛型：
 
 
 ```rust
@@ -96,7 +96,7 @@ fn lorem<Ipsum: Eq = usize,
 }
 ```
 
-结构体
+结构体：
 
 ```rust
 fn main() {
@@ -125,7 +125,7 @@ fn main() {
 }
 ```
 
-流程控制
+流程控制：
 
 ```rust
 fn main() {
@@ -143,7 +143,7 @@ fn main() {
 }
 ```
 
-函数参数
+函数参数：
 
 ```rust
 fn lorem() {}
@@ -165,7 +165,7 @@ fn lorem(
 
 ```
 
-函数调用
+函数调用：
 
 ```rust
 fn main() {
@@ -183,7 +183,7 @@ fn main() {
 }
 ```
 
-泛型
+泛型：
 
 ```rust
 // 符合： 缩进四个空格
@@ -208,7 +208,7 @@ fn lorem<
 }
 ```
 
-结构体
+结构体：
 
 ```rust
 fn main() {
@@ -221,7 +221,7 @@ fn main() {
 
 **【rustfmt 配置】**
 
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Block（默认） | No| 多个标识符定义保持块状风格，缩进符合标准 |
-| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Visual | No| 多个标识符定义保持对齐风格，但不符合缩进标准 |
+| 对应选项                                                             | 可选值        | 是否 stable | 说明                                         |
+| -------------------------------------------------------------------- | ------------- | ----------- | -------------------------------------------- |
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Block（默认） | No          | 多个标识符定义保持块状风格，缩进符合标准     |
+| [`indent_style`](https://rust-lang.github.io/rustfmt/?#indent_style) | Visual        | No          | 多个标识符定义保持对齐风格，但不符合缩进标准 |

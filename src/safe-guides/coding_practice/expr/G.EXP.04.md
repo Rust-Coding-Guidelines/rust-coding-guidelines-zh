@@ -4,7 +4,7 @@
 
 **【描述】**
 
-C/Cpp 等编程语言常用的自增自减操作，如 `++i` 、`i++` 、`i--` 等不是合法的 Rust 表达式， `--i` 虽然是合法的 Rust 表达式，但是表达对i取反两次，而不是自减语义。
+C/Cpp 等编程语言常用的自增自减操作，如 `++i` 、`i++` 、`i--` 等不是合法的 Rust 表达式， `--i` 虽然是合法的 Rust 表达式，但是是表达对i的符号取反两次，而不是自减语义。
 
 **【反例】**
 
@@ -22,7 +22,7 @@ x -= 1; // 符合
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [double_neg](https://rust-lang.github.io/rust-clippy/master/#double_neg) | yes           | no           | style      | warn |
+| lint name                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [double_neg](https://rust-lang.github.io/rust-clippy/master/#double_neg) | yes           | no           | style      | warn      |
 

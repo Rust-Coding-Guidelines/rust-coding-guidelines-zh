@@ -57,7 +57,7 @@ fn main() {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [expl_impl_clone_on_copy](https://rust-lang.github.io/rust-clippy/master/#expl_impl_clone_on_copy) | yes           | no           | pedantic   | allow |
+| lint name                                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [expl_impl_clone_on_copy](https://rust-lang.github.io/rust-clippy/master/#expl_impl_clone_on_copy) | yes           | no           | pedantic   | allow     |
 

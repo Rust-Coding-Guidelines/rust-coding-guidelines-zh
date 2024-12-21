@@ -8,10 +8,10 @@
 
 请对照下面表格进行检查。
 
-|Comparison	| Bit Op |Example	| equals |
-| ------ | ---- | --------- | ------ |
-|\> / <= |	&#124; / ^ | x &#124; 2 > 3 | x > 3 |
-|< / >= |	&#124; / ^ | x ^ 1 < 4 | x < 4 |
+| Comparison | Bit Op     | Example        | equals |
+| ---------- | ---------- | -------------- | ------ |
+| \> / <=    | &#124; / ^ | x &#124; 2 > 3 | x > 3  |
+| < / >=     | &#124; / ^ | x ^ 1 < 4      | x < 4  |
 
 **【反例】**
 
@@ -29,7 +29,7 @@ if (x > 3) {  }
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [ineffective_bit_mask](https://rust-lang.github.io/rust-clippy/master/#ineffective_bit_mask) | yes           | no           | correctness | **deny**  |
+| lint name                                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| -------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [ineffective_bit_mask](https://rust-lang.github.io/rust-clippy/master/#ineffective_bit_mask) | yes           | no           | correctness | deny      |
 

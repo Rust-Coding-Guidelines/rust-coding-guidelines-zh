@@ -10,7 +10,7 @@
 >
 > 我不打算处理 `None` 或 `Err` 这种可能性，因为我知道这种可能性永远不会发生，或者，它不应该发生。但是 类型系统并不知道它永远不会发生。所以，我需要像类型系统保证，如果它确实发生了，它可以认为是一种错误，并且程序应该崩溃，并带着可以用于跟踪和修复该错误的栈跟踪信息。
 
-但是对于一些存在“副作用”的函数，在 遇到 `None` 或 `Err` 时，可能需要返回一些指定的值。这个时候用 `expect` 就不太符合语义。
+但是对于一些存在“副作用”的函数，在遇到 `None` 或 `Err` 时，可能需要返回一些指定的值。这个时候用 `expect` 就不太符合语义。
 
 如果你的用法完全符合 `expect` 语义，那么可以设置 `#![allow(clippy::expect_fun_call]`
 
@@ -61,10 +61,10 @@ let _home: IpAddr = "127.0.0.1".parse().expect("Provide the correct Ip addr");
 ```
 
 
-### 【Lint 检测】
+**【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [expect_fun_call](https://rust-lang.github.io/rust-clippy/master/#expect_fun_call) | yes           | no           | perf        | warn  |
-| [expect_used](https://rust-lang.github.io/rust-clippy/master/#expect_used) | yes           | no           | restriction | allow |
+| lint name                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [expect_fun_call](https://rust-lang.github.io/rust-clippy/master/#expect_fun_call) | yes           | no           | perf        | warn      |
+| [expect_used](https://rust-lang.github.io/rust-clippy/master/#expect_used)         | yes           | no           | restriction | allow     |
 

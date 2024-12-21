@@ -90,6 +90,8 @@ fn main () {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [rustc-lint: non-ascii-idents](https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#non-ascii-idents) | no            | yes          | pedantic   | allow |
+| lint name                                                                                                              | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ---------------------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ----- |
+| [rustc-lint: non-ascii-idents](https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#non-ascii-idents) | no            | yes          | pedantic   | deny  |
+
+默认为 `allow`，但是此规则需要设置 `#![deny(non_ascii_idents)]`。

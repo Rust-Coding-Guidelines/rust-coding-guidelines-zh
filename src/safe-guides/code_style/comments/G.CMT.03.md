@@ -50,6 +50,6 @@ pub struct DoubleString {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
-| [tabs_in_doc_comments ](https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments ) | yes           | no           | Style      | warn       |
+| lint name                                                                                              | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ------------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | ---------- |
+| [tabs_in_doc_comments](https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments) | yes           | no           | Style      | warn       |

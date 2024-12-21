@@ -1,4 +1,4 @@
-## G.TRA.BLN.02  不要为迭代器实现`Copy` 特质
+## G.TRA.BLN.02  不要为迭代器实现 `Copy` 特质
 
 **【级别】** 要求
 
@@ -155,6 +155,6 @@ fn main(){
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [copy_iterator](https://rust-lang.github.io/rust-clippy/master/#copy_iterator) | yes           | no           | **pedantic** | allow |
+| lint name                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [copy_iterator](https://rust-lang.github.io/rust-clippy/master/#copy_iterator) | yes           | no           | pedantic   | allow     |

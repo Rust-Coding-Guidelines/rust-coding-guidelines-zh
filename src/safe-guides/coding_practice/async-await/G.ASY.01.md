@@ -33,6 +33,6 @@ fn bar() {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [async_yields_async](https://rust-lang.github.io/rust-clippy/master/#async_yields_async) | yes           | no           | correctness | deny  |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [async_yields_async](https://rust-lang.github.io/rust-clippy/master/#async_yields_async) | yes           | no           | correctness | deny      |

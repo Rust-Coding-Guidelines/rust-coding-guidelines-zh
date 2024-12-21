@@ -53,8 +53,8 @@ pub enum Arch {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [enum_glob_use](https://rust-lang.github.io/rust-clippy/master/#enum_glob_use) | yes           | no           | pedantic   | allow |
+| lint name                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [enum_glob_use](https://rust-lang.github.io/rust-clippy/master/#enum_glob_use) | yes           | no           | pedantic   | allow     |
 
 

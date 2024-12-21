@@ -29,10 +29,10 @@ x.push_str(", World"); // 符合
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [string_add_assign](https://rust-lang.github.io/rust-clippy/master/#string_add_assign) | yes           | no           | pedantic    | allow |
-| [string_add](https://rust-lang.github.io/rust-clippy/master/#string_add) | yes           | no           | restriction | allow |
+| lint name                                                                              | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| -------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [string_add_assign](https://rust-lang.github.io/rust-clippy/master/#string_add_assign) | yes           | no           | pedantic    | allow     |
+| [string_add](https://rust-lang.github.io/rust-clippy/master/#string_add)               | yes           | no           | restriction | allow     |
 
 
 
