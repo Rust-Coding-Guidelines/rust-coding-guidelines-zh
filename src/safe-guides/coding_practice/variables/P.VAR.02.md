@@ -15,7 +15,7 @@ let data = {
     let mut data = get_vec();
     data.sort();
     data 
-}
+};
 
 //  `data` 在后面不会再被改变
 ```
