@@ -32,9 +32,9 @@ enum Test {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [large_enum_variant](https://rust-lang.github.io/rust-clippy/master/#large_enum_variant) | yes           | no           | perf       | warn  |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [large_enum_variant](https://rust-lang.github.io/rust-clippy/master/#large_enum_variant) | yes           | no           | perf       | warn      |
 
 该 lint 可以通过 clippy 配置项 `enum-variant-size-threshold = 200` 来配置，默认是 `200` 字节。
 

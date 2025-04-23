@@ -51,7 +51,7 @@ macro_rules! foo {
 
 **【rustfmt 配置】**
 
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`format_macro_matchers`](https://rust-lang.github.io/rustfmt/?#format_macro_matchers) | （false（默认），true(建议)） | No |声明宏 模式匹配分支（`=>` 左侧）中要使用紧凑格式|
-| [`format_macro_bodies`](https://rust-lang.github.io/rustfmt/?#format_macro_bodies) | true（默认） | No| 声明宏分支代码体（`=>` 右侧） 使用宽松格式|
+| 对应选项                                                                               | 可选值                      | 是否 stable | 说明                                             |
+| -------------------------------------------------------------------------------------- | --------------------------- | ----------- | ------------------------------------------------ |
+| [`format_macro_matchers`](https://rust-lang.github.io/rustfmt/?#format_macro_matchers) | false（默认），true（建议） | No          | 声明宏 模式匹配分支（`=>` 左侧）中要使用紧凑格式 |
+| [`format_macro_bodies`](https://rust-lang.github.io/rustfmt/?#format_macro_bodies)     | true（默认）                | No          | 声明宏分支代码体（`=>` 右侧） 使用宽松格式       |

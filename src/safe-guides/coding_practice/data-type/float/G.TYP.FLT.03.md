@@ -32,7 +32,6 @@ fn payment(x: f64, y: f64) -> f64{
 推荐使用精度更高的类型，比如 Decimal 类型（需要第三方库支持）。
 
 ```rust
-
 #![warn(clippy::float_arithmetic, clippy::float_cmp, clippy::float_cmp_const)]
 
 fn main(){
@@ -57,12 +56,12 @@ fn payment(x: f64, y: f64) -> Result<f64, PaymentErr>{
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [float_arithmetic](https://rust-lang.github.io/rust-clippy/master/#float_arithmetic) | yes           | no           | restriction | allow |
-| [float_cmp](https://rust-lang.github.io/rust-clippy/master/#float_cmp) | yes           | no           | pedantic    | allow |
-| [float_cmp_const](https://rust-lang.github.io/rust-clippy/master/#float_cmp_const) | yes           | no           | restriction | allow |
-| [float_equality_without_abs](https://rust-lang.github.io/rust-clippy/master/#float_equality_without_abs) | yes           | no           | suspicious  | warn  |
+| lint name                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| -------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [float_arithmetic](https://rust-lang.github.io/rust-clippy/master/#float_arithmetic)                     | yes           | no           | restriction | allow     |
+| [float_cmp](https://rust-lang.github.io/rust-clippy/master/#float_cmp)                                   | yes           | no           | pedantic    | allow     |
+| [float_cmp_const](https://rust-lang.github.io/rust-clippy/master/#float_cmp_const)                       | yes           | no           | restriction | allow     |
+| [float_equality_without_abs](https://rust-lang.github.io/rust-clippy/master/#float_equality_without_abs) | yes           | no           | suspicious  | warn      |
 
 
 

@@ -73,8 +73,8 @@ fn main(){
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [imprecise_flops](https://rust-lang.github.io/rust-clippy/master/#imprecise_flops) | yes           | no           | nursery    | allow |
-| [suboptimal_flops](https://rust-lang.github.io/rust-clippy/master/#suboptimal_flops) | yes           | no           | nursery    | allow |
+| lint name                                                                            | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [imprecise_flops](https://rust-lang.github.io/rust-clippy/master/#imprecise_flops)   | yes           | no           | nursery    | allow     |
+| [suboptimal_flops](https://rust-lang.github.io/rust-clippy/master/#suboptimal_flops) | yes           | no           | nursery    | allow     |
 

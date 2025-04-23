@@ -26,8 +26,8 @@ x[3];
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [out_of_bounds_indexing](https://rust-lang.github.io/rust-clippy/master/#out_of_bounds_indexing) | yes           | no           | **correctness** | deny  |
+| lint name                                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ------------------------------------------------------------------------------------------------ | ------------- | ------------ | ----------- | --------- |
+| [out_of_bounds_indexing](https://rust-lang.github.io/rust-clippy/master/#out_of_bounds_indexing) | yes           | no           | correctness | deny      |
 
 

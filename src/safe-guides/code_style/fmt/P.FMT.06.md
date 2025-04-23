@@ -6,7 +6,7 @@
 
 **【反例】**
 
-操作符置于行尾
+操作符置于行尾：
 
 ```rust
 fn main() {
@@ -25,7 +25,7 @@ fn main() {
 
 **【正例】**
 
-操作符置于行首
+操作符置于行首：
 
 ```rust
 fn main() {
@@ -45,6 +45,6 @@ fn main() {
 
 **【rustfmt 配置】**
 
-| 对应选项 | 可选值 | 是否 stable | 说明 |
-| ------ | ---- | ---- | ---- | 
-| [`binop_separator`](https://rust-lang.github.io/rustfmt/?#binop_separator) | Front（默认） | No| 换行后，操作符置于行首 |
+| 对应选项                                                                   | 可选值        | 是否 stable | 说明                   |
+| -------------------------------------------------------------------------- | ------------- | ----------- | ---------------------- |
+| [`binop_separator`](https://rust-lang.github.io/rustfmt/?#binop_separator) | Front（默认） | No          | 换行后，操作符置于行首 |

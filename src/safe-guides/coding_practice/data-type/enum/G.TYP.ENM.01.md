@@ -7,7 +7,7 @@
 在标准库中内置的一些 Enum 类型中提供了一些方便的组合算子，比如 `map` 和 `and_then`。
 
 - `map` ，函数签名是 `fn map<U, F>(self, f: F) -> Option<U> where F: FnOnce(T) -> U` 。
-- `and_then` ，函数签名是 `fn and_then<U, F>(self, f: F) -> Option<U> where F: FnOnce(T) -> U` 。
+- `and_then` ，函数签名是 `fn and_then<U, F>(self, f: F) -> Option<U> where F: FnOnce(T) -> Option<U>` 。
 
 `Result` 中实现的 `map/and_then` 函数签名也和 `Option` 一致。这两个方法之间的区别在于传入的闭包参数的返回值类型不同。
 
@@ -43,9 +43,6 @@ let _ = res().map_err(|s| if s.len() == 42 { 10 } else { 20 });
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [bind_instead_of_map ](https://rust-lang.github.io/rust-clippy/master/#bind_instead_of_map ) | yes| no | complexity | warn |
-
-
-
+| lint name                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [bind_instead_of_map](https://rust-lang.github.io/rust-clippy/master/#bind_instead_of_map) | yes           | no           | complexity | warn      |

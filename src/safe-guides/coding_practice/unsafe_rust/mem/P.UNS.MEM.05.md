@@ -13,8 +13,7 @@
 
 Rust 中使用位域时推荐使用的第三方库：
 
-- [bitvec](https://github.com/bitvecto-rs/bitvec)，是 Cpp 中 `std::vector<bool>`和`std::bitset` 数据结构的 Rust 实现。
-在性能、功能性、API完整性和表现力方面，该库都非常优秀。
+- [bitvec](https://github.com/bitvecto-rs/bitvec)，是 Cpp 中 `std::vector<bool>`和`std::bitset` 数据结构的 Rust 实现。在性能、功能性、API完整性和表现力方面，该库都非常优秀。
 - [bitflags](https://github.com/bitflags/bitflags)，提供了方便的宏语法来定义和处理位域。
 - [modular-bitfield](https://github.com/Robbepop/modular-bitfield)，提供了一些宏来定义和处理位域，并且是完全基于 Safe Rust。
 

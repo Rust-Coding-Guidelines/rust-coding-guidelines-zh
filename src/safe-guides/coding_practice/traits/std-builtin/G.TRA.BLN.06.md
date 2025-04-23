@@ -1,10 +1,10 @@
-## G.TRA.BLN.06   不要对实现 `Copy`  或引用类型调用  `std::mem::drop` 和 `std::mem::forgot`
+## G.TRA.BLN.06   不要对实现 `Copy` 或引用类型调用 `std::mem::drop` 和 `std::mem::forgot`
 
 **【级别】** 要求
 
 **【描述】**
 
-`std::mem::drop` 函数只是利用 Rust 所有权的一个技巧，对于 实现了 Copy 的类型 或引用，是无效的。如果使用它，对导致代码可读方便产生误导作用。
+`std::mem::drop` 函数只是利用 Rust 所有权的一个技巧，对于 实现了 Copy 的类型或引用，是无效的。如果使用它，对导致代码可读方便产生误导作用。
 
 另外`std::mem::drop` 也无法 Drop 掉 `ManuallyDrop` 类型。
 
@@ -44,13 +44,13 @@ pub fn format(&mut self) -> String {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [drop_copy](https://rust-lang.github.io/rust-clippy/master/#drop_copy) | yes           | no           | correctness | deny  |
-| [drop_ref](https://rust-lang.github.io/rust-clippy/master/#drop_ref) | yes           | no           | correctness | deny  |
-| [forget_copy](https://rust-lang.github.io/rust-clippy/master/#forget_copy) | yes           | no           | correctness | deny  |
-| [forget_ref](https://rust-lang.github.io/rust-clippy/master/#forget_ref) | yes           | no           | correctness | deny  |
-| [undropped_manually_drops](https://rust-lang.github.io/rust-clippy/master/#undropped_manually_drops) | yes           | no           | correctness | deny  |
+| lint name                                                                                            | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ---------------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [drop_copy](https://rust-lang.github.io/rust-clippy/master/#drop_copy)                               | yes           | no           | correctness | deny      |
+| [drop_ref](https://rust-lang.github.io/rust-clippy/master/#drop_ref)                                 | yes           | no           | correctness | deny      |
+| [forget_copy](https://rust-lang.github.io/rust-clippy/master/#forget_copy)                           | yes           | no           | correctness | deny      |
+| [forget_ref](https://rust-lang.github.io/rust-clippy/master/#forget_ref)                             | yes           | no           | correctness | deny      |
+| [undropped_manually_drops](https://rust-lang.github.io/rust-clippy/master/#undropped_manually_drops) | yes           | no           | correctness | deny      |
 
 
 

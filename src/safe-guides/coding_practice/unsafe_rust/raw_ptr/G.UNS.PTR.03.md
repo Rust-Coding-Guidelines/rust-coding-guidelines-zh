@@ -26,6 +26,6 @@ let _ = mut_ptr.cast::<i32>(); // 符合
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [ptr_as_ptr](https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr) | yes           | no           | **correctness** | deny  |
+| lint name                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认 level |
+| ------------------------------------------------------------------------ | ------------- | ------------ | ----------- | ---------- |
+| [ptr_as_ptr](https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr) | yes           | no           | correctness | deny       |

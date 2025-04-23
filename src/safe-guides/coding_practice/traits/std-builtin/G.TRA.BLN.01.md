@@ -1,4 +1,4 @@
-## G.TRA.BLN.01   应该具体类型的 `default()` 方法代替 ` Default::default()` 调用
+## G.TRA.BLN.01   应该用具体类型的 `default()` 方法代替 `Default::default()` 调用
 
 **【级别】** 建议
 
@@ -25,6 +25,6 @@ let s = String::default();
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [default_trait_access](https://rust-lang.github.io/rust-clippy/master/#default_trait_access) | yes           | no           | **pedantic** | allow |
+| lint name                                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [default_trait_access](https://rust-lang.github.io/rust-clippy/master/#default_trait_access) | yes           | no           | pedantic   | allow     |

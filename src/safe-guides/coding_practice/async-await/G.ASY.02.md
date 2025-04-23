@@ -1,6 +1,6 @@
 ## G.ASY.02 在跨 `await` 调用中，需要对其持有的同步互斥锁进行处理
 
-**【级别】** 建议
+**【级别】** 要求
 
 **【描述】**
 
@@ -99,6 +99,6 @@ std::thread::spawn(|| {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes           | no           | pedantic   | allow |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [await_holding_lock](https://rust-lang.github.io/rust-clippy/master/#await_holding_lock) | yes           | no           | pedantic   | allow     |

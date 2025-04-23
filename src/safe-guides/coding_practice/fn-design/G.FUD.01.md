@@ -37,15 +37,15 @@ fn main(){
 }
 ```
 
-### 【Lint 检测】
+**【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [too_many_arguments](https://rust-lang.github.io/rust-clippy/master/#too_many_arguments) | yes           | no           | complexity | warn  |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [too_many_arguments](https://rust-lang.github.io/rust-clippy/master/#too_many_arguments) | yes           | no           | complexity | warn      |
 
 该 lint 对应 `clippy.toml` 配置项：
 
 ```toml
 # 函数参数最长不要超过5个
-too-many-arguments-threshold=5
+too-many-arguments-threshold = 5
 ```

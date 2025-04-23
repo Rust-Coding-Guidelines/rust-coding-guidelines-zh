@@ -6,11 +6,11 @@
 
 进行特定类型转换的方法名应该包含以下前缀：
 
-| 名称前缀 | 内存代价 | 所有权 |
-| ------ | ---- | --------- |
-| `as_` | 无代价 | borrowed -\> borrowed |
-| `to_` | 代价昂贵 | borrowed -\> borrowed<br>borrowed -\> owned (非 Copy 类型)<br>owned -\> owned (Copy 类型) |
-| `into_` | 看情况 | owned -\> owned (非 Copy 类型) |
+| 名称前缀 | 内存代价 | 所有权                                                                                    |
+| -------- | -------- | ----------------------------------------------------------------------------------------- |
+| `as_`    | 无代价   | borrowed -\> borrowed                                                                     |
+| `to_`    | 代价昂贵 | borrowed -\> borrowed<br>borrowed -\> owned (非 Copy 类型)<br>owned -\> owned (Copy 类型) |
+| `into_`  | 看情况   | owned -\> owned (非 Copy 类型)                                                            |
 
 以 `as_` 和 `into_` 作为前缀的类型转换通常是 *降低抽象层次* ，要么是查看背后的数据 ( `as` ) ，要么是分解 (deconstructe) 背后的数据 ( `into` ) 。
 相对来说，以 `to_` 作为前缀的类型转换处于同一个抽象层次，但是底层会做更多工作，比如多了内存拷贝等操作。
@@ -19,7 +19,7 @@
 
 这适用于以下封装器：
 
-读取缓存 ([`BufReader`](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)) 、编码或解码 ([`GzDecoder`](https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner)) 、取出原子 ([`AtomicBool`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner) 、
+读取缓存 ([`BufReader`](https://doc.rust-lang.org/std/io/struct.BufReader.html#method.into_inner)) 、编码或解码 ([`GzDecoder`](https://docs.rs/flate2/1.0.22/flate2/read/struct.GzDecoder.html#method.into_inner)) 、取出原子 ([`AtomicBool`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.into_inner)) 、
 或者任何相似的语义封装 ([`BufWriter`](https://doc.rust-lang.org/stable/std/io/struct.BufWriter.html#method.into_inner))。
 
 
@@ -66,6 +66,6 @@
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
-| ------ | ---- | --------- | ------ | ------ |
-| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes| no | Style | warn |
+| lint name                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | Lint Level |
+| -------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ---------- |
+| [wrong_self_convention](https://rust-lang.github.io/rust-clippy/master/index.html#wrong_self_convention) | yes           | no           | Style      | warn       |

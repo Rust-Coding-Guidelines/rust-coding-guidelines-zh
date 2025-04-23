@@ -43,8 +43,8 @@ pub fn divide_by(x: i32, y: i32) -> i32 {
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [missing_panics_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc ) | yes| no | Style | allow | 
+| lint name                                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| -------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ---------- |
+| [missing_panics_doc](https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc) | yes           | no           | Style      | allow      |
 
 默认为 `allow`，但是此规则需要设置`#![warn(clippy::missing_panics_doc)]`。

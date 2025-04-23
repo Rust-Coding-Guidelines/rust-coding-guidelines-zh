@@ -88,9 +88,9 @@ impl<T> Into<Vec<T>> for Wrapper<T> {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [from_over_into](https://rust-lang.github.io/rust-clippy/master/#from_over_into) | yes           | no           | style      | warn  |
+| lint name                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [from_over_into](https://rust-lang.github.io/rust-clippy/master/#from_over_into) | yes           | no           | style      | warn      |
 
 
 

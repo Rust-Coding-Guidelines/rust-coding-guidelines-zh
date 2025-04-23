@@ -32,9 +32,9 @@ fn foo(v: &TooLarge) {}
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [large_types_passed_by_value](https://rust-lang.github.io/rust-clippy/master/#large_types_passed_by_value) | yes           | no           | pedantic   | allow |
+| lint name                                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [large_types_passed_by_value](https://rust-lang.github.io/rust-clippy/master/#large_types_passed_by_value) | yes           | no           | pedantic   | allow     |
 
 该 lint 对应 `clippy.toml` 配置项：
 

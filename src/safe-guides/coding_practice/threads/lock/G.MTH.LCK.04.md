@@ -1,4 +1,4 @@
-## G.MTH.LCK.04 尽量避免直接使用标准库 `std::sync::mpsc` 模块中的 `channel`，替换为 [`crossbeam`](https://github.com/crossbeam-rs/crossbeam)
+## G.MTH.LCK.04 尽量使用[`crossbeam`](https://github.com/crossbeam-rs/crossbeam)模块的 `channel`，而不是`std::sync::mpsc::channel` 
 
 **【级别】** 建议
 

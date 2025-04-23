@@ -89,6 +89,6 @@ impl Ord for JsonObject
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [derive_ord_xor_partial_ord](https://rust-lang.github.io/rust-clippy/master/#derive_ord_xor_partial_ord) | yes           | no           | correctness | deny  |
+| lint name                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| -------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | --------- |
+| [derive_ord_xor_partial_ord](https://rust-lang.github.io/rust-clippy/master/#derive_ord_xor_partial_ord) | yes           | no           | correctness | deny      |

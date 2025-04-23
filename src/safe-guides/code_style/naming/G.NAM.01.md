@@ -5,28 +5,28 @@
 
 **【描述】**
 
-Rust 倾向于在“类型”级的结构中使用驼峰（ `UpperCamelCase`） 命名风格，在 “变量、值（实例）、函数名”等结构中使用蛇形（ `snake_case`）命名风格。
+Rust 倾向于在“类型”级的结构中使用大驼峰（`UpperCamelCase`） 命名风格，在 “变量、值（实例）、函数名”等结构中使用蛇形（`snake_case`）命名风格。
 
 下面是汇总信息：
 
-| Item | 规范 |
-| ---- | ---------- |
-| 包（Crates） | [通常使用 snake_case](https://github.com/rust-lang/api-guidelines/issues/29) [^crate-name] |
-| 模块（Modules） | `snake_case` |
-| 类型（Types） | `UpperCamelCase` |
-| 特质（Traits） | `UpperCamelCase` |
-| 枚举体（Enum variants） | `UpperCamelCase` |
-| 函数（Functions） | `snake_case` |
-| 方法（Methods） | `snake_case` |
-| 通用构造函数（General constructors） | `new` 或者 `with_more_details` |
-| 转换构造函数（Conversion constructors） | `from_some_other_type` |
-| 宏（Macros） | `snake_case!` |
-| 本地变量（Local variables） | `snake_case` |
-| 静态变量（Statics） | `SCREAMING_SNAKE_CASE` |
-| 常量（Constants） | `SCREAMING_SNAKE_CASE` |
-| 类型参数（Type parameters） | 简明的 `UpperCamelCase` ，通常使用单个大写字母： `T` |
-| 生存期（Lifetimes） | 简短的 `lowercase`，通常使用单个小写字母 `'a`, `'de`, `'src`，尽量保持语义 |
-| 特性（Features） | `snake_case` |
+| Item                                    | 规范                                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 包（Crates）                            | [通常使用 snake_case](https://github.com/rust-lang/api-guidelines/issues/29) [^crate-name] |
+| 模块（Modules）                         | `snake_case`                                                                               |
+| 类型（Types）                           | `UpperCamelCase`                                                                           |
+| 特质（Traits）                          | `UpperCamelCase`                                                                           |
+| 枚举体（Enum variants）                 | `UpperCamelCase`                                                                           |
+| 函数（Functions）                       | `snake_case`                                                                               |
+| 方法（Methods）                         | `snake_case`                                                                               |
+| 通用构造函数（General constructors）    | `new` 或者 `with_more_details`                                                             |
+| 转换构造函数（Conversion constructors） | `from_some_other_type`                                                                     |
+| 宏（Macros）                            | `snake_case!`                                                                              |
+| 本地变量（Local variables）             | `snake_case`                                                                               |
+| 静态变量（Statics）                     | `SCREAMING_SNAKE_CASE`                                                                     |
+| 常量（Constants）                       | `SCREAMING_SNAKE_CASE`                                                                     |
+| 类型参数（Type parameters）             | 简明的 `UpperCamelCase` ，通常使用单个大写字母： `T`                                       |
+| 生命周期（Lifetimes）                   | 简短的 `lowercase`，通常使用单个小写字母 `'a`, `'de`, `'src`，尽量保持语义                 |
+| 特性（Features）                        | `snake_case`                                                                               |
 
 说明 :
 
@@ -46,7 +46,7 @@ Rust 命名规范在 [RFC 0430](https://github.com/rust-lang/rfcs/blob/master/te
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group |
-| ------ | ---- | --------- | ------ |
-| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no | yes | Style |
-| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case) | no | yes | Style |
+| lint name                                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- |
+| [`Rustc: non_camel_case_types`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-camel-case-types) | no            | yes          | Style      |
+| [`Rustc: non_snake_case`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#non-snake-case)             | no            | yes          | Style      |

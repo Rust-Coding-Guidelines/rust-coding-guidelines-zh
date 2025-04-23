@@ -68,10 +68,10 @@ fn test_integer_overflow() {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic) | yes           | no           | restriction | allow |
-| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | warn |
+| lint name                                                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ------------------------------------------------------------------------------------------------------------ | ------------- | ------------ | ----------- | --------- |
+| [integer_arithmetic](https://rust-lang.github.io/rust-clippy/master/#integer_arithmetic)                     | yes           | no           | restriction | allow     |
+| [manual_saturating_arithmetic](https://rust-lang.github.io/rust-clippy/master/#manual_saturating_arithmetic) | yes           | no           | style       | warn      |
 
 
 

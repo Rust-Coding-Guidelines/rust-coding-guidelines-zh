@@ -23,6 +23,6 @@ fn foo(bar: &T) { ... }
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [borrowed_box](https://rust-lang.github.io/rust-clippy/master/#borrowed_box) | yes| no | complexity | warn |
+| lint name                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [borrowed_box](https://rust-lang.github.io/rust-clippy/master/#borrowed_box) | yes           | no           | complexity | warn      |

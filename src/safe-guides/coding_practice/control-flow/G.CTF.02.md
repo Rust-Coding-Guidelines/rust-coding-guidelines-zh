@@ -44,9 +44,9 @@ fn main(){
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group      | level |
-| ------------------------------------------------------------ | ------------- | ------------ | --------------- | ----- |
-| [else_if_without_else](https://rust-lang.github.io/rust-clippy/master/#else_if_without_else) | yes           | no           | **restriction** | allow |
+| lint name                                                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
+| -------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | ----- |
+| [else_if_without_else](https://rust-lang.github.io/rust-clippy/master/#else_if_without_else) | yes           | no           | restriction | allow |
 
 
 

@@ -30,7 +30,7 @@ let f = i16::try_from(foo).is_ok(); // 返回 false
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [checked_conversions](https://rust-lang.github.io/rust-clippy/master/#checked_conversions) | yes           | no           | pedantic   | allow |
+| lint name                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [checked_conversions](https://rust-lang.github.io/rust-clippy/master/#checked_conversions) | yes           | no           | pedantic   | allow     |
 

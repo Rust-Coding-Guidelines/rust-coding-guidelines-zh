@@ -4,7 +4,7 @@
 
 比如只有对调用 C 函数或其他 `unsafe` 函数时才使用 `unsafe` 块，而不要将多余的代码都包入 `unsafe` 块中。
 
-【反例】
+**【反例】**
 
 ```rust
 pub fn io_read_u32(ioaddr: usize) -> Result<u32, MyError> {
@@ -17,7 +17,7 @@ pub fn io_read_u32(ioaddr: usize) -> Result<u32, MyError> {
 }
 ```
 
-【正例】
+**【正例】**
 
 ```rust
 pub fn io_read_u32(ioaddr: usize) -> Result<u32, MyError> {

@@ -34,8 +34,8 @@ struct Foo {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
-| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
-| [derivable_impls](https://rust-lang.github.io/rust-clippy/master/#derivable_impls) | yes           | no           | **complexity** | warn  |
+| lint name                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [derivable_impls](https://rust-lang.github.io/rust-clippy/master/#derivable_impls) | yes           | no           | complexity | warn      |
 
 该lint不能用于检测泛型参数类型的 Default 手工实现。

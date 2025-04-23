@@ -1,10 +1,10 @@
-## P.NAM.06 遵循 `iter/ iter_mut/ into_iter` 规范来生成迭代器
+## P.NAM.06 遵循 `iter/iter_mut/into_iter` 规范来生成迭代器
 
 **【描述】**
 
 此规则包含两条基本子规则：
 
-1. 对于容纳 `U` 类型的容器 (container) ，其迭代器方法应该遵循`iter/ iter_mut/ into_iter` 这三种命名方式。
+1. 对于容纳 `U` 类型的容器 (container) ，其迭代器方法应该遵循`iter/iter_mut/into_iter` 这三种命名方式。
 2. 返回的迭代器类型名称也应该和其方法名保持一致，如一个叫做`into_iter()`的方法应该返回一个叫做`IntoIter`的类型。
 
 说明：

@@ -26,9 +26,9 @@ assert!(sad_people.is_empty(), "there are sad people: {:?}", sad_people);
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [if_then_panic](https://rust-lang.github.io/rust-clippy/master/#if_then_panic) | yes           | no           | Style   |warn|
+| lint name                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [if_then_panic](https://rust-lang.github.io/rust-clippy/master/#if_then_panic) | yes           | no           | Style      | warn      |
 
 
 

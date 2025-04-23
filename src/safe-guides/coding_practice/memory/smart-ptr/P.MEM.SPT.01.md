@@ -4,8 +4,7 @@
 
 Rust 的 `RefCell<T>` 在运行时会对通过 `borrow/borrow_mut` 方法借用出去的不可变借用和可变借用进行检查。如果发现违反了借用规则的情况，则会 Panic。
 
-所以在一些多线程场景下，开发者可能对细粒度的操作加了锁同步，但是没有对 `RefCell<T>` 进行加锁，此时宜用 `try_borrow/try_borrow_mut` 来代替
-`borrow/borrow_mut`，以避免在运行时因为违反借用检查规则而出现 Panic。
+所以在一些多线程场景下，开发者可能对细粒度的操作加了锁同步，但是没有对 `RefCell<T>` 进行加锁，此时宜用 `try_borrow/try_borrow_mut` 来代替 `borrow/borrow_mut`，以避免在运行时因为违反借用检查规则而出现 Panic。
 
 **【反例】**
 

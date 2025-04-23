@@ -40,9 +40,9 @@ vec.sort_unstable(); // unstable sort
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [stable_sort_primitive](https://rust-lang.github.io/rust-clippy/master/#stable_sort_primitive) | yes           | no           | **perf**   | warn  |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [stable_sort_primitive](https://rust-lang.github.io/rust-clippy/master/#stable_sort_primitive) | yes           | no           | perf       | warn      |
 
 当确实需要稳定排序时，需要修改该 lint 的设置为 `allow`。
 

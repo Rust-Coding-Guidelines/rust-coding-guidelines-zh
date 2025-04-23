@@ -63,16 +63,16 @@ fn main() {
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [as_conversions](https://rust-lang.github.io/rust-clippy/master/#as_conversions) | yes| no | restriction | allow |
-| [cast_lossless](https://rust-lang.github.io/rust-clippy/master/#cast_lossless) | yes| no | pedantic | allow |
-| [cast_possible_truncation](https://rust-lang.github.io/rust-clippy/master/#cast_possible_truncation) | yes| no | pedantic | allow |
-| [cast_possible_wrap](https://rust-lang.github.io/rust-clippy/master/#cast_possible_wrap) | yes| no | pedantic | allow |
-| [cast_precision_loss](https://rust-lang.github.io/rust-clippy/master/#cast_precision_loss) | yes| no | pedantic | allow |
-| [cast_sign_loss](https://rust-lang.github.io/rust-clippy/master/#cast_sign_loss) | yes| no | pedantic | allow |
-| [fn_to_numeric_cast](https://rust-lang.github.io/rust-clippy/master/#fn_to_numeric_cast) | yes| no | Style | warn |
-| [fn_to_numeric_cast_with_truncation](https://rust-lang.github.io/rust-clippy/master/#fn_to_numeric_cast_with_truncation) | yes| no | Style | warn |
-| [char_lit_as_u8](https://rust-lang.github.io/rust-clippy/master/#char_lit_as_u8) | yes| no | Complexity | warn |
-| [cast_ref_to_mut](https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut) | yes| no | correctness | deny |
-| [ptr_as_ptr](https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr) | yes| no | pedantic | allow |
+| lint name                                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认level |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------ | ----------- | --------- |
+| [as_conversions](https://rust-lang.github.io/rust-clippy/master/#as_conversions)                                         | yes           | no           | restriction | allow     |
+| [cast_lossless](https://rust-lang.github.io/rust-clippy/master/#cast_lossless)                                           | yes           | no           | pedantic    | allow     |
+| [cast_possible_truncation](https://rust-lang.github.io/rust-clippy/master/#cast_possible_truncation)                     | yes           | no           | pedantic    | allow     |
+| [cast_possible_wrap](https://rust-lang.github.io/rust-clippy/master/#cast_possible_wrap)                                 | yes           | no           | pedantic    | allow     |
+| [cast_precision_loss](https://rust-lang.github.io/rust-clippy/master/#cast_precision_loss)                               | yes           | no           | pedantic    | allow     |
+| [cast_sign_loss](https://rust-lang.github.io/rust-clippy/master/#cast_sign_loss)                                         | yes           | no           | pedantic    | allow     |
+| [fn_to_numeric_cast](https://rust-lang.github.io/rust-clippy/master/#fn_to_numeric_cast)                                 | yes           | no           | Style       | warn      |
+| [fn_to_numeric_cast_with_truncation](https://rust-lang.github.io/rust-clippy/master/#fn_to_numeric_cast_with_truncation) | yes           | no           | Style       | warn      |
+| [char_lit_as_u8](https://rust-lang.github.io/rust-clippy/master/#char_lit_as_u8)                                         | yes           | no           | Complexity  | warn      |
+| [cast_ref_to_mut](https://rust-lang.github.io/rust-clippy/master/#cast_ref_to_mut)                                       | yes           | no           | correctness | deny      |
+| [ptr_as_ptr](https://rust-lang.github.io/rust-clippy/master/#ptr_as_ptr)                                                 | yes           | no           | pedantic    | allow     |

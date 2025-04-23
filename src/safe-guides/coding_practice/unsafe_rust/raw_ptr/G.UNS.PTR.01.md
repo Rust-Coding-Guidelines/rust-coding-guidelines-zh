@@ -47,6 +47,6 @@ fn main() {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [cast_ptr_alignment](https://rust-lang.github.io/rust-clippy/master/#cast_ptr_alignment) | yes           | no           | style      | warn  |
+| lint name                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| ---------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ---------- |
+| [cast_ptr_alignment](https://rust-lang.github.io/rust-clippy/master/#cast_ptr_alignment) | yes           | no           | style      | warn       |

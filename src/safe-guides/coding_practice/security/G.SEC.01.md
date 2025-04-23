@@ -81,10 +81,10 @@ pub fn get_embed_languages() -> FileContent {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group  | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ----------- | ----- |
-| [`invisible_characters`](https://rust-lang.github.io/rust-clippy/master/#invisible_characters) | yes           | no           | correctness | deny  |
-| [`text-direction-codepoint-in-comment`](https://doc.rust-lang.org/rustc/lints/listing/deny-by-default.html#text-direction-codepoint-in-comment) | no            | yes          | -           | deny  |
-| [`text_direction_codepoint_in_literal`](https://doc.rust-lang.org/rustc/lints/listing/deny-by-default.html#text-direction-codepoint-in-literal) | no            | yes          | -           | deny  |
-| [`confusable_idents`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#confusable-idents) | no            | yes          | -           | warn  |
-| [`mixed_script_confusables`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#mixed-script-confusables) | no            | yes          | -           | warn  |
+| lint name                                                                                                                                       | Clippy 可检测 | Rustc 可检测 | Lint Group  | 默认 level |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ----------- | ---------- |
+| [`invisible_characters`](https://rust-lang.github.io/rust-clippy/master/#invisible_characters)                                                  | yes           | no           | correctness | deny       |
+| [`text-direction-codepoint-in-comment`](https://doc.rust-lang.org/rustc/lints/listing/deny-by-default.html#text-direction-codepoint-in-comment) | no            | yes          | -           | deny       |
+| [`text_direction_codepoint_in_literal`](https://doc.rust-lang.org/rustc/lints/listing/deny-by-default.html#text-direction-codepoint-in-literal) | no            | yes          | -           | deny       |
+| [`confusable_idents`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#confusable-idents)                                     | no            | yes          | -           | warn       |
+| [`mixed_script_confusables`](https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#mixed-script-confusables)                       | no            | yes          | -           | warn       |

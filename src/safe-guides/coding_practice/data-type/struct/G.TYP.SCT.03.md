@@ -18,14 +18,14 @@ impl<'a> Colorize for &'a str {
             fgcolor: String::from("31"),
             input: String::from(self), // 该方法只更新 fgcolor 和 input
             bgcolor: String::default(); // 如果该结构体字段比较多的话，此处就需要指派很多字段，不太方便
-        }   
+        }
     }
     fn on_yellow(self) -> ColoredString {
         ColoredString {
             bgcolor: String::from("43"),
             input: String::from(self),
             fgcolor: String::default();
-        }   
+        }
     }
 }
 ```
@@ -40,7 +40,7 @@ impl<'a> Colorize for &'a str {
             fgcolor: String::from("31"),
             input: String::from(self),
             ..ColoredString::default() // 通过该语法，开发者可以快速了解该方法只更新 fgcolor 和 input，也不需要指派其他不需要更新的字段，更加方便
-        }   
+        }
     }
     fn on_yellow(self) -> ColoredString {
         ColoredString {
@@ -54,8 +54,8 @@ impl<'a> Colorize for &'a str {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [field_reassign_with_default](https://rust-lang.github.io/rust-clippy/master/#field_reassign_with_default) | yes           | no           | style      | warn  |
+| lint name                                                                                                  | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [field_reassign_with_default](https://rust-lang.github.io/rust-clippy/master/#field_reassign_with_default) | yes           | no           | style      | warn      |
 
 

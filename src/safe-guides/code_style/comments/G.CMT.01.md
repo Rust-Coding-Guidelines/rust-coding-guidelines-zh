@@ -40,6 +40,6 @@ pub fn read(filename: String) -> io::Result<String> {
 
 **【Lint 检测】**
 
-| lint name | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
-| ------ | ---- | --------- | ------ | ------ | 
-| [missing_errors_doc ](https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc ) | yes| no | Style | allow | 
+| lint name                                                                                          | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认 level |
+| -------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | ---------- |
+| [missing_errors_doc](https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc) | yes           | no           | Style      | allow      |

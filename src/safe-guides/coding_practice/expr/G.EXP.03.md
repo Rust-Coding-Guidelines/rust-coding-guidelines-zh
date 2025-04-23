@@ -44,8 +44,8 @@ fn compute_array() -> [i32; 3] {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group     | level |
-| ------------------------------------------------------------ | ------------- | ------------ | -------------- | ----- |
-| [unnecessary_operation](https://rust-lang.github.io/rust-clippy/master/#unnecessary_operation) | yes           | no           | **complexity** | warn  |
+| lint name                                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ---------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [unnecessary_operation](https://rust-lang.github.io/rust-clippy/master/#unnecessary_operation) | yes           | no           | complexity | warn      |
 
 

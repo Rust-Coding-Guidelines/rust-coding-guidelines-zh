@@ -1,4 +1,4 @@
-## G.FUD.04   当Copy 类型的足够小的值作为函数参数时，应该按值（by-value）传入，而不是引用(by-ref)
+## G.FUD.04   当 Copy 类型的足够小的值作为函数参数时，应该按值（by-value）传入，而不是引用(by-ref)
 
 **【级别】** 建议
 
@@ -59,17 +59,17 @@ fn main() {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [trivially_copy_pass_by_ref](https://rust-lang.github.io/rust-clippy/master/#trivially_copy_pass_by_ref) | yes           | no           | pedantic   | allow |
+| lint name                                                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| -------------------------------------------------------------------------------------------------------- | ------------- | ------------ | ---------- | --------- |
+| [trivially_copy_pass_by_ref](https://rust-lang.github.io/rust-clippy/master/#trivially_copy_pass_by_ref) | yes           | no           | pedantic   | allow     |
 
 该 lint 对应 `clippy.toml` 配置项：
 
 ```toml
 # 如果函数是被导出的 API，则该 lint 不会被触发，是防止 lint 建议对 API 有破坏性的改变。默认为 true
-avoid-breaking-exported-api=true
+avoid-breaking-exported-api = true
 # 考虑Copy按值而不是按引用传递的类型的最大大小（以字节为单位）。默认是None
-trivial-copy-size-limit=None
+trivial-copy-size-limit = "None"
 ```
 
 **注意**，该 lint 没有考虑指针相关的情况，见例外示例。需要酌情考虑使用。例外示例来自  [rust-clippy/issues/5953](https://github.com/rust-lang/rust-clippy/issues/5953) 。

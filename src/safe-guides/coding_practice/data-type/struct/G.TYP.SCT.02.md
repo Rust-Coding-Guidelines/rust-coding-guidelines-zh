@@ -39,14 +39,14 @@ enum State {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [struct_excessive_bools](https://rust-lang.github.io/rust-clippy/master/#struct_excessive_bools) | yes           | no           | pedantic   | allow |
+| lint name                                                                                        | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [struct_excessive_bools](https://rust-lang.github.io/rust-clippy/master/#struct_excessive_bools) | yes           | no           | pedantic   | allow     |
 
 该 lint 对应 `clippy.toml` 配置项：
 
 ```toml
-# 用于配置函数可以拥有的 bool 类型参数最大数量，默认为 3。
-max-struct-bools=3 
+# 用于配置结构体可以拥有的 bool 类型字段最大数量，默认为 3。
+max-struct-bools = 3 
 ```
 

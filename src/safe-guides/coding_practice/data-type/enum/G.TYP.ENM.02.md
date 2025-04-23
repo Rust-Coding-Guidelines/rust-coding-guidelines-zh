@@ -25,7 +25,7 @@ enum Test {}
 #![feature(never_type)] // 当启用该功能的时候，下面的clippy才会生效
 #![warn(clippy::empty_enum)]
 
-//符合： 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
+// 符合： 未来 never 类型稳定的话，将会把 Infallible 设置为 never 类型的别名
 pub type Infallible = !;
 ```
 
@@ -48,9 +48,9 @@ impl Display for NoUserError {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group   | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ------------ | ----- |
-| [empty_enum](https://rust-lang.github.io/rust-clippy/master/#empty_enum) | yes           | no           | **pedantic** | allow |
+| lint name                                                                | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
+| ------------------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
+| [empty_enum](https://rust-lang.github.io/rust-clippy/master/#empty_enum) | yes           | no           | pedantic   | allow |
 
 
 

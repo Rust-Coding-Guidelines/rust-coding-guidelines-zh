@@ -32,7 +32,7 @@ pub fn buf_recycle(buf_id: usize) {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [inline_always](https://rust-lang.github.io/rust-clippy/master/#inline_always) | yes           | no           | pedantic   | allow |
+| lint name                                                                      | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [inline_always](https://rust-lang.github.io/rust-clippy/master/#inline_always) | yes           | no           | pedantic   | allow     |
 

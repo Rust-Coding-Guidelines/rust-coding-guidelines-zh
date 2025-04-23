@@ -1,4 +1,4 @@
-## G.CTF.01 当需要通过多个`if`判断来比较大小来区分不同情况时，优先使用`match`和`cmp`来代替`if`表达式
+## G.CTF.01 当需要通过多个`if`比较大小来区分不同情况时，优先使用`match`和`cmp`来代替`if`表达式
 
 **【级别】** 建议
 
@@ -44,9 +44,9 @@ fn f(x: u8, y: u8) {
 
 **【Lint 检测】**
 
-| lint name                                                    | Clippy 可检测 | Rustc 可检测 | Lint Group | level |
-| ------------------------------------------------------------ | ------------- | ------------ | ---------- | ----- |
-| [comparison_chain](https://rust-lang.github.io/rust-clippy/master/#comparison_chain) | yes           | no           | style      | warn  |
+| lint name                                                                            | Clippy 可检测 | Rustc 可检测 | Lint Group | 默认level |
+| ------------------------------------------------------------------------------------ | ------------- | ------------ | ---------- | --------- |
+| [comparison_chain](https://rust-lang.github.io/rust-clippy/master/#comparison_chain) | yes           | no           | style      | warn      |
 
 
 
