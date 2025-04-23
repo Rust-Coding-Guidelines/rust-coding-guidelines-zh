@@ -5,25 +5,35 @@ on:
   pull_request:
     branches: [ main ]
 
+# Add explicit permissions - this is crucial!
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   build:
     name: Build, Test and Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4  # Update to v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important for git history
+          
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          
       - name: Install mdbook
         run: |
           mkdir bin
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.14/mdbook-v0.4.14-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           echo "$(pwd)/bin" >> $GITHUB_PATH
+          
       - run: mdbook build
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4  # Update to v4
+      
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: book  # The folder the action should deploy
+          folder: book
+          branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}  # Explicitly use the token
+          clean: true  # Clean up old files
