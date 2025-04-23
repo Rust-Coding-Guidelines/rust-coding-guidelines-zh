@@ -35,5 +35,5 @@ jobs:
         with:
           folder: book
           branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}  # Explicitly use the token
+          token: ${{ secrets.PAT }}  # Explicitly use the token
           clean: true  # Clean up old files
