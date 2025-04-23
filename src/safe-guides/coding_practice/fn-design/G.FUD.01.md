@@ -4,7 +4,8 @@
 
 **【描述】**
 
-为了提升代码可读性，函数的参数最长不宜超过五个。
+为了提升代码可读性，函数的参数最长不宜超过五个。根据编译器函数调用规范[[1](https://www.cnblogs.com/shines77/p/3788514.html)][[2](https://learn.microsoft.com/zh-cn/cpp/build/x64-calling-convention?view=msvc-170)]，较少的参数个数编译器优先使用寄存器，所以
+存在性能收益的可能性。
 
 **【反例】**
 
